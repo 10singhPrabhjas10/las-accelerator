@@ -1,0 +1,66 @@
+import {StyleSheet} from 'react-native';
+import {COLORS} from '../theme/colors';
+
+const CommonStyles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: COLORS.backdrop,
+    opacity: 0.5,
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  margin: {margin: 20},
+  marginTop: {marginTop: 24},
+  padding: {padding: 20},
+  padding16: {padding: 16},
+  padding12: {padding: 12},
+  padding10: {padding: 10},
+  flexOne: {flex: 1},
+  flexGrow: {flexGrow: 1},
+  flexRow: {flexDirection: 'row'},
+  flexColumn: {flexDirection: 'column'},
+  rowSpaceBetween: {flexDirection: 'row', justifyContent: 'space-between'},
+  flexRowGap: {flexDirection: 'row', gap: 20},
+  flexOneMargin: {flex: 1, margin: 20},
+  marginHorizontal: {marginHorizontal: 20},
+  marginVertical: {marginVertical: 20},
+  scrollViewContainer: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+  },
+  verticalDivider: {width: 1, height: '100%', color: COLORS.lightGrey2},
+  horizontalDivider: {
+    width: '100%',
+    height: 1,
+    color: COLORS.lightGrey2,
+    marginVertical: 16,
+  },
+  horizontalDivider2: {backgroundColor: COLORS.grey, marginBottom: 10},
+  accordionHeadingStyle: {
+    backgroundColor: COLORS.white,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+  accordionTitleStyle: {
+    color: COLORS.darkOrange,
+    fontFamily: 'soleto_medium',
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0,
+    lineHeight: 20,
+    paddingLeft: 0,
+  },
+  gap10: {gap: 10},
+  pressableFeedback: {opacity: 0.6},
+  textAlignCenter: {textAlign: 'center'},
+  comment: {height: 100},
+  paddingH10: {paddingHorizontal: 10},
+  dateViewStyle: {marginHorizontal: 5, marginTop: 10},
+  justifyContentSpaceAround: {justifyContent: 'space-around'},
+  flatListMargin: {margin: 20, marginBottom: 0},
+  flexOneMargin0: {flex: 1, margin: 0},
+});
+
+export default CommonStyles;

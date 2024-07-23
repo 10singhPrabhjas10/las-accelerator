@@ -1,118 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import 'react-native-gesture-handler';
+import React, {useEffect} from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import notifee from '@notifee/react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import ReduxProvider from './app/store/redux';
+import {NoInternetToast} from './app/components/NoInternet';
+import {PaperProvider} from 'react-native-paper';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// Navigation
+import RootNavigation from './app/routes/RootNavigation';
+import Icon from 'react-native-vector-icons/Feather';
+import ErrorBoundary from './app/errorBoundary';
+import {theme} from './app/theme/theme';
+import {LogBox} from 'react-native';
+import CommonStyles from './app/utils/commonStyle';
+import {AutocompleteDropdownContextProvider} from './app/components/auto-complete/AutocompleteDropdownContext';
+import {LocaleConfig} from 'react-native-calendars';
+import {getFcmToken, notificationListener} from './app/utils/firebase';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort = [
+  'S',
+  'M',
+  'T',
+  'W',
+  'T',
+  'F',
+  'S',
+];
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+Icon.loadFont();
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+//TODO: remove later added to avoid warnings in demo
+LogBox.ignoreAllLogs();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+let Root = function App() {
+  useEffect(() => {
+    (async function () {
+      await notifee.requestPermission();
+      getFcmToken();
+    })();
+    const unsubscribe = notificationListener();
+    return unsubscribe;
+  }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <ErrorBoundary>
+        <ReduxProvider>
+          <GestureHandlerRootView style={CommonStyles.flexOne}>
+            <PaperProvider theme={theme}>
+              <AutocompleteDropdownContextProvider>
+                <RootNavigation />
+                <NoInternetToast />
+              </AutocompleteDropdownContextProvider>
+            </PaperProvider>
+          </GestureHandlerRootView>
+        </ReduxProvider>
+      </ErrorBoundary>
+    </SafeAreaProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default Root;

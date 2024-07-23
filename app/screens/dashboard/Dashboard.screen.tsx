@@ -1,0 +1,154 @@
+import React, {ReactNode} from 'react';
+import {FlatList, StyleSheet} from 'react-native';
+import {Card, Text} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
+
+import Layout from 'components/Layout';
+import DashboardHeader from './dashboardComponent/dashboardHeader/DashboardHeader';
+
+import {RootNavigationProp} from 'routes/RootNavigation';
+import PrimaryUserProfile from '../../../assets/icons/primaryuserProfile.svg';
+import SecondaryProfileIcon from '../../../assets/icons/secondaryProfileIcon.svg';
+import MultipleUsersIcon from '../../../assets/icons/multipleUsersIcon.svg';
+import ExpenseManagementIcon from '../../../assets/icons/expenseManagementIcon.svg';
+import SelfManagementIcon from '../../../assets/icons/selfManagementIcon.svg';
+import OrderTakingIcon from '../../../assets/icons/orderTakingIcon.svg';
+import PerformanceIcon from '../../../assets/icons/performance.svg';
+import ProductPriceListIcon from '../../../assets/icons/productPriceListIcon.svg';
+import BeatIcon from '../../../assets/icons/beat.svg';
+import {COLORS, spacing} from 'theme/theme';
+import AttendaceIcon from '../../../assets/icons/attendance.svg';
+import {getTranslationLabel} from 'utils/commonMethods';
+
+interface IDashboardTileProps {
+  title: string;
+  icon: ReactNode;
+  onPress: () => void;
+}
+
+const DashboardTile = ({title, icon, onPress}: IDashboardTileProps) => {
+  return (
+    <Card style={styles.tile} onPress={onPress}>
+      <Card.Content style={styles.cardContent}>
+        {icon}
+        <Text variant="bodyMedium" style={styles.tileText}>
+          {title}
+        </Text>
+      </Card.Content>
+    </Card>
+  );
+};
+
+const Dashboard = () => {
+  const navigation = useNavigation<RootNavigationProp>();
+
+  const tilesData = [
+    {
+      title: getTranslationLabel('primary_cp'),
+      image: <PrimaryUserProfile height={24} width={24} />,
+      onPress: () =>
+        navigation.navigate('PrimaryPartnerSearch', {fromOrderTaking: false}),
+    },
+    {
+      title: getTranslationLabel('secondary_cp'),
+      image: <SecondaryProfileIcon height={24} width={24} />,
+      onPress: () =>
+        navigation.navigate('RetailerPartnerSearch', {fromOrderTaking: false}),
+    },
+    {
+      title: getTranslationLabel('attendance'),
+      image: <AttendaceIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('AttendanceLanding'),
+    },
+    {
+      title: getTranslationLabel('beat'),
+      image: <BeatIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('Beat'),
+    },
+    {
+      title: getTranslationLabel('expense_management'),
+      image: <ExpenseManagementIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('ExpenseManagement'),
+    },
+    {
+      title: getTranslationLabel('self_management'),
+      image: <SelfManagementIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('SelfManagement'),
+    },
+    {
+      title: getTranslationLabel('order_taking'),
+      image: <OrderTakingIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('OrderTaking'),
+    },
+    {
+      title: getTranslationLabel('product_price_list'),
+      image: <ProductPriceListIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('ProductPriceList'),
+    },
+
+    {
+      title: getTranslationLabel('lead_management'),
+      image: <MultipleUsersIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('LeadManagement'),
+    },
+    {
+      title: getTranslationLabel('performance_management'),
+      image: <PerformanceIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('PerformanceManagement'),
+    },
+  ];
+
+  return (
+    <Layout>
+      <DashboardHeader />
+      <FlatList
+        data={tilesData}
+        renderItem={({item}) => (
+          <DashboardTile
+            title={item.title}
+            icon={item.image}
+            onPress={item.onPress}
+          />
+        )}
+        keyExtractor={(item, index) => `tile_${index}`}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContent}
+      />
+    </Layout>
+  );
+};
+
+export default Dashboard;
+
+const styles = StyleSheet.create({
+  cardContent: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  row: {
+    gap: 8,
+  },
+  tile: {
+    backgroundColor: COLORS.white,
+    flex: 1 / 2,
+    height: 114,
+    margin: 5,
+    justifyContent: 'center',
+  },
+  icon: {
+    width: 35,
+    height: 35,
+    marginBottom: 1,
+    alignSelf: 'center',
+  },
+  flatListContent: {
+    gap: 8,
+    padding: 10,
+  },
+  tileText: {
+    textAlign: 'center',
+    color: COLORS.black,
+    paddingTop: spacing.layoutPaddingH,
+  },
+});
