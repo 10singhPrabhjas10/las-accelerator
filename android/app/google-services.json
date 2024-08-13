@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "439045737450",
+    "project_id": "lasaccelarator",
+    "storage_bucket": "lasaccelarator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439045737450:android:ecc859fc55e9438bb70093",
+        "android_client_info": {
+          "package_name": "com.lasaccelarator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu4jv-KrgwLGKL8qk73Rr5H1TUjIkplyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
