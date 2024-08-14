@@ -43,6 +43,8 @@ const LanguageSelection = () => {
     },
   };
 
+  console.log(selectedLanguage);
+
   return (
     <Layout hideStatusBar>
       <View style={styles.mainContainer}>

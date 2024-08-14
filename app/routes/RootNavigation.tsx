@@ -862,7 +862,7 @@ export default function RootNavigation() {
           </>
         )}
       </RootStack.Navigator>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <SnackBar />
       <OtpAttemptExhaustedModal />
     </NavigationContainer>

@@ -13,29 +13,31 @@ export const handleLanguageChange = async (
   onSuccess: () => void,
 ) => {
   setReduxLoading(true);
-  NetworkRequest(
-    GET,
-    getLocalizationApi(selectedLanguage.id),
-    {},
-    {
-      headers: {Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`},
-    },
-  )
-    .then(result => {
-      if (result.status === HttpStatusCode.OK) {
-        store.dispatch(
-          setCurrentLanguage({
-            selectedLanguageTranslation: result?.data,
-            language: selectedLanguage,
-          }),
-        );
-        onSuccess();
-      }
-    })
-    .catch(error => {
-      handleApiError(error?.message);
-    })
-    .finally(() => {
-      setReduxLoading(false);
-    });
+  onSuccess();
+  return;
+  // NetworkRequest(
+  //   GET,
+  //   getLocalizationApi(selectedLanguage.id),
+  //   {},
+  //   {
+  //     headers: {Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`},
+  //   },
+  // )
+  //   .then(result => {
+  //     if (result.status === HttpStatusCode.OK) {
+  //       store.dispatch(
+  //         setCurrentLanguage({
+  //           selectedLanguageTranslation: result?.data,
+  //           language: selectedLanguage,
+  //         }),
+  //       );
+  //       onSuccess();
+  //     }
+  //   })
+  //   .catch(error => {
+  //     handleApiError(error?.message);
+  //   })
+  //   .finally(() => {
+  //     setReduxLoading(false);
+  //   });
 };

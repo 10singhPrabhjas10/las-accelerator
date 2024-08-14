@@ -27,6 +27,25 @@ interface IOnboardingData {
   };
 }
 
+const dummyData: IOnboardingData[] = [
+  {
+    id: '1',
+    attributes: {
+      media: 'https://via.placeholder.com/120x80.png',
+      description:
+        'lorem ipsum dolor sit am equivalents of ver accusantium et accusantium',
+    },
+  },
+  {
+    id: '2',
+    attributes: {
+      media: 'https://via.placeholder.com/120x80.png',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, tenetur.',
+    },
+  },
+];
+
 const OnboardingScreens = () => {
   const [onboardingData, setOnboardingData] = useState<IOnboardingData[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -67,7 +86,10 @@ const OnboardingScreens = () => {
   };
 
   useEffect(() => {
-    getOnboardingData();
+    //getOnboardingData();
+    setOnboardingData(dummyData);
+    const dotsArray = Array.from(Array(dummyData.length).keys());
+    setDotsData(dotsArray);
   }, []);
 
   const handleLeftButton = () => {
