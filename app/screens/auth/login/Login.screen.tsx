@@ -45,15 +45,19 @@ const Login = () => {
   const warningIcon = () => <WarningSvg height={20} width={20} />;
 
   const handleOtpSubmit = () => {
-    handleGetOtp(
-      mobileNumber,
-      setIsLoading,
-      (resendBlockDurationSeconds: number) =>
-        navigation.navigate('OtpVerification', {
-          mobileNumber: mobileNumber,
-          resendBlockDurationSeconds: resendBlockDurationSeconds,
-        }),
-    );
+    // handleGetOtp(
+    //   mobileNumber,
+    //   setIsLoading,
+    //   (resendBlockDurationSeconds: number) =>
+    //     navigation.navigate('OtpVerification', {
+    //       mobileNumber: mobileNumber,
+    //       resendBlockDurationSeconds: resendBlockDurationSeconds,
+    //     }),
+    // );
+    navigation.navigate('OtpVerification', {
+      mobileNumber: mobileNumber,
+      resendBlockDurationSeconds: 1000,
+    });
   };
 
   return (

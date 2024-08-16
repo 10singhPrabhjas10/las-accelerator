@@ -18,6 +18,7 @@ import styles from './Onboarding.style';
 import {GET} from 'constants/httpConstants';
 import {MARKETINGS} from 'services/constants';
 import {handleApiError} from 'utils/CommonReduxMethods';
+import serverData from 'utils/serverData';
 
 interface IOnboardingData {
   id: string;
@@ -27,24 +28,24 @@ interface IOnboardingData {
   };
 }
 
-const dummyData: IOnboardingData[] = [
-  {
-    id: '1',
-    attributes: {
-      media: 'https://via.placeholder.com/120x80.png',
-      description:
-        'lorem ipsum dolor sit am equivalents of ver accusantium et accusantium',
-    },
-  },
-  {
-    id: '2',
-    attributes: {
-      media: 'https://via.placeholder.com/120x80.png',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, tenetur.',
-    },
-  },
-];
+// const dummyData: IOnboardingData[] = [
+//   {
+//     id: '1',
+//     attributes: {
+//       media: 'https://via.placeholder.com/120x80.png',
+//       description:
+//         'lorem ipsum dolor sit am equivalents of ver accusantium et accusantium',
+//     },
+//   },
+//   {
+//     id: '2',
+//     attributes: {
+//       media: 'https://via.placeholder.com/120x80.png',
+//       description:
+//         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, tenetur.',
+//     },
+//   },
+// ];
 
 const OnboardingScreens = () => {
   const [onboardingData, setOnboardingData] = useState<IOnboardingData[]>([]);
@@ -64,21 +65,25 @@ const OnboardingScreens = () => {
 
   const getOnboardingData = async () => {
     try {
-      const result = await NetworkRequest(
-        GET,
-        MARKETINGS,
-        {},
-        {
-          headers: {
-            'skip-token': 'true',
-            Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-          },
-        },
-      );
+      // const result = await NetworkRequest(
+      //   GET,
+      //   MARKETINGS,
+      //   {},
+      //   {
+      //     headers: {
+      //       'skip-token': 'true',
+      //       Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+      //     },
+      //   },
+      // );
 
-      setOnboardingData(result?.data?.data);
+      //setOnboardingData(result?.data?.data);
+      //const dotsArray = Array.from(Array(result?.data?.data?.length).keys());
 
-      const dotsArray = Array.from(Array(result?.data?.data?.length).keys());
+      const result: IOnboardingData[] = serverData.marketing.data.data;
+      setOnboardingData(result);
+      const dotsArray = Array.from(Array(result.length).keys());
+
       setDotsData(dotsArray);
     } catch (error: any) {
       handleApiError(error?.message);
@@ -86,10 +91,7 @@ const OnboardingScreens = () => {
   };
 
   useEffect(() => {
-    //getOnboardingData();
-    setOnboardingData(dummyData);
-    const dotsArray = Array.from(Array(dummyData.length).keys());
-    setDotsData(dotsArray);
+    getOnboardingData();
   }, []);
 
   const handleLeftButton = () => {

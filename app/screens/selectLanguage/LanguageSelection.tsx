@@ -43,8 +43,6 @@ const LanguageSelection = () => {
     },
   };
 
-  console.log(selectedLanguage);
-
   return (
     <Layout hideStatusBar>
       <View style={styles.mainContainer}>
@@ -64,15 +62,23 @@ const LanguageSelection = () => {
             renderItem={({item, index}) =>
               item?.id ? (
                 <Card
+                  // style={
+                  //   index >= 1
+                  //     ? styles.disabledSubCardContainer
+                  //     : selectedLanguage.id === item.id
+                  //     ? styles.activeSubCardContainer
+                  //     : styles.subCardContainer
+                  // }
+                  // disabled={index >= 1}
                   style={
-                    index >= 1
-                      ? styles.disabledSubCardContainer
-                      : selectedLanguage.id === item.id
+                    selectedLanguage.id === item.id
                       ? styles.activeSubCardContainer
                       : styles.subCardContainer
                   }
-                  disabled={index >= 1}
-                  onPress={() => setSelectedLanguage(item)}>
+                  onPress={() => {
+                    console.log('SubCard clicked');
+                    setSelectedLanguage(item);
+                  }}>
                   <Card.Content style={styles.cardContent}>
                     <Image source={item.icon} />
                     <Text

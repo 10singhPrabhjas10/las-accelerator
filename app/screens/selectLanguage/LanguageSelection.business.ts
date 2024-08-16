@@ -7,12 +7,20 @@ import {getLocalizationApi} from 'services/methods/localization';
 import {setCurrentLanguage} from 'store/redux/localizationSlice';
 import {handleApiError, setReduxLoading} from 'utils/CommonReduxMethods';
 import Config from 'react-native-config';
+import appStringsLocal from 'utils/appStringsLocal';
 
 export const handleLanguageChange = async (
   selectedLanguage: ILanguage,
   onSuccess: () => void,
 ) => {
   setReduxLoading(true);
+  console.log('selectedLanguage', selectedLanguage);
+  store.dispatch(
+    setCurrentLanguage({
+      selectedLanguageTranslation: appStringsLocal[selectedLanguage.id],
+      language: selectedLanguage,
+    }),
+  );
   onSuccess();
   return;
   // NetworkRequest(
