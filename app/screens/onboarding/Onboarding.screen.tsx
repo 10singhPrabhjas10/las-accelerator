@@ -18,7 +18,7 @@ import styles from './Onboarding.style';
 import {GET} from 'constants/httpConstants';
 import {MARKETINGS} from 'services/constants';
 import {handleApiError} from 'utils/CommonReduxMethods';
-import serverData from 'utils/serverData';
+import dummyServerData from 'utils/dummyServerData';
 
 interface IOnboardingData {
   id: string;
@@ -27,25 +27,6 @@ interface IOnboardingData {
     description: string;
   };
 }
-
-// const dummyData: IOnboardingData[] = [
-//   {
-//     id: '1',
-//     attributes: {
-//       media: 'https://via.placeholder.com/120x80.png',
-//       description:
-//         'lorem ipsum dolor sit am equivalents of ver accusantium et accusantium',
-//     },
-//   },
-//   {
-//     id: '2',
-//     attributes: {
-//       media: 'https://via.placeholder.com/120x80.png',
-//       description:
-//         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, tenetur.',
-//     },
-//   },
-// ];
 
 const OnboardingScreens = () => {
   const [onboardingData, setOnboardingData] = useState<IOnboardingData[]>([]);
@@ -80,7 +61,7 @@ const OnboardingScreens = () => {
       //setOnboardingData(result?.data?.data);
       //const dotsArray = Array.from(Array(result?.data?.data?.length).keys());
 
-      const result: IOnboardingData[] = serverData.marketing.data.data;
+      const result: IOnboardingData[] = dummyServerData.marketing.data.data;
       setOnboardingData(result);
       const dotsArray = Array.from(Array(result.length).keys());
 

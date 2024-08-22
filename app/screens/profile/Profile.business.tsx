@@ -24,15 +24,18 @@ import {getMappedRetailerFilterApi} from 'services/methods/primaryChannelPartner
 import {store} from 'store/redux/store';
 import {updateUser} from 'store/redux/userSlice';
 import {getTranslationLabel} from 'utils/commonMethods';
+import dummyServerData from 'utils/dummyServerData';
 
 export const getProfileData = async (setProfile: SetStateAction<any>) => {
   setReduxLoading(true);
 
   try {
-    const result = await NetworkRequest(GET, getProfileDetails());
-    if (result?.status === HttpStatusCode.OK && result?.data) {
-      setProfile([result?.data]);
-    }
+    // const result = await NetworkRequest(GET, getProfileDetails());
+    // if (result?.status === HttpStatusCode.OK && result?.data) {
+    //   setProfile([result?.data]);
+    // }
+    const result = dummyServerData['las-profile'];
+    setProfile([result?.data]);
   } catch (error: any) {
     handleApiError(error?.message);
   } finally {
@@ -48,20 +51,25 @@ export const getMappedChannelPartnersData = async (
 ) => {
   setReduxLoading(true);
   try {
-    const result = await NetworkRequest(POST, getMappedChannelPartners(), body);
-    if (result?.status === HttpStatusCode.OK && result?.data) {
-      const {
-        data,
-        meta: {
-          pagination: {pageCount},
-        },
-      } = result?.data;
-      setMappedData((prev: IMappedChannelPartnerResponse[]) => [
-        ...prev,
-        ...data,
-      ]);
-      setTotalPages(pageCount);
-    }
+    // const result = await NetworkRequest(POST, getMappedChannelPartners(), body);
+    // if (result?.status === HttpStatusCode.OK && result?.data) {
+    //   const {
+    //     data,
+    //     meta: {
+    //       pagination: {pageCount},
+    //     },
+    //   } = result?.data;
+    // setMappedData((prev: IMappedChannelPartnerResponse[]) => [
+    //   ...prev,
+    //   ...data,
+    // ]);
+    // setTotalPages(pageCount);
+    const {data} = dummyServerData['profile/mappedChannelPartners'].data;
+    setMappedData((prev: IMappedChannelPartnerResponse[]) => [
+      ...prev,
+      ...data,
+    ]);
+    setTotalPages(1);
   } catch (error: any) {
     handleApiError(error?.message);
   } finally {

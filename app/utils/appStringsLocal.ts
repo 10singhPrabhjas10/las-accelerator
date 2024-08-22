@@ -60,6 +60,122 @@ export default {
       key: 'verify',
       label: 'Verify',
     },
+    {
+      key: 'primary_cp',
+      label: 'Primary Partner Search',
+    },
+    {
+      key: 'secondary_cp',
+      label: 'Retailer Partner Search',
+    },
+    {
+      key: 'attendance',
+      label: 'Attendance Landing',
+    },
+    {
+      key: 'beat',
+      label: 'Beat',
+    },
+    {
+      key: 'expense_management',
+      label: 'Expense Management',
+    },
+    {
+      key: 'self_management',
+      label: 'Self Management',
+    },
+    {
+      key: 'order_taking',
+      label: 'Order Taking',
+    },
+    {
+      key: 'product_price_list',
+      label: 'Product Price List',
+    },
+    {
+      key: 'lead_management',
+      label: 'Lead Management',
+    },
+    {
+      key: 'performance_management',
+      label: 'Performance Management',
+    },
+    {
+      key: 'welcome',
+      label: 'Welcome',
+    },
+    {
+      key: 'las_id',
+      label: 'LAS ID',
+    },
+    {
+      key: 'dismiss',
+      label: 'Dismiss',
+    },
+    {
+      key: 'logout',
+      label: 'Logout',
+    },
+    {
+      key: 'logout_description',
+      label: 'Logout Description',
+    },
+    {
+      key: 'home',
+      label: 'Home',
+    },
+    {
+      key: 'notification',
+      label: 'Notification',
+    },
+    {
+      key: 'helpdesk',
+      label: 'Helpdesk',
+    },
+    {
+      key: 'profile',
+      label: 'Profile',
+    },
+    {
+      key: 'view_mapped_channel_partner',
+      label: 'View mapped Channel Partner',
+    },
+    {
+      key: 'mapped_channel_partner',
+      label: 'Mapped Channel Partner',
+    },
+    {
+      key: 'no_channel_partner',
+      label: 'No Channel Partner',
+    },
+    {
+      key: 'primary_cp_name',
+      label: 'Primary CP Name',
+    },
+    {
+      key: 'contact_person',
+      label: 'Contact Person',
+    },
+    {
+      key: 'contact_no',
+      label: 'Contact Number',
+    },
+    {
+      key: 'primary_cp_code',
+      label: 'Primary CP Code',
+    },
+    {
+      key: 'view_mapped_retailer',
+      label: 'View mapped retailers',
+    },
+    {
+      key: '',
+      label: '',
+    },
+    {
+      key: '',
+      label: '',
+    },
   ],
   hi: [
     {
