@@ -1,3 +1,4 @@
+import {COLORS} from 'theme/colors';
 import {StyleSheet} from 'react-native';
 import {getDeviceHeight, getDeviceWidth} from 'utils/commonMethods';
 
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
   imageHeader: {
     height: getDeviceHeight(0.3),
     width: getDeviceWidth(),
+    backgroundColor: COLORS.dDarkGreen,
   },
 });
 

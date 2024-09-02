@@ -33,6 +33,8 @@ const ProfileScreen = () => {
 
   const dispatch = useDispatch();
 
+  console.log('----ProfileData--', profileData);
+
   useEffect(() => {
     getProfileData(setProfileData);
   }, []);

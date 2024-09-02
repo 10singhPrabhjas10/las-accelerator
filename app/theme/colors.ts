@@ -44,6 +44,9 @@ export const COLORS = {
   lightblue: '#DAE7F8',
   kellyGreen: '#A2E28E',
   olympicBlue: '#AFCCF0',
+  dgreen: '#26890D',
+  backgroundDgreen: '#DDF2D9',
+  dDarkGreen: '#002E33'
 };
 
 export const PIE_CHART_COLORS = [

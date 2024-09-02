@@ -24,8 +24,7 @@ import {getMappedRetailerFilterApi} from 'services/methods/primaryChannelPartner
 import {store} from 'store/redux/store';
 import {updateUser} from 'store/redux/userSlice';
 import {getTranslationLabel} from 'utils/commonMethods';
-import dummyServerData from 'utils/dummyServerData';
-
+import { lasProfileRes, mappedChannelPartnersRes} from 'utils/dummyData';
 export const getProfileData = async (setProfile: SetStateAction<any>) => {
   setReduxLoading(true);
 
@@ -34,7 +33,7 @@ export const getProfileData = async (setProfile: SetStateAction<any>) => {
     // if (result?.status === HttpStatusCode.OK && result?.data) {
     //   setProfile([result?.data]);
     // }
-    const result = dummyServerData['las-profile'];
+    const result = lasProfileRes;
     setProfile([result?.data]);
   } catch (error: any) {
     handleApiError(error?.message);
@@ -64,7 +63,7 @@ export const getMappedChannelPartnersData = async (
     //   ...data,
     // ]);
     // setTotalPages(pageCount);
-    const {data} = dummyServerData['profile/mappedChannelPartners'].data;
+    const {data} = mappedChannelPartnersRes;
     setMappedData((prev: IMappedChannelPartnerResponse[]) => [
       ...prev,
       ...data,

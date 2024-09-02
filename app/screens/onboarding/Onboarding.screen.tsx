@@ -114,7 +114,7 @@ const OnboardingScreens = () => {
         {activeIndex === 0 ? (
           <View style={styles.emptyView} />
         ) : (
-          <Text variant="bodySmall" onPress={handleLeftButton}>
+          <Text variant="bodySmall" onPress={handleLeftButton} style={styles.buttonTextStyle}>
             {backLabel}
           </Text>
         )}
@@ -132,7 +132,7 @@ const OnboardingScreens = () => {
             : null}
         </View>
 
-        <Text variant="bodySmall" onPress={handleRightButton}>
+        <Text variant="bodySmall" onPress={handleRightButton} style={styles.buttonTextStyle}>
           {rightButtonName}
         </Text>
       </View>

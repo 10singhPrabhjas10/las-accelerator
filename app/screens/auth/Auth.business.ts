@@ -13,6 +13,7 @@ import {store} from 'store/redux/store';
 import {updateIsAuthenticated, updateUser} from 'store/redux/userSlice';
 import {setStorageData} from 'utils/AppStorage';
 import {handleApiError} from 'utils/CommonReduxMethods';
+import {sendOtpResponse, verifyOtpResponse} from 'utils/dummyData';
 
 export const handleGetOtp = async (
   mobileNumber: string,
@@ -24,12 +25,13 @@ export const handleGetOtp = async (
     const body = {
       mobileNumber: mobileNumber,
     };
-    const result = await NetworkRequest(POST, sendOTP(), body, {
-      headers: {
-        'skip-token': 'true',
-        Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-      },
-    });
+    // const result = await NetworkRequest(POST, sendOTP(), body, {
+    //   headers: {
+    //     'skip-token': 'true',
+    //     Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+    //   },
+    // });
+    const result = sendOtpResponse;
     if (result?.status === HttpStatusCode.CREATED) {
       onSuccess(result?.data?.resendBlockDurationSeconds);
     }
@@ -59,12 +61,13 @@ export const handleResendOtp = async (
     const body = {
       mobileNumber: mobileNumber,
     };
-    const result = await NetworkRequest(POST, sendOTP(), body, {
-      headers: {
-        'skip-token': 'true',
-        Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-      },
-    });
+    // const result = await NetworkRequest(POST, sendOTP(), body, {
+    //   headers: {
+    //     'skip-token': 'true',
+    //     Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+    //   },
+    // });
+    const result = sendOtpResponse;
 
     setResendOtpTimer(59);
     store.dispatch(
@@ -110,16 +113,7 @@ export const handleVerifyOtp = async (
     //   },
     // });
 
-    const result = {
-      data: {
-        id: 1,
-        userType: '',
-        accessToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzE3NjE1MzQwfQ.eQnhQSnS4o0sXZWARh2HsWrEr6XfDT4ngh0ejiykfH8',
-        refreshToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzIwMjAzNzQwfQ.YsStJdmdUjKOUlbXdqze0nEScCM_RJw9rnuy0RdSn88',
-      },
-    };
+    const result = verifyOtpResponse;
 
     const {
       data: {accessToken, refreshToken, userType},

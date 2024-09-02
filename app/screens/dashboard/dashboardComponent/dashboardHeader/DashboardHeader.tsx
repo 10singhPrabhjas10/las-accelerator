@@ -75,17 +75,17 @@ const DashboardHeader = () => {
             </View>
 
             <View style={styles.textContainer}>
-              <Text variant="bodyLarge">{getTranslationLabel('welcome')}</Text>
+              <Text variant="bodyLarge" style={styles.textStyle}>{getTranslationLabel('welcome')}</Text>
               <View style={styles.titleSecondContainer}>
-                <Text variant="titleLarge">{userData?.lasUserName}</Text>
+                <Text variant="titleLarge" style={styles.textStyle}>{userData?.lasUserName}</Text>
               </View>
 
-              <Text variant="bodySmall">{`${getTranslationLabel('las_id')}: ${
+              <Text variant="bodySmall" style={styles.textStyle}>{`${getTranslationLabel('las_id')}: ${
                 userData?.lasId
               }`}</Text>
             </View>
             <TouchableOpacity onPress={() => setShowLogoutModal(true)}>
-              <LogoutSvg height={24} width={24} style={styles.logo} />
+              <LogoutSvg height={24} width={24} style={styles.logo}/>
             </TouchableOpacity>
           </View>
         </Card.Content>

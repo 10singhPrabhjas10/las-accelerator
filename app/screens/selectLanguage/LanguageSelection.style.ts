@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1 / 3,
     height: 85,
     margin: 6,
-    backgroundColor: COLORS.backgroundYellow,
+    backgroundColor: COLORS.backgroundDgreen,
   },
   disabledSubCardContainer: {
     flex: 1 / 3,
@@ -55,9 +55,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 25,
   },
+  buttonText: {
+    color: COLORS.white,
+  },
   imageHeader: {
     height: getDeviceHeight(0.3),
     width: getDeviceWidth(),
+    backgroundColor:COLORS.dDarkGreen
   },
 });
 

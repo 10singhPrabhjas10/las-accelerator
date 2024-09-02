@@ -16,6 +16,7 @@ import {COLORS} from 'theme/colors';
 import {LANGUAGES} from 'utils/Constants';
 import {RootNavigationProp, RootNavigationTypes} from 'routes/RootNavigation';
 import {handleLanguageChange} from './LanguageSelection.business';
+import ScreenHeader from 'components/headers/ScreenHeader';
 
 export interface ILanguage {
   id: string;
@@ -39,17 +40,19 @@ const LanguageSelection = () => {
   const buttonTheme = {
     roundness: 1,
     colors: {
-      onSurface: COLORS.black,
+      onSurface: COLORS.white,
     },
   };
 
   return (
     <Layout hideStatusBar>
       <View style={styles.mainContainer}>
-        <Image
+        {/* <Image
           source={require('../../../assets/images/languageScreenHeader.png')}
           style={styles.imageHeader}
-        />
+        /> */}
+        <ScreenHeader  showScreenName={false}/>
+        <View style={styles.imageHeader}/>
         <View style={styles.container}>
           <Text variant="headlineMedium" style={styles.headerTitle}>
             {useLanguageSelection('choose_language').label || 'Choose Language'}
@@ -108,7 +111,9 @@ const LanguageSelection = () => {
               navigation.navigate(navigateTo as never);
             })
           }>
-          <Text variant="bodySmall">Proceed</Text>
+          <Text variant="bodySmall" style={styles.buttonText}>
+            Proceed
+          </Text>
         </Button>
       </View>
     </Layout>

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.dDarkGreen,
     padding: 16,
   },
   dotsContainer: {
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   emptyView: {width: 20},
+  buttonTextStyle: {
+    color: COLORS.white,
+  },
 });
 
 export default styles;
