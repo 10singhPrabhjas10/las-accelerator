@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   arrow: {
-    backgroundColor: COLORS.lightOrange2,
+    backgroundColor: COLORS.backgroundDgreen,
     paddingHorizontal: 12,
     paddingVertical: 10,
     borderRadius: 16,

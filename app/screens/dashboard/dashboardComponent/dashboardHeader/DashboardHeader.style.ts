@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     shadowOpacity: 0,
     backgroundColor: COLORS.dDarkGreen,
+    justifyContent: 'space-between',
   },
   header: {
     textDecorationLine: 'underline',
@@ -70,11 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: COLORS.white,
   },
-  languageContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+  languageContainer: {},
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',

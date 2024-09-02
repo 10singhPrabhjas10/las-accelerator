@@ -77,8 +77,8 @@ const TabNavigator = () => {
       navigationState={{index: tabIndex, routes}}
       onIndexChange={handleTabChange}
       renderScene={renderScene}
-      barStyle={{backgroundColor: COLORS.backgroundYellow}}
-      activeIndicatorStyle={{backgroundColor: COLORS.yellow}}
+      barStyle={{backgroundColor: COLORS.backgroundDgreen}}
+      activeIndicatorStyle={{backgroundColor: COLORS.dDarkGreen}}
     />
   );
 };

@@ -13,16 +13,13 @@ const ScreenHeader = ({
 }: IScreenHeaderProps) => {
   return (
     <View style={[styles.container, headerStyle]}>
-      <View style={styles.logoContainer}>
-        <LogoSvg />
-      </View>
       {showScreenName ? (
         <>
           <IconButton
             icon="chevron-left"
             size={30}
             onPress={onBackPress}
-            iconColor={COLORS.black}
+            iconColor={COLORS.white}
           />
           <Text variant="bodyLarge" style={styles.header}>
             {header}
@@ -31,6 +28,9 @@ const ScreenHeader = ({
       ) : (
         <View style={styles.header} />
       )}
+      <View style={styles.logoContainer}>
+        <LogoSvg />
+      </View>
     </View>
   );
 };
@@ -39,7 +39,7 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center',
     paddingEnd: 16,
@@ -48,12 +48,14 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 3.84,
     shadowOpacity: 0.25,
+    paddingVertical: 10,
   },
   header: {
     flex: 1,
+    color: COLORS.white,
   },
   logoContainer: {
-    marginLeft: 24,
-    marginTop: 11,
+    // marginTop: 11,
+    marginRight: 24,
   },
 });

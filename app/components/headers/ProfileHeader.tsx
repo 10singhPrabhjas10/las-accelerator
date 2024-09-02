@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   editIcon: {
     height: 30,
     width: 30,
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.backgroundDgreen,
     borderRadius: 15,
     borderWidth: 1,
     borderColor: COLORS.white,
