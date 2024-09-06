@@ -118,15 +118,15 @@ const SecondarySales = ({
       style={styles.container}
       automaticallyAdjustKeyboardInsets={true}>
       <SalesCard
-        title={getTranslationLabel('sales_performance')}
-        leftValue={getTranslationLabel('target')}
+        title={'sales_performance'}
+        leftValue={'target'}
         rightValue="Actual"
         data={secondarySalesPerformance && secondarySalesPerformance}
       />
       <Spacer size={16} />
       <SalesCard
         title="YTD Details"
-        leftValue={getTranslationLabel('target')}
+        leftValue={'target'}
         rightValue="Actual"
         data={ytdData && ytdData}
         productDropdownRequired
@@ -139,7 +139,7 @@ const SecondarySales = ({
       <Spacer size={16} />
       <SalesCard
         title="MTD Details"
-        leftValue={getTranslationLabel('target')}
+        leftValue={'target'}
         rightValue="Actual"
         data={mtdData && mtdData}
         productDropdownRequired
@@ -151,7 +151,7 @@ const SecondarySales = ({
       />
       <Spacer size={16} />
       <SalesCard
-        title={getTranslationLabel('store_details')}
+        title={'store_details'}
         leftValue="Target Active Stores"
         rightValue="Actual Active Stores"
         data={storeData && storeData}

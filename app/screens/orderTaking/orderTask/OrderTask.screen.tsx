@@ -22,14 +22,14 @@ const OrderTaskScreen = () => {
       headerTitle={getTranslationLabel('order_taking_task')}>
       <ActionButton
         icon={<OrderIcon width={24} height={24} />}
-        title={getTranslationLabel('order_creation')}
+        title={'order creating'}
         onPress={() => {
           navigation.navigate('OrderCreation', {navigationFrom, relation});
         }}
       />
       <ActionButton
         icon={<MultipleFileIcon width={24} height={24} />}
-        title={getTranslationLabel('order_status')}
+        title={'order_status'}
         onPress={() => {
           relation === Relation.SECONDARY_CHANNEL_PARTNER ||
           relation === Relation.SECONDARY_LEAD

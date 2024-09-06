@@ -30,7 +30,11 @@ import {useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
 import EmptyContainer from 'components/emptyContainer/EmptyContainer';
 
-const OutstandingAgeingGraph = ({data}: {data: IPieChartProps[]}) => {
+const OutstandingAgeingGraph = ({
+  data = [{label: 'fdsf', value: 343434}],
+}: {
+  data: IPieChartProps[];
+}) => {
   const total = data.reduce((acc, curr) => {
     return acc + curr.value;
   }, 0);

@@ -16,7 +16,7 @@ const FilterButton = ({
       style={[CommonStyles.margin, style]}
       type={ButtonTypes.contained}
       icon={<FilterIcon />}
-      text={getTranslationLabel('filter')}
+      text={'filter'}
       onPress={onPress}
       isDisabled={isDisabled}
     />

@@ -55,8 +55,8 @@ const SalesCard = ({
           <Spacer size={20} />
           <DropDown
             list={productDropdownData ?? []}
-            label={getTranslationLabel('product_category')}
-            placeholder={getTranslationLabel('select_category')}
+            label={'product_category'}
+            placeholder={'select_category'}
             isRequired
             value={productCategory}
             visible={showDropdown}

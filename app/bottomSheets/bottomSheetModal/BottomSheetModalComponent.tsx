@@ -82,7 +82,7 @@ const BottomSheetModalComponent = forwardRef<
         enablePanDownToClose={!isFilter}>
         {isFilter && (
           <View style={styles.headerContainer}>
-            <Text variant="titleLarge">{getTranslationLabel('filters  ')}</Text>
+            <Text variant="titleLarge">{'filters  '}</Text>
             <CloseIcon
               height={20}
               width={20}

@@ -24,6 +24,7 @@ presets: ['module:metro-react-native-babel-preset'],
         ],
         root: ['./app'],
         alias: {
+          '@': './app',
           '@components': './app/components',
           '@scenes': './app/screens',
           '@store': './app/store',

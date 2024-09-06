@@ -11,7 +11,12 @@ import CommonStyles from 'utils/commonStyle';
 const KeyContacts = () => {
   const [keyContactDetails, setKeyContactDetails] = useState<
     IKeyContactResponse[]
-  >([]);
+  >([
+    {
+      name: 'avc',
+      data: [{title: 'dsfsdf', text: '2000', formatValueInRupees: true}],
+    },
+  ]);
 
   useEffect(() => {
     getKeyContactsDetails(setKeyContactDetails);

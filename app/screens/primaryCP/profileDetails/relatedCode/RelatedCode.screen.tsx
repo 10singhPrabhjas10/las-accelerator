@@ -27,9 +27,14 @@ const RelatedCode = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const [relatedCodeData, setRelatedCodeData] = useState<IRelatedCodesData[]>(
-    [],
-  );
+  const [relatedCodeData, setRelatedCodeData] = useState<IRelatedCodesData[]>([
+    {
+      code: '325435',
+      phoneNo: '534534534',
+      data: [{title: 'sdfsdf', text: '20000', formatValueInRupees: true}],
+      channelPartnerCode: '345354',
+    },
+  ]);
   const [filterData, setFilterData] = useState<IRelatedCodeFilters>({
     productDivision: [],
     relationship: [],

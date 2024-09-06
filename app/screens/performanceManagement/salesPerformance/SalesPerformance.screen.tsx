@@ -18,8 +18,12 @@ const SalesPerformance = () => {
   const lastype = userData?.lasType;
 
   const [index, setTabIndex] = useState(0);
-  const [categoryData, setCategoryData] = useState<IDropdownItem[]>([]);
-  const [channelPartnerId, setChannelPartnerId] = useState<IDropdownItem[]>([]);
+  const [categoryData, setCategoryData] = useState<IDropdownItem[]>([
+    {value: 'electronice', label: 'ak electonices'},
+  ]);
+  const [channelPartnerId, setChannelPartnerId] = useState<IDropdownItem[]>([
+    {value: 'sdfs', label: 'mfdsfs'},
+  ]);
 
   const handleChangeIndex = (tabIndex: number) => {
     setTabIndex(tabIndex);
@@ -34,12 +38,12 @@ const SalesPerformance = () => {
   }, []);
 
   return (
-    <Layout headerTitle={getTranslationLabel('sales_performance')}>
+    <Layout headerTitle={'sales_performance'}>
       <TabsProvider>
         <Tabs theme={{colors: {surface: COLORS.white}}} disableSwipe>
           {lastype !== LasType.RE && (
             <TabScreen
-              label={getTranslationLabel('primary_sales')}
+              label={'primary_sales'}
               onPress={() => handleChangeIndex(0)}>
               <PrimarySales
                 categoryData={categoryData}
@@ -49,7 +53,7 @@ const SalesPerformance = () => {
             </TabScreen>
           )}
           <TabScreen
-            label={getTranslationLabel('secondary_sales')}
+            label={'secondary_sales'}
             onPress={() => handleChangeIndex(1)}>
             <SecondarySales
               categoryData={categoryData}

@@ -35,6 +35,39 @@ export const uploadProfilePhotoResponse = {
 
 /* Response*/
 
+export const ChannelPartnerData = [
+  {
+    nameOfFirm: 'A. S. A. ASSOCIATES',
+    code: '6546363',
+    channelPartnerId: 'gdsfgsgs',
+  },
+  {
+    nameOfFirm: 'ALTIUS BUSINESS CORPORATION.',
+    code: '456456456',
+    channelPartnerId: 'dgfdfg',
+  },
+  {
+    nameOfFirm: 'PEGASUS ASSOCIATES',
+    code: '65464564',
+    channelPartnerId: 'gdfgd3453',
+  },
+  {
+    nameOfFirm: 'RAMDEV METAL MART',
+    code: '4353453',
+    channelPartnerId: 'fsdfs',
+  },
+  {
+    nameOfFirm: 'Deloitte',
+    code: '52345245',
+    channelPartnerId: 'fdsfs',
+  },
+  {
+    nameOfFirm: 'ANJALI AGENCIES',
+    code: '34525234',
+    channelPartnerId: 'fsdf',
+  },
+];
+
 export const lasProfileRes = {
   data: {
     employeeCode: '45789',

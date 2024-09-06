@@ -126,9 +126,9 @@ const OrderCreationScreen = () => {
             <OrderCard
               dropdownData={productDivisionData}
               data={ytdData}
-              title={getTranslationLabel('target_vs_achievement')}
-              leftValue={getTranslationLabel('ytd_target')}
-              rightValue={getTranslationLabel('achievement')}
+              title={'target_vs_achievement'}
+              leftValue={'ytd_target'}
+              rightValue={'achievement'}
               showFooter
               dropdownRequired={isDropdownRequired}
               setDropdownValue={setYtdDropdownValue}
@@ -136,17 +136,17 @@ const OrderCreationScreen = () => {
             <OrderCard
               dropdownData={productDivisionData}
               data={mtdData}
-              title={getTranslationLabel('mtd_target_vs_achievement')}
-              leftValue={getTranslationLabel('mtd_target')}
-              rightValue={getTranslationLabel('achievement')}
+              title={'mtd_target_vs_achievement'}
+              leftValue={'mtd_target'}
+              rightValue={'achievement'}
               showFooter
               dropdownRequired={isDropdownRequired}
               setDropdownValue={setMtdDropdownValue}
             />
             <OrderCard
-              title={getTranslationLabel('credit_limit_details')}
-              leftValue={getTranslationLabel('credit_limit_available')}
-              rightValue={getTranslationLabel('credit_limit_utilized')}
+              title={'credit_limit_details'}
+              leftValue={'credit_limit_available'}
+              rightValue={'credit_limit_utilized'}
               data={
                 [
                   {
@@ -169,7 +169,7 @@ const OrderCreationScreen = () => {
       {customerData?.isBlocked && (
         <InformationCard
           type={SnackBarEnum.ERROR}
-          description={getTranslationLabel('customer_block_message')}
+          description={'customer_block_message'}
         />
       )}
       <CustomButton
@@ -179,7 +179,7 @@ const OrderCreationScreen = () => {
             ? customerData?.isBlocked
             : false
         }
-        text={getTranslationLabel('place_order')}
+        text={'place_order'}
         onPress={() =>
           navigation.navigate('PrimaryOrderCreation', {
             navigationFrom,

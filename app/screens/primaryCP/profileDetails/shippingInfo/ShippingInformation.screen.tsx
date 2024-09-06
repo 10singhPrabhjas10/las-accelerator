@@ -12,7 +12,14 @@ import {RootNavigationProp} from 'routes/RootNavigation';
 import EmptyContainer from 'components/emptyContainer/EmptyContainer';
 
 const ShippingInformation = () => {
-  const [shippingData, setShippingData] = useState<IShippingListData[]>([]);
+  const [shippingData, setShippingData] = useState<IShippingListData[]>([
+    {
+      addressType: 'temp',
+      customerAddressCode: '345345345',
+      address: 'delhi inida',
+      customerAddressId: '5345345',
+    },
+  ]);
 
   const navigation = useNavigation<RootNavigationProp>();
 
