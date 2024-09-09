@@ -15,6 +15,7 @@ import ReactNativeBlobUtil from 'react-native-blob-util';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import Share from 'react-native-share';
 import {store} from 'store/redux/store';
+import appStringsLocal from './appStringsLocal';
 
 export const callNumber = (phone: string) => {
   let phoneNumber = phone;
@@ -522,6 +523,7 @@ export const getNotificationFilterDateDropDown = () => {
 
 export const getTranslationLabel = (key: string) => {
   const translations = store.getState().localization.translations;
+  // const translations = appStringsLocal.hi;
   const translation = translations?.find((element: any) => element.key === key);
   return translation?.label || '';
 };

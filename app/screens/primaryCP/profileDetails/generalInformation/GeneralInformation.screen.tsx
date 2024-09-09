@@ -7,7 +7,9 @@ import DataCard from 'components/dataCard/DataCard';
 import CommonStyles from 'utils/commonStyle';
 
 export const GeneralInformation = () => {
-  const [generalInfo, setGeneralInfo] = useState<IDataCard[]>([]);
+  const [generalInfo, setGeneralInfo] = useState<IDataCard[]>([
+    {title: 'Sales associate', text: '2000', formatValueInRupees: true},
+  ]);
 
   useEffect(() => {
     getGeneralInformationDetails(setGeneralInfo);

@@ -25,8 +25,8 @@ const Layout = ({
     <SafeAreaView style={styles.container}>
       <StatusBar
         animated
-        barStyle="dark-content"
-        backgroundColor={COLORS.orange}
+        barStyle="light-content"
+        backgroundColor={COLORS.dDarkGreen}
         hidden={hideStatusBar}
       />
       {headerTitle && (

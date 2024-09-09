@@ -15,7 +15,12 @@ import CommonStyles from 'utils/commonStyle';
 import {gerRelatedCodesDetails} from 'screens/primaryCP/PrimaryChannelPartner.business';
 
 const RelatedCodesCardDetails = () => {
-  const [relatedCodeData, setRelatedCodeData] = useState<IRelatedCodesData>();
+  const [relatedCodeData, setRelatedCodeData] = useState<IRelatedCodesData>({
+    code: '3435',
+    phoneNo: '5435345345',
+    channelPartnerCode: '5345345',
+    data: [{title: 'afdsa', text: '20000', formatValueInRupees: true}],
+  });
   const route =
     useRoute<RouteProp<RootNavigationTypes, 'RelatedCodesCardDetails'>>();
   const {channelPartnerCode} = route.params;

@@ -72,7 +72,9 @@ const Dashboard = () => {
     },
     {
       title: getTranslationLabel('self_management'),
-      image: <SelfManagementIcon height={24} width={24} />,
+      image: (
+        <SelfManagementIcon height={24} width={24} />
+      ),
       onPress: () => navigation.navigate('SelfManagement'),
     },
     {

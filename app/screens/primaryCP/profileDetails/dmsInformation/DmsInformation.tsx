@@ -7,7 +7,9 @@ import DataCard from 'components/dataCard/DataCard';
 import CommonStyles from 'utils/commonStyle';
 
 const DmsInformation = () => {
-  const [dmsData, setDmsData] = useState<IDataCard[]>([]);
+  const [dmsData, setDmsData] = useState<IDataCard[]>([
+    {title: 'fsdfsdf', text: '2000', formatValueInRupees: true},
+  ]);
 
   useEffect(() => {
     getDmsInformationDetails(setDmsData);

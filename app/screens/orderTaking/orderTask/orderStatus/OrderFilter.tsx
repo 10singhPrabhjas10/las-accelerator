@@ -85,7 +85,7 @@ const OrderFilter = ({
               }}
               filterData={filterData.statusFilters}
               data={statusData}
-              title={getTranslationLabel('status')}
+              title={'status'}
             />
           </>
         )}
@@ -93,7 +93,7 @@ const OrderFilter = ({
           headingStyle={CommonStyles.accordionHeadingStyle}
           titleStyle={CommonStyles.accordionTitleStyle}
           isExpanded
-          title={getTranslationLabel('date')}>
+          title={'date'}>
           <DateRange
             startDate={startDate ? startDate : dateValue?.[0]?.toString()}
             setStartDate={setStartDate}

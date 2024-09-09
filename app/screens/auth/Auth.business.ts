@@ -13,6 +13,7 @@ import {store} from 'store/redux/store';
 import {updateIsAuthenticated, updateUser} from 'store/redux/userSlice';
 import {setStorageData} from 'utils/AppStorage';
 import {handleApiError} from 'utils/CommonReduxMethods';
+import {sendOtpResponse, verifyOtpResponse} from 'utils/dummyData';
 
 export const handleGetOtp = async (
   mobileNumber: string,
@@ -24,12 +25,13 @@ export const handleGetOtp = async (
     const body = {
       mobileNumber: mobileNumber,
     };
-    const result = await NetworkRequest(POST, sendOTP(), body, {
-      headers: {
-        'skip-token': 'true',
-        Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-      },
-    });
+    // const result = await NetworkRequest(POST, sendOTP(), body, {
+    //   headers: {
+    //     'skip-token': 'true',
+    //     Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+    //   },
+    // });
+    const result = sendOtpResponse;
     if (result?.status === HttpStatusCode.CREATED) {
       onSuccess(result?.data?.resendBlockDurationSeconds);
     }
@@ -59,12 +61,13 @@ export const handleResendOtp = async (
     const body = {
       mobileNumber: mobileNumber,
     };
-    const result = await NetworkRequest(POST, sendOTP(), body, {
-      headers: {
-        'skip-token': 'true',
-        Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-      },
-    });
+    // const result = await NetworkRequest(POST, sendOTP(), body, {
+    //   headers: {
+    //     'skip-token': 'true',
+    //     Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+    //   },
+    // });
+    const result = sendOtpResponse;
 
     setResendOtpTimer(59);
     store.dispatch(
@@ -99,16 +102,18 @@ export const handleVerifyOtp = async (
 ) => {
   setIsLoading(true);
   try {
-    const body = {
-      mobileNumber: mobileNumber,
-      otp: Number(otp),
-    };
-    const result = await NetworkRequest(POST, verifyOTP(), body, {
-      headers: {
-        'skip-token': 'true',
-        Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
-      },
-    });
+    // const body = {
+    //   mobileNumber: mobileNumber,
+    //   otp: Number(otp),
+    // };
+    // const result = await NetworkRequest(POST, verifyOTP(), body, {
+    //   headers: {
+    //     'skip-token': 'true',
+    //     Authorization: `Bearer ${Config.PUBLIC_API_TOKEN}`,
+    //   },
+    // });
+
+    const result = verifyOtpResponse;
 
     const {
       data: {accessToken, refreshToken, userType},

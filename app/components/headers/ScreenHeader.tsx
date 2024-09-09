@@ -19,7 +19,7 @@ const ScreenHeader = ({
             icon="chevron-left"
             size={30}
             onPress={onBackPress}
-            iconColor={COLORS.black}
+            iconColor={COLORS.white}
           />
           <Text variant="bodyLarge" style={styles.header}>
             {header}
@@ -28,8 +28,9 @@ const ScreenHeader = ({
       ) : (
         <View style={styles.header} />
       )}
-
-      <LogoSvg />
+      <View style={styles.logoContainer}>
+        <LogoSvg />
+      </View>
     </View>
   );
 };
@@ -38,17 +39,23 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center',
     paddingEnd: 16,
-    backgroundColor: COLORS.orange,
+    backgroundColor: COLORS.dDarkGreen,
     borderBottomColor: COLORS.grey3,
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 3.84,
     shadowOpacity: 0.25,
+    paddingVertical: 10,
   },
   header: {
     flex: 1,
+    color: COLORS.white,
+  },
+  logoContainer: {
+    // marginTop: 11,
+    marginRight: 24,
   },
 });

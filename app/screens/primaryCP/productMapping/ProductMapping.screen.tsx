@@ -20,7 +20,23 @@ const ProductsMapping = () => {
   );
   const [totalPages, setTotalPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
-  const [productData, setProductData] = useState<IProductMappingResponse[]>([]);
+  const [productData, setProductData] = useState<IProductMappingResponse[]>([
+    {
+      categoryId: '32423423',
+      channelPartnerGroup: 'fdsfsdf',
+      categoryName: 'electonics',
+    },
+    {
+      categoryId: '32423423',
+      channelPartnerGroup: 'fdsfsdf',
+      categoryName: 'electonics',
+    },
+    {
+      categoryId: '32423423',
+      channelPartnerGroup: 'fdsfsdf',
+      categoryName: 'electonics',
+    },
+  ]);
 
   const getProductMapping = useCallback(() => {
     const requestBody: IProductMappingRequestBody = {

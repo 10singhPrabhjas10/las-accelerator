@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   cardBackground: {
-    backgroundColor: COLORS.orange,
+    backgroundColor: COLORS.dDarkGreen,
     borderRadius: 0,
     elevation: 0,
     shadowOpacity: 0,
@@ -62,22 +62,23 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 0,
     shadowOpacity: 0,
-    backgroundColor: COLORS.orange,
+    backgroundColor: COLORS.dDarkGreen,
+    justifyContent: 'space-between',
   },
   header: {
     textDecorationLine: 'underline',
     paddingHorizontal: 10,
     fontWeight: '400',
+    color: COLORS.white,
   },
-  languageContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+  languageContainer: {},
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginStart: 10,
+  },
+  textStyle: {
+    color: COLORS.white,
   },
 });
 

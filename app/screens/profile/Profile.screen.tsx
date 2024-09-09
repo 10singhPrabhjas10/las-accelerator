@@ -23,6 +23,7 @@ import {Text} from 'react-native-paper';
 import Config from 'react-native-config';
 import Spacer from 'components/spacer';
 import DeviceInfo from 'react-native-device-info';
+import { COLORS } from '../../theme/colors';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
@@ -32,6 +33,8 @@ const ProfileScreen = () => {
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+
+  console.log('----ProfileData--', profileData);
 
   useEffect(() => {
     getProfileData(setProfileData);
@@ -157,6 +160,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginHorizontal: 4,
     marginTop: 15,
+    borderColor: COLORS.dDarkGreen
   },
 });
 export default ProfileScreen;

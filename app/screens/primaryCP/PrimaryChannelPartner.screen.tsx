@@ -181,7 +181,7 @@ const PrimaryChannelPartner = () => {
       headerTitle={'Primary Channel Partner'}
       style={CommonStyles.padding16}>
       <FlatList
-        data={filteredTiles}
+        data={menuItems}
         renderItem={({item}) => (
           <ActionButton
             icon={item.icon}

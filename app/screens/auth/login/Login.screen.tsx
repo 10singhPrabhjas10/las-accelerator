@@ -11,6 +11,7 @@ import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {AuthNavigationProp} from 'routes/AuthNavigator';
 import {handleGetOtp} from '../Auth.business';
 import CustomButton from 'components/button/CustomButton';
+import ScreenHeader from 'components/headers/ScreenHeader';
 
 //Styles, Constants and interfaces
 import styles from './Login.style';
@@ -45,27 +46,29 @@ const Login = () => {
   const warningIcon = () => <WarningSvg height={20} width={20} />;
 
   const handleOtpSubmit = () => {
-    // handleGetOtp(
-    //   mobileNumber,
-    //   setIsLoading,
-    //   (resendBlockDurationSeconds: number) =>
-    //     navigation.navigate('OtpVerification', {
-    //       mobileNumber: mobileNumber,
-    //       resendBlockDurationSeconds: resendBlockDurationSeconds,
-    //     }),
-    // );
-    navigation.navigate('OtpVerification', {
-      mobileNumber: mobileNumber,
-      resendBlockDurationSeconds: 1000,
-    });
+    handleGetOtp(
+      mobileNumber,
+      setIsLoading,
+      (resendBlockDurationSeconds: number) =>
+        navigation.navigate('OtpVerification', {
+          mobileNumber: mobileNumber,
+          resendBlockDurationSeconds: resendBlockDurationSeconds,
+        }),
+    );
+    // navigation.navigate('OtpVerification', {
+    //   mobileNumber: mobileNumber,
+    //   resendBlockDurationSeconds: 1000,
+    // });
   };
 
   return (
     <Layout isScrollable hideStatusBar>
-      <Image
+      {/* <Image
         source={require('../../../../assets/images/loginHeader.png')}
         style={styles.imageHeader}
-      />
+      /> */}
+      <ScreenHeader showScreenName={false} />
+      <View style={styles.imageHeader} />
       <View style={styles.bodyContainer}>
         <Text variant="headlineSmall">
           {getTranslationLabel('enter_mobile_num')}
@@ -116,12 +119,12 @@ const Login = () => {
         style={styles.button}
         text={getTranslationLabel('get_otp')}
         loading={isLoading}
-        isDisabled={
-          isLoading ||
-          !termsAccepted ||
-          mobileNumber.length !== 10 ||
-          errorMsg.length !== 0
-        }
+        // isDisabled={
+        //   isLoading ||
+        //   !termsAccepted ||
+        //   mobileNumber.length !== 10 ||
+        //   errorMsg.length !== 0
+        // }
         onPress={handleOtpSubmit}
       />
       <ContactFooter />

@@ -87,15 +87,15 @@ const PrimarySales = ({
       style={styles.container}
       automaticallyAdjustKeyboardInsets={true}>
       <SalesCard
-        title={getTranslationLabel('sales_performance')}
-        leftValue={getTranslationLabel('target')}
+        title={'sales_performance'}
+        leftValue={'target'}
         rightValue="Actual"
         data={salesPerformance && salesPerformance}
       />
       <Spacer size={16} />
       <SalesCard
         title="YTD Details"
-        leftValue={getTranslationLabel('target')}
+        leftValue={'target'}
         rightValue="Actual"
         data={ytdData && ytdData}
         productDropdownRequired
@@ -108,7 +108,7 @@ const PrimarySales = ({
       <Spacer size={16} />
       <SalesCard
         title="MTD Details"
-        leftValue={getTranslationLabel('target')}
+        leftValue={'target'}
         rightValue="Actual"
         data={mtdData && mtdData}
         productDropdownRequired

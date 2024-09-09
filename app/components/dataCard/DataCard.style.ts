@@ -18,5 +18,8 @@ const styles = StyleSheet.create({
     color: COLORS.grey2,
     paddingBottom: 15,
   },
+  buttonStyle: {
+    borderColor: COLORS.dDarkGreen,
+  },
 });
 export default styles;

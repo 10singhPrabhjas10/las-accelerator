@@ -29,7 +29,8 @@ const theme = {
   myOwnProperty: true,
   colors: {
     ...DefaultTheme.colors,
-    primary: COLORS.yellow,
+    // primary: COLORS.yellow,
+    primary: COLORS.dgreen,
     onPrimary: COLORS.black,
     primaryContainer: COLORS.lightYellow,
     onPrimaryContainer: COLORS.darkYellow,

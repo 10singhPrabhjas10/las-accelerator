@@ -48,7 +48,14 @@ const OrderStatusScreen = () => {
   const isPrimaryCP = relation === Relation.PRIMARY_CHANNEL_PARTNER;
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const [orderData, setOrderData] = useState<ITransformedOrderStatus[]>([]);
+  const [orderData, setOrderData] = useState<ITransformedOrderStatus[]>([
+    {
+      id: '53453453',
+      name: 'avc',
+      invoiceNo: '234234',
+      data: [{title: 'mrn', text: 'ksjdlkfsldjf'}],
+    },
+  ]);
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isFilterApplied, setIsFilterApplied] = useState(true);
@@ -116,7 +123,7 @@ const OrderStatusScreen = () => {
   };
 
   return (
-    <Layout headerTitle={getTranslationLabel('primary_order_fulfillment')}>
+    <Layout headerTitle={'primary_order_fulfillment'}>
       <FlatList
         data={orderData}
         showsVerticalScrollIndicator={false}
@@ -138,9 +145,7 @@ const OrderStatusScreen = () => {
                     style={styles.image}
                   />
                   <View>
-                    <Text variant="labelLarge">
-                      {getTranslationLabel('order_invoice')}
-                    </Text>
+                    <Text variant="labelLarge">{'order_invoice'}</Text>
                   </View>
                 </TouchableOpacity>
               )
@@ -159,9 +164,7 @@ const OrderStatusScreen = () => {
         onEndReachedThreshold={0.7}
         style={CommonStyles.flatListMargin}
         ListEmptyComponent={
-          isLoading ? null : (
-            <EmptyContainer title={getTranslationLabel('no_order_data')} />
-          )
+          isLoading ? null : <EmptyContainer title={'no_order_data'} />
         }
       />
       <FilterButton onPress={() => bottomSheetModalRef.current?.present()} />

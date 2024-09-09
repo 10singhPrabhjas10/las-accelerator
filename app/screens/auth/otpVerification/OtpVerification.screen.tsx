@@ -11,6 +11,7 @@ import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {AuthNavigationTypes} from 'routes/AuthNavigator';
 import {handleResendOtp, handleVerifyOtp} from '../Auth.business';
 import CustomButton from 'components/button/CustomButton';
+import ScreenHeader from 'components/headers/ScreenHeader';
 
 //Styles, Constants and interfaces
 import {COLORS} from 'theme/colors';
@@ -49,10 +50,12 @@ const OtpVerification = () => {
 
   return (
     <Layout isScrollable hideStatusBar>
-      <Image
+      {/* <Image
         source={require('../../../../assets/images/loginHeader.png')}
         style={styles.imageHeader}
-      />
+      /> */}
+      <ScreenHeader showScreenName={false} />
+      <View style={styles.imageHeader} />
       <View style={styles.bodyContainer}>
         <Text variant="headlineSmall">{getTranslationLabel('otp_verify')}</Text>
         <Text variant="bodyMedium" theme={textTheme} style={styles.otpTitle}>

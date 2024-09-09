@@ -91,6 +91,7 @@ const DataCard = ({
             icon={buttonIcon}
             onPress={onPressViewLeadDetails}
             isDisabled={buttonDisabled}
+            style={styles.buttonStyle}
           />
         </>
       )}
