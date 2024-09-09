@@ -24,13 +24,15 @@ const ScreenHeader = ({
           <Text variant="bodyLarge" style={styles.header}>
             {header}
           </Text>
+          <View style={styles.logoContainer}>
+            <LogoSvg />
+          </View>
         </>
       ) : (
-        <View style={styles.header} />
+        <View style={styles.header}>
+          <LogoSvg />
+        </View>
       )}
-      <View style={styles.logoContainer}>
-        <LogoSvg />
-      </View>
     </View>
   );
 };
@@ -39,7 +41,7 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 54,
     flexDirection: 'row',
     alignItems: 'center',
     paddingEnd: 16,
@@ -53,9 +55,9 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     color: COLORS.white,
+    marginLeft: 24,
   },
   logoContainer: {
-    // marginTop: 11,
     marginRight: 24,
   },
 });

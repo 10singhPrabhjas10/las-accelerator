@@ -5,6 +5,7 @@ import {
   PermissionsAndroid,
   PixelRatio,
   Platform,
+  ViewStyle,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -550,3 +551,15 @@ export const getTranslationDynamicLabel = (key: string) => {
 
 export const currentYearShort = moment().format('YY');
 export const currentMonthShort = moment().format('MMM');
+
+export const widthToRatio = (): number => {
+  const {width: screenWidth} = Dimensions.get('window');
+  console.log('width', screenWidth);
+  const ratio = screenWidth / 360;
+  return ratio;
+};
+export const heightToRatio = (): number => {
+  const {height: screenHeight} = Dimensions.get('window');
+  const ratio = screenHeight / 800;
+  return ratio;
+};
