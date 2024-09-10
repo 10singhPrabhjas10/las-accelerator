@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   },
   avatar: {
     height: heightToRatio() * 40,
-    width: widthToRatio() * 40,
-    borderRadius: 20,
+    width: heightToRatio() * 40,
+    borderRadius: heightToRatio() * 20,
     backgroundColor: COLORS.neutralLight,
     alignItems: 'center',
     justifyContent: 'center',
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: heightToRatio() * 14,
     lineHeight: heightToRatio() * 21,
     color: COLORS.neutralLight,
   },
   titleText: {
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: heightToRatio() * 16,
     lineHeight: heightToRatio() * 20,
     color: COLORS.neutralLight,
   },

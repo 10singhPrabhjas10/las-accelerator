@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   dropDownItemSelectedTextStyle: {
-    color: COLORS.darkYellow,
+    color: COLORS.dDarkGreen,
   },
   dropDownItemSelectedStyle: {
-    backgroundColor: COLORS.lightYellow,
+    backgroundColor: COLORS.backgroundDgreen,
   },
   titleView: {
     flexDirection: 'row',

@@ -18,5 +18,12 @@ buildscript {
         classpath('com.google.gms:google-services:4.4.2')
     }
 }
-
+allprojects {
+    repositories {
+      // ADD THIS for react-native-image-crop-picker
+      maven { url 'https://maven.google.com' }
+      // ADD THIS for react-native-image-crop-picker
+      maven { url "https://www.jitpack.io" }
+    }
+}
 apply plugin: "com.facebook.react.rootproject"
