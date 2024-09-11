@@ -26,7 +26,8 @@ import WarningSvg from './../../../../assets/icons/warning-circle.svg';
 import {ButtonTypes} from 'types/buttons';
 import CardWrapper from '@/components/card/Card';
 import HelpCard from '@/components/helpCard/HelpCard';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/AntDesign';
+import CommonStyles from '@/utils/commonStyle';
 
 //-------NEW-DESIGNS------------------------------------------------\\
 const Login = () => {
@@ -90,9 +91,9 @@ const Login = () => {
       <View style={styles.bodyContainer}>
         <CardWrapper cardStyle={styles.LoginCard}>
           <View style={styles.group}>
-            <CallIcon />
-            <Icon name="mail" />
-            <Text variant="headlineLarge">{getTranslationLabel('login')}</Text>
+            <Icon name="mobile1" size={32} color={COLORS.black} />
+            <View style={CommonStyles.padding16} />
+            <Text variant="headlineSmall">{getTranslationLabel('login')}</Text>
           </View>
           <View>
             <Text variant="titleMedium" style={styles.EnterMobile}>
@@ -106,7 +107,7 @@ const Login = () => {
             error={errorMsg}
           />
         </CardWrapper>
-
+        <View style={CommonStyles.padding16} />
         <HelpCard />
       </View>
 

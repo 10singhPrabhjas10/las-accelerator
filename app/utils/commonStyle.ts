@@ -17,6 +17,7 @@ const CommonStyles = StyleSheet.create({
   padding16: {padding: 16},
   padding12: {padding: 12},
   padding10: {padding: 10},
+  padding5: {padding: 5},
   flexOne: {flex: 1},
   flexGrow: {flexGrow: 1},
   flexRow: {flexDirection: 'row'},

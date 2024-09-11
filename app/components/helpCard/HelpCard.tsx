@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import CardWrapper from '../card/Card';
 import {TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
-import ArrowUp from '../../../assets/icons/arrowUp.svg';
-import ArrowDown from '../../../assets/icons/arrowDown.svg';
+import ArrowUp from '../../../assets/icons/bold_arrow_up.svg';
+import ArrowDown from '../../../assets/icons/bold_arrow_down.svg';
 import {getTranslationLabel} from '@/utils/commonMethods';
 import styles from './HelpCard.styles.ts';
 import SupprtAgent from '../../../assets/icons/support_agent.svg';
+import CommonStyles from '@/utils/commonStyle.ts';
 const HelpCard = () => {
   const [openHelp, setOpenHelp] = useState<boolean>(false);
 
@@ -14,7 +15,7 @@ const HelpCard = () => {
     <CardWrapper>
       <View style={styles.parent}>
         <View style={styles.Icon}>
-          <SupprtAgent />
+          <SupprtAgent width={32} height={32} />
         </View>
         <View style={styles.content}>
           <Text variant="titleLarge">{getTranslationLabel('help')}</Text>
@@ -24,7 +25,11 @@ const HelpCard = () => {
           onPress={() => {
             setOpenHelp(!openHelp);
           }}>
-          {!openHelp ? <ArrowDown /> : <ArrowUp />}
+          {!openHelp ? (
+            <ArrowDown width={32} height={32} />
+          ) : (
+            <ArrowUp width={32} height={32} />
+          )}
         </TouchableOpacity>
       </View>
       {openHelp && (
@@ -39,6 +44,7 @@ const HelpCard = () => {
               +91 9876567890
             </Text>{' '}
           </Text>
+          <View style={CommonStyles.padding5} />
           <Text variant="titleMedium">
             {getTranslationLabel('email')}{' '}
             <Text variant="titleMedium" style={styles.greenText}>

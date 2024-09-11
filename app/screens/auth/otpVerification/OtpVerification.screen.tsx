@@ -30,6 +30,7 @@ import CloseIcon from '../../../../assets/icons/closeIcon.svg';
 import ErrorIcon from '../../../../assets/icons/error.svg';
 import EmailIcon from '../../../../assets/icons/email.svg';
 import PhoneIcon from '../../../../assets/icons/phone.svg';
+import CommonStyles from '@/utils/commonStyle';
 const OtpVerification = () => {
   const route = useRoute<RouteProp<AuthNavigationTypes, 'OtpVerification'>>();
   const otpTimer = 60; // route.params?.resendBlockDurationSeconds;
@@ -164,7 +165,7 @@ const OtpVerification = () => {
             )}
           </View>
         </CardWrapper>
-
+        <View style={CommonStyles.padding16} />
         <HelpCard />
       </View>
 
@@ -178,7 +179,7 @@ const OtpVerification = () => {
         />
         <CustomButton
           style={styles.OTPButton}
-          isDisabled={otpDisabled}
+          isDisabled={otp.trim().length < 6}
           type={ButtonTypes.contained}
           text={getTranslationLabel('submit')}
           onPress={() => {
@@ -195,25 +196,27 @@ const OtpVerification = () => {
               setOtp,
             );
           }}
-          textStyle={(!otpDisabled && styles.OTPtextStyle) || {}}
+          textStyle={(!(otp.trim().length < 6) && styles.OTPtextStyle) || {}}
         />
       </View>
       <ModalComponent showModal={showModal}>
         <View style={styles.modalTopContainer}>
           <TouchableOpacity onPress={() => setShowModal(!showModal)}>
-            <CloseIcon />
+            <CloseIcon width={16} height={16} />
           </TouchableOpacity>
         </View>
         <View style={styles.modalcontainerBottom}>
           <ErrorIcon />
+          <View style={CommonStyles.padding10} />
           <Text variant="headlineSmall">
             {getTranslationLabel('otp_attempts_exhausted')}
           </Text>
           <View
             style={{
               borderWidth: 1,
+
               backgroundColor: COLORS.dividerGrey,
-              width: '90%',
+              width: '100%',
               borderColor: COLORS.dividerGrey,
               marginVertical: 10,
             }}
@@ -227,12 +230,14 @@ const OtpVerification = () => {
               +91 9876567890
             </Text>
           </View>
+          <View style={CommonStyles.padding10} />
           <View style={styles.contactGroup}>
             <EmailIcon width={24} height={24} />
             <Text variant="titleMedium" style={styles.greenText}>
               info@deloitte.com
             </Text>
           </View>
+          <View style={CommonStyles.padding10} />
         </View>
       </ModalComponent>
     </Layout>

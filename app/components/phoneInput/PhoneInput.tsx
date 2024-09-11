@@ -8,22 +8,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Text} from 'react-native-paper';
+import BoldArrowDown from '../../../assets/icons/bold_arrow_down.svg';
+import BoldArrowUp from '../../../assets/icons/bold_arrow_up.svg';
+
 interface CountryCode {
   code: string;
   dialCode: string;
 }
 
 const countryCodes: CountryCode[] = [
-  {code: 'IN', dialCode: '+91'},
-  {code: 'US', dialCode: '+1'},
-  {code: 'UK', dialCode: '+44'},
-  {code: 'CA', dialCode: '+1'},
-  {code: 'AU', dialCode: '+61'},
-  {code: 'IN', dialCode: '+91'},
-  {code: 'US', dialCode: '+1'},
-  {code: 'UK', dialCode: '+44'},
-  {code: 'CA', dialCode: '+1'},
-  {code: 'AU', dialCode: '+61'},
   {code: 'IN', dialCode: '+91'},
   {code: 'US', dialCode: '+1'},
   {code: 'UK', dialCode: '+44'},
@@ -75,9 +68,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
               {selectedCountry.dialCode}
             </Text>
           </>
-          <Text variant="labelMedium" style={styles.dropdownArrow}>
-            {isOpen ? ' ▲ ' : ' ▼ '}
-          </Text>
+          {isOpen ? <BoldArrowUp /> : <BoldArrowDown />}
         </TouchableOpacity>
         <TextInput
           style={styles.input}
@@ -126,6 +117,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: COLORS.errorRed,
+    marginTop: 5,
   },
   validInput: {
     borderColor: COLORS.dgreen,
