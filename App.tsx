@@ -18,6 +18,7 @@ import CommonStyles from './app/utils/commonStyle';
 import {AutocompleteDropdownContextProvider} from './app/components/auto-complete/AutocompleteDropdownContext';
 import {LocaleConfig} from 'react-native-calendars';
 import {getFcmToken, notificationListener} from './app/utils/firebase';
+import SplashScreen from 'react-native-splash-screen';
 
 LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort = [
   'S',
@@ -36,6 +37,8 @@ LogBox.ignoreAllLogs();
 
 let Root = function App() {
   useEffect(() => {
+    SplashScreen.hide();
+
     (async function () {
       await notifee.requestPermission();
       getFcmToken();

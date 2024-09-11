@@ -85,6 +85,140 @@ export const lasProfileRes = {
   },
 };
 
+export const performanceData = {
+  overallInsightReport: {
+    keyPerformanceIndicators: [
+      {
+        name: 'Total Sales',
+        value: '11.2 Lakhs',
+        unit: 'INR',
+      },
+      {
+        name: 'Retailer Visits',
+        value: 12,
+        unit: 'count',
+      },
+      {
+        name: 'New Retailers',
+        value: 1,
+        unit: 'count',
+      },
+      {
+        name: 'Products Sold',
+        value: 1234,
+        unit: 'count',
+      },
+    ],
+    insights: [
+      {
+        name: 'Sales Growth',
+        value: '10%',
+        unit: '%',
+      },
+      {
+        name: 'Average Order Value',
+        value: '5000',
+        unit: 'INR',
+      },
+    ],
+  },
+  salesReport: {
+    dateRange: '7/4/2024 - 7/10/2024',
+    salesGoal: '58lac',
+    salesAchived: '52lac',
+    salesData: [
+      {
+        date: 'July',
+        sales: 450000,
+      },
+      {
+        date: 'Aug',
+        sales: 678678,
+      },
+      {
+        date: 'Sept',
+        sales: 234320,
+      },
+      {
+        date: 'Oct',
+        sales: 645645,
+      },
+      {
+        date: 'Nov',
+        sales: 364345,
+      },
+      {
+        date: 'Dec',
+        sales: 654746,
+      },
+    ],
+    salesMetrics: [
+      {
+        name: 'Total Sales',
+        value: '280000',
+        unit: 'INR',
+      },
+      {
+        name: 'Average Daily Sales',
+        value: '40000',
+        unit: 'INR',
+      },
+    ],
+    productSold: {
+      returnProduct: {
+        value: '1%',
+        claims: '2%',
+      },
+    },
+    topProductSold: {
+      month: 'fab 2024',
+      topSoldProductList: [
+        {
+          productName: 'Power Distribution',
+          sale: '24000',
+          unit: 'INR',
+          salesIncreaseDecrease: '+2.5%',
+        },
+        {
+          productName: 'Energy Management Products',
+          sale: '180000',
+          unit: 'INR',
+          salesIncreaseDecrease: '+3.5%',
+        },
+        {
+          productName: 'Switches & Accessories',
+          sale: '1200000',
+          unit: 'INR',
+          salesIncreaseDecrease: '-1.5%',
+        },
+      ],
+    },
+    topRetailers: {
+      month: 'fab 2024',
+      topRetailersList: [
+        {
+          retailerName: 'Lakshi Trader',
+          retailerId: '#44334',
+        },
+        {
+          retailerName: 'HG Wells Electrical Ltd',
+          retailerId: '#4534',
+        },
+        {
+          retailerName: 'ZMT Trader Ltd',
+          retailerId: '#435345',
+        },
+      ],
+    },
+    EffectiveCoverageArea: {
+      month: 'fab 2024',
+      totalRetailers: 200,
+      uniqueBillRetailers: 82,
+      zeroBillRetailers: 112,
+    },
+  },
+};
+
 // /api/las-profile/mappedChannelPartners
 //  **Request Body**:
 // {
