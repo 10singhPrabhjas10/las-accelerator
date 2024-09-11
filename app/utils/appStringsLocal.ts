@@ -13,12 +13,37 @@ export default {
       label: 'Proceed',
     },
     {
+      key: 'submit',
+      label: 'Submit',
+    },
+    {
+      key: 'login',
+      label: 'Login',
+    },
+    {
+      key: 'invalid_please_try_again',
+      label: 'Invalid OTP. Please try again',
+    },
+    {
+      key: 'email',
+      label: 'Email:',
+    },
+    {
       key: 'enter_mobile_num',
       label: 'Enter Mobile Number',
     },
     {
       key: 'mobile_number',
       label: 'Mobile Number',
+    },
+    {
+      key: 'phone',
+      label: 'Phone:',
+    },
+
+    {
+      key: 'not_a_registered_partner_yet',
+      label: 'Not a registered partner yet?',
     },
     {
       key: 'tnc_statement',
@@ -33,12 +58,40 @@ export default {
       label: 'Resend OTP',
     },
     {
+      key: 'resend_otp_in_',
+      label: 'Resend OTP in',
+    },
+    {
       key: 'resend_otp_in',
       label: 'Resend OTP in {duration} seconds',
     },
     {
       key: 'otp_verify',
       label: 'Verify OTP',
+    },
+    {
+      key: 'verification',
+      label: 'Verification',
+    },
+    {
+      key: 'otp_sent_to',
+      label: ' OTP has been sent to',
+    },
+    {
+      key: 'six_digits',
+      label: '6 Digits',
+    },
+    {
+      key: 'mobile_number_not_registered',
+      label: 'Mobile Number not registered',
+    },
+    {
+      key: 'get_in_touch_with_support',
+      label: 'Get in touch with Support',
+    },
+    {
+      key: 'otp_attempts_exhausted',
+      label: 'OTP Attempts Exhausted',
     },
     {
       key: 'otp_sent_successfully',
@@ -127,6 +180,10 @@ export default {
     {
       key: 'notification',
       label: 'Notification',
+    },
+    {
+      key: 'help',
+      label: 'Help',
     },
     {
       key: 'helpdesk',

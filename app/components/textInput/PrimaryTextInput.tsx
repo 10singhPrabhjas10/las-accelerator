@@ -19,6 +19,7 @@ interface IPrimaryTextInput extends TextInputProps {
   rest?: any;
   subtitleText?: string;
   subTitleStyle?: TextStyle;
+  ThemeColors?: object;
 }
 
 const PrimaryTextInput = ({
@@ -33,6 +34,7 @@ const PrimaryTextInput = ({
   disabled,
   subtitleText,
   subTitleStyle,
+  ThemeColors = {},
   ...rest
 }: IPrimaryTextInput) => {
   const theme = {
@@ -40,6 +42,7 @@ const PrimaryTextInput = ({
       background: disabled ? COLORS.lightGrey2 : COLORS.white,
       primary: COLORS.blue,
       onSurface: disabled ? COLORS.grey2 : COLORS.black,
+      ...ThemeColors,
     },
   };
 
