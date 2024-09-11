@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
 import {Text} from 'react-native-paper';
 
+import {useNavigation} from '@react-navigation/native';
+
 import {Formik, FormikProps, FormikHelpers} from 'formik';
 import ImagePicker, {Image as ImageProp} from 'react-native-image-crop-picker';
 
@@ -36,6 +38,7 @@ interface FormValues {
 export const AttendanceLandingScreen: React.FC<
   AttendanceLandingScreenProps
 > = ({title = 'Gururaj Chandera'}) => {
+  const navigation = useNavigation();
   const [currentTask, setCurrentTask] = useState<number>(1);
   const [showTaskType, setShowTaskType] = useState<boolean>(false);
 
@@ -50,6 +53,7 @@ export const AttendanceLandingScreen: React.FC<
   ) => {
     console.log(values);
     helpers.setSubmitting(false);
+    navigation.goBack();
   };
   const currentDate: string = '12/01/2024';
 
@@ -125,6 +129,9 @@ export const AttendanceLandingScreen: React.FC<
                         },
                       ]}
                       containerStyle={styles.radioGroup}
+                      isVerticalButtons
+                      vrButtonContainerStyle={styles.vrButtonContainerStyle}
+                      labelStyle={styles.labelStyle}
                     />
                   </View>
                 )}
@@ -329,6 +336,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: heightToRatio() * 15,
     marginLeft: heightToRatio() * 6,
+  },
+  vrButtonContainerStyle: {
+    marginTop: heightToRatio() * 16,
+  },
+  labelStyle: {
+    marginLeft: widthToRatio() * 6,
   },
 });
 

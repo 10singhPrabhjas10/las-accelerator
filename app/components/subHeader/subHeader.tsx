@@ -19,7 +19,6 @@ const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
     }
     return '';
   };
-  console.log(heightToRatio());
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   },
   titleTextContainer: {
     flexDirection: 'column',
-    marginLeft: widthToRatio() * 6,
+    marginLeft: widthToRatio() * 16,
   },
   welcomeText: {
     fontWeight: '400',
