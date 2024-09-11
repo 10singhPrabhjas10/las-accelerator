@@ -1,3 +1,5 @@
+import {Divider} from 'react-native-paper';
+
 export const COLORS = {
   white: '#FFFFFF',
   black: '#000104',
@@ -8,6 +10,7 @@ export const COLORS = {
   grey5: '#1D1B20',
   yellow: '#FDC300',
   orange: '#F39200',
+  dividerGrey: '#C7C9C9',
   red: '#CD2A13',
   red2: '#EB4028',
   green: '#5FCD3D',
@@ -23,6 +26,8 @@ export const COLORS = {
   lightOrange3: '#FFE6C0',
   lightGreen: '#C3ECB7',
   lightRed: '#F49385',
+  errorRed: '#C33F3F',
+  transparentGreen: '#E9F3E7',
   darkYellow: '#644D00',
   darkOrange: '#5A3600',
   darkOrange2: '#8D5500',

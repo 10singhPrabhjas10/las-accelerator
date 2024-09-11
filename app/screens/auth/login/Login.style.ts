@@ -10,6 +10,15 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginTop: 15,
   },
+  group: {
+    marginBottom: 15,
+  },
+  LoginCard: {
+    zIndex: 1,
+  },
+  EnterMobile: {
+    marginBottom: 10,
+  },
   textInputText: {
     height: 50,
     textAlignVertical: 'center',
@@ -25,6 +34,28 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 20,
+  },
+  ButtonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    marginBottom: 20,
+  },
+  BackButton: {
+    borderColor: COLORS.dgreen,
+    flex: 1,
+    marginHorizontal: 20,
+    padding: 5,
+  },
+  OTPButton: {
+    flex: 1,
+    marginHorizontal: 20,
+    padding: 5,
+  },
+  BackTextStyle: {
+    color: COLORS.dgreen,
+  },
+  OTPtextStyle: {
+    color: COLORS.white,
   },
   imageHeader: {
     height: getDeviceHeight(0.3),
