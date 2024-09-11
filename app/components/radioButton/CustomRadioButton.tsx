@@ -4,6 +4,7 @@ import {RadioButton, Text} from 'react-native-paper';
 
 import {COLORS} from 'theme/colors';
 import CommonStyles from 'utils/commonStyle';
+import {widthToRatio} from '../../utils/commonMethods';
 
 interface IRadioButtonProps {
   value: string;
@@ -18,7 +19,12 @@ interface ICustomRadioButtonProps {
   data: IRadioButtonProps[];
   disabled?: boolean;
   containerStyle?: ViewStyle;
+  vrButtonStyle?: ViewStyle;
+  RadioButtonStyle?: ViewStyle;
+  vrButtonContainerStyle?: ViewStyle;
+  radioButtonContainerStyle?: ViewStyle;
   textStyle?: TextStyle;
+  labelStyle?: TextStyle;
   isVerticalButtons?: boolean;
 }
 
@@ -32,8 +38,13 @@ const CustomRadioButton = ({
   containerStyle,
   textStyle,
   isVerticalButtons = false,
+  vrButtonStyle,
+  RadioButtonStyle,
+  vrButtonContainerStyle,
+  radioButtonContainerStyle,
+  labelStyle,
 }: ICustomRadioButtonProps) => {
-  const radioButtonTheme = {colors: {primary: COLORS.darkYellow}};
+  const radioButtonTheme = {colors: {primary: COLORS.dDarkGreen}};
   const errorTheme = {colors: {onSurface: COLORS.red}};
 
   return (
@@ -52,18 +63,29 @@ const CustomRadioButton = ({
         <View
           style={
             isVerticalButtons
-              ? styles.radioButtonVerticalView
-              : styles.radioButtonView
+              ? {...styles.radioButtonVerticalView, ...vrButtonContainerStyle}
+              : {...styles.radioButtonView, ...radioButtonContainerStyle}
           }>
           {data?.length &&
             data.map((item, index) => (
-              <View style={styles.radioButton} key={index}>
+              <View
+                style={
+                  isVerticalButtons
+                    ? {
+                        ...styles.verticalRadioButton,
+                        ...vrButtonStyle,
+                      }
+                    : {...styles.radioButton, ...RadioButtonStyle}
+                }
+                key={index}>
                 <RadioButton.Android
                   theme={radioButtonTheme}
                   value={item.value}
                   disabled={disabled}
                 />
-                <Text variant="bodyMedium">{item.label}</Text>
+                <Text variant="bodyMedium" style={labelStyle}>
+                  {item.label}
+                </Text>
               </View>
             ))}
         </View>
@@ -78,11 +100,16 @@ const styles = StyleSheet.create({
   radioButtonVerticalView: {
     flexDirection: 'column',
     justifyContent: 'space-around',
+    marginLeft: widthToRatio() * -8,
   },
   radioButtonView: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  verticalRadioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   radioButton: {
     flexDirection: 'row',

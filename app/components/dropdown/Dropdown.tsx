@@ -274,7 +274,7 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     backgroundColor: isActive(_item.value)
-                      ? COLORS.lightYellow
+                      ? COLORS.backgroundDgreen
                       : COLORS.white,
                   }}
                   onPress={() => {

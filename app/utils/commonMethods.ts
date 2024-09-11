@@ -5,8 +5,11 @@ import {
   PermissionsAndroid,
   PixelRatio,
   Platform,
+  ViewStyle,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+
+import ImagePicker, {Image} from 'react-native-image-crop-picker';
 
 import {INDIAN_MOBILE_REGEX} from './Constants';
 import {DateFormats} from 'constants/dateFormat';
@@ -88,7 +91,7 @@ export const getCameraPermission = async () => {
     } else {
       console.log('Camera permission denied');
 
-      return '';
+      return 'Camera permission denied';
     }
   } catch (err) {
     console.warn(err);
@@ -550,3 +553,47 @@ export const getTranslationDynamicLabel = (key: string) => {
 
 export const currentYearShort = moment().format('YY');
 export const currentMonthShort = moment().format('MMM');
+
+export const widthToRatio = (): number => {
+  const {width: screenWidth} = Dimensions.get('window');
+  const ratio = screenWidth / 360;
+  return ratio;
+};
+export const heightToRatio = (): number => {
+  const {height: screenHeight} = Dimensions.get('window');
+  const ratio = screenHeight / 800;
+  return ratio;
+};
+
+export const pickFromCamera = (isCropImage: boolean) => {
+  ImagePicker.openCamera({
+    width: 300,
+    mediaType: 'photo',
+    height: 300,
+    cropping: isCropImage,
+    includeBase64: true,
+    compressImageQuality: 0.7,
+    includeExif: true,
+  })
+    .then((image: Image) => {
+      console.log('imageCamera', image);
+      return image;
+    })
+    .catch(e => console.log(e));
+};
+
+export const pickFromGallery = () => {
+  ImagePicker.openPicker({
+    width: 300,
+    height: 300,
+    multiple: false,
+    cropping: true,
+    includeBase64: true,
+    compressImageQuality: 0.7,
+    includeExif: true,
+  })
+    .then((image: Image) => {
+      return image;
+    })
+    .catch(e => console.log(e));
+};
