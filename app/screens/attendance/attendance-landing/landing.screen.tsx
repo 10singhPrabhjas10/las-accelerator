@@ -102,8 +102,8 @@ export const AttendanceLandingScreen: React.FC<
             <SubHeader title={title}>
               <View style={styles.headingContainer}>
                 <CalendarSvg
-                  width={heightToRatio() * 25}
-                  height={heightToRatio() * 25}
+                  width={heightToRatio(25)}
+                  height={heightToRatio(25)}
                 />
                 <Text style={styles.salesTextStyle}>Sales Operations</Text>
               </View>
@@ -191,8 +191,8 @@ export const AttendanceLandingScreen: React.FC<
                           activeOpacity={0.8}
                           onPress={() => takeSelfie(setFieldValue)}>
                           <CameraSvg
-                            width={widthToRatio() * 20}
-                            height={heightToRatio() * 18}
+                            width={widthToRatio(20)}
+                            height={heightToRatio(18)}
                           />
                           <Text style={styles.cameraTextStyle}>
                             Open Camera
@@ -206,8 +206,8 @@ export const AttendanceLandingScreen: React.FC<
                         activeOpacity={0.8}
                         onPress={() => takeSelfie(setFieldValue)}>
                         <CameraSvg
-                          width={widthToRatio() * 20}
-                          height={heightToRatio() * 18}
+                          width={widthToRatio(20)}
+                          height={heightToRatio(18)}
                         />
                         <Text style={styles.retakeTextStyle}>
                           Retake Picture
@@ -248,42 +248,42 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: heightToRatio() * 16,
+    marginBottom: heightToRatio(16),
   },
   headingTextStyle: {
-    fontSize: heightToRatio() * 20,
+    fontSize: heightToRatio(20),
     fontWeight: '700',
   },
   salesTextStyle: {
     color: COLORS.dDarkGreen,
-    fontSize: heightToRatio() * 10,
+    fontSize: heightToRatio(10),
     fontWeight: '400',
-    lineHeight: heightToRatio() * 12.5,
+    lineHeight: heightToRatio(12.5),
     textAlignVertical: 'center',
     backgroundColor: COLORS.neutralLight,
-    paddingHorizontal: widthToRatio() * 8,
-    paddingVertical: heightToRatio() * 8,
+    paddingHorizontal: widthToRatio(8),
+    paddingVertical: heightToRatio(8),
   },
   dateTextStyle: {
-    fontSize: heightToRatio() * 14,
+    fontSize: heightToRatio(14),
     fontWeight: '500',
-    lineHeight: heightToRatio() * 17.5,
-    marginTop: heightToRatio() * 8,
+    lineHeight: heightToRatio(17.5),
+    marginTop: heightToRatio(8),
   },
   taskContainer: {
-    marginTop: heightToRatio() * 24,
+    marginTop: heightToRatio(24),
   },
   taskTextStyle: {
-    fontSize: heightToRatio() * 14,
+    fontSize: heightToRatio(14),
     fontWeight: '500',
-    lineHeight: heightToRatio() * 17.5,
+    lineHeight: heightToRatio(17.5),
   },
   asterik: {
     color: COLORS.red,
   },
   button: {
-    marginHorizontal: widthToRatio() * 20,
-    marginBottom: heightToRatio() * 12,
+    marginHorizontal: widthToRatio(20),
+    marginBottom: heightToRatio(12),
   },
   radioGroup: {
     alignItems: 'flex-start',
@@ -291,20 +291,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   selfieDirection: {
-    fontSize: heightToRatio() * 12,
+    fontSize: heightToRatio(12),
     fontWeight: '400',
-    lineHeight: heightToRatio() * 18,
+    lineHeight: heightToRatio(18),
     color: COLORS.greyText,
-    left: widthToRatio() * 16,
-    marginBottom: heightToRatio() * 8,
+    left: widthToRatio(16),
+    marginBottom: heightToRatio(8),
   },
   selfieContainer: {
-    height: heightToRatio() * 107,
-    width: widthToRatio() * 280,
+    height: heightToRatio(107),
+    width: widthToRatio(280),
     borderWidth: 1,
     borderStyle: 'dashed',
     borderColor: COLORS.greyText,
-    borderRadius: heightToRatio() * 8,
+    borderRadius: heightToRatio(8),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -314,34 +314,34 @@ const styles = StyleSheet.create({
   },
   cameraTextStyle: {
     color: COLORS.dgreen,
-    fontSize: heightToRatio() * 12,
+    fontSize: heightToRatio(12),
     fontWeight: '500',
-    lineHeight: heightToRatio() * 15,
-    marginTop: heightToRatio() * 6,
+    lineHeight: heightToRatio(15),
+    marginTop: heightToRatio(6),
   },
   imageStyle: {
-    width: widthToRatio() * 80,
-    height: heightToRatio() * 80,
-    borderRadius: heightToRatio() * 11,
+    width: widthToRatio(80),
+    height: heightToRatio(80),
+    borderRadius: heightToRatio(11),
   },
   retakePictureContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: heightToRatio() * 6,
+    marginTop: heightToRatio(6),
   },
   retakeTextStyle: {
     color: COLORS.dgreen,
-    fontSize: heightToRatio() * 12,
+    fontSize: heightToRatio(12),
     fontWeight: '500',
-    lineHeight: heightToRatio() * 15,
-    marginLeft: heightToRatio() * 6,
+    lineHeight: heightToRatio(15),
+    marginLeft: heightToRatio(6),
   },
   vrButtonContainerStyle: {
-    marginTop: heightToRatio() * 16,
+    marginTop: heightToRatio(16),
   },
   labelStyle: {
-    marginLeft: widthToRatio() * 6,
+    marginLeft: widthToRatio(6),
   },
 });
 

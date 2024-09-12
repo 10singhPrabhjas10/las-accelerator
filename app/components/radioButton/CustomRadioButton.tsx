@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   radioButtonVerticalView: {
     flexDirection: 'column',
     justifyContent: 'space-around',
-    marginLeft: widthToRatio() * -8,
+    marginLeft: widthToRatio(-8),
   },
   radioButtonView: {
     flexDirection: 'row',
