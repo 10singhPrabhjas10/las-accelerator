@@ -1,7 +1,7 @@
 // External Dependencies
 import React, {useState} from 'react';
 import {View, Image, FlatList} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card, Text} from 'react-native-paper';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 
@@ -16,7 +16,12 @@ import {COLORS} from 'theme/colors';
 import {LANGUAGES} from 'utils/Constants';
 import {RootNavigationProp, RootNavigationTypes} from 'routes/RootNavigation';
 import {handleLanguageChange} from './LanguageSelection.business';
-import ScreenHeader from 'components/headers/ScreenHeader';
+import SubHeader from '@/components/subHeader/subHeader';
+import ScreenHeader from '@/components/headers/ScreenHeader';
+import CustomButton from '@/components/button/CustomButton';
+import {ButtonTypes} from '@/types/buttons';
+import {getDeviceHeight} from '@/utils/commonMethods';
+import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 
 export interface ILanguage {
   id: string;
@@ -30,6 +35,8 @@ const LanguageSelection = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<ILanguage>(
     activeLanguage ?? LANGUAGES[0],
   );
+  const dispatch = useDispatch();
+
   const isFirstTimeAppLaunch = useSelector(
     (state: RootState) => state.user.isFirstTimeAppLaunch,
   );
@@ -45,14 +52,9 @@ const LanguageSelection = () => {
   };
 
   return (
-    <Layout hideStatusBar>
-      <View style={styles.mainContainer}>
-        {/* <Image
-          source={require('../../../assets/images/languageScreenHeader.png')}
-          style={styles.imageHeader}
-        /> */}
-        <ScreenHeader  showScreenName={false}/>
-        <View style={styles.imageHeader}/>
+    <Layout>
+      <ScreenHeader showScreenName={false} />
+      <SubHeader>
         <View style={styles.container}>
           <Text variant="headlineMedium" style={styles.headerTitle}>
             {useLanguageSelection('choose_language').label || 'Choose Language'}
@@ -60,62 +62,48 @@ const LanguageSelection = () => {
           <FlatList
             data={LANGUAGES}
             keyExtractor={item => item.id}
-            numColumns={3}
-            style={styles.flatlist}
-            renderItem={({item, index}) =>
-              item?.id ? (
-                <Card
-                  // style={
-                  //   index >= 1
-                  //     ? styles.disabledSubCardContainer
-                  //     : selectedLanguage.id === item.id
-                  //     ? styles.activeSubCardContainer
-                  //     : styles.subCardContainer
-                  // }
-                  // disabled={index >= 1}
-                  style={
-                    selectedLanguage.id === item.id
-                      ? styles.activeSubCardContainer
-                      : styles.subCardContainer
-                  }
-                  onPress={() => {
-                    console.log('SubCard clicked');
-                    setSelectedLanguage(item);
-                  }}>
-                  <Card.Content style={styles.cardContent}>
-                    <Image source={item.icon} />
-                    <Text
-                      variant="bodySmall"
-                      ellipsizeMode="tail"
-                      numberOfLines={1}>
-                      {item.title}
-                    </Text>
-                  </Card.Content>
-                </Card>
-              ) : (
-                <View style={styles.subCardContainer} />
-              )
-            }
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <Card
+                style={
+                  selectedLanguage.id === item.id
+                    ? styles.activeSubCardContainer
+                    : styles.subCardContainer
+                }
+                onPress={() => {
+                  console.log('SubCard clicked');
+                  setSelectedLanguage(item);
+                }}>
+                <Card.Content style={styles.cardContent}>
+                  <Image source={item.icon} />
+                  <Text
+                    variant="bodySmall"
+                    ellipsizeMode="tail"
+                    numberOfLines={1}>
+                    {item.title}
+                  </Text>
+                </Card.Content>
+              </Card>
+            )}
           />
         </View>
-        <Button
-          mode="contained"
-          theme={buttonTheme}
-          style={styles.button}
-          onPress={() =>
-            handleLanguageChange(selectedLanguage, () => {
-              const navigateTo = route?.params?.navigateTo
-                ? route?.params?.navigateTo
-                : 'OnboardingScreens';
+      </SubHeader>
+      <CustomButton
+        type={ButtonTypes.contained}
+        style={styles.button}
+        text={'Proceed'}
+        // loading={isLoading}
+        onPress={() => {
+          dispatch(updateIsFirstTimeAppLaunch(false));
+          // handleLanguageChange(selectedLanguage, () => {
+          //   const navigateTo = route?.params?.navigateTo
+          //     ? route?.params?.navigateTo
+          //     : 'OnboardingScreens';
 
-              navigation.navigate(navigateTo as never);
-            })
-          }>
-          <Text variant="bodySmall" style={styles.buttonText}>
-            Proceed
-          </Text>
-        </Button>
-      </View>
+          //   navigation.navigate(navigateTo as never);
+          // });
+        }}
+      />
     </Layout>
   );
 };

@@ -14,7 +14,7 @@ const CustomButton = ({
   isDisabled = false,
   textCustomTheme,
   loading = false,
-  textStyle,
+  textStyle = {color: 'white'},
   contentStyle,
 }: ICustomButtonProps) => {
   const containedButtonTheme = {

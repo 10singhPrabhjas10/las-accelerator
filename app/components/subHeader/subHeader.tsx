@@ -1,15 +1,28 @@
 import React, {ReactNode} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ViewProps, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper'; // Assuming you're using react-native-paper for the Card component
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
-import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
+import {
+  widthToRatio,
+  heightToRatio,
+  getDeviceHeight,
+} from '../../utils/commonMethods';
 
 interface HeaderProps {
   title?: string;
+  showLogo?: boolean;
   children: ReactNode;
+  shouldShowCardView?: boolean;
+  customParentstyles?: ViewStyle;
 }
 
-const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
+const SubHeader: React.FC<HeaderProps> = ({
+  showLogo = true,
+  title,
+  customParentstyles,
+  shouldShowCardView = true,
+  children,
+}) => {
   const initials = (): string => {
     if (title) {
       return title
@@ -20,27 +33,32 @@ const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
     return '';
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        {title && (
-          <View style={styles.titleContainer}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{initials()}</Text>
-            </View>
-            <View style={styles.titleTextContainer}>
-              <Text style={styles.welcomeText}>Welcome</Text>
-              <Text style={styles.titleText}>{title}</Text>
-            </View>
+    <View style={[styles.container, customParentstyles]}>
+      <View style={styles.headerContainer} />
+      {title && (
+        <View style={styles.titleContainer}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{initials()}</Text>
           </View>
-        )}
-      </View>
-      <Card
-        style={[
-          styles.card,
-          {top: title ? heightToRatio(75) : heightToRatio(6)},
-        ]}>
-        {children}
-      </Card>
+          <View style={styles.titleTextContainer}>
+            <Text style={styles.welcomeText}>Welcome</Text>
+            <Text style={styles.titleText}>{title}</Text>
+          </View>
+        </View>
+      )}
+      {shouldShowCardView ? (
+        <Card
+          style={[
+            styles.card,
+            {
+              top: title || showLogo ? heightToRatio(75) : heightToRatio(6),
+            },
+          ]}>
+          {children}
+        </Card>
+      ) : (
+        <>{children}</>
+      )}
     </View>
   );
 };
@@ -50,9 +68,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    height: heightToRatio(145),
+    height: getDeviceHeight(0.3),
     backgroundColor: COLORS.dDarkGreen,
   },
+
   titleContainer: {
     marginLeft: widthToRatio(24),
     flexDirection: 'row',

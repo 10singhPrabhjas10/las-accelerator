@@ -226,12 +226,16 @@ export default {
       label: 'View mapped retailers',
     },
     {
-      key: '',
-      label: '',
+      key: 'onboardingDescription',
+      label: 'Manage all your daily Sales Operations\nat one place',
     },
     {
-      key: '',
-      label: '',
+      key: 'welcome',
+      label: 'Welcome',
+    },
+    {
+      key: 'letsBegin',
+      label: 'Let’s Begin',
     },
   ],
   hi: [

@@ -5,7 +5,6 @@ import {getDeviceHeight, getDeviceWidth} from 'utils/commonMethods';
 const styles = StyleSheet.create({
   bodyContainer: {
     flex: 1,
-    padding: 20,
   },
   IconContainer: {
     marginBottom: 10,
@@ -13,12 +12,15 @@ const styles = StyleSheet.create({
   OTPbanner: {
     backgroundColor: COLORS.transparentGreen,
     borderRadius: 10,
+    flex: 1,
     padding: 5,
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   OTPBannerText: {
     color: COLORS.dgreen,
+    paddingHorizontal: 1,
+    paddingVertical: 5,
   },
   group: {
     marginBottom: 15,

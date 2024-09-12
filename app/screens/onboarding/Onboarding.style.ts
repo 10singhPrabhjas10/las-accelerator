@@ -1,3 +1,4 @@
+import {getDeviceHeight, getDeviceWidth} from '@/utils/commonMethods';
 import {StyleSheet} from 'react-native';
 import {COLORS} from 'theme/colors';
 
@@ -8,10 +9,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
+
+  onboardingContainer: {
+    backgroundColor: COLORS.dDarkGreen,
+    // flex: 1,
+    height: getDeviceHeight(0.6),
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: getDeviceWidth(1),
+  },
+  contentView: {
+    backgroundColor: '#EEF7F9',
+    flex: 1,
+  },
+  button: {
+    marginHorizontal: 20,
+    marginBottom: 25,
+  },
   image: {
     flex: 1 / 2,
     resizeMode: 'contain',
     aspectRatio: 1,
+  },
+  buttonText: {
+    color: COLORS.white,
   },
 
   textDescription: {
@@ -35,7 +56,7 @@ const styles = StyleSheet.create({
     height: 12,
     width: 12,
     borderRadius: 10,
-    backgroundColor: COLORS.darkYellow,
+    backgroundColor: COLORS.green,
   },
   inActiveDot: {
     height: 8,
