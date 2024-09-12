@@ -37,7 +37,7 @@ const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
       <Card
         style={[
           styles.card,
-          {top: title ? heightToRatio() * 75 : heightToRatio() * 6},
+          {top: title ? heightToRatio(75) : heightToRatio(6)},
         ]}>
         {children}
       </Card>
@@ -50,18 +50,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    height: heightToRatio() * 145,
+    height: heightToRatio(145),
     backgroundColor: COLORS.dDarkGreen,
   },
   titleContainer: {
-    marginLeft: widthToRatio() * 24,
+    marginLeft: widthToRatio(24),
     flexDirection: 'row',
-    marginTop: heightToRatio() * 6,
+    marginTop: heightToRatio(6),
   },
   avatar: {
-    height: heightToRatio() * 40,
-    width: heightToRatio() * 40,
-    borderRadius: heightToRatio() * 20,
+    height: heightToRatio(40),
+    width: heightToRatio(40),
+    borderRadius: heightToRatio(20),
     backgroundColor: COLORS.neutralLight,
     alignItems: 'center',
     justifyContent: 'center',
@@ -71,27 +71,27 @@ const styles = StyleSheet.create({
   },
   titleTextContainer: {
     flexDirection: 'column',
-    marginLeft: widthToRatio() * 16,
+    marginLeft: widthToRatio(16),
   },
   welcomeText: {
     fontWeight: '400',
-    fontSize: heightToRatio() * 14,
-    lineHeight: heightToRatio() * 21,
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(21),
     color: COLORS.neutralLight,
   },
   titleText: {
     fontWeight: '500',
-    fontSize: heightToRatio() * 16,
-    lineHeight: heightToRatio() * 20,
+    fontSize: heightToRatio(16),
+    lineHeight: heightToRatio(20),
     color: COLORS.neutralLight,
   },
   card: {
     flex: 1,
-    width: widthToRatio() * 312,
-    left: widthToRatio() * 24,
-    right: widthToRatio() * 24,
-    paddingHorizontal: widthToRatio() * 16,
-    paddingVertical: heightToRatio() * 16,
+    width: widthToRatio(312),
+    left: widthToRatio(24),
+    right: widthToRatio(24),
+    paddingHorizontal: widthToRatio(16),
+    paddingVertical: heightToRatio(16),
     position: 'absolute',
     backgroundColor: COLORS.white,
     top: 0,

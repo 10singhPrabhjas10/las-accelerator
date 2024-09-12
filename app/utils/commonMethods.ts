@@ -554,15 +554,15 @@ export const getTranslationDynamicLabel = (key: string) => {
 export const currentYearShort = moment().format('YY');
 export const currentMonthShort = moment().format('MMM');
 
-export const widthToRatio = (): number => {
+export const widthToRatio = (pixel: number): number => {
   const {width: screenWidth} = Dimensions.get('window');
   const ratio = screenWidth / 360;
-  return ratio;
+  return ratio * pixel;
 };
-export const heightToRatio = (): number => {
+export const heightToRatio = (pixel: number): number => {
   const {height: screenHeight} = Dimensions.get('window');
   const ratio = screenHeight / 800;
-  return ratio;
+  return ratio * pixel;
 };
 
 export const pickFromCamera = (isCropImage: boolean) => {
