@@ -88,6 +88,26 @@ const OtpVerification = () => {
     setOTPattempts(attempts => attempts + 1);
   };
 
+  const verifyOtpHandler = async (): Promise<void> => {
+    try {
+      if (otp.length < 6) {
+        setErrorMsg(getTranslationLabel('invalid_please_try_again'));
+        return;
+      }
+
+      await handleVerifyOtp(
+        mobileNumber,
+        otp,
+        setIsLoading,
+        setErrorMsg,
+        setOtp,
+      );
+      navigation.navigate('attendance', {title: 'Dummy User'});
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const BackButton = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
@@ -111,16 +131,7 @@ const OtpVerification = () => {
           <Text variant="headlineSmall">
             {getTranslationLabel('otp_attempts_exhausted')}
           </Text>
-          <View
-            style={{
-              borderWidth: 1,
-
-              backgroundColor: COLORS.dividerGrey,
-              width: '100%',
-              borderColor: COLORS.dividerGrey,
-              marginVertical: 10,
-            }}
-          />
+          <View style={styles.helpTextContainer} />
           <Text variant="titleMedium">
             {getTranslationLabel('get_in_touch_with_support')}
           </Text>
@@ -147,8 +158,8 @@ const OtpVerification = () => {
     <Layout isScrollable>
       <ScreenHeader showScreenName={false} />
       <View style={[CommonStyles.rowSpaceBetweenFlex]}>
-        <>
-          <SubHeader customParentstyles={{flex: 0.4}}>
+        <View style={CommonStyles.flexOne}>
+          <SubHeader>
             <View style={styles.bodyContainer}>
               <View style={styles.group}>
                 <View style={styles.IconContainer}>
@@ -188,12 +199,7 @@ const OtpVerification = () => {
                   ) : null
                 }
               />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: '5%',
-                }}>
+              <View style={styles.resendContainer}>
                 <Text
                   onPress={!resendOtpTimer ? ResendOTP : () => {}}
                   style={!resendOtpTimer ? styles.ResendOTP : {}}
@@ -216,9 +222,10 @@ const OtpVerification = () => {
 
             {renderModal(showModal, setShowModal)}
           </SubHeader>
-        </>
-        <View style={CommonStyles.marginHorizontal24}>
-          <HelpCard />
+          <View
+            style={[CommonStyles.marginHorizontal24, CommonStyles.marginTop]}>
+            <HelpCard />
+          </View>
         </View>
         <View style={styles.ButtonContainer}>
           <CustomButton
@@ -233,20 +240,7 @@ const OtpVerification = () => {
             isDisabled={otp.trim().length < 6}
             type={ButtonTypes.contained}
             text={getTranslationLabel('submit')}
-            onPress={() => {
-              if (otp.length < 6) {
-                setErrorMsg(getTranslationLabel('invalid_please_try_again'));
-                return;
-              }
-
-              handleVerifyOtp(
-                mobileNumber,
-                otp,
-                setIsLoading,
-                setErrorMsg,
-                setOtp,
-              );
-            }}
+            onPress={verifyOtpHandler}
             textStyle={(!(otp.trim().length < 6) && styles.OTPtextStyle) || {}}
           />
         </View>

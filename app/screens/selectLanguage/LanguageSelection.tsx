@@ -22,6 +22,7 @@ import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import {getDeviceHeight} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
+import CommonStyles from '../../utils/commonStyle';
 
 export interface ILanguage {
   id: string;
@@ -54,56 +55,59 @@ const LanguageSelection = () => {
   return (
     <Layout>
       <ScreenHeader showScreenName={false} />
-      <SubHeader>
-        <View style={styles.container}>
-          <Text variant="headlineMedium" style={styles.headerTitle}>
-            {useLanguageSelection('choose_language').label || 'Choose Language'}
-          </Text>
-          <FlatList
-            data={LANGUAGES}
-            keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-              <Card
-                style={
-                  selectedLanguage.id === item.id
-                    ? styles.activeSubCardContainer
-                    : styles.subCardContainer
-                }
-                onPress={() => {
-                  console.log('SubCard clicked');
-                  setSelectedLanguage(item);
-                }}>
-                <Card.Content style={styles.cardContent}>
-                  <Image source={item.icon} />
-                  <Text
-                    variant="bodySmall"
-                    ellipsizeMode="tail"
-                    numberOfLines={1}>
-                    {item.title}
-                  </Text>
-                </Card.Content>
-              </Card>
-            )}
-          />
-        </View>
-      </SubHeader>
-      <CustomButton
-        type={ButtonTypes.contained}
-        style={styles.button}
-        text={'Proceed'}
-        // loading={isLoading}
-        onPress={() => {
-          dispatch(updateIsFirstTimeAppLaunch(false));
-          // handleLanguageChange(selectedLanguage, () => {
-          //   const navigateTo = route?.params?.navigateTo
-          //     ? route?.params?.navigateTo
-          //     : 'OnboardingScreens';
+      <View style={CommonStyles.rowSpaceBetweenFlex}>
+        <SubHeader>
+          <View style={styles.container}>
+            <Text variant="headlineMedium" style={styles.headerTitle}>
+              {useLanguageSelection('choose_language').label ||
+                'Choose Language'}
+            </Text>
+            <FlatList
+              data={LANGUAGES}
+              keyExtractor={item => item.id}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => (
+                <Card
+                  style={
+                    selectedLanguage.id === item.id
+                      ? styles.activeSubCardContainer
+                      : styles.subCardContainer
+                  }
+                  onPress={() => {
+                    console.log('SubCard clicked');
+                    setSelectedLanguage(item);
+                  }}>
+                  <Card.Content style={styles.cardContent}>
+                    <Image source={item.icon} />
+                    <Text
+                      variant="bodySmall"
+                      ellipsizeMode="tail"
+                      numberOfLines={1}>
+                      {item.title}
+                    </Text>
+                  </Card.Content>
+                </Card>
+              )}
+            />
+          </View>
+        </SubHeader>
+        <CustomButton
+          type={ButtonTypes.contained}
+          style={styles.button}
+          text={'Proceed'}
+          // loading={isLoading}
+          onPress={() => {
+            dispatch(updateIsFirstTimeAppLaunch(false));
+            // handleLanguageChange(selectedLanguage, () => {
+            //   const navigateTo = route?.params?.navigateTo
+            //     ? route?.params?.navigateTo
+            //     : 'OnboardingScreens';
 
-          //   navigation.navigate(navigateTo as never);
-          // });
-        }}
-      />
+            //   navigation.navigate(navigateTo as never);
+            // });
+          }}
+        />
+      </View>
     </Layout>
   );
 };

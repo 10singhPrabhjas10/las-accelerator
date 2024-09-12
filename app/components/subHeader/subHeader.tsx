@@ -1,23 +1,17 @@
 import React, {ReactNode} from 'react';
-import {View, Text, StyleSheet, ViewProps, ViewStyle} from 'react-native';
+import {View, Text, StyleSheet, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper'; // Assuming you're using react-native-paper for the Card component
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
-import {
-  widthToRatio,
-  heightToRatio,
-  getDeviceHeight,
-} from '../../utils/commonMethods';
+import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
 
 interface HeaderProps {
   title?: string;
-  showLogo?: boolean;
   children: ReactNode;
   shouldShowCardView?: boolean;
   customParentstyles?: ViewStyle;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
-  showLogo = true,
   title,
   customParentstyles,
   shouldShowCardView = true,
@@ -34,24 +28,25 @@ const SubHeader: React.FC<HeaderProps> = ({
   };
   return (
     <View style={[styles.container, customParentstyles]}>
-      <View style={styles.headerContainer} />
-      {title && (
-        <View style={styles.titleContainer}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{initials()}</Text>
+      <View style={styles.headerContainer}>
+        {title && (
+          <View style={styles.titleContainer}>
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{initials()}</Text>
+            </View>
+            <View style={styles.titleTextContainer}>
+              <Text style={styles.welcomeText}>Welcome</Text>
+              <Text style={styles.titleText}>{title}</Text>
+            </View>
           </View>
-          <View style={styles.titleTextContainer}>
-            <Text style={styles.welcomeText}>Welcome</Text>
-            <Text style={styles.titleText}>{title}</Text>
-          </View>
-        </View>
-      )}
+        )}
+      </View>
       {shouldShowCardView ? (
         <Card
           style={[
             styles.card,
             {
-              top: title || showLogo ? heightToRatio(75) : heightToRatio(6),
+              marginTop: title ? heightToRatio(-70) : heightToRatio(-129),
             },
           ]}>
           {children}
@@ -65,10 +60,10 @@ const SubHeader: React.FC<HeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   headerContainer: {
-    height: getDeviceHeight(0.3),
+    height: heightToRatio(145),
     backgroundColor: COLORS.dDarkGreen,
   },
 
@@ -105,16 +100,11 @@ const styles = StyleSheet.create({
     color: COLORS.neutralLight,
   },
   card: {
-    flex: 1,
     width: widthToRatio(312),
-    left: widthToRatio(24),
-    right: widthToRatio(24),
+    alignSelf: 'center',
     paddingHorizontal: widthToRatio(16),
     paddingVertical: heightToRatio(16),
-    position: 'absolute',
     backgroundColor: COLORS.white,
-    top: 0,
-    zIndex: 1,
   },
   cardText: {
     color: COLORS.neutralLight,

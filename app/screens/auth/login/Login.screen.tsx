@@ -85,10 +85,10 @@ const Login = () => {
   return (
     <Layout isScrollable>
       <ScreenHeader showScreenName={false} />
-      <KeyboardAvoidingView style={{flex: 1}}>
+      <KeyboardAvoidingView style={CommonStyles.flexOne}>
         <View style={[CommonStyles.rowSpaceBetweenFlex]}>
-          <>
-            <SubHeader customParentstyles={{flex: 0}}>
+          <View style={CommonStyles.flexOne}>
+            <SubHeader>
               <View style={styles.bodyContainer}>
                 <View style={styles.group}>
                   <Icon name="mobile1" size={32} color={COLORS.black} />
@@ -108,13 +108,13 @@ const Login = () => {
                   setCountryCode={setCountryCode}
                   error={errorMsg}
                 />
-                <View style={CommonStyles.padding16} />
               </View>
             </SubHeader>
-            <View style={CommonStyles.marginHorizontal24}>
+            <View
+              style={[CommonStyles.marginHorizontal24, CommonStyles.marginTop]}>
               <HelpCard />
             </View>
-          </>
+          </View>
           <View style={styles.ButtonContainer}>
             <CustomButton
               style={styles.BackButton}

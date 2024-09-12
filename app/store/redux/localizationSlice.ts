@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ILocalizationState, ISelectedLanguageState} from 'types/redux';
 import {LANGUAGES} from 'utils/Constants';
+import appStringsLocal from '../../utils/appStringsLocal';
 
 const initialSelectedLanguage: ISelectedLanguageState = LANGUAGES[0];
 
 const initialState: ILocalizationState = {
-  translations: [],
+  translations: appStringsLocal?.en,
   selectedLanguage: initialSelectedLanguage,
 };
 

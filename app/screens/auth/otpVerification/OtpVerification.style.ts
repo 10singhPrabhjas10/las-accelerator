@@ -107,6 +107,18 @@ const styles = StyleSheet.create({
   OTPtextStyle: {
     color: COLORS.white,
   },
+  resendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '5%',
+  },
+  helpTextContainer: {
+    borderWidth: 1,
+    backgroundColor: COLORS.dividerGrey,
+    width: '100%',
+    borderColor: COLORS.dividerGrey,
+    marginVertical: 10,
+  },
 });
 
 export default styles;
