@@ -34,10 +34,12 @@ interface IDataCardInterface {
   footer?: ReactNode;
   headerStyle?: TextStyle;
   buttonDisabled?: boolean;
+  shouldShowCardWrapper?: boolean;
 }
 
 const DataCard = ({
   data,
+  shouldShowCardWrapper = true,
   showViewDetailsButton = false,
   header = '',
   buttonIcon = null,
@@ -63,54 +65,66 @@ const DataCard = ({
 
   const expandableIcon = () => (expanded ? <ArrowUp /> : <ArrowDown />);
 
-  return (
-    <CardWrapper>
-      {header ? (
-        <Text variant="labelLarge" style={[styles.header, headerStyle]}>
-          {header}
-        </Text>
-      ) : null}
-      {body}
-      {conditionalData &&
-        conditionalData.map((content: IRowDataProps, index: number) => (
-          <RowItem
-            key={content.title}
-            keyContent={content.title}
-            value={content.text}
-            showDivider={index !== conditionalData.length - 1}
-            formatValueInRupees={content?.formatValueInRupees ?? false}
-            showExpenseStatusWithColor={content?.showStatusColor ?? false}
-          />
-        ))}
-      {showViewDetailsButton && (
-        <>
-          <Spacer size={20} />
-          <CustomButton
-            type={ButtonTypes.outline}
-            text={buttonText || getTranslationLabel('view_details')}
-            icon={buttonIcon}
-            onPress={onPressViewLeadDetails}
-            isDisabled={buttonDisabled}
-            style={styles.buttonStyle}
-          />
-        </>
-      )}
-      {showViewMoreButton ? (
-        <Button
-          mode="text"
-          textColor={COLORS.darkOrange}
-          onPress={handleExpand}
-          contentStyle={styles.buttonContentStyle}
-          icon={expandableIcon}>
-          <Text
-            theme={{colors: {onSurface: COLORS.darkOrange}}}
-            variant="bodyMedium">
-            {getTranslationLabel(expanded ? 'view_less' : 'view_more')}
+  const renderBody = () => {
+    return (
+      <>
+        {header ? (
+          <Text variant="labelLarge" style={[styles.header, headerStyle]}>
+            {header}
           </Text>
-        </Button>
-      ) : null}
-      {footer}
-    </CardWrapper>
+        ) : null}
+        {body}
+        {conditionalData &&
+          conditionalData.map((content: IRowDataProps, index: number) => (
+            <RowItem
+              key={content.title}
+              keyContent={content.title}
+              value={content.text}
+              showDivider={index !== conditionalData.length - 1}
+              formatValueInRupees={content?.formatValueInRupees ?? false}
+              showExpenseStatusWithColor={content?.showStatusColor ?? false}
+            />
+          ))}
+        {showViewDetailsButton && (
+          <>
+            <Spacer size={20} />
+            <CustomButton
+              type={ButtonTypes.outline}
+              text={buttonText || getTranslationLabel('view_details')}
+              icon={buttonIcon}
+              onPress={onPressViewLeadDetails}
+              isDisabled={buttonDisabled}
+              style={styles.buttonStyle}
+            />
+          </>
+        )}
+        {showViewMoreButton ? (
+          <Button
+            mode="text"
+            textColor={COLORS.darkOrange}
+            onPress={handleExpand}
+            contentStyle={styles.buttonContentStyle}
+            icon={expandableIcon}>
+            <Text
+              theme={{colors: {onSurface: COLORS.darkOrange}}}
+              variant="bodyMedium">
+              {getTranslationLabel(expanded ? 'view_less' : 'view_more')}
+            </Text>
+          </Button>
+        ) : null}
+        {footer}
+      </>
+    );
+  };
+
+  return (
+    <>
+      {shouldShowCardWrapper ? (
+        <CardWrapper>{renderBody()}</CardWrapper>
+      ) : (
+        renderBody()
+      )}
+    </>
   );
 };
 
