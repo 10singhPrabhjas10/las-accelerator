@@ -1,38 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import Layout from 'components/Layout';
-import ProfileHeader from 'components/headers/ProfileHeader';
 import DataCard from 'components/dataCard/DataCard';
 import {StyleSheet, View} from 'react-native';
-import CustomButton from 'components/button/CustomButton';
-import {ButtonTypes} from 'types/buttons';
-import ContactFooter from 'components/contactFooter/ContactFooter';
 import CommonStyles from 'utils/commonStyle';
-import IconRight from '../../../assets/icons/iconRight.svg';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
 import {getProfileData, uploadProfile} from './Profile.business';
-import {IPhotoProps, IProfileResponse} from './Profile.interface';
-import {convertDateToDisplay, getTranslationLabel} from 'utils/commonMethods';
-import {DateFormats} from 'constants/dateFormat';
+import {IProfileResponse} from './Profile.interface';
+import {getTranslationLabel} from 'utils/commonMethods';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
-import UploadImageBottomSheet from 'bottomSheets/uploadImageBottomSheet/UploadImageBottomSheet';
 import {updateTabIndex} from 'store/redux/modalSlice';
 import {Text} from 'react-native-paper';
-import Config from 'react-native-config';
 import Spacer from 'components/spacer';
-import DeviceInfo from 'react-native-device-info';
 import {COLORS} from '../../theme/colors';
 import ScreenHeader from '@/components/headers/ScreenHeader';
 import SubHeader from '@/components/subHeader/subHeader';
+import Accordion from '@/components/accordion/Accordion';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icon1 from 'react-native-vector-icons/MaterialIcons';
+import Icon2 from 'react-native-vector-icons/Entypo';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const user = useSelector((state: RootState) => state.user.user);
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
-  const [photo, setPhoto] = useState<IPhotoProps | null>(null);
-  const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -41,16 +34,6 @@ const ProfileScreen = () => {
   useEffect(() => {
     getProfileData(setProfileData);
   }, []);
-
-  useEffect(() => {
-    if (photo) {
-      const reqBody = {
-        profilePhoto: photo?.uri,
-      };
-      uploadProfile(reqBody, user);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [photo]);
 
   const renderProfilesDetailsSection = () => {
     return (
@@ -126,6 +109,63 @@ const ProfileScreen = () => {
       </View>
     );
   };
+
+  const renderlanguageIcon = () => (
+    <Icon2 style={styles.iconStyle} name="language" size={25} color="#000" />
+  );
+  const renderLanguageSection = () => {
+    return (
+      <View style={CommonStyles.marginHorizontal24}>
+        <Accordion leftComponent={renderlanguageIcon} title="Language">
+          <View style={{height: 100, width: 200}} />
+        </Accordion>
+      </View>
+    );
+  };
+
+  const renderKycSection = () => {
+    return (
+      <View style={CommonStyles.marginHorizontal24}>
+        <Accordion title="KYC">
+          <View style={{height: 100, width: 200}} />
+        </Accordion>
+      </View>
+    );
+  };
+  const renderNotificationIcon = () => (
+    <Icon
+      style={styles.iconStyle}
+      name="notifications-outline"
+      size={25}
+      color="#000"
+    />
+  );
+  const renderNotificationSection = () => {
+    return (
+      <View style={CommonStyles.marginHorizontal24}>
+        <Accordion
+          // eslint-disable-next-line react/no-unstable-nested-components
+          leftComponent={renderNotificationIcon}
+          title="Notification">
+          <View style={{height: 100, width: 200}} />
+        </Accordion>
+      </View>
+    );
+  };
+
+  const renderLogoutIcon = () => (
+    <Icon1 style={styles.iconStyle} name="logout" size={25} color="#000" />
+  );
+
+  const renderLogoutSection = () => {
+    return (
+      <View style={CommonStyles.marginHorizontal24}>
+        <Accordion leftComponent={renderLogoutIcon} title="Logout">
+          <View style={{height: 100, width: 200}} />
+        </Accordion>
+      </View>
+    );
+  };
   return (
     <>
       <Layout
@@ -140,6 +180,11 @@ const ProfileScreen = () => {
         isScrollable>
         <ScreenHeader showScreenName={false} />
         {renderProfilesDetailsSection()}
+
+        {renderKycSection()}
+        {renderLanguageSection()}
+        {renderNotificationSection()}
+        {renderLogoutSection()}
       </Layout>
     </>
   );
@@ -251,6 +296,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 16,
     marginTop: 16,
+  },
+
+  iconStyle: {
+    alignSelf: 'center',
+    marginLeft: 10,
   },
   viewLine: {
     marginVertical: 16,

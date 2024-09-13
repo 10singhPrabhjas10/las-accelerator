@@ -1,5 +1,5 @@
 //External dependencies
-import {Image, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Text, TextInput} from 'react-native-paper';
 import {RouteProp, useRoute} from '@react-navigation/native';
@@ -7,10 +7,10 @@ import {useNavigation} from '@react-navigation/native';
 
 //Internal dependencies
 import Layout from 'components/Layout';
-import ContactFooter from 'components/contactFooter/ContactFooter';
+// import ContactFooter from 'components/contactFooter/ContactFooter';
 import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {AuthNavigationTypes} from 'routes/AuthNavigator';
-import {handleResendOtp, handleVerifyOtp} from '../Auth.business';
+import {handleVerifyOtp} from '../Auth.business';
 import CustomButton from 'components/button/CustomButton';
 import ScreenHeader from 'components/headers/ScreenHeader';
 import {AuthNavigationProp} from 'routes/AuthNavigator';
@@ -21,7 +21,7 @@ import styles from './OtpVerification.style';
 import {getTranslationLabel, secondsToMinutes} from 'utils/commonMethods';
 import WarningSvg from './../../../../assets/icons/warning-circle.svg';
 import {ButtonTypes} from 'types/buttons';
-import CardWrapper from '@/components/card/Card';
+// import CardWrapper from '@/components/card/Card';
 import HelpCard from '@/components/helpCard/HelpCard';
 import DialPad from '../../../../assets/icons/dialpad.svg';
 import CheckCircle from '../../../../assets/icons/check_circle.svg';
@@ -41,7 +41,7 @@ const OtpVerification = () => {
   const [resendOtpTimer, setResendOtpTimer] = useState<number>(otpTimer);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpAttempts, setOTPattempts] = useState<number>(0);
-  const [otpDisabled, setOtpDisabled] = useState<boolean>(false);
+  // const [otpDisabled, setOtpDisabled] = useState<boolean>(false);
   const [resendBannerTimmer, setResendTimerBanner] =
     useState<number>(bannerTime);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -50,11 +50,11 @@ const OtpVerification = () => {
 
   const mobileNumber = route.params?.mobileNumber;
 
-  const textTheme = {colors: {onSurface: COLORS.grey4}};
-  const resendOtpTheme = {colors: {onSurface: COLORS.blue}};
+  // const textTheme = {colors: {onSurface: COLORS.grey4}};
+  // const resendOtpTheme = {colors: {onSurface: COLORS.blue}};
 
-  const resendOtpLabel = getTranslationLabel('resend_otp');
-  const resendOtpInLabel = getTranslationLabel('resend_otp_in');
+  // const resendOtpLabel = getTranslationLabel('resend_otp');
+  // const resendOtpInLabel = getTranslationLabel('resend_otp_in');
 
   const warningIcon = () => <WarningSvg height={20} width={20} />;
 

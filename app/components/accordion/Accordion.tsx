@@ -53,9 +53,7 @@ const Accordion = ({
         style={[
           styles.heading,
           {
-            backgroundColor: isWhiteAccordion
-              ? COLORS.white
-              : COLORS.lightYellow,
+            backgroundColor: COLORS.white,
           },
           headingStyle,
         ]}>
