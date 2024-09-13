@@ -44,7 +44,9 @@ const Login = () => {
   useEffect(() => {
     if (isMobileNumberValid(mobileNumber)) {
       setErrorMsg(getTranslationLabel('invalid_mobile_number'));
+      setOtpDisabled(false);
     } else {
+      setOtpDisabled(true);
       setErrorMsg('');
     }
   }, [mobileNumber]);

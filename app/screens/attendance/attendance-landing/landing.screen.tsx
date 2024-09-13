@@ -91,6 +91,15 @@ export const AttendanceLandingScreen: React.FC<
       console.log(err);
     }
   };
+  const checkDisabled = (values: FormValues): boolean => {
+    if (
+      (currentTask === 1 && values?.attendance) ||
+      (currentTask === 2 && values?.primaryTask) ||
+      (currentTask === 3 && values?.selfie)
+    ) {
+      return false;
+    } else return true;
+  };
   return (
     <Layout isScrollable>
       <ScreenHeader showScreenName={false} />
@@ -230,6 +239,7 @@ export const AttendanceLandingScreen: React.FC<
                   style={styles.button}
                   text={'Proceed'}
                   // loading={isLoading}
+                  isDisabled={checkDisabled(values)}
                   onPress={handleProceed}
                 />
               ) : (
@@ -238,6 +248,7 @@ export const AttendanceLandingScreen: React.FC<
                   style={styles.button}
                   text={'Submit'}
                   // loading={isLoading}
+                  isDisabled={checkDisabled(values)}
                   onPress={handleSubmit}
                 />
               )}
