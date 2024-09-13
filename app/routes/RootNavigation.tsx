@@ -800,12 +800,12 @@ export default function RootNavigation() {
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen
-              name={'lSelection'}
-              component={LanguageSelection}
-            />
-            <RootStack.Screen
               name="OnboardingScreens"
               component={OnboardingScreens}
+            />
+            <RootStack.Screen
+              name={'lSelection'}
+              component={LanguageSelection}
             />
           </>
         ) : isAuthenticated ? (

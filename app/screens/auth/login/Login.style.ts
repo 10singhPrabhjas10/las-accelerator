@@ -5,7 +5,6 @@ import {getDeviceHeight, getDeviceWidth} from 'utils/commonMethods';
 const styles = StyleSheet.create({
   bodyContainer: {
     flex: 1,
-    padding: 20,
   },
   textInputContainer: {
     marginTop: 15,

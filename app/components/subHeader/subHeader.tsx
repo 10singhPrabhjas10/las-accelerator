@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper'; // Assuming you're using react-native-paper for the Card component
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
 import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
@@ -7,9 +7,16 @@ import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
 interface HeaderProps {
   title?: string;
   children: ReactNode;
+  shouldShowCardView?: boolean;
+  customParentstyles?: ViewStyle;
 }
 
-const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
+const SubHeader: React.FC<HeaderProps> = ({
+  title,
+  customParentstyles,
+  shouldShowCardView = true,
+  children,
+}) => {
   const initials = (): string => {
     if (title) {
       return title
@@ -20,7 +27,7 @@ const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
     return '';
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, customParentstyles]}>
       <View style={styles.headerContainer}>
         {title && (
           <View style={styles.titleContainer}>
@@ -34,25 +41,32 @@ const SubHeader: React.FC<HeaderProps> = ({title, children}) => {
           </View>
         )}
       </View>
-      <Card
-        style={[
-          styles.card,
-          {top: title ? heightToRatio(75) : heightToRatio(6)},
-        ]}>
-        {children}
-      </Card>
+      {shouldShowCardView ? (
+        <Card
+          style={[
+            styles.card,
+            {
+              marginTop: title ? heightToRatio(-70) : heightToRatio(-129),
+            },
+          ]}>
+          {children}
+        </Card>
+      ) : (
+        <>{children}</>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   headerContainer: {
     height: heightToRatio(145),
     backgroundColor: COLORS.dDarkGreen,
   },
+
   titleContainer: {
     marginLeft: widthToRatio(24),
     flexDirection: 'row',
@@ -86,16 +100,11 @@ const styles = StyleSheet.create({
     color: COLORS.neutralLight,
   },
   card: {
-    flex: 1,
     width: widthToRatio(312),
-    left: widthToRatio(24),
-    right: widthToRatio(24),
+    alignSelf: 'center',
     paddingHorizontal: widthToRatio(16),
     paddingVertical: heightToRatio(16),
-    position: 'absolute',
     backgroundColor: COLORS.white,
-    top: 0,
-    zIndex: 1,
   },
   cardText: {
     color: COLORS.neutralLight,

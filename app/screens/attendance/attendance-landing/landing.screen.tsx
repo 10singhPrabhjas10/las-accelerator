@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
 import {Text} from 'react-native-paper';
 
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
+// import {useRoute} from '@react-navigation/native';
 
 import {Formik, FormikProps, FormikHelpers} from 'formik';
 import ImagePicker, {Image as ImageProp} from 'react-native-image-crop-picker';
 
 import Layout from 'components/Layout';
+import {store} from 'store/redux/store';
+import {updateIsAuthenticated} from 'store/redux/userSlice';
 
 import ScreenHeader from '../../../components/headers/ScreenHeader';
 import SubHeader from '../../../components/subHeader/subHeader';
@@ -25,6 +28,7 @@ import {
   // pickFromCamera,
 } from '../../../utils/commonMethods';
 import {ButtonTypes} from '../../../types/buttons';
+import CommonStyles from '../../../utils/commonStyle';
 
 interface AttendanceLandingScreenProps {
   title?: string;
@@ -38,7 +42,8 @@ interface FormValues {
 export const AttendanceLandingScreen: React.FC<
   AttendanceLandingScreenProps
 > = ({title = 'Gururaj Chandera'}) => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
+  // const route = useRoute();
   const [currentTask, setCurrentTask] = useState<number>(1);
   const [showTaskType, setShowTaskType] = useState<boolean>(false);
 
@@ -53,7 +58,7 @@ export const AttendanceLandingScreen: React.FC<
   ) => {
     console.log(values);
     helpers.setSubmitting(false);
-    navigation.goBack();
+    store.dispatch(updateIsAuthenticated(true));
   };
   const currentDate: string = '12/01/2024';
 
@@ -98,7 +103,7 @@ export const AttendanceLandingScreen: React.FC<
           setFieldValue,
           values,
         }: FormikProps<FormValues>) => (
-          <>
+          <View style={CommonStyles.rowSpaceBetweenFlex}>
             <SubHeader title={title}>
               <View style={styles.headingContainer}>
                 <CalendarSvg
@@ -218,24 +223,26 @@ export const AttendanceLandingScreen: React.FC<
                 )}
               </View>
             </SubHeader>
-            {currentTask < 3 ? (
-              <CustomButton
-                type={ButtonTypes.contained}
-                style={styles.button}
-                text={'Proceed'}
-                // loading={isLoading}
-                onPress={handleProceed}
-              />
-            ) : (
-              <CustomButton
-                type={ButtonTypes.contained}
-                style={styles.button}
-                text={'Submit'}
-                // loading={isLoading}
-                onPress={handleSubmit}
-              />
-            )}
-          </>
+            <View>
+              {currentTask < 3 ? (
+                <CustomButton
+                  type={ButtonTypes.contained}
+                  style={styles.button}
+                  text={'Proceed'}
+                  // loading={isLoading}
+                  onPress={handleProceed}
+                />
+              ) : (
+                <CustomButton
+                  type={ButtonTypes.contained}
+                  style={styles.button}
+                  text={'Submit'}
+                  // loading={isLoading}
+                  onPress={handleSubmit}
+                />
+              )}
+            </View>
+          </View>
         )}
       </Formik>
     </Layout>

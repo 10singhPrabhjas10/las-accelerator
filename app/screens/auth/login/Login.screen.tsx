@@ -1,6 +1,6 @@
 //External dependencies
 import React, {useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {Image, View, KeyboardAvoidingView} from 'react-native';
 import {Checkbox, Text, TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import CallIcon from '../../../../assets/icons/call.svg';
@@ -18,6 +18,7 @@ import PhoneInput from '@/components/phoneInput/PhoneInput';
 import styles from './Login.style';
 import {COLORS} from 'theme/colors';
 import {
+  getDeviceHeight,
   getTranslationDynamicLabel,
   getTranslationLabel,
   isMobileNumberValid,
@@ -28,6 +29,7 @@ import CardWrapper from '@/components/card/Card';
 import HelpCard from '@/components/helpCard/HelpCard';
 import Icon from 'react-native-vector-icons/AntDesign';
 import CommonStyles from '@/utils/commonStyle';
+import SubHeader from '@/components/subHeader/subHeader';
 
 //-------NEW-DESIGNS------------------------------------------------\\
 const Login = () => {
@@ -81,53 +83,57 @@ const Login = () => {
   };
 
   return (
-    <Layout isScrollable hideStatusBar>
-      {/* <Image
-        source={require('../../../../assets/images/loginHeader.png')}
-        style={styles.imageHeader}
-      /> */}
+    <Layout isScrollable>
       <ScreenHeader showScreenName={false} />
-
-      <View style={styles.bodyContainer}>
-        <CardWrapper cardStyle={styles.LoginCard}>
-          <View style={styles.group}>
-            <Icon name="mobile1" size={32} color={COLORS.black} />
-            <View style={CommonStyles.padding16} />
-            <Text variant="headlineSmall">{getTranslationLabel('login')}</Text>
+      <KeyboardAvoidingView style={CommonStyles.flexOne}>
+        <View style={[CommonStyles.rowSpaceBetweenFlex]}>
+          <View style={CommonStyles.flexOne}>
+            <SubHeader>
+              <View style={styles.bodyContainer}>
+                <View style={styles.group}>
+                  <Icon name="mobile1" size={32} color={COLORS.black} />
+                  <View style={CommonStyles.padding5} />
+                  <Text variant="headlineSmall">
+                    {getTranslationLabel('login')}
+                  </Text>
+                </View>
+                <View>
+                  <Text variant="titleMedium" style={styles.EnterMobile}>
+                    {getTranslationLabel('enter_mobile_num')}
+                  </Text>
+                </View>
+                <PhoneInput
+                  phoneNumber={mobileNumber}
+                  onPhoneNumberChange={number => setMobileNumber(number)}
+                  setCountryCode={setCountryCode}
+                  error={errorMsg}
+                />
+              </View>
+            </SubHeader>
+            <View
+              style={[CommonStyles.marginHorizontal24, CommonStyles.marginTop]}>
+              <HelpCard />
+            </View>
           </View>
-          <View>
-            <Text variant="titleMedium" style={styles.EnterMobile}>
-              {getTranslationLabel('enter_mobile_num')}
-            </Text>
+          <View style={styles.ButtonContainer}>
+            <CustomButton
+              style={styles.BackButton}
+              type={ButtonTypes.outline}
+              text={getTranslationLabel('back')}
+              onPress={BackButton}
+              textStyle={styles.BackTextStyle}
+            />
+            <CustomButton
+              style={styles.OTPButton}
+              isDisabled={otpDisabled}
+              type={ButtonTypes.contained}
+              text={getTranslationLabel('get_otp')}
+              onPress={handleSubmit}
+              textStyle={(!otpDisabled && styles.OTPtextStyle) || {}}
+            />
           </View>
-          <PhoneInput
-            phoneNumber={mobileNumber}
-            onPhoneNumberChange={number => setMobileNumber(number)}
-            setCountryCode={setCountryCode}
-            error={errorMsg}
-          />
-        </CardWrapper>
-        <View style={CommonStyles.padding16} />
-        <HelpCard />
-      </View>
-
-      <View style={styles.ButtonContainer}>
-        <CustomButton
-          style={styles.BackButton}
-          type={ButtonTypes.outline}
-          text={getTranslationLabel('back')}
-          onPress={BackButton}
-          textStyle={styles.BackTextStyle}
-        />
-        <CustomButton
-          style={styles.OTPButton}
-          isDisabled={otpDisabled}
-          type={ButtonTypes.contained}
-          text={getTranslationLabel('get_otp')}
-          onPress={handleSubmit}
-          textStyle={(!otpDisabled && styles.OTPtextStyle) || {}}
-        />
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </Layout>
   );
 };

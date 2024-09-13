@@ -124,7 +124,7 @@ export const handleVerifyOtp = async (
     await setStorageData('REFRESH_TOKEN', refreshToken);
     await setStorageData('USER_TYPE', userType);
 
-    store.dispatch(updateIsAuthenticated(true));
+    // store.dispatch(updateIsAuthenticated(true));
     store.dispatch(updateUser(result?.data));
   } catch (error: any) {
     if (error.status === HttpStatusCode.FORBIDDEN) {

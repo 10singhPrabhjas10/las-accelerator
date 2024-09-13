@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingVertical: 20,
-    flex: 1,
+    // paddingVertical: 20,
+    height: getDeviceHeight(0.6),
   },
   headerTitle: {
     paddingHorizontal: 16,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     flex: 1,
-    paddingHorizontal: 12,
+    // maxHeight: getDeviceHeight(0.3),
   },
   languageCard: {
     flex: 1,
@@ -27,29 +27,39 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   subCardContainer: {
-    flex: 1 / 3,
-    height: 85,
+    height: 48,
     margin: 6,
+    borderRadius: 2,
+    marginVertical: 10,
     backgroundColor: COLORS.white,
   },
   activeSubCardContainer: {
-    flex: 1 / 3,
-    height: 85,
+    // flex: 1,
+    // width: getDeviceWidth(0.9),
+    // width: 500,
+    marginVertical: 10,
+    height: 48,
     margin: 6,
+    justifyContent: 'center',
+    borderRadius: 2,
     backgroundColor: COLORS.backgroundDgreen,
   },
   disabledSubCardContainer: {
-    flex: 1 / 3,
+    // flex: 1,
     height: 85,
     margin: 6,
+
     backgroundColor: COLORS.lightGrey,
   },
   columnWrapper: {
-    gap: 20,
+    // gap: 20,
   },
   cardContent: {
     alignItems: 'center',
-    gap: 4,
+
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignContent: 'center',
   },
   button: {
     marginHorizontal: 20,
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
   imageHeader: {
     height: getDeviceHeight(0.3),
     width: getDeviceWidth(),
-    backgroundColor:COLORS.dDarkGreen
+    backgroundColor: COLORS.dDarkGreen,
   },
 });
 
