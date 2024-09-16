@@ -17,7 +17,7 @@ import {LogBox} from 'react-native';
 import CommonStyles from './app/utils/commonStyle';
 import {AutocompleteDropdownContextProvider} from './app/components/auto-complete/AutocompleteDropdownContext';
 import {LocaleConfig} from 'react-native-calendars';
-import {getFcmToken, notificationListener} from './app/utils/firebase';
+// import {getFcmToken, notificationListener} from './app/utils/firebase';
 import SplashScreen from 'react-native-splash-screen';
 
 LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort = [
@@ -38,14 +38,17 @@ LogBox.ignoreAllLogs();
 let Root = function App() {
   useEffect(() => {
     SplashScreen.hide();
-
-    (async function () {
-      await notifee.requestPermission();
-      getFcmToken();
-    })();
-    const unsubscribe = notificationListener();
-    return unsubscribe;
   }, []);
+  // useEffect(() => {
+  //   SplashScreen.hide();
+
+  //   (async function () {
+  //     await notifee.requestPermission();
+  //     getFcmToken();
+  //   })();
+  //   const unsubscribe = notificationListener();
+  //   return unsubscribe;
+  // }, []);
 
   return (
     <SafeAreaProvider>

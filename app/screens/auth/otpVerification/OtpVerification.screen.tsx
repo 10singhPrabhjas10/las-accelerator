@@ -175,7 +175,7 @@ const OtpVerification = () => {
                   )}
                 </View>
 
-                <Text variant="headlineLarge">
+                <Text variant="headlineSmall">
                   {getTranslationLabel('verification')}
                 </Text>
               </View>
@@ -236,7 +236,7 @@ const OtpVerification = () => {
             textStyle={styles.BackTextStyle}
           />
           <CustomButton
-            style={styles.OTPButton}
+            style={styles.BackButton}
             isDisabled={otp.trim().length < 6}
             type={ButtonTypes.contained}
             text={getTranslationLabel('submit')}

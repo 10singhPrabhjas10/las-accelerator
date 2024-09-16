@@ -82,16 +82,18 @@ const Login = () => {
                   </Text>
                 </View>
                 <View>
-                  <Text variant="titleMedium" style={styles.EnterMobile}>
+                  <Text variant="titleSmall" style={styles.EnterMobile}>
                     {getTranslationLabel('enter_mobile_num')}
                   </Text>
                 </View>
-                <PhoneInput
-                  phoneNumber={mobileNumber}
-                  onPhoneNumberChange={number => setMobileNumber(number)}
-                  setCountryCode={setCountryCode}
-                  error={errorMsg}
-                />
+                <View style={{zIndex: 100, elevation: 5}}>
+                  <PhoneInput
+                    phoneNumber={mobileNumber}
+                    onPhoneNumberChange={number => setMobileNumber(number)}
+                    setCountryCode={setCountryCode}
+                    error={errorMsg}
+                  />
+                </View>
               </View>
             </SubHeader>
             <View
@@ -108,12 +110,13 @@ const Login = () => {
               textStyle={styles.BackTextStyle}
             />
             <CustomButton
-              style={styles.OTPButton}
               isDisabled={otpDisabled}
               type={ButtonTypes.contained}
+              style={styles.BackButton}
               text={getTranslationLabel('get_otp')}
-              onPress={handleSubmit}
               textStyle={(!otpDisabled && styles.OTPtextStyle) || {}}
+              // loading={isLoading}
+              onPress={handleSubmit}
             />
           </View>
         </View>
