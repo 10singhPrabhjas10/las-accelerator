@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
@@ -21,6 +21,8 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import ProfileSubHeader from '../../components/profilesubHeader/profileSubHeader';
+import {heightToRatio} from 'utils/commonMethods';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
@@ -38,7 +40,20 @@ const ProfileScreen = () => {
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
-        <SubHeader shouldShowCardView={true} title={'Gururaj Chandrea'}>
+        <SubHeader
+          shouldShowCardView={true}
+          otherSubHeaderContent={
+            <ProfileSubHeader
+              title="Gururaj Chandrea"
+              isImageEdit
+              children={
+                <>
+                  <Text style={styles.titleText}>Gururaj Chandrea</Text>
+                  {/*  add view mapped channel partner button code here */}
+                </>
+              }
+            />
+          }>
           <View style={styles.profileBodyView}>
             <DataCard
               shouldShowCardWrapper={false}
@@ -87,7 +102,7 @@ const ProfileScreen = () => {
             />
           </View>
           <Spacer size={10} />
-          <View style={styles.viewLine}></View>
+          <View style={styles.viewLine} />
           <View style={CommonStyles.rowCenter}>
             <Text
               theme={{colors: {onSurface: COLORS.black}}}
@@ -143,10 +158,7 @@ const ProfileScreen = () => {
   const renderNotificationSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion
-          // eslint-disable-next-line react/no-unstable-nested-components
-          leftComponent={renderNotificationIcon}
-          title="Notification">
+        <Accordion leftComponent={renderNotificationIcon} title="Notification">
           <View style={{height: 100, width: 200}} />
         </Accordion>
       </View>
@@ -313,6 +325,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: 15,
     borderColor: COLORS.dDarkGreen,
+  },
+  titleText: {
+    fontWeight: '500',
+    fontSize: heightToRatio(16),
+    lineHeight: heightToRatio(20),
+    color: COLORS.neutralLight,
   },
 });
 export default ProfileScreen;

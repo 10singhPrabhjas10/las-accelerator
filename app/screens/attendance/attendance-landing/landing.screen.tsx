@@ -17,6 +17,7 @@ import SubHeader from '../../../components/subHeader/subHeader';
 import CustomRadioButton from '../../../components/radioButton/CustomRadioButton';
 import CustomButton from '../../../components/button/CustomButton';
 import DropDown from '../../../components/dropdown/Dropdown';
+import ProfileSubHeader from '../../../components/profilesubHeader/profileSubHeader';
 
 import {COLORS} from '../../../theme/colors';
 import CalendarSvg from '../../../../assets/images/calendar.svg';
@@ -113,7 +114,19 @@ export const AttendanceLandingScreen: React.FC<
           values,
         }: FormikProps<FormValues>) => (
           <View style={CommonStyles.rowSpaceBetweenFlex}>
-            <SubHeader title={title}>
+            <SubHeader
+              title={title}
+              otherSubHeaderContent={
+                <ProfileSubHeader
+                  title={title}
+                  children={
+                    <>
+                      <Text style={styles.welcomeText}>Welcome</Text>
+                      <Text style={styles.titleText}>{title}</Text>
+                    </>
+                  }
+                />
+              }>
               <View style={styles.headingContainer}>
                 <CalendarSvg
                   width={heightToRatio(25)}
@@ -360,6 +373,18 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     marginLeft: widthToRatio(6),
+  },
+  welcomeText: {
+    fontWeight: '400',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(21),
+    color: COLORS.neutralLight,
+  },
+  titleText: {
+    fontWeight: '500',
+    fontSize: heightToRatio(16),
+    lineHeight: heightToRatio(20),
+    color: COLORS.neutralLight,
   },
 });
 

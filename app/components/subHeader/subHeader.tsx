@@ -1,52 +1,39 @@
 import React, {ReactNode} from 'react';
-import {View, Text, StyleSheet, ViewStyle} from 'react-native';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper'; // Assuming you're using react-native-paper for the Card component
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
 import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
 
 interface HeaderProps {
   title?: string;
+  imageUrl?: string;
+  imageUploadHandler?: Function;
   children: ReactNode;
   shouldShowCardView?: boolean;
+  isImageEdit?: boolean;
   customParentstyles?: ViewStyle;
+  otherSubHeaderContent?: ReactNode | boolean;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
-  title,
   customParentstyles,
   shouldShowCardView = true,
+  otherSubHeaderContent,
   children,
 }) => {
-  const initials = (): string => {
-    if (title) {
-      return title
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase())
-        .join('');
-    }
-    return '';
-  };
   return (
     <View style={[styles.container, customParentstyles]}>
       <View style={styles.headerContainer}>
-        {title && (
-          <View style={styles.titleContainer}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{initials()}</Text>
-            </View>
-            <View style={styles.titleTextContainer}>
-              <Text style={styles.welcomeText}>Welcome</Text>
-              <Text style={styles.titleText}>{title}</Text>
-            </View>
-          </View>
-        )}
+        {otherSubHeaderContent && otherSubHeaderContent}
       </View>
       {shouldShowCardView ? (
         <Card
           style={[
             styles.card,
             {
-              marginTop: title ? heightToRatio(-70) : heightToRatio(-129),
+              marginTop: otherSubHeaderContent
+                ? heightToRatio(-70)
+                : heightToRatio(-129),
             },
           ]}>
           {children}
@@ -59,9 +46,7 @@ const SubHeader: React.FC<HeaderProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-  },
+  container: {},
   headerContainer: {
     height: heightToRatio(145),
     backgroundColor: COLORS.dDarkGreen,
@@ -108,6 +93,11 @@ const styles = StyleSheet.create({
   },
   cardText: {
     color: COLORS.neutralLight,
+  },
+  pencilIconContainer: {
+    position: 'absolute',
+    left: widthToRatio(20),
+    bottom: -12,
   },
 });
 
