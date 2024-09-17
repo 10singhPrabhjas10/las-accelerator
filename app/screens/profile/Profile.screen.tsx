@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
 import {getProfileData, uploadProfile} from './Profile.business';
 import {IProfileResponse} from './Profile.interface';
-import {getTranslationLabel} from 'utils/commonMethods';
+import {getTranslationLabel, heightToRatio} from 'utils/commonMethods';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
@@ -409,6 +409,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 24,
     marginVertical: 16,
+    height: heightToRatio(32),
   },
   kycBtntextStyle: {
     ...fontConfig.labelMedium,
