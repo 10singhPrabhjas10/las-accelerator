@@ -43,9 +43,6 @@ const ProfileScreen = () => {
   }, []);
   const handleLogout = async () => {
     dispatch(clearUser());
-    dispatch(updateIsAuthenticated(false));
-    await removeData('ACCESS_TOKEN');
-    await removeData('IS_FIRST_TIME_APP_LAUNCH');
     await clearStorage();
   };
   const renderProfilesDetailsSection = () => {
