@@ -135,17 +135,24 @@ const ProfileScreen = () => {
       </>
     );
   };
-  const customRightKyc = () => {
+  const customRightKyc = expanded => {
     return (
-      <View style={{flexDirection: 'row', flex: 1}}>
+      <View style={{flexDirection: 'row'}}>
         <Image
           source={require('../../../assets/images/pendingKyc.png')}
           style={[styles.iconStyle, styles.top]}
         />
-        <Image
-          source={require('../../../assets/images/downArrow.png')}
-          style={[styles.iconStyle, styles.top]}
-        />
+        {expanded ? (
+          <Image
+            source={require('../../../assets/images/downArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        ) : (
+          <Image
+            source={require('../../../assets/images/upArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        )}
       </View>
     );
   };
@@ -204,7 +211,8 @@ const ProfileScreen = () => {
         <Accordion
           leftComponent={renderLogoutIcon}
           title="Logout"
-          customRight={() => {}}>
+          // customRight={() => {return <View/>}}
+        >
           {/* <View style={{height: 100, width: 200}} /> */}
         </Accordion>
       </View>
