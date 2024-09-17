@@ -36,8 +36,6 @@ const ProfileScreen = () => {
 
   const dispatch = useDispatch();
 
-  console.log('----ProfileData--', profileData);
-
   useEffect(() => {
     getProfileData(setProfileData);
   }, []);
@@ -49,6 +47,14 @@ const ProfileScreen = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
         <SubHeader shouldShowCardView={true} title={'Gururaj Chandrea'}>
+          <CustomButton
+            type={ButtonTypes.outline}
+            text={'View mapped channel partner'}
+            onPress={() => {
+              navigation.navigate('MappedChannelPartner');
+            }}
+            textStyle={{color: 'green'}}
+          />
           <View style={styles.profileBodyView}>
             <DataCard
               shouldShowCardWrapper={false}
@@ -239,7 +245,6 @@ const ProfileScreen = () => {
           navigation.navigate('TabNavigator');
         }}
         isScrollable>
-        <ScreenHeader showScreenName={false} />
         {renderProfilesDetailsSection()}
 
         {renderKycSection()}
