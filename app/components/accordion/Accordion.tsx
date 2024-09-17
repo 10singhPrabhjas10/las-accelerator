@@ -7,6 +7,7 @@ import {
   View,
   TextStyle,
   ViewStyle,
+  Image,
 } from 'react-native';
 import styles from './Accordion.style';
 import {COLORS} from 'theme/colors';
@@ -23,6 +24,9 @@ interface IAccordionProps {
   titleStyle?: TextStyle;
   isWhiteAccordion?: boolean;
   leftComponent?: () => React.ReactNode;
+  childrenStyles?: ViewStyle;
+  customRight?: ReactNode;
+  onCustomPress?: () => React.ReactNode;
 }
 
 const Accordion = ({
@@ -33,14 +37,37 @@ const Accordion = ({
   leftComponent,
   isExpanded = false,
   isWhiteAccordion = false,
+  childrenStyles = {},
+  customRight,
+  onCustomPress,
 }: IAccordionProps) => {
   const [expanded, setExpanded] = React.useState(isExpanded);
 
   const handlePress = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(prev => !prev);
+    if (onCustomPress) {
+      onCustomPress();
+    } else {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setExpanded(prev => !prev);
+    }
   };
-
+  const right = () => {
+    return (
+      <>
+        {expanded ? (
+          <Image
+            source={require('../../../assets/images/downArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        ) : (
+          <Image
+            source={require('../../../assets/images/upArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        )}
+      </>
+    );
+  };
   return (
     <List.Section>
       <List.Accordion
@@ -49,6 +76,7 @@ const Accordion = ({
         expanded={expanded}
         onPress={handlePress}
         left={leftComponent}
+        right={!!customRight ? () => customRight(expanded) : right}
         titleStyle={[styles.titleStyle, titleStyle]}
         style={[
           styles.heading,
@@ -57,7 +85,7 @@ const Accordion = ({
           },
           headingStyle,
         ]}>
-        <View style={styles.innerContainer}>{children}</View>
+        <View style={[styles.innerContainer, childrenStyles]}>{children}</View>
       </List.Accordion>
     </List.Section>
   );

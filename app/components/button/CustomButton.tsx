@@ -41,7 +41,7 @@ const CustomButton = ({
           ? containedButtonTheme
           : outlineButtonTheme
       }
-      style={[{height: heightToRatio(46), justifyContent: 'center'}, style]}
+      style={[{height: heightToRatio(46) , justifyContent:"center"}, style]}
       mode={type}
       loading={loading}
       icon={() => icon}

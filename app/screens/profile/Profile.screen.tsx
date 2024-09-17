@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
 import {getProfileData, uploadProfile} from './Profile.business';
 import {IProfileResponse} from './Profile.interface';
-import {getTranslationLabel} from 'utils/commonMethods';
+import {getTranslationLabel, heightToRatio} from 'utils/commonMethods';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
@@ -21,20 +21,28 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import LogoutIcon from '../../../assets/icons/logoutIcon.svg';
+import {fontConfig} from '@/theme/fonts';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
-
+import SuccessFailureModal from '@/modals/SuccessFailureModal';
+import {clearUser, updateIsAuthenticated} from '@/store/redux/userSlice';
+import {clearStorage, removeData} from '@/utils/AppStorage';
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const user = useSelector((state: RootState) => state.user.user);
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     getProfileData(setProfileData);
   }, []);
-
+  const handleLogout = async () => {
+    dispatch(clearUser());
+    await clearStorage();
+  };
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
@@ -130,12 +138,57 @@ const ProfileScreen = () => {
       </View>
     );
   };
-
+  const renderKycIcon = () => {
+    return (
+      <>
+        <Image
+          source={require('../../../assets/images/kycIcon.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+      </>
+    );
+  };
+  const customRightKyc = expanded => {
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <Image
+          source={require('../../../assets/images/pendingKyc.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+        {expanded ? (
+          <Image
+            source={require('../../../assets/images/downArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        ) : (
+          <Image
+            source={require('../../../assets/images/upArrow.png')}
+            style={[styles.iconStyle]}
+          />
+        )}
+      </View>
+    );
+  };
   const renderKycSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion title="KYC">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          title="KYC"
+          leftComponent={renderKycIcon}
+          customRight={customRightKyc}
+          childrenStyles={styles.accordionchildrenStyles}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text style={[fontConfig.labelLarge, styles.kyctextStyle]}>
+              KYC not done yet?
+            </Text>
+            <CustomButton
+              style={styles.kycButton}
+              type={ButtonTypes.contained}
+              text={'Complete KYC'}
+              onPress={() => {}}
+              textStyle={styles.kycBtntextStyle}
+            />
+          </View>
         </Accordion>
       </View>
     );
@@ -164,12 +217,18 @@ const ProfileScreen = () => {
   const renderLogoutIcon = () => (
     <Icon1 style={styles.iconStyle} name="logout" size={25} color="#000" />
   );
-
+  const onCustomPressLogout = () => {
+    setShowLogoutModal(true);
+  };
   const renderLogoutSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion leftComponent={renderLogoutIcon} title="Logout">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          leftComponent={renderLogoutIcon}
+          title="Logout"
+          // customRight={() => {}}
+          onCustomPress={onCustomPressLogout}>
+          {/* <View style={{height: 100, width: 200}} /> */}
         </Accordion>
       </View>
     );
@@ -192,6 +251,21 @@ const ProfileScreen = () => {
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        <SuccessFailureModal
+          btnType="both"
+          primaryButtonTitle={getTranslationLabel('dismiss')}
+          secondaryBtnTitle={getTranslationLabel('logout')}
+          title={getTranslationLabel('logout')}
+          icon={<LogoutIcon width="40" height="40" />}
+          label={getTranslationLabel('logout_description')}
+          onPrimaryBtnHandler={() => setShowLogoutModal(false)}
+          onSecondaryBtnHandler={() => {
+            handleLogout();
+          }}
+          setShowModal={() => setShowLogoutModal(false)}
+          showModal={showLogoutModal}
+          theme={{colors: {onSurface: COLORS.black}}}
+        />
       </Layout>
     </>
   );
@@ -320,6 +394,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: 15,
     borderColor: COLORS.dDarkGreen,
+  },
+  top: {
+    top: 2,
+  },
+  accordionchildrenStyles: {
+    paddingVertical: 0,
+  },
+  kyctextStyle: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  kycButton: {
+    marginLeft: 'auto',
+    marginRight: 24,
+    marginVertical: 16,
+    height: heightToRatio(32),
+  },
+  kycBtntextStyle: {
+    ...fontConfig.labelMedium,
+    color: COLORS.white,
   },
 });
 export default ProfileScreen;

@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: COLORS.darkYellow,
   },
+  iconStyle: {
+    alignSelf: 'center',
+    marginLeft: 10,
+    top: 2,
+  },
 });
 
 export default styles;
