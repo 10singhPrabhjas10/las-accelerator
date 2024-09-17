@@ -26,6 +26,7 @@ interface IAccordionProps {
   leftComponent?: () => React.ReactNode;
   childrenStyles?: ViewStyle;
   customRight?: ReactNode;
+  onCustomPress?: () => React.ReactNode;
 }
 
 const Accordion = ({
@@ -38,12 +39,17 @@ const Accordion = ({
   isWhiteAccordion = false,
   childrenStyles = {},
   customRight,
+  onCustomPress,
 }: IAccordionProps) => {
   const [expanded, setExpanded] = React.useState(isExpanded);
 
   const handlePress = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(prev => !prev);
+    if (onCustomPress) {
+      onCustomPress();
+    } else {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setExpanded(prev => !prev);
+    }
   };
   const right = () => {
     return (

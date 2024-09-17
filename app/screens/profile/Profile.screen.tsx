@@ -21,14 +21,18 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
-import kycIcon from '../../../assets/images/kycIcon.svg';
+import LogoutIcon from '../../../assets/icons/logoutIcon.svg';
 import {fontConfig} from '@/theme/fonts';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
+import SuccessFailureModal from '@/modals/SuccessFailureModal';
+import {clearUser, updateIsAuthenticated} from '@/store/redux/userSlice';
+import {clearStorage, removeData} from '@/utils/AppStorage';
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const user = useSelector((state: RootState) => state.user.user);
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -37,7 +41,13 @@ const ProfileScreen = () => {
   useEffect(() => {
     getProfileData(setProfileData);
   }, []);
-
+  const handleLogout = async () => {
+    dispatch(clearUser());
+    dispatch(updateIsAuthenticated(false));
+    await removeData('ACCESS_TOKEN');
+    await removeData('IS_FIRST_TIME_APP_LAUNCH');
+    await clearStorage();
+  };
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
@@ -204,15 +214,17 @@ const ProfileScreen = () => {
   const renderLogoutIcon = () => (
     <Icon1 style={styles.iconStyle} name="logout" size={25} color="#000" />
   );
-
+  const onCustomPressLogout = () => {
+    setShowLogoutModal(true);
+  };
   const renderLogoutSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion
           leftComponent={renderLogoutIcon}
           title="Logout"
-          // customRight={() => {return <View/>}}
-        >
+          // customRight={() => {}}
+          onCustomPress={onCustomPressLogout}>
           {/* <View style={{height: 100, width: 200}} /> */}
         </Accordion>
       </View>
@@ -237,6 +249,21 @@ const ProfileScreen = () => {
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        <SuccessFailureModal
+          btnType="both"
+          primaryButtonTitle={getTranslationLabel('dismiss')}
+          secondaryBtnTitle={getTranslationLabel('logout')}
+          title={getTranslationLabel('logout')}
+          icon={<LogoutIcon width="40" height="40" />}
+          label={getTranslationLabel('logout_description')}
+          onPrimaryBtnHandler={() => setShowLogoutModal(false)}
+          onSecondaryBtnHandler={() => {
+            handleLogout();
+          }}
+          setShowModal={() => setShowLogoutModal(false)}
+          showModal={showLogoutModal}
+          theme={{colors: {onSurface: COLORS.black}}}
+        />
       </Layout>
     </>
   );
