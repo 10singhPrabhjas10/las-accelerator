@@ -67,26 +67,20 @@ export const AttendanceLandingScreen: React.FC<
   ) => {
     try {
       console.log('result');
-      let result = await getCameraPermission();
-      console.log('result', result);
-      if (result === 'granted') {
-        ImagePicker.openCamera({
-          width: 300,
-          mediaType: 'photo',
-          height: 300,
-          cropping: false,
-          includeBase64: true,
-          compressImageQuality: 0.7,
-          includeExif: true,
+      ImagePicker.openCamera({
+        width: 300,
+        mediaType: 'photo',
+        height: 300,
+        cropping: false,
+        includeBase64: true,
+        compressImageQuality: 0.7,
+        includeExif: true,
+      })
+        .then((image: ImageProp) => {
+          console.log('imageVal', image);
+          setFieldValue('selfie', image.path);
         })
-          .then((image: ImageProp) => {
-            console.log('imageVal', image);
-            setFieldValue('selfie', image.path);
-          })
-          .catch(e => Alert.alert(e));
-      } else {
-        Alert.alert(result);
-      }
+        .catch(e => console.log(e));
     } catch (err) {
       console.log(err);
     }

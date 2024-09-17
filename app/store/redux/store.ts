@@ -10,6 +10,7 @@ import localizationSlice from './localizationSlice';
 import snackbarSlice from './snackbarSlice';
 import channelPartnerSlice from './channelPartnerSlice';
 import forceUpdateSlice from './forceUpdateSlice';
+import logger from 'redux-logger';
 
 const rootReducer = combineReducers({
   user: userSlice,
@@ -31,7 +32,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({immutableCheck: false, serializableCheck: false}),
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }).concat(logger),
 });
 
 export const persistor = persistStore(store);
