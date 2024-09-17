@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
@@ -21,7 +21,10 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
-
+import kycIcon from '../../../assets/images/kycIcon.svg';
+import {fontConfig} from '@/theme/fonts';
+import CustomButton from '@/components/button/CustomButton';
+import {ButtonTypes} from '@/types/buttons';
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const user = useSelector((state: RootState) => state.user.user);
@@ -122,12 +125,50 @@ const ProfileScreen = () => {
       </View>
     );
   };
-
+  const renderKycIcon = () => {
+    return (
+      <>
+        <Image
+          source={require('../../../assets/images/kycIcon.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+      </>
+    );
+  };
+  const customRightKyc = () => {
+    return (
+      <View style={{flexDirection: 'row', flex: 1}}>
+        <Image
+          source={require('../../../assets/images/pendingKyc.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+        <Image
+          source={require('../../../assets/images/downArrow.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+      </View>
+    );
+  };
   const renderKycSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion title="KYC">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          title="KYC"
+          leftComponent={renderKycIcon}
+          customRight={customRightKyc}
+          childrenStyles={styles.accordionchildrenStyles}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text style={[fontConfig.labelLarge, styles.kyctextStyle]}>
+              KYC not done yet?
+            </Text>
+            <CustomButton
+              style={styles.kycButton}
+              type={ButtonTypes.contained}
+              text={'Complete KYC'}
+              onPress={() => {}}
+              textStyle={styles.kycBtntextStyle}
+            />
+          </View>
         </Accordion>
       </View>
     );
@@ -160,8 +201,11 @@ const ProfileScreen = () => {
   const renderLogoutSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion leftComponent={renderLogoutIcon} title="Logout">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          leftComponent={renderLogoutIcon}
+          title="Logout"
+          customRight={() => {}}>
+          {/* <View style={{height: 100, width: 200}} /> */}
         </Accordion>
       </View>
     );
@@ -313,6 +357,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: 15,
     borderColor: COLORS.dDarkGreen,
+  },
+  top: {
+    top: 2,
+  },
+  accordionchildrenStyles: {
+    paddingVertical: 0,
+  },
+  kyctextStyle: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  kycButton: {
+    marginLeft: 'auto',
+    marginRight: 24,
+    marginVertical: 16,
+  },
+  kycBtntextStyle: {
+    ...fontConfig.labelMedium,
+    color: COLORS.white,
   },
 });
 export default ProfileScreen;
