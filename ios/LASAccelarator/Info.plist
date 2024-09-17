@@ -46,6 +46,8 @@
     <string>Zocial.ttf</string>
    <string>Fontisto.ttf</string>
    </array>
+   <key>NSCameraUsageDescription</key>
+  <string>We need access to your camera to allow you to take photo for profile verification.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->

@@ -98,6 +98,7 @@ export const getCameraPermission = async () => {
     return '';
   }
 };
+
 export const isMobileNumberValid = (mobileNumber: string) => {
   return mobileNumber.length === 10 && mobileNumber.match(INDIAN_MOBILE_REGEX);
 };
