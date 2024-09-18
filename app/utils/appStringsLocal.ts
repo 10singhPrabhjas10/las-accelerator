@@ -254,6 +254,14 @@ export default {
     {key: 'designation', label: 'Designation'},
     {key: 'branch', label: 'Branch'},
     {key: 'officeAddress', label: 'Office Address'},
+    {key: 'upload-profile-pic', label: 'Update Profile Picture'},
+    {key: 'profile-pic', label: 'Profile Picture'},
+    {
+      key: 'camera-gallery-description',
+      label: 'Take a photo or upload from your gallery',
+    },
+    {key: 'camera', label: 'Camera'},
+    {key: 'gallery', label: 'Gallery'},
   ],
   hi: [
     {key: 'back', label: 'पीछे'},

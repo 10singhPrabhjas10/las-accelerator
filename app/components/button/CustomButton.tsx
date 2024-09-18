@@ -25,7 +25,7 @@ const CustomButton = ({
   };
 
   const outlineButtonTheme = {
-    colors: {outline: isDisabled ? COLORS.grey3 : COLORS.orange},
+    colors: {outline: isDisabled ? COLORS.grey3 : COLORS.dDarkGreen},
     roundness: 1,
   };
 

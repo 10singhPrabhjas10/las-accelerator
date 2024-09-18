@@ -7,6 +7,10 @@ import {
 } from '@react-navigation/native-stack';
 import {useDispatch, useSelector} from 'react-redux';
 
+import {store} from '@/store/redux/store';
+import {setCurrentLanguage} from '@/store/redux/localizationSlice';
+import appStringsLocal from '../utils/appStringsLocal';
+
 //Internal dependencies
 import LanguageSelection from 'screens/selectLanguage/LanguageSelection';
 import TabNavigator from './TabNavigator';
@@ -377,6 +381,10 @@ export default function RootNavigation() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated,
   );
+  const selectedLanguage = useSelector(
+    (state: RootState) => state?.localization?.selectedLanguage,
+  );
+
   const isFirstTimeAppLaunch = useSelector(
     (state: RootState) => state.user.isFirstTimeAppLaunch,
   );
@@ -385,6 +393,13 @@ export default function RootNavigation() {
   const isLoading = useAppSelector((state: RootState) => state.modal.isLoading);
 
   useEffect(() => {
+    // for updating the language for development mode, can be removed in release version
+    store.dispatch(
+      setCurrentLanguage({
+        selectedLanguageTranslation: appStringsLocal[selectedLanguage.id],
+        language: selectedLanguage,
+      }),
+    );
     async function checkIsLoggedIn() {
       try {
         let accessToken = await getStorageData('ACCESS_TOKEN');

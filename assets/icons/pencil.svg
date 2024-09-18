@@ -1,25 +1,3 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_dd_2581_4017)">
-<path d="M20 24C20 17.3726 25.3726 12 32 12C38.6274 12 44 17.3726 44 24C44 30.6274 38.6274 36 32 36C25.3726 36 20 30.6274 20 24Z" fill="white"/>
-<path d="M25.999 30.0008H28.499L35.8724 22.6275L33.3724 20.1275L25.999 27.5008V30.0008ZM27.3324 28.0541L33.3724 22.0141L33.9857 22.6275L27.9457 28.6675H27.3324V28.0541Z" fill="#656767"/>
-<path d="M36.2457 18.1941C35.9857 17.9341 35.5657 17.9341 35.3057 18.1941L34.0857 19.4141L36.5857 21.9141L37.8057 20.6941C38.0657 20.4341 38.0657 20.0141 37.8057 19.7541L36.2457 18.1941Z" fill="#656767"/>
-</g>
-<defs>
-<filter id="filter0_dd_2581_4017" x="0" y="0" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feMorphology radius="4" operator="erode" in="SourceAlpha" result="effect1_dropShadow_2581_4017"/>
-<feOffset dy="8"/>
-<feGaussianBlur stdDeviation="12"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.0941176 0 0 0 0 0.152941 0 0 0 0 0.294118 0 0 0 0.08 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2581_4017"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feMorphology radius="6" operator="erode" in="SourceAlpha" result="effect2_dropShadow_2581_4017"/>
-<feOffset dy="6"/>
-<feGaussianBlur stdDeviation="6"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.0941176 0 0 0 0 0.152941 0 0 0 0 0.294118 0 0 0 0.12 0"/>
-<feBlend mode="normal" in2="effect1_dropShadow_2581_4017" result="effect2_dropShadow_2581_4017"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_2581_4017" result="shape"/>
-</filter>
-</defs>
+<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.2157 7.51667L12.9824 8.28333L5.43236 15.8333H4.66569V15.0667L12.2157 7.51667ZM15.2157 2.5C15.0074 2.5 14.7907 2.58333 14.6324 2.74167L13.1074 4.26667L16.2324 7.39167L17.7574 5.86667C18.0824 5.54167 18.0824 5.01667 17.7574 4.69167L15.8074 2.74167C15.6407 2.575 15.4324 2.5 15.2157 2.5ZM12.2157 5.15833L2.99902 14.375V17.5H6.12402L15.3407 8.28333L12.2157 5.15833Z" fill="white"/>
 </svg>

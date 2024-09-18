@@ -1,13 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
 import {StyleSheet, View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
+
+import BottomSheetModalComponent from 'bottomSheets/bottomSheetModal/BottomSheetModalComponent';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+
+import {ImageOrVideo} from 'react-native-image-crop-picker';
+
 import {getProfileData, uploadProfile} from './Profile.business';
 import {IProfileResponse} from './Profile.interface';
-import {getTranslationLabel} from 'utils/commonMethods';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
@@ -22,12 +27,31 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import ProfileSubHeader from '../../components/profilesubHeader/profileSubHeader';
-import {heightToRatio} from 'utils/commonMethods';
+import {
+  heightToRatio,
+  getTranslationLabel,
+  widthToRatio,
+  pickFromCamera,
+  pickFromGallery,
+} from 'utils/commonMethods';
+import {ButtonTypes} from '../../types/buttons';
+
+import SvgImagePlaceholder from '@/../assets/icons/ImagePlaceholder.svg';
+import CustomButton from '../../components/button/CustomButton';
+import SvgCamera from '@/../assets/icons/camera.svg';
+import SvgGallery from '@/../assets/icons/gallery.svg';
+import SvgPencil from '@/../assets/icons/pencil.svg';
+import SvgDelete from '@/../assets/icons/delete.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const activeDp = useRef<string>('');
   const user = useSelector((state: RootState) => state.user.user);
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  const [profilePicture, setProfilePicture] = useState<any | null>(null);
+  const [isUpdatingPicture, setIsUpdatingPicture] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -37,6 +61,10 @@ const ProfileScreen = () => {
     getProfileData(setProfileData);
   }, []);
 
+  const bottomSheetHandler = (): void => {
+    bottomSheetModalRef.current?.present();
+  };
+
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
@@ -45,7 +73,9 @@ const ProfileScreen = () => {
           otherSubHeaderContent={
             <ProfileSubHeader
               title="Gururaj Chandrea"
+              imageUrl={activeDp.current}
               isImageEdit
+              imageUploadHandler={bottomSheetHandler}
               children={
                 <>
                   <Text style={styles.titleText}>Gururaj Chandrea</Text>
@@ -178,6 +208,111 @@ const ProfileScreen = () => {
       </View>
     );
   };
+
+  const getPictureHandler = async (type: string) => {
+    try {
+      let result;
+      if (type === 'camera') {
+        result = await pickFromCamera();
+      } else {
+        result = await pickFromGallery();
+      }
+      if (result) {
+        setIsUpdatingPicture(true);
+        setProfilePicture(result);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updatePictureHandler = (): void => {
+    activeDp.current = profilePicture?.path;
+    bottomSheetModalRef.current?.dismiss();
+    setIsUpdatingPicture(false);
+  };
+
+  const deleteIconHandler = () => {
+    setProfilePicture(null);
+  };
+
+  const renderUploadProfileContent = () => {
+    return (
+      <View style={styles.bottomSheetContainer}>
+        <View>
+          {!isUpdatingPicture && (
+            <Text style={styles.description}>
+              {getTranslationLabel('camera-gallery-description')}
+            </Text>
+          )}
+          <View style={styles.imageContainer}>
+            {profilePicture?.path ? (
+              <>
+                <Image
+                  source={{uri: profilePicture?.path}}
+                  style={styles.image}
+                />
+                {!isUpdatingPicture && (
+                  <TouchableOpacity
+                    onPress={deleteIconHandler}
+                    activeOpacity={0.8}
+                    style={styles.deleteIconContainer}>
+                    <SvgDelete
+                      height={heightToRatio(18)}
+                      width={widthToRatio(14)}
+                    />
+                  </TouchableOpacity>
+                )}
+              </>
+            ) : (
+              <SvgImagePlaceholder width="100%" />
+            )}
+          </View>
+        </View>
+        {isUpdatingPicture ? (
+          <CustomButton
+            type={ButtonTypes.contained}
+            style={styles.updateButton}
+            // textStyle={styles.buttonText}
+            icon={
+              <SvgPencil width={heightToRatio(20)} height={heightToRatio(20)} />
+            }
+            text={getTranslationLabel('upload-profile-pic')}
+            onPress={updatePictureHandler}
+          />
+        ) : (
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              type={ButtonTypes.outline}
+              style={styles.ButtonStyleBS}
+              textStyle={styles.buttonText}
+              icon={
+                <SvgCamera
+                  width={heightToRatio(24)}
+                  height={heightToRatio(24)}
+                />
+              }
+              text={getTranslationLabel('camera')}
+              onPress={() => getPictureHandler('camera')}
+            />
+            <CustomButton
+              type={ButtonTypes.outline}
+              style={styles.ButtonStyleBS}
+              textStyle={styles.buttonText}
+              icon={
+                <SvgGallery
+                  width={heightToRatio(24)}
+                  height={heightToRatio(24)}
+                />
+              }
+              text={getTranslationLabel('gallery')}
+              onPress={() => getPictureHandler('gallery')}
+            />
+          </View>
+        )}
+      </View>
+    );
+  };
   return (
     <>
       <Layout
@@ -197,6 +332,19 @@ const ProfileScreen = () => {
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        <BottomSheetModalComponent
+          maxHeight={'75%'}
+          minHeight={'75%'}
+          enableClose={true}
+          title={
+            isUpdatingPicture
+              ? getTranslationLabel('profile-pic')
+              : getTranslationLabel('upload-profile-pic')
+          }
+          titleTextVariant="headlineSmall"
+          ref={bottomSheetModalRef}>
+          {renderUploadProfileContent()}
+        </BottomSheetModalComponent>
       </Layout>
     </>
   );
@@ -331,6 +479,58 @@ const styles = StyleSheet.create({
     fontSize: heightToRatio(16),
     lineHeight: heightToRatio(20),
     color: COLORS.neutralLight,
+  },
+  bottomSheetContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 5,
+  },
+  imageContainer: {
+    height: heightToRatio(314),
+    width: 'auto',
+    backgroundColor: COLORS.neutralLight,
+    borderRadius: heightToRatio(8),
+    marginTop: heightToRatio(8),
+  },
+  deleteIconContainer: {
+    width: heightToRatio(40),
+    height: heightToRatio(40),
+    backgroundColor: COLORS.white,
+    borderRadius: heightToRatio(20),
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: heightToRatio(10),
+    right: heightToRatio(10),
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: heightToRatio(12),
+  },
+  ButtonStyleBS: {
+    width: widthToRatio(150),
+    height: heightToRatio(48),
+    justifyContent: 'center',
+  },
+  updateButton: {
+    height: heightToRatio(48),
+    justifyContent: 'center',
+    marginVertical: heightToRatio(18),
+  },
+  buttonText: {
+    color: COLORS.dDarkGreen,
+  },
+  description: {
+    fontWeight: '500',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(17.5),
+  },
+  image: {
+    height: heightToRatio(314),
+    borderRadius: heightToRatio(8),
+    width: 'auto',
   },
 });
 export default ProfileScreen;

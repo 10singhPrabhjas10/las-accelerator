@@ -5,13 +5,10 @@ import {COLORS} from '../../theme/colors'; // Adjust import as per your project 
 import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
 
 interface HeaderProps {
-  title?: string;
-  imageUrl?: string;
-  imageUploadHandler?: Function;
   children: ReactNode;
   shouldShowCardView?: boolean;
-  isImageEdit?: boolean;
   customParentstyles?: ViewStyle;
+  cardStyle?: ViewStyle;
   otherSubHeaderContent?: ReactNode | boolean;
 }
 
@@ -19,25 +16,24 @@ const SubHeader: React.FC<HeaderProps> = ({
   customParentstyles,
   shouldShowCardView = true,
   otherSubHeaderContent,
+  cardStyle,
   children,
 }) => {
+  const cardStyles = {
+    ...styles.card,
+    ...{
+      marginTop: otherSubHeaderContent
+        ? heightToRatio(-70)
+        : heightToRatio(-129),
+    },
+  };
   return (
     <View style={[styles.container, customParentstyles]}>
       <View style={styles.headerContainer}>
         {otherSubHeaderContent && otherSubHeaderContent}
       </View>
       {shouldShowCardView ? (
-        <Card
-          style={[
-            styles.card,
-            {
-              marginTop: otherSubHeaderContent
-                ? heightToRatio(-70)
-                : heightToRatio(-129),
-            },
-          ]}>
-          {children}
-        </Card>
+        <Card style={[cardStyles, cardStyle]}>{children}</Card>
       ) : (
         <>{children}</>
       )}

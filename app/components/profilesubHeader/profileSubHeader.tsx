@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
 import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
-import PencilIcon from '@/../assets/icons/pencil.svg';
+import PencilIcon from '@/../assets/icons/pencilGray.svg';
 import CommonStyles from '../../utils/commonStyle';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -30,7 +30,7 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
     }
     return '';
   };
-  console.log(title);
+  console.log(imageUrl);
   return (
     <View style={styles.container}>
       {isImageEdit ? (
@@ -42,11 +42,7 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
             {imageUrl ? (
               <Image
                 source={{uri: imageUrl}}
-                style={{
-                  height: heightToRatio(50),
-                  width: heightToRatio(50),
-                  borderRadius: heightToRatio(25),
-                }}
+                style={styles.imageStyle}
                 resizeMode="contain"
               />
             ) : (
@@ -54,7 +50,7 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
             )}
           </View>
           <View style={styles.pencilIconContainer}>
-            <PencilIcon height={heightToRatio(40)} width={heightToRatio(40)} />
+            <PencilIcon height={heightToRatio(15)} width={heightToRatio(15)} />
           </View>
         </TouchableOpacity>
       ) : (
@@ -63,11 +59,7 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
             {imageUrl ? (
               <Image
                 source={{uri: imageUrl}}
-                style={{
-                  height: heightToRatio(40),
-                  width: heightToRatio(40),
-                  borderRadius: heightToRatio(20),
-                }}
+                style={styles.imageStyle}
                 resizeMode="contain"
               />
             ) : (
@@ -93,12 +85,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   avatar: {
-    height: heightToRatio(50),
-    width: heightToRatio(50),
-    borderRadius: heightToRatio(25),
-    backgroundColor: COLORS.neutralLight,
+    height: heightToRatio(56),
+    width: heightToRatio(56),
+    borderRadius: heightToRatio(28),
+    backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  imageStyle: {
+    height: heightToRatio(56),
+    width: heightToRatio(56),
+    borderRadius: heightToRatio(28),
   },
   avatarText: {
     color: '#000',
@@ -109,8 +106,15 @@ const styles = StyleSheet.create({
   },
   pencilIconContainer: {
     position: 'absolute',
-    left: widthToRatio(24),
-    bottom: -18,
+    height: heightToRatio(24),
+    width: heightToRatio(24),
+    borderRadius: heightToRatio(12),
+    backgroundColor: COLORS.neutralLight,
+    // left: widthToRatio(24),
+    right: -10,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
