@@ -1,7 +1,5 @@
-//External dependencies
+// Custom hook to create the Axios client
 import axios, {AxiosInstance} from 'axios';
-
-//Internal dependencies
 import {refreshAccessToken} from './methods/auth';
 import {getStorageData, setStorageData} from 'utils/AppStorage';
 import {store} from 'store/redux/store';
@@ -9,101 +7,94 @@ import {showOtpModal} from 'store/redux/modalSlice';
 import {HttpStatusCode} from 'constants/httpConstants';
 import Config from 'react-native-config';
 import {authenticateUserWithSFDC} from './sfdcApi';
+import {useError} from '@/globalErrorHandler/ErroProvider';
 
-function showLoginModal() {
-  store.dispatch(
-    showOtpModal({
-      isVisible: true,
-      header: 'Session Expired',
-      content: 'Please Login again',
-      buttonText: 'Login',
-    }),
-  );
-}
+const useAxiosClient = () => {
+  const {showError} = useError();
 
-const axiosClient: AxiosInstance = axios.create({
-  baseURL: Config.BASE_URL,
-  timeout: 10000,
-  // signal: newAbortSignal(),
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-axiosClient.interceptors.request.use(
-  async function (config) {
-    const token = await getStorageData('ACCESS_TOKEN');
-    const skipAuth = config.headers['skip-auth'];
-    const isSkip = skipAuth === 'true';
-
-    if (token && !isSkip) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  },
-);
-
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (token?: string | null) => void;
-  reject: (error: any) => void;
-}> = [];
-
-const processQueue = (error: any, token: string | null = null): void => {
-  failedQueue.forEach(prom => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
+  const axiosClient: AxiosInstance = axios.create({
+    baseURL: Config.BASE_URL,
+    timeout: 10000,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
-  failedQueue = [];
-};
+  let isRefreshing = false;
+  const failedQueue: Array<{
+    resolve: (token?: string | null) => void;
+    reject: (error: any) => void;
+  }> = [];
 
-axiosClient.interceptors.response.use(
-  response => {
-    return response;
-  },
-  async error => {
-    const originalRequest = error.config;
-    if (
-      error?.response?.status === HttpStatusCode.UNAUTHORIZED &&
-      !originalRequest._retry
-    ) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({resolve, reject});
-        })
-          .then(token => {
+  // Show login modal for expired sessions
+  const showLoginModal = () => {
+    store.dispatch(
+      showOtpModal({
+        isVisible: true,
+        header: 'Session Expired',
+        content: 'Please Login again',
+        buttonText: 'Login',
+      }),
+    );
+  };
+
+  const processQueue = (error: any, token: string | null = null) => {
+    failedQueue.forEach(prom =>
+      error ? prom.reject(error) : prom.resolve(token),
+    );
+    failedQueue.length = 0; // Clear the queue
+  };
+
+  // Request interceptor
+  axiosClient.interceptors.request.use(
+    async config => {
+      const token = await getStorageData('ACCESS_TOKEN');
+      if (token && config.headers['skip-auth'] !== 'true') {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    error => Promise.reject(error),
+  );
+
+  // Response interceptor
+  axiosClient.interceptors.response.use(
+    response => response,
+    async error => {
+      const originalRequest = error.config;
+
+      if (
+        error?.response?.status === HttpStatusCode.UNAUTHORIZED &&
+        !originalRequest._retry
+      ) {
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({resolve, reject});
+          }).then(token => {
             originalRequest.headers.Authorization = `Bearer ${token}`;
             return axiosClient(originalRequest);
-          })
-          .catch(err => {
-            return Promise.reject(err);
           });
-      }
+        }
 
-      originalRequest._retry = true;
-      isRefreshing = true;
+        originalRequest._retry = true;
+        isRefreshing = true;
 
-      const refreshToken = await getStorageData('REFRESH_TOKEN');
+        const refreshToken = await getStorageData('REFRESH_TOKEN');
+        if (!refreshToken) {
+          showLoginModal();
+          return Promise.reject(new Error('No refresh token available'));
+        }
 
-      if (!refreshToken) {
-        showLoginModal();
-        return Promise.reject(new Error('No refresh token available'));
-      }
+        try {
+          const tokenResponse = error?.response?.config?.url?.includes(
+            'salesforce',
+          )
+            ? await authenticateUserWithSFDC()
+            : await refreshAccessToken(refreshToken);
 
-      try {
-        if (error?.response?.config?.url?.includes('salesforce')) {
-          await authenticateUserWithSFDC();
-          return axiosClient(originalRequest);
-        } else {
-          const result = await refreshAccessToken(refreshToken);
-          const accessToken = result?.data?.accessToken;
+          const accessToken =
+            tokenResponse?.data?.accessToken ||
+            tokenResponse?.data?.access_token;
 
           if (!accessToken) {
             showLoginModal();
@@ -113,29 +104,75 @@ axiosClient.interceptors.response.use(
           }
 
           await setStorageData('ACCESS_TOKEN', accessToken);
-          await setStorageData('REFRESH_TOKEN', result?.data?.refreshToken);
+          await setStorageData(
+            'REFRESH_TOKEN',
+            tokenResponse?.data?.refreshToken,
+          );
 
           axiosClient.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
           processQueue(null, accessToken);
 
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return axiosClient(originalRequest);
+        } catch (err) {
+          processQueue(err, null);
+          showLoginModal();
+          return Promise.reject(err);
+        } finally {
+          isRefreshing = false;
         }
-      } catch (err) {
-        processQueue(err, null);
-        showLoginModal();
-        return Promise.reject(err);
-      } finally {
-        isRefreshing = false;
       }
-    }
 
-    return Promise.reject({
-      data: error?.response?.data,
-      status: error?.response?.status,
-    });
-  },
-);
+      if (error.response) {
+        switch (error.response.status) {
+          case HttpStatusCode.BAD_REQUEST:
+            showError(
+              'Invalid request. Please check your input and try again.',
+              originalRequest,
+            );
+            break;
+          case HttpStatusCode.FORBIDDEN:
+            showError(
+              'You do not have permission to perform this action.',
+              originalRequest,
+            );
+            break;
+          case HttpStatusCode.NOT_FOUND:
+            showError('The requested resource was not found.', originalRequest);
+            break;
+          case HttpStatusCode.INTERNAL_SERVER:
+            showError(
+              'An internal server error occurred. Please try again later.',
+              originalRequest,
+            );
+            break;
+          default:
+            showError(
+              `An error occurred: ${
+                error.response.data.message || 'Something went wrong'
+              }`,
+              originalRequest,
+            );
+        }
+      } else if (error.request) {
+        showError(
+          'No response received from the server. Please check your internet connection.',
+          originalRequest,
+        );
+      } else {
+        showError(
+          'An unexpected error occurred. Please try again later.',
+          originalRequest,
+        );
+      }
+      return Promise.reject({
+        data: error?.response?.data,
+        status: error?.response?.status,
+      });
+    },
+  );
 
-export default axiosClient;
+  return axiosClient;
+};
+
+export default useAxiosClient;

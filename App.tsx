@@ -19,6 +19,10 @@ import {AutocompleteDropdownContextProvider} from './app/components/auto-complet
 import {LocaleConfig} from 'react-native-calendars';
 import {getFcmToken, notificationListener} from './app/utils/firebase';
 import SplashScreen from 'react-native-splash-screen';
+import {
+  ErrorProvider,
+  withErrorHandler,
+} from '@/globalErrorHandler/ErroProvider';
 
 LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort = [
   'S',
@@ -54,7 +58,9 @@ let Root = function App() {
           <GestureHandlerRootView style={CommonStyles.flexOne}>
             <PaperProvider theme={theme}>
               <AutocompleteDropdownContextProvider>
-                <RootNavigation />
+                <ErrorProvider>
+                  <RootNavigation />
+                </ErrorProvider>
                 <NoInternetToast />
               </AutocompleteDropdownContextProvider>
             </PaperProvider>
@@ -64,5 +70,6 @@ let Root = function App() {
     </SafeAreaProvider>
   );
 };
+export default withErrorHandler(Root);
 
-export default Root;
+// export default Root;
