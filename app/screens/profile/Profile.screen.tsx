@@ -26,19 +26,21 @@ import {fontConfig} from '@/theme/fonts';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import SuccessFailureModal from '@/modals/SuccessFailureModal';
-import {clearUser, updateIsAuthenticated} from '@/store/redux/userSlice';
-import {clearStorage, removeData} from '@/utils/AppStorage';
+import {clearUser} from '@/store/redux/userSlice';
+import {clearStorage} from '@/utils/AppStorage';
+import {boolean} from 'yup';
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
-  const user = useSelector((state: RootState) => state.user.user);
-  const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  // const user = useSelector((state: RootState) => state.user.user);
+  // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getProfileData(setProfileData);
-  }, []);
+  // useEffect(() => {
+  //   getProfileData(setProfileData);
+  // }, []);
+
   const handleLogout = async () => {
     dispatch(clearUser());
     await clearStorage();
@@ -59,45 +61,29 @@ const ProfileScreen = () => {
             <DataCard
               shouldShowCardWrapper={false}
               data={[
-                {
-                  title: getTranslationLabel('empId'),
-
-                  text: '45789' ?? EMPTY_DATA_DASH,
-                },
-                {
-                  title: getTranslationLabel('sf_id'),
-                  text: 'HIp0213521' ?? EMPTY_DATA_DASH,
-                },
+                {title: getTranslationLabel('empId'), text: '45789'},
+                {title: getTranslationLabel('sf_id'), text: 'HIp0213521'},
                 {
                   title: getTranslationLabel('contact_no'),
-                  text: '+91 9869456902' ?? EMPTY_DATA_DASH,
+                  text: '+91 9869456902',
                 },
                 {
                   title: getTranslationLabel('emailId'),
-                  text: 'xyz@deloitte.com' ?? EMPTY_DATA_DASH,
+                  text: 'xyz@deloitte.com',
                 },
                 {
                   title: getTranslationLabel('dateOfjoining'),
-                  text: '12-01-2022' ?? EMPTY_DATA_DASH,
+                  text: '12-01-2022',
                 },
-                {
-                  title: getTranslationLabel('designation'),
-                  text: 'Executive' ?? EMPTY_DATA_DASH,
-                },
+                {title: getTranslationLabel('designation'), text: 'Executive'},
                 {
                   title: getTranslationLabel('reportingMgmr'),
-                  text: 'Prakhar Saha' ?? EMPTY_DATA_DASH,
+                  text: 'Prakhar Saha',
                 },
-                {
-                  title: getTranslationLabel('branch'),
-                  text: 'delhi' ?? EMPTY_DATA_DASH,
-                },
-
+                {title: getTranslationLabel('branch'), text: 'delhi'},
                 {
                   title: getTranslationLabel('officeAddress'),
-                  text:
-                    'Plot-D567, G.T. Tilak Road, Mahavir Nagar, Mumbai-400067 Maharashtra' ??
-                    EMPTY_DATA_DASH,
+                  text: 'Plot-D567, G.T. Tilak Road, Mahavir Nagar, Mumbai-400067 Maharashtra',
                 },
               ]}
             />
@@ -148,24 +134,21 @@ const ProfileScreen = () => {
       </>
     );
   };
-  const customRightKyc = expanded => {
+  const customRightKyc = (expanded: boolean) => {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={CommonStyles.flexRow}>
         <Image
           source={require('../../../assets/images/pendingKyc.png')}
           style={[styles.iconStyle, styles.top]}
         />
-        {expanded ? (
-          <Image
-            source={require('../../../assets/images/downArrow.png')}
-            style={[styles.iconStyle]}
-          />
-        ) : (
-          <Image
-            source={require('../../../assets/images/upArrow.png')}
-            style={[styles.iconStyle]}
-          />
-        )}
+        <Image
+          source={
+            expanded
+              ? require('../../../assets/images/downArrow.png')
+              : require('../../../assets/images/upArrow.png')
+          }
+          style={styles.iconStyle}
+        />
       </View>
     );
   };
@@ -177,7 +160,7 @@ const ProfileScreen = () => {
           leftComponent={renderKycIcon}
           customRight={customRightKyc}
           childrenStyles={styles.accordionchildrenStyles}>
-          <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={CommonStyles.flexRow}>
             <Text style={[fontConfig.labelLarge, styles.kyctextStyle]}>
               KYC not done yet?
             </Text>
@@ -228,7 +211,7 @@ const ProfileScreen = () => {
           title="Logout"
           // customRight={() => {}}
           onCustomPress={onCustomPressLogout}>
-          {/* <View style={{height: 100, width: 200}} /> */}
+          <></>
         </Accordion>
       </View>
     );
@@ -412,6 +395,7 @@ const styles = StyleSheet.create({
     height: heightToRatio(32),
   },
   kycBtntextStyle: {
+    height: 46,
     ...fontConfig.labelMedium,
     color: COLORS.white,
   },

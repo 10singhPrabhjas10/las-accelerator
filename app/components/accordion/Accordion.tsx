@@ -22,11 +22,10 @@ interface IAccordionProps {
   isExpanded?: boolean;
   headingStyle?: ViewStyle;
   titleStyle?: TextStyle;
-  isWhiteAccordion?: boolean;
   leftComponent?: () => React.ReactNode;
   childrenStyles?: ViewStyle;
-  customRight?: ReactNode;
-  onCustomPress?: () => React.ReactNode;
+  customRight?: ReactNode | boolean | ((expanded: boolean) => React.ReactNode); // Updated type
+  onCustomPress?: () => void;
 }
 
 const Accordion = ({
@@ -36,7 +35,6 @@ const Accordion = ({
   titleStyle,
   leftComponent,
   isExpanded = false,
-  isWhiteAccordion = false,
   childrenStyles = {},
   customRight,
   onCustomPress,
