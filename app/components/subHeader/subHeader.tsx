@@ -23,7 +23,7 @@ const SubHeader: React.FC<HeaderProps> = ({
     ...styles.card,
     ...{
       marginTop: otherSubHeaderContent
-        ? heightToRatio(-70)
+        ? heightToRatio(-40)
         : heightToRatio(-129),
     },
   };

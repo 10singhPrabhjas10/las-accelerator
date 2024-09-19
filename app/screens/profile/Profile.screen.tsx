@@ -5,17 +5,10 @@ import {StyleSheet, View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
-
+import styles from './profileStyle';
 import {useDispatch, useSelector} from 'react-redux';
-
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
-// import {getProfileData, uploadProfile} from './Profile.business';
-// import {IProfileResponse} from './Profile.interface';
-// import {EMPTY_DATA_DASH} from 'utils/Constants';
-// import {RootState} from 'store/redux/store';
 import {updateTabIndex} from 'store/redux/modalSlice';
 import {Text} from 'react-native-paper';
 import Spacer from 'components/spacer';
@@ -36,7 +29,6 @@ import {
 } from 'utils/commonMethods';
 
 import ModalComponent from '../../modals/ModalComponent';
-
 import SvgImagePlaceholder from '@/../assets/icons/ImagePlaceholder.svg';
 import SvgCamera from '@/../assets/icons/camera.svg';
 import SvgGallery from '@/../assets/icons/gallery.svg';
@@ -45,7 +37,6 @@ import SvgDelete from '@/../assets/icons/delete.svg';
 import SvgClose from '@/../assets/icons/closeIcon.svg';
 import SvgCall from '@/../assets/icons/callIcon.svg';
 import SvgEmail from '@/../assets/icons/email.svg';
-
 import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import LanguageSelectionList from '../selectLanguage/LanguageSelectionList';
 import CloseIcon from '../../../assets/icons/closeIcon.svg';
@@ -107,18 +98,25 @@ const ProfileScreen = () => {
               isImageEdit
               imageUploadHandler={bottomSheetHandler}
               children={
-                <>
+                <View>
                   <Text style={styles.titleText}>Gururaj Chandrea</Text>
+
                   <CustomButton
-                    type={ButtonTypes.outline}
+                    style={{
+                      borderRadius: 10,
+                      height: heightToRatio(32),
+                      marginTop: 20,
+                      // backgroundColor: 'blue',
+                    }}
+                    type={ButtonTypes.contained}
                     text={'View mapped channel partner'}
                     onPress={() => {
                       navigation.navigate('MappedChannelPartner');
                     }}
-                    textStyle={{color: 'green'}}
+                    textStyle={styles.greenLabel}
                   />
                   {/*  add view mapped channel partner button code here */}
-                </>
+                </View>
               }
             />
           }>
@@ -348,6 +346,7 @@ const ProfileScreen = () => {
                   {getTranslationLabel('profile-modal-email')}
                 </Text>
               </View>
+              <Spacer size={20} />
               <View style={[CommonStyles.flexRow, CommonStyles.center]}>
                 <SvgEmail
                   width={heightToRatio(18)}
@@ -461,8 +460,8 @@ const ProfileScreen = () => {
         {renderLogoutSection()}
         {renderModalContent()}
         <BottomSheetModalComponent
-          maxHeight={'75%'}
-          minHeight={'75%'}
+          maxHeight={'80%'}
+          minHeight={'80%'}
           enableClose={true}
           title={
             isUpdatingPicture
@@ -502,266 +501,13 @@ const ProfileScreen = () => {
               <CloseIcon />
             </TouchableOpacity>
           </View>
-          <LanguageSelectionList />
+          <LanguageSelectionList
+            onlanguageChange={() => bottomSheetref.current.close()}
+          />
         </View>
       </BottomSheetModalComponent>
     </>
   );
-
-  //-----old ui
-  // return (
-  //   <>
-  //     <Layout
-  //       style={CommonStyles.flexGrow}
-  //       onBackPress={() => {
-  //         dispatch(updateTabIndex(0));
-  //         navigation.navigate('TabNavigator');
-  //       }}
-  //       isScrollable>
-  //       <ScreenHeader showScreenName={false} />
-  //       <SubHeader shouldShowCardView={false} title={'fsdf'} />
-  //       <ProfileHeader
-  //         isEdit={true}
-  //         imageUri={{uri: user?.profilePhoto}}
-  //         header={user?.lasUserName}
-  //         subTitle={`${getTranslationLabel('las_id')}: ${user?.lasId}`}
-  //         onEditIconPress={() => setShowBottomSheet(true)}
-  //       />
-  //       <View style={styles.profileBodyView}>
-  //         <DataCard
-  //           data={[
-  //             {
-  //               title: getTranslationLabel('employee_code'),
-  //               text: profileData[0]?.employeeCode ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('phone_no'),
-  //               text: profileData[0]?.mobileNo
-  //                 ? `+91 ${profileData[0]?.mobileNo}`
-  //                 : EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('email_id'),
-  //               text: profileData[0]?.emailId ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('designation'),
-  //               text: profileData[0]?.lasType ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('date_of_joining'),
-  //               text: profileData[0]?.dateOfJoining
-  //                 ? convertDateToDisplay(
-  //                     profileData[0]?.dateOfJoining,
-  //                     DateFormats.DD_MM_YYYY,
-  //                   )
-  //                 : EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('branch'),
-  //               text: profileData[0]?.branch ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('reporting_manager1'),
-  //               text: profileData[0]?.reportingManager1 ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('reporting_manager2'),
-  //               text: profileData[0]?.reportingManager2 ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('address'),
-  //               text: profileData[0]?.address ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('aadhar_card_no'),
-  //               text: profileData[0]?.aadharCardNo ?? EMPTY_DATA_DASH,
-  //             },
-  //             {
-  //               title: getTranslationLabel('pan_card_num'),
-  //               text: profileData[0]?.panCardNo ?? EMPTY_DATA_DASH,
-  //             },
-  //           ]}
-  //         />
-  //         <CustomButton
-  //           type={ButtonTypes.outline}
-  //           text={getTranslationLabel('view_mapped_channel_partner')}
-  //           onPress={() => {
-  //             navigation?.navigate('MappedChannelPartner');
-  //           }}
-  //           style={styles.buttonStyle}
-  //           icon={<IconRight />}
-  //           contentStyle={styles.contentStyle}
-  //         />
-  //       </View>
-  //       <Spacer size={10} />
-  //       <Text style={CommonStyles.paddingH10}>
-  //         v{DeviceInfo.getVersion()} {Config.BASE_URL}
-  //       </Text>
-  //       {/* Remove this Later */}
-  //       <ContactFooter />
-  //     </Layout>
-  //     <UploadImageBottomSheet
-  //       setPhoto={setPhoto}
-  //       visible={showBottomSheet}
-  //       onDismiss={() => setShowBottomSheet(false)}
-  //     />
-  //   </>
-  // );
 };
 
-const styles = StyleSheet.create({
-  profileBodyView: {
-    flex: 1,
-    marginHorizontal: 16,
-    marginTop: 16,
-  },
-
-  iconStyle: {
-    alignSelf: 'center',
-    marginLeft: 10,
-  },
-  viewLine: {
-    marginVertical: 16,
-    height: 1,
-    width: '100%',
-    backgroundColor: COLORS.dividerGrey,
-  },
-  contentStyle: {flexDirection: 'row-reverse'},
-  buttonStyle: {
-    marginHorizontal: 4,
-    marginTop: 15,
-    borderColor: COLORS.dDarkGreen,
-  },
-  titleText: {
-    fontWeight: '500',
-    fontSize: heightToRatio(16),
-    lineHeight: heightToRatio(20),
-    color: COLORS.neutralLight,
-  },
-  bottomSheetContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 5,
-  },
-  imageContainer: {
-    height: heightToRatio(314),
-    width: 'auto',
-    backgroundColor: COLORS.neutralLight,
-    borderRadius: heightToRatio(8),
-    marginTop: heightToRatio(8),
-  },
-  deleteIconContainer: {
-    width: heightToRatio(40),
-    height: heightToRatio(40),
-    backgroundColor: COLORS.white,
-    borderRadius: heightToRatio(20),
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: heightToRatio(10),
-    right: heightToRatio(10),
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: heightToRatio(12),
-  },
-  ButtonStyleBS: {
-    width: widthToRatio(150),
-    height: heightToRatio(48),
-    justifyContent: 'center',
-  },
-  updateButton: {
-    height: heightToRatio(48),
-    justifyContent: 'center',
-    marginVertical: heightToRatio(18),
-  },
-  buttonText: {
-    color: COLORS.dDarkGreen,
-  },
-  description: {
-    fontWeight: '500',
-    fontSize: heightToRatio(14),
-    lineHeight: heightToRatio(17.5),
-  },
-  image: {
-    height: heightToRatio(314),
-    borderRadius: heightToRatio(8),
-    width: 'auto',
-  },
-  modalTopContainer: {
-    height: heightToRatio(237),
-    width: widthToRatio(312),
-    paddingHorizontal: widthToRatio(12),
-    paddingVertical: heightToRatio(12),
-  },
-  modalSubHeading: {
-    fontWeight: '500',
-    fontSize: heightToRatio(14),
-    lineHeight: heightToRatio(17.5),
-    color: COLORS.grey500,
-  },
-  modalHeading: {
-    fontWeight: '700',
-    fontSize: heightToRatio(20),
-    lineHeight: heightToRatio(25),
-    color: COLORS.grey500,
-  },
-  divider: {
-    width: '100%',
-    height: heightToRatio(1),
-    backgroundColor: COLORS.dividerGrey,
-    marginVertical: heightToRatio(12),
-  },
-  contactContainer: {
-    marginTop: heightToRatio(8),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContact: {
-    color: COLORS.green,
-    fontWeight: '400',
-    fontSize: heightToRatio(14),
-    lineHeight: heightToRatio(21),
-    marginLeft: widthToRatio(6),
-    textAlignVertical: 'center',
-  },
-  languageContainer: {
-    marginHorizontal: '10%',
-    paddingBottom: '20%',
-  },
-  languageHead: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: '5%',
-  },
-  languageDropDown: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: 24,
-  },
-  top: {
-    top: 2,
-  },
-  accordionchildrenStyles: {
-    paddingVertical: 0,
-  },
-  kyctextStyle: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  kycButton: {
-    marginLeft: 'auto',
-    marginRight: 24,
-    marginVertical: 16,
-    height: heightToRatio(32),
-  },
-  kycBtntextStyle: {
-    height: 46,
-    ...fontConfig.labelMedium,
-    color: COLORS.white,
-  },
-});
 export default ProfileScreen;

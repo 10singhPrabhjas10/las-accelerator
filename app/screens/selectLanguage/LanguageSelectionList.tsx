@@ -15,9 +15,11 @@ import CheckCircle from '../../../assets/icons/check_circle.svg';
 import appStringsLocal from '@/utils/appStringsLocal';
 import {store} from '../../store/redux/store';
 import {setCurrentLanguage} from '@/store/redux/localizationSlice';
-interface ILanguage {}
+interface ILanguage {
+  onlanguageChange: (lan: ILanguage) => void;
+}
 
-const LanguageSelectionList = ({}: ILanguage) => {
+const LanguageSelectionList = ({onlanguageChange}: ILanguage) => {
   const activeLanguage = useSelector(
     (state: RootState) => state?.localization?.selectedLanguage,
   );
@@ -33,6 +35,7 @@ const LanguageSelectionList = ({}: ILanguage) => {
         language: item,
       }),
     );
+    onlanguageChange(item);
   };
 
   return (
