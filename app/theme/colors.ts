@@ -1,5 +1,3 @@
-import {Divider} from 'react-native-paper';
-
 export const COLORS = {
   white: '#FFFFFF',
   black: '#000104',

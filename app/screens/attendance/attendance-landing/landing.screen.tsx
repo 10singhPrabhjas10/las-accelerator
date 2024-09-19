@@ -22,6 +22,7 @@ import {
   widthToRatio,
   heightToRatio,
   getCameraPermission,
+  pickFromCamera,
 } from '../../../utils/commonMethods';
 import {ButtonTypes} from '../../../types/buttons';
 import CommonStyles from '../../../utils/commonStyle';
@@ -62,21 +63,8 @@ export const AttendanceLandingScreen: React.FC<
     setFieldValue: (field: string, value: string) => void,
   ) => {
     try {
-      const result = await getCameraPermission();
-      if (result === 'granted') {
-        const image = await ImagePicker.openCamera({
-          width: 300,
-          height: 300,
-          mediaType: 'photo',
-          cropping: false,
-          includeBase64: true,
-          compressImageQuality: 0.7,
-          includeExif: true,
-        });
-        setFieldValue('selfie', image.path);
-      } else {
-        Alert.alert(result);
-      }
+      const image = await pickFromCamera();
+      setFieldValue('selfie', image.path);
     } catch (err) {
       console.log(err);
     }

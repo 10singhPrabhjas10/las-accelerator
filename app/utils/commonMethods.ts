@@ -5,12 +5,11 @@ import {
   PermissionsAndroid,
   PixelRatio,
   Platform,
-  ViewStyle,
   Alert,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
-import ImagePicker, {Image, ImageOrVideo} from 'react-native-image-crop-picker';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
 import {INDIAN_MOBILE_REGEX} from './Constants';
 import {DateFormats} from 'constants/dateFormat';
@@ -19,7 +18,6 @@ import ReactNativeBlobUtil from 'react-native-blob-util';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import Share from 'react-native-share';
 import {store} from 'store/redux/store';
-import appStringsLocal from './appStringsLocal';
 
 export const callNumber = (phone: string) => {
   let phoneNumber = phone;
@@ -100,31 +98,6 @@ export const getCameraPermission = async () => {
   }
 };
 
-export const getGalleryPermission = async (): Promise<string> => {
-  try {
-    const granted: PermissionStatus = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      {
-        title: 'Gallery Permission',
-        message: 'App needs access to your gallery to select photos.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('Gallery permission granted');
-      return 'granted';
-    } else {
-      console.log('Gallery permission denied');
-      return 'Gallery permission denied';
-    }
-  } catch (err) {
-    console.warn('Error requesting gallery permission:', err);
-    return '';
-  }
-};
 export const isMobileNumberValid = (mobileNumber: string) => {
   return mobileNumber.length === 10 && mobileNumber.match(INDIAN_MOBILE_REGEX);
 };
@@ -375,11 +348,11 @@ export const downloadPdfWithUrl = async (
     })
       .fetch('GET', data?.url)
       .then(async () => {
-        const channelId = await notifee.createChannel({
-          id: 'important',
-          name: 'Important Notifications',
-          importance: AndroidImportance.HIGH,
-        });
+        // const channelId = await notifee.createChannel({
+        //   id: 'important',
+        //   name: 'Important Notifications',
+        //   importance: AndroidImportance.HIGH,
+        // });
         if (isShare) {
           shareFile(fileName, filePath);
         } else {
@@ -615,7 +588,7 @@ export const pickFromCamera = async (
     compressImageQuality: 0.7,
     includeExif: true,
   },
-): Promise<string | null | ImageOrVideo> => {
+): Promise<string | ImageOrVideo | any> => {
   try {
     const result = await getCameraPermission();
     if (result === 'granted') {
@@ -623,11 +596,11 @@ export const pickFromCamera = async (
       return image;
     } else {
       Alert.alert(result);
-      return null;
+      return '';
     }
   } catch (err) {
     console.error('Error taking selfie:', err);
-    return null;
+    return '';
   }
 };
 
@@ -643,18 +616,10 @@ export const pickFromGallery = async (
   },
 ): Promise<string | null | ImageOrVideo> => {
   try {
-    const result = await getGalleryPermission();
-
-    console.log('--------------------result----------------', result);
-    if (result === 'granted') {
-      const image = await ImagePicker.openPicker(options);
-      return image; // Returning the image path
-    } else {
-      Alert.alert(result);
-      return null; // Return null if permission is not granted
-    }
+    const image = await ImagePicker.openPicker(options);
+    return image;
   } catch (err) {
     console.error('Error taking selfie:', err);
-    return null; // Return null in case of an error
+    return null;
   }
 };
