@@ -55,6 +55,7 @@ export const COLORS = {
   neutralLight: '#f5f5f5',
   greyText: '#656767',
   portalBackground: 'rgba(0, 66, 75, 0.5)',
+  subtleBorder: '#EAEBEB',
   grey500: '#2C2D2F',
 };
 

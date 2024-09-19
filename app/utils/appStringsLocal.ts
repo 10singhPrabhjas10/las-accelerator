@@ -286,7 +286,10 @@ export default {
       key: 'profile-modal-contact',
       label: '+91 9876567890',
     },
+    {key: 'select_language', label: 'Select Language'},
+    {key: 'change_language', label: 'Change Language'},
   ],
+
   hi: [
     {key: 'back', label: 'पीछे'},
     {key: 'next', label: 'अगला'},
@@ -367,4 +370,10 @@ export default {
     {key: 'branch', label: 'ब्रांच'},
     {key: 'officeAddress', label: 'कार्यालय का पता'},
   ],
+  mr: [],
+  te: [],
+  bn: [],
+  ma: [],
+  ka: [],
+  ta: [],
 };
