@@ -21,8 +21,8 @@ export const NoInternetToast = ({
 }) => {
   const netInfo = useNetInfo();
   if (
-    // !netInfo.isConnected
-    true
+    !netInfo.isConnected
+    // true
   ) {
     return (
       <View style={styles.offlineContainer}>
