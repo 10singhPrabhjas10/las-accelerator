@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
 import {getProfileData, uploadProfile} from './Profile.business';
 import {IProfileResponse} from './Profile.interface';
-import {getTranslationLabel} from 'utils/commonMethods';
+import {getTranslationLabel, heightToRatio} from 'utils/commonMethods';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
@@ -27,70 +27,75 @@ import CloseIcon from '../../../assets/icons/closeIcon.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import CheckCircle from '../../../assets/icons/check_circle.svg';
 import Edit from '../../../assets/icons/edit.svg';
+import LogoutIcon from '../../../assets/icons/logoutIcon.svg';
+import {fontConfig} from '@/theme/fonts';
+import CustomButton from '@/components/button/CustomButton';
+import {ButtonTypes} from '@/types/buttons';
+import SuccessFailureModal from '@/modals/SuccessFailureModal';
+import {clearUser} from '@/store/redux/userSlice';
+import {clearStorage} from '@/utils/AppStorage';
+import {boolean} from 'yup';
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
-  const user = useSelector((state: RootState) => state.user.user);
+  // const user = useSelector((state: RootState) => state.user.user);
+  // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+
   const language = useSelector(
     (state: RootState) => state.localization.selectedLanguage,
   );
+  const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
   const bottomSheetref = useRef();
   const dispatch = useDispatch();
 
-  console.log('----ProfileData--', profileData);
+  // useEffect(() => {
+  //   getProfileData(setProfileData);
+  // }, []);
 
-  useEffect(() => {
-    getProfileData(setProfileData);
-  }, []);
-
+  const handleLogout = async () => {
+    dispatch(clearUser());
+    await clearStorage();
+  };
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
         <SubHeader shouldShowCardView={true} title={'Gururaj Chandrea'}>
+          <CustomButton
+            type={ButtonTypes.outline}
+            text={'View mapped channel partner'}
+            onPress={() => {
+              navigation.navigate('MappedChannelPartner');
+            }}
+            textStyle={{color: 'green'}}
+          />
           <View style={styles.profileBodyView}>
             <DataCard
               shouldShowCardWrapper={false}
               data={[
-                {
-                  title: getTranslationLabel('empId'),
-
-                  text: '45789' ?? EMPTY_DATA_DASH,
-                },
-                {
-                  title: getTranslationLabel('sf_id'),
-                  text: 'HIp0213521' ?? EMPTY_DATA_DASH,
-                },
+                {title: getTranslationLabel('empId'), text: '45789'},
+                {title: getTranslationLabel('sf_id'), text: 'HIp0213521'},
                 {
                   title: getTranslationLabel('contact_no'),
-                  text: '+91 9869456902' ?? EMPTY_DATA_DASH,
+                  text: '+91 9869456902',
                 },
                 {
                   title: getTranslationLabel('emailId'),
-                  text: 'xyz@deloitte.com' ?? EMPTY_DATA_DASH,
+                  text: 'xyz@deloitte.com',
                 },
                 {
                   title: getTranslationLabel('dateOfjoining'),
-                  text: '12-01-2022' ?? EMPTY_DATA_DASH,
+                  text: '12-01-2022',
                 },
-                {
-                  title: getTranslationLabel('designation'),
-                  text: 'Executive' ?? EMPTY_DATA_DASH,
-                },
+                {title: getTranslationLabel('designation'), text: 'Executive'},
                 {
                   title: getTranslationLabel('reportingMgmr'),
-                  text: 'Prakhar Saha' ?? EMPTY_DATA_DASH,
+                  text: 'Prakhar Saha',
                 },
-                {
-                  title: getTranslationLabel('branch'),
-                  text: 'delhi' ?? EMPTY_DATA_DASH,
-                },
-
+                {title: getTranslationLabel('branch'), text: 'delhi'},
                 {
                   title: getTranslationLabel('officeAddress'),
-                  text:
-                    'Plot-D567, G.T. Tilak Road, Mahavir Nagar, Mumbai-400067 Maharashtra' ??
-                    EMPTY_DATA_DASH,
+                  text: 'Plot-D567, G.T. Tilak Road, Mahavir Nagar, Mumbai-400067 Maharashtra',
                 },
               ]}
             />
@@ -143,12 +148,54 @@ const ProfileScreen = () => {
       </View>
     );
   };
-
+  const renderKycIcon = () => {
+    return (
+      <>
+        <Image
+          source={require('../../../assets/images/kycIcon.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+      </>
+    );
+  };
+  const customRightKyc = (expanded: boolean) => {
+    return (
+      <View style={CommonStyles.flexRow}>
+        <Image
+          source={require('../../../assets/images/pendingKyc.png')}
+          style={[styles.iconStyle, styles.top]}
+        />
+        <Image
+          source={
+            expanded
+              ? require('../../../assets/images/downArrow.png')
+              : require('../../../assets/images/upArrow.png')
+          }
+          style={styles.iconStyle}
+        />
+      </View>
+    );
+  };
   const renderKycSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion title="KYC">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          title="KYC"
+          leftComponent={renderKycIcon}
+          customRight={customRightKyc}
+          childrenStyles={styles.accordionchildrenStyles}>
+          <View style={CommonStyles.flexRow}>
+            <Text style={[fontConfig.labelLarge, styles.kyctextStyle]}>
+              KYC not done yet?
+            </Text>
+            <CustomButton
+              style={styles.kycButton}
+              type={ButtonTypes.contained}
+              text={'Complete KYC'}
+              onPress={() => {}}
+              textStyle={styles.kycBtntextStyle}
+            />
+          </View>
         </Accordion>
       </View>
     );
@@ -177,12 +224,18 @@ const ProfileScreen = () => {
   const renderLogoutIcon = () => (
     <Icon1 style={styles.iconStyle} name="logout" size={25} color="#000" />
   );
-
+  const onCustomPressLogout = () => {
+    setShowLogoutModal(true);
+  };
   const renderLogoutSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion leftComponent={renderLogoutIcon} title="Logout">
-          <View style={{height: 100, width: 200}} />
+        <Accordion
+          leftComponent={renderLogoutIcon}
+          title="Logout"
+          // customRight={() => {}}
+          onCustomPress={onCustomPressLogout}>
+          <></>
         </Accordion>
       </View>
     );
@@ -199,13 +252,27 @@ const ProfileScreen = () => {
           navigation.navigate('TabNavigator');
         }}
         isScrollable>
-        <ScreenHeader showScreenName={false} />
         {renderProfilesDetailsSection()}
 
         {renderKycSection()}
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        <SuccessFailureModal
+          btnType="both"
+          primaryButtonTitle={getTranslationLabel('dismiss')}
+          secondaryBtnTitle={getTranslationLabel('logout')}
+          title={getTranslationLabel('logout')}
+          icon={<LogoutIcon width="40" height="40" />}
+          label={getTranslationLabel('logout_description')}
+          onPrimaryBtnHandler={() => setShowLogoutModal(false)}
+          onSecondaryBtnHandler={() => {
+            handleLogout();
+          }}
+          setShowModal={() => setShowLogoutModal(false)}
+          showModal={showLogoutModal}
+          theme={{colors: {onSurface: COLORS.black}}}
+        />
       </Layout>
       <BottomSheetModalComponent
         minHeight={'50%'}
@@ -364,6 +431,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 24,
+  },
+  top: {
+    top: 2,
+  },
+  accordionchildrenStyles: {
+    paddingVertical: 0,
+  },
+  kyctextStyle: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  kycButton: {
+    marginLeft: 'auto',
+    marginRight: 24,
+    marginVertical: 16,
+    height: heightToRatio(32),
+  },
+  kycBtntextStyle: {
+    height: 46,
+    ...fontConfig.labelMedium,
+    color: COLORS.white,
   },
 });
 export default ProfileScreen;

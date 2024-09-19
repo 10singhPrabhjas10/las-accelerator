@@ -57,6 +57,7 @@ export const COLORS = {
   neutralLight: '#f5f5f5',
   greyText: '#656767',
   subtleBorder: '#EAEBEB',
+  grey500: '#2C2D2F',
 };
 
 export const PIE_CHART_COLORS = [

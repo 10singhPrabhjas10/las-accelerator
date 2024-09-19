@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Text} from 'react-native-paper';
-
+import {heightToRatio} from '@/utils/commonMethods';
 import {COLORS} from 'theme/colors';
 import {ButtonTypes, ICustomButtonProps} from 'types/buttons';
 
@@ -41,7 +41,7 @@ const CustomButton = ({
           ? containedButtonTheme
           : outlineButtonTheme
       }
-      style={style}
+      style={[{height: heightToRatio(46), justifyContent: 'center'}, style]}
       mode={type}
       loading={loading}
       icon={() => icon}
