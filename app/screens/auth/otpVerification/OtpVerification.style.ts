@@ -79,16 +79,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
+
   ButtonContainer: {
     flexDirection: 'row',
     width: '100%',
     marginBottom: 20,
+    gap: 20,
+    justifyContent: 'center',
   },
+
   BackButton: {
     borderColor: COLORS.dgreen,
-    flex: 1,
-    marginHorizontal: 20,
-    padding: 5,
+    width: '45%',
   },
   OTPButton: {
     flex: 1,

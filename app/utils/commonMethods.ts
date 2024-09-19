@@ -5,11 +5,11 @@ import {
   PermissionsAndroid,
   PixelRatio,
   Platform,
-  ViewStyle,
+  Alert,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
-import ImagePicker, {Image} from 'react-native-image-crop-picker';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
 import {INDIAN_MOBILE_REGEX} from './Constants';
 import {DateFormats} from 'constants/dateFormat';
@@ -18,7 +18,6 @@ import ReactNativeBlobUtil from 'react-native-blob-util';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import Share from 'react-native-share';
 import {store} from 'store/redux/store';
-import appStringsLocal from './appStringsLocal';
 
 export const callNumber = (phone: string) => {
   let phoneNumber = phone;
@@ -98,8 +97,9 @@ export const getCameraPermission = async () => {
     return '';
   }
 };
+
 export const isMobileNumberValid = (mobileNumber: string) => {
-  return mobileNumber.length === 10 && !mobileNumber.match(INDIAN_MOBILE_REGEX);
+  return mobileNumber.length === 10 && mobileNumber.match(INDIAN_MOBILE_REGEX);
 };
 const showEnableLocationAlert = async () => {
   //ask user to open setting manually and allow location service
@@ -348,11 +348,11 @@ export const downloadPdfWithUrl = async (
     })
       .fetch('GET', data?.url)
       .then(async () => {
-        const channelId = await notifee.createChannel({
-          id: 'important',
-          name: 'Important Notifications',
-          importance: AndroidImportance.HIGH,
-        });
+        // const channelId = await notifee.createChannel({
+        //   id: 'important',
+        //   name: 'Important Notifications',
+        //   importance: AndroidImportance.HIGH,
+        // });
         if (isShare) {
           shareFile(fileName, filePath);
         } else {
@@ -527,6 +527,7 @@ export const getNotificationFilterDateDropDown = () => {
 export const getTranslationLabel = (key: string) => {
   const translations = store.getState().localization.translations;
   // const translations = appStringsLocal.hi;
+  console.log(translations);
   const translation = translations?.find((element: any) => element.key === key);
   return translation?.label || '';
 };
@@ -565,35 +566,60 @@ export const heightToRatio = (pixel: number): number => {
   return ratio * pixel;
 };
 
-export const pickFromCamera = (isCropImage: boolean) => {
-  ImagePicker.openCamera({
-    width: 300,
-    mediaType: 'photo',
-    height: 300,
-    cropping: isCropImage,
-    includeBase64: true,
-    compressImageQuality: 0.7,
-    includeExif: true,
-  })
-    .then((image: Image) => {
-      console.log('imageCamera', image);
-      return image;
-    })
-    .catch(e => console.log(e));
+type MediaType = 'photo' | 'video' | 'any';
+
+type CameraOptions = {
+  width?: number;
+  height?: number;
+  mediaType: MediaType;
+  cropping?: boolean;
+  includeBase64?: boolean;
+  compressImageQuality?: number;
+  includeExif?: boolean;
 };
 
-export const pickFromGallery = () => {
-  ImagePicker.openPicker({
+export const pickFromCamera = async (
+  options: CameraOptions = {
     width: 300,
     height: 300,
-    multiple: false,
-    cropping: true,
+    mediaType: 'photo',
+    cropping: false,
     includeBase64: true,
     compressImageQuality: 0.7,
     includeExif: true,
-  })
-    .then((image: Image) => {
+  },
+): Promise<string | ImageOrVideo | any> => {
+  try {
+    const result = await getCameraPermission();
+    if (result === 'granted') {
+      const image = await ImagePicker.openCamera(options);
       return image;
-    })
-    .catch(e => console.log(e));
+    } else {
+      Alert.alert(result);
+      return '';
+    }
+  } catch (err) {
+    console.error('Error taking selfie:', err);
+    return '';
+  }
+};
+
+export const pickFromGallery = async (
+  options: CameraOptions = {
+    width: 300,
+    height: 300,
+    mediaType: 'photo',
+    cropping: false,
+    includeBase64: true,
+    compressImageQuality: 0.7,
+    includeExif: true,
+  },
+): Promise<string | null | ImageOrVideo> => {
+  try {
+    const image = await ImagePicker.openPicker(options);
+    return image;
+  } catch (err) {
+    console.error('Error taking selfie:', err);
+    return null;
+  }
 };

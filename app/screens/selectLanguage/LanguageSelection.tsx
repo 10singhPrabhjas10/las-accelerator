@@ -20,9 +20,10 @@ import SubHeader from '@/components/subHeader/subHeader';
 import ScreenHeader from '@/components/headers/ScreenHeader';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
-import {getDeviceHeight} from '@/utils/commonMethods';
+import {getDeviceHeight, getTranslationLabel} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 import CommonStyles from '../../utils/commonStyle';
+import LanguageSelectionList from './LanguageSelectionList';
 
 export interface ILanguage {
   id: string;
@@ -59,36 +60,10 @@ const LanguageSelection = () => {
         <SubHeader>
           <View style={styles.container}>
             <Text variant="headlineMedium" style={styles.headerTitle}>
-              {useLanguageSelection('choose_language').label ||
-                'Choose Language'}
+              {getTranslationLabel('select_language')}
             </Text>
-            <FlatList
-              data={LANGUAGES}
-              keyExtractor={item => item.id}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item}) => (
-                <Card
-                  style={
-                    selectedLanguage.id === item.id
-                      ? styles.activeSubCardContainer
-                      : styles.subCardContainer
-                  }
-                  onPress={() => {
-                    console.log('SubCard clicked');
-                    setSelectedLanguage(item);
-                  }}>
-                  <Card.Content style={styles.cardContent}>
-                    <Image source={item.icon} />
-                    <Text
-                      variant="bodySmall"
-                      ellipsizeMode="tail"
-                      numberOfLines={1}>
-                      {item.title}
-                    </Text>
-                  </Card.Content>
-                </Card>
-              )}
-            />
+
+            <LanguageSelectionList />
           </View>
         </SubHeader>
         <CustomButton

@@ -4,6 +4,7 @@ import {IconButton, Text} from 'react-native-paper';
 import {IScreenHeaderProps} from 'types/headers';
 import {COLORS} from 'theme/colors';
 import LogoSvg from '../../../assets/images/logo.svg';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ScreenHeader = ({
   showScreenName = true,
@@ -15,18 +16,16 @@ const ScreenHeader = ({
     <View style={[styles.container, headerStyle]}>
       {showScreenName ? (
         <>
-          <IconButton
-            icon="chevron-left"
-            size={30}
+          <Icon
             onPress={onBackPress}
-            iconColor={COLORS.white}
+            style={styles.iconStyle}
+            name="arrow-back"
+            size={25}
+            color="white"
           />
           <Text variant="bodyLarge" style={styles.header}>
             {header}
           </Text>
-          <View style={styles.logoContainer}>
-            <LogoSvg />
-          </View>
         </>
       ) : (
         <View style={styles.header}>
@@ -52,12 +51,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     paddingVertical: 10,
   },
+  iconStyle: {
+    marginLeft: 10,
+  },
   header: {
     flex: 1,
     color: COLORS.white,
     marginLeft: 24,
   },
   logoContainer: {
-    marginRight: 24,
+    marginRight: 16,
   },
 });

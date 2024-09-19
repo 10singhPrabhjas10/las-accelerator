@@ -1,5 +1,3 @@
-import {Divider} from 'react-native-paper';
-
 export const COLORS = {
   white: '#FFFFFF',
   black: '#000104',
@@ -56,6 +54,9 @@ export const COLORS = {
   dDarkGreen: '#002E33',
   neutralLight: '#f5f5f5',
   greyText: '#656767',
+  portalBackground: 'rgba(0, 66, 75, 0.5)',
+  subtleBorder: '#EAEBEB',
+  grey500: '#2C2D2F',
 };
 
 export const PIE_CHART_COLORS = [
