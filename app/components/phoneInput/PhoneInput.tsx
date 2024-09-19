@@ -61,12 +61,8 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           onPress={toggleDropdown}
           style={styles.dropdownButton}>
           <>
-            <Text variant="labelMedium" style={styles.dialCode}>
-              {selectedCountry.code}
-            </Text>
-            <Text variant="labelMedium" style={styles.dialCode}>
-              {selectedCountry.dialCode}
-            </Text>
+            <Text variant="bodyMedium">{selectedCountry.code}</Text>
+            <Text variant="bodyMedium">{selectedCountry.dialCode}</Text>
           </>
           {isOpen ? <BoldArrowUp /> : <BoldArrowDown />}
         </TouchableOpacity>
@@ -80,7 +76,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         />
       </View>
       {error && (
-        <Text variant="labelMedium" style={styles.errorText}>
+        <Text variant="bodyMedium" style={styles.errorText}>
           {error}
         </Text>
       )}
@@ -93,7 +89,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             <View style={styles.dropdownItem}>
               <Text
                 onPress={() => selectCountry(item)}
-                variant="labelMedium"
+                variant="bodyMedium"
                 style={styles.dialCode}>
                 {item.code} {item.dialCode}
               </Text>
@@ -108,6 +104,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -142,6 +139,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   dropdown: {
+    zIndex: 1,
     maxHeight: 200,
     borderWidth: 1,
     borderColor: '#ccc',

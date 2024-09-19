@@ -1,4 +1,5 @@
 //External dependencies
+import {heightToRatio} from '@/utils/commonMethods';
 import React from 'react';
 import {Platform, StyleSheet, TextStyle, View} from 'react-native';
 import {Text, TextInput, TextInputProps} from 'react-native-paper';
@@ -91,6 +92,7 @@ export const styles = StyleSheet.create({
   },
   textInputView: {
     lineHeight: Platform.OS === 'android' ? 30 : 0,
+    height: heightToRatio(46),
   },
   requiredText: {color: COLORS.red},
 });

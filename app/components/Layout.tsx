@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {LayoutPropsType} from '../types/components';
 import {COLORS} from 'theme/colors';
@@ -59,7 +60,10 @@ const Layout = ({
 export default Layout;
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    flex: 1,
+    backgroundColor: Platform.OS === 'ios' ? COLORS.dDarkGreen : COLORS.white,
+  },
   layout: {
     flex: 1,
     backgroundColor: COLORS.lightGreenBackground,
@@ -68,6 +72,6 @@ const styles = StyleSheet.create({
   scrollableLayout: {
     flex: 1,
     flexGrow: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightGreenBackground,
   },
 });

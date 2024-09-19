@@ -406,12 +406,12 @@ export default function RootNavigation() {
         if (accessToken) {
           dispatch(updateIsAuthenticated(true));
         }
-        const result = await getStorageData('IS_FIRST_TIME_APP_LAUNCH');
-        if ((result === null || result === undefined) && !isAuthenticated) {
-          dispatch(updateIsFirstTimeAppLaunch(true));
-        } else {
-          dispatch(updateIsFirstTimeAppLaunch(false));
-        }
+        // const result = await getStorageData('IS_FIRST_TIME_APP_LAUNCH');
+        // if ((result === null || result === undefined) && !isAuthenticated) {
+        //   dispatch(updateIsFirstTimeAppLaunch(true));
+        // } else {
+        //   dispatch(updateIsFirstTimeAppLaunch(false));
+        // }
       } catch (e) {
         console.log(e);
       }
@@ -812,6 +812,7 @@ export default function RootNavigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{headerShown: false}}>
+        {console.log(isFirstTimeAppLaunch)}
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen

@@ -214,6 +214,10 @@ export default {
       label: 'Primary CP Name',
     },
     {
+      key: 'cp_code',
+      label: 'CP Code',
+    },
+    {
       key: 'contact_person',
       label: 'Contact Person',
     },
