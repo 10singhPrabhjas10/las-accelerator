@@ -3,6 +3,7 @@ import {Modal, Portal} from 'react-native-paper';
 import {IModalComponentProps} from 'types/modal';
 import {COLORS} from 'theme/colors';
 import {StyleSheet} from 'react-native';
+import {heightToRatio, widthToRatio} from '../utils/commonMethods';
 
 const ModalComponent = ({
   showModal,
@@ -29,10 +30,8 @@ export default React.memo(ModalComponent);
 const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: COLORS.white,
-    padding: 20,
-    width: '90%',
     alignSelf: 'center',
     borderRadius: 5,
   },
-  background: {backgroundColor: COLORS.backdrop},
+  background: {backgroundColor: COLORS.portalBackground},
 });

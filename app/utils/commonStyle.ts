@@ -74,6 +74,7 @@ const CommonStyles = StyleSheet.create({
   justifyContentSpaceAround: {justifyContent: 'space-around'},
   flatListMargin: {margin: 20, marginBottom: 0},
   flexOneMargin0: {flex: 1, margin: 0},
+  selfFlexEnd: {alignSelf: 'flex-end'},
 });
 
 export default CommonStyles;

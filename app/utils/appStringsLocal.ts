@@ -258,6 +258,34 @@ export default {
     {key: 'designation', label: 'Designation'},
     {key: 'branch', label: 'Branch'},
     {key: 'officeAddress', label: 'Office Address'},
+    {key: 'upload-profile-pic', label: 'Update Profile Picture'},
+    {key: 'profile-pic', label: 'Profile Picture'},
+    {
+      key: 'camera-gallery-description',
+      label: 'Take a photo or upload from your gallery',
+    },
+    {key: 'camera', label: 'Camera'},
+    {key: 'gallery', label: 'Gallery'},
+    {
+      key: 'profile-modal-heading1',
+      label: 'Need to update',
+    },
+    {
+      key: 'profile-modal-heading2',
+      label: 'your profile Details?',
+    },
+    {
+      key: 'profile-modal-subHeading',
+      label: 'Get in touch with Admin',
+    },
+    {
+      key: 'profile-modal-email',
+      label: 'info@deloitte.com',
+    },
+    {
+      key: 'profile-modal-contact',
+      label: '+91 9876567890',
+    },
     {key: 'select_language', label: 'Select Language'},
     {key: 'change_language', label: 'Change Language'},
   ],

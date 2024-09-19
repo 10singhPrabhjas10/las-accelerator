@@ -1,30 +1,54 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
-import {getProfileData, uploadProfile} from './Profile.business';
-import {IProfileResponse} from './Profile.interface';
-import {getTranslationLabel, heightToRatio} from 'utils/commonMethods';
-import {EMPTY_DATA_DASH} from 'utils/Constants';
+
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store/redux/store';
+
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+
+import {TouchableOpacity} from 'react-native-gesture-handler';
+
+// import {getProfileData, uploadProfile} from './Profile.business';
+// import {IProfileResponse} from './Profile.interface';
+// import {EMPTY_DATA_DASH} from 'utils/Constants';
+// import {RootState} from 'store/redux/store';
 import {updateTabIndex} from 'store/redux/modalSlice';
 import {Text} from 'react-native-paper';
 import Spacer from 'components/spacer';
 import {COLORS} from '../../theme/colors';
-import ScreenHeader from '@/components/headers/ScreenHeader';
+// import ScreenHeader from '@/components/headers/ScreenHeader';
 import SubHeader from '@/components/subHeader/subHeader';
 import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import ProfileSubHeader from '../../components/profilesubHeader/profileSubHeader';
+import {
+  heightToRatio,
+  getTranslationLabel,
+  widthToRatio,
+  pickFromCamera,
+  pickFromGallery,
+} from 'utils/commonMethods';
+
+import ModalComponent from '../../modals/ModalComponent';
+
+import SvgImagePlaceholder from '@/../assets/icons/ImagePlaceholder.svg';
+import SvgCamera from '@/../assets/icons/camera.svg';
+import SvgGallery from '@/../assets/icons/gallery.svg';
+import SvgPencil from '@/../assets/icons/pencil.svg';
+import SvgDelete from '@/../assets/icons/delete.svg';
+import SvgClose from '@/../assets/icons/closeIcon.svg';
+import SvgCall from '@/../assets/icons/callIcon.svg';
+import SvgEmail from '@/../assets/icons/email.svg';
+
 import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import LanguageSelectionList from '../selectLanguage/LanguageSelectionList';
 import CloseIcon from '../../../assets/icons/closeIcon.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import CheckCircle from '../../../assets/icons/check_circle.svg';
 import Edit from '../../../assets/icons/edit.svg';
 import LogoutIcon from '../../../assets/icons/logoutIcon.svg';
@@ -34,18 +58,23 @@ import {ButtonTypes} from '@/types/buttons';
 import SuccessFailureModal from '@/modals/SuccessFailureModal';
 import {clearUser} from '@/store/redux/userSlice';
 import {clearStorage} from '@/utils/AppStorage';
-import {boolean} from 'yup';
+// import {boolean} from 'yup';
+
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const activeDp = useRef<string>('');
   // const user = useSelector((state: RootState) => state.user.user);
   // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
-
+  const [profilePicture, setProfilePicture] = useState<any | null>(null);
+  const [isUpdatingPicture, setIsUpdatingPicture] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const language = useSelector(
     (state: RootState) => state.localization.selectedLanguage,
   );
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
-  const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
   const bottomSheetref = useRef();
   const dispatch = useDispatch();
 
@@ -53,22 +82,46 @@ const ProfileScreen = () => {
   //   getProfileData(setProfileData);
   // }, []);
 
+  const bottomSheetHandler = (): void => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  const contactAdminHandler = (): void => {
+    setShowModal(true);
+  };
+
   const handleLogout = async () => {
     dispatch(clearUser());
     await clearStorage();
   };
+
   const renderProfilesDetailsSection = () => {
     return (
       <View style={CommonStyles.marginBottom20}>
-        <SubHeader shouldShowCardView={true} title={'Gururaj Chandrea'}>
-          <CustomButton
-            type={ButtonTypes.outline}
-            text={'View mapped channel partner'}
-            onPress={() => {
-              navigation.navigate('MappedChannelPartner');
-            }}
-            textStyle={{color: 'green'}}
-          />
+        <SubHeader
+          shouldShowCardView={true}
+          otherSubHeaderContent={
+            <ProfileSubHeader
+              title="Gururaj Chandrea"
+              imageUrl={activeDp.current}
+              isImageEdit
+              imageUploadHandler={bottomSheetHandler}
+              children={
+                <>
+                  <Text style={styles.titleText}>Gururaj Chandrea</Text>
+                  <CustomButton
+                    type={ButtonTypes.outline}
+                    text={'View mapped channel partner'}
+                    onPress={() => {
+                      navigation.navigate('MappedChannelPartner');
+                    }}
+                    textStyle={{color: 'green'}}
+                  />
+                  {/*  add view mapped channel partner button code here */}
+                </>
+              }
+            />
+          }>
           <View style={styles.profileBodyView}>
             <DataCard
               shouldShowCardWrapper={false}
@@ -101,22 +154,24 @@ const ProfileScreen = () => {
             />
           </View>
           <Spacer size={10} />
-          <View style={styles.viewLine}></View>
+          <View style={styles.viewLine} />
           <View style={CommonStyles.rowCenter}>
             <Text
               theme={{colors: {onSurface: COLORS.black}}}
               variant="bodyMedium">
               To update your details,
             </Text>
-            <Text
-              style={[
-                CommonStyles.marginHorizontal10,
-                {textDecorationLine: 'underline'},
-              ]}
-              theme={{colors: {onSurface: COLORS.green}}}
-              variant="bodyMedium">
-              Contact Admin
-            </Text>
+            <TouchableOpacity activeOpacity={0.8} onPress={contactAdminHandler}>
+              <Text
+                style={[
+                  CommonStyles.marginHorizontal10,
+                  {textDecorationLine: 'underline'},
+                ]}
+                theme={{colors: {onSurface: COLORS.green}}}
+                variant="bodyMedium">
+                Contact Admin
+              </Text>
+            </TouchableOpacity>
           </View>
           <Spacer size={10} />
         </SubHeader>
@@ -211,10 +266,7 @@ const ProfileScreen = () => {
   const renderNotificationSection = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
-        <Accordion
-          // eslint-disable-next-line react/no-unstable-nested-components
-          leftComponent={renderNotificationIcon}
-          title="Notification">
+        <Accordion leftComponent={renderNotificationIcon} title="Notification">
           <View style={{height: 100, width: 200}} />
         </Accordion>
       </View>
@@ -240,6 +292,155 @@ const ProfileScreen = () => {
       </View>
     );
   };
+
+  const getPictureHandler = async (type: string) => {
+    try {
+      let result;
+      if (type === 'camera') {
+        result = await pickFromCamera();
+      } else {
+        result = await pickFromGallery();
+      }
+      if (result) {
+        setIsUpdatingPicture(true);
+        setProfilePicture(result);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updatePictureHandler = (): void => {
+    activeDp.current = profilePicture?.path;
+    bottomSheetModalRef.current?.dismiss();
+    setIsUpdatingPicture(false);
+  };
+
+  const deleteIconHandler = () => {
+    setProfilePicture(null);
+    activeDp.current = '';
+  };
+
+  const renderModalContent = () => {
+    return (
+      <ModalComponent showModal={showModal}>
+        <View style={styles.modalTopContainer}>
+          <TouchableOpacity
+            onPress={() => setShowModal(!showModal)}
+            style={CommonStyles.selfFlexEnd}>
+            <SvgClose width={16} height={16} />
+          </TouchableOpacity>
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.modalHeading}>
+              {getTranslationLabel('profile-modal-heading1')}
+            </Text>
+            <Text style={styles.modalHeading}>
+              {getTranslationLabel('profile-modal-heading2')}
+            </Text>
+            <View style={styles.divider} />
+            <Text style={styles.modalSubHeading}>
+              {getTranslationLabel('profile-modal-subHeading')}
+            </Text>
+            <View style={styles.contactContainer}>
+              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+                <SvgCall width={heightToRatio(18)} height={heightToRatio(18)} />
+                <Text style={styles.modalContact}>
+                  {getTranslationLabel('profile-modal-email')}
+                </Text>
+              </View>
+              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+                <SvgEmail
+                  width={heightToRatio(18)}
+                  height={heightToRatio(18)}
+                />
+                <Text style={styles.modalContact}>
+                  {getTranslationLabel('profile-modal-contact')}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ModalComponent>
+    );
+  };
+
+  const renderUploadProfileContent = () => {
+    return (
+      <View style={styles.bottomSheetContainer}>
+        <View>
+          {!isUpdatingPicture && (
+            <Text style={styles.description}>
+              {getTranslationLabel('camera-gallery-description')}
+            </Text>
+          )}
+          <View style={styles.imageContainer}>
+            {profilePicture?.path ? (
+              <>
+                <Image
+                  source={{uri: profilePicture?.path}}
+                  style={styles.image}
+                />
+                {!isUpdatingPicture && (
+                  <TouchableOpacity
+                    onPress={deleteIconHandler}
+                    activeOpacity={0.8}
+                    style={styles.deleteIconContainer}>
+                    <SvgDelete
+                      height={heightToRatio(18)}
+                      width={widthToRatio(14)}
+                    />
+                  </TouchableOpacity>
+                )}
+              </>
+            ) : (
+              <SvgImagePlaceholder width="100%" />
+            )}
+          </View>
+        </View>
+        {isUpdatingPicture ? (
+          <CustomButton
+            type={ButtonTypes.contained}
+            style={styles.updateButton}
+            // textStyle={styles.buttonText}
+            icon={
+              <SvgPencil width={heightToRatio(20)} height={heightToRatio(20)} />
+            }
+            text={getTranslationLabel('upload-profile-pic')}
+            onPress={updatePictureHandler}
+          />
+        ) : (
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              type={ButtonTypes.outline}
+              style={styles.ButtonStyleBS}
+              textStyle={styles.buttonText}
+              icon={
+                <SvgCamera
+                  width={heightToRatio(24)}
+                  height={heightToRatio(24)}
+                />
+              }
+              text={getTranslationLabel('camera')}
+              onPress={() => getPictureHandler('camera')}
+            />
+            <CustomButton
+              type={ButtonTypes.outline}
+              style={styles.ButtonStyleBS}
+              textStyle={styles.buttonText}
+              icon={
+                <SvgGallery
+                  width={heightToRatio(24)}
+                  height={heightToRatio(24)}
+                />
+              }
+              text={getTranslationLabel('gallery')}
+              onPress={() => getPictureHandler('gallery')}
+            />
+          </View>
+        )}
+      </View>
+    );
+  };
   return (
     <>
       <Layout
@@ -258,6 +459,20 @@ const ProfileScreen = () => {
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        {renderModalContent()}
+        <BottomSheetModalComponent
+          maxHeight={'75%'}
+          minHeight={'75%'}
+          enableClose={true}
+          title={
+            isUpdatingPicture
+              ? getTranslationLabel('profile-pic')
+              : getTranslationLabel('upload-profile-pic')
+          }
+          titleTextVariant="headlineSmall"
+          ref={bottomSheetModalRef}>
+          {renderUploadProfileContent()}
+        </BottomSheetModalComponent>
         <SuccessFailureModal
           btnType="both"
           primaryButtonTitle={getTranslationLabel('dismiss')}
@@ -417,6 +632,101 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: 15,
     borderColor: COLORS.dDarkGreen,
+  },
+  titleText: {
+    fontWeight: '500',
+    fontSize: heightToRatio(16),
+    lineHeight: heightToRatio(20),
+    color: COLORS.neutralLight,
+  },
+  bottomSheetContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 5,
+  },
+  imageContainer: {
+    height: heightToRatio(314),
+    width: 'auto',
+    backgroundColor: COLORS.neutralLight,
+    borderRadius: heightToRatio(8),
+    marginTop: heightToRatio(8),
+  },
+  deleteIconContainer: {
+    width: heightToRatio(40),
+    height: heightToRatio(40),
+    backgroundColor: COLORS.white,
+    borderRadius: heightToRatio(20),
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: heightToRatio(10),
+    right: heightToRatio(10),
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: heightToRatio(12),
+  },
+  ButtonStyleBS: {
+    width: widthToRatio(150),
+    height: heightToRatio(48),
+    justifyContent: 'center',
+  },
+  updateButton: {
+    height: heightToRatio(48),
+    justifyContent: 'center',
+    marginVertical: heightToRatio(18),
+  },
+  buttonText: {
+    color: COLORS.dDarkGreen,
+  },
+  description: {
+    fontWeight: '500',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(17.5),
+  },
+  image: {
+    height: heightToRatio(314),
+    borderRadius: heightToRatio(8),
+    width: 'auto',
+  },
+  modalTopContainer: {
+    height: heightToRatio(237),
+    width: widthToRatio(312),
+    paddingHorizontal: widthToRatio(12),
+    paddingVertical: heightToRatio(12),
+  },
+  modalSubHeading: {
+    fontWeight: '500',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(17.5),
+    color: COLORS.grey500,
+  },
+  modalHeading: {
+    fontWeight: '700',
+    fontSize: heightToRatio(20),
+    lineHeight: heightToRatio(25),
+    color: COLORS.grey500,
+  },
+  divider: {
+    width: '100%',
+    height: heightToRatio(1),
+    backgroundColor: COLORS.dividerGrey,
+    marginVertical: heightToRatio(12),
+  },
+  contactContainer: {
+    marginTop: heightToRatio(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContact: {
+    color: COLORS.green,
+    fontWeight: '400',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(21),
+    marginLeft: widthToRatio(6),
+    textAlignVertical: 'center',
   },
   languageContainer: {
     marginHorizontal: '10%',
