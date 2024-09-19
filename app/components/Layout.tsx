@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
   scrollableLayout: {
     flex: 1,
     flexGrow: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightGreenBackground,
   },
 });
