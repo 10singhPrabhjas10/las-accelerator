@@ -262,6 +262,26 @@ export default {
     },
     {key: 'camera', label: 'Camera'},
     {key: 'gallery', label: 'Gallery'},
+    {
+      key: 'profile-modal-heading1',
+      label: 'Need to update',
+    },
+    {
+      key: 'profile-modal-heading2',
+      label: 'your profile Details?',
+    },
+    {
+      key: 'profile-modal-subHeading',
+      label: 'Get in touch with Admin',
+    },
+    {
+      key: 'profile-modal-email',
+      label: 'info@deloitte.com',
+    },
+    {
+      key: 'profile-modal-contact',
+      label: '+91 9876567890',
+    },
   ],
   hi: [
     {key: 'back', label: 'पीछे'},

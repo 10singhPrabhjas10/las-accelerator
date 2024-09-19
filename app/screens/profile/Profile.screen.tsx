@@ -5,11 +5,12 @@ import {StyleSheet, View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
+import {Divider} from 'react-native-paper';
 
 import BottomSheetModalComponent from 'bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 
-import {ImageOrVideo} from 'react-native-image-crop-picker';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {getProfileData, uploadProfile} from './Profile.business';
 import {IProfileResponse} from './Profile.interface';
@@ -36,13 +37,17 @@ import {
 } from 'utils/commonMethods';
 import {ButtonTypes} from '../../types/buttons';
 
+import ModalComponent from '../../modals/ModalComponent';
+
 import SvgImagePlaceholder from '@/../assets/icons/ImagePlaceholder.svg';
 import CustomButton from '../../components/button/CustomButton';
 import SvgCamera from '@/../assets/icons/camera.svg';
 import SvgGallery from '@/../assets/icons/gallery.svg';
 import SvgPencil from '@/../assets/icons/pencil.svg';
 import SvgDelete from '@/../assets/icons/delete.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import SvgClose from '@/../assets/icons/closeIcon.svg';
+import SvgCall from '@/../assets/icons/callIcon.svg';
+import SvgEmail from '@/../assets/icons/email.svg';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
@@ -52,6 +57,7 @@ const ProfileScreen = () => {
   const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
   const [profilePicture, setProfilePicture] = useState<any | null>(null);
   const [isUpdatingPicture, setIsUpdatingPicture] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -63,6 +69,10 @@ const ProfileScreen = () => {
 
   const bottomSheetHandler = (): void => {
     bottomSheetModalRef.current?.present();
+  };
+
+  const contactAdminHandler = (): void => {
+    setShowModal(true);
   };
 
   const renderProfilesDetailsSection = () => {
@@ -139,15 +149,17 @@ const ProfileScreen = () => {
               variant="bodyMedium">
               To update your details,
             </Text>
-            <Text
-              style={[
-                CommonStyles.marginHorizontal10,
-                {textDecorationLine: 'underline'},
-              ]}
-              theme={{colors: {onSurface: COLORS.green}}}
-              variant="bodyMedium">
-              Contact Admin
-            </Text>
+            <TouchableOpacity activeOpacity={0.8} onPress={contactAdminHandler}>
+              <Text
+                style={[
+                  CommonStyles.marginHorizontal10,
+                  {textDecorationLine: 'underline'},
+                ]}
+                theme={{colors: {onSurface: COLORS.green}}}
+                variant="bodyMedium">
+                Contact Admin
+              </Text>
+            </TouchableOpacity>
           </View>
           <Spacer size={10} />
         </SubHeader>
@@ -234,6 +246,50 @@ const ProfileScreen = () => {
 
   const deleteIconHandler = () => {
     setProfilePicture(null);
+    activeDp.current = '';
+  };
+
+  const renderModalContent = () => {
+    return (
+      <ModalComponent showModal={showModal}>
+        <View style={styles.modalTopContainer}>
+          <TouchableOpacity
+            onPress={() => setShowModal(!showModal)}
+            style={CommonStyles.selfFlexEnd}>
+            <SvgClose width={16} height={16} />
+          </TouchableOpacity>
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.modalHeading}>
+              {getTranslationLabel('profile-modal-heading1')}
+            </Text>
+            <Text style={styles.modalHeading}>
+              {getTranslationLabel('profile-modal-heading2')}
+            </Text>
+            <View style={styles.divider} />
+            <Text style={styles.modalSubHeading}>
+              {getTranslationLabel('profile-modal-subHeading')}
+            </Text>
+            <View style={styles.contactContainer}>
+              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+                <SvgCall width={heightToRatio(18)} height={heightToRatio(18)} />
+                <Text style={styles.modalContact}>
+                  {getTranslationLabel('profile-modal-email')}
+                </Text>
+              </View>
+              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+                <SvgEmail
+                  width={heightToRatio(18)}
+                  height={heightToRatio(18)}
+                />
+                <Text style={styles.modalContact}>
+                  {getTranslationLabel('profile-modal-contact')}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ModalComponent>
+    );
   };
 
   const renderUploadProfileContent = () => {
@@ -332,6 +388,7 @@ const ProfileScreen = () => {
         {renderLanguageSection()}
         {renderNotificationSection()}
         {renderLogoutSection()}
+        {renderModalContent()}
         <BottomSheetModalComponent
           maxHeight={'75%'}
           minHeight={'75%'}
@@ -531,6 +588,43 @@ const styles = StyleSheet.create({
     height: heightToRatio(314),
     borderRadius: heightToRatio(8),
     width: 'auto',
+  },
+  modalTopContainer: {
+    height: heightToRatio(237),
+    width: widthToRatio(312),
+    paddingHorizontal: widthToRatio(12),
+    paddingVertical: heightToRatio(12),
+  },
+  modalSubHeading: {
+    fontWeight: '500',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(17.5),
+    color: COLORS.surfaceText,
+  },
+  modalHeading: {
+    fontWeight: '700',
+    fontSize: heightToRatio(20),
+    lineHeight: heightToRatio(25),
+    color: COLORS.surfaceText,
+  },
+  divider: {
+    width: '100%',
+    height: heightToRatio(1),
+    backgroundColor: COLORS.dividerGrey,
+    marginVertical: heightToRatio(12),
+  },
+  contactContainer: {
+    marginTop: heightToRatio(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContact: {
+    color: COLORS.green,
+    fontWeight: '400',
+    fontSize: heightToRatio(14),
+    lineHeight: heightToRatio(21),
+    marginLeft: widthToRatio(6),
+    textAlignVertical: 'center',
   },
 });
 export default ProfileScreen;
