@@ -268,3 +268,139 @@ export const mappedChannelPartnersRes = {
     },
   },
 };
+
+export const orderDashboard = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    pastOrders: [
+      {
+        id: '1',
+        name: 'Pebble Water Heater',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '2',
+        name: 'Master Heater Pebble',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '3',
+        name: 'Smart Water Heater',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '4',
+        name: 'Smart Water Heater',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '5',
+        name: 'Smart Water Heater',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '6',
+        name: 'Smart Water Heater',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+    ],
+    categories: [
+      {
+        id: '1',
+        name: 'Water Heaters',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [
+          {
+            id: '1',
+            name: 'Storage Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '2',
+            name: 'Instant Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '3',
+            name: 'Solar Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '4',
+            name: 'Gas Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '5',
+            name: 'Immersion Heat Rods',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '6',
+            name: 'Heat Pump Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '7',
+            name: 'Electric Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+          {
+            id: '8',
+            name: 'Tankless Water Heaters',
+            image: require('../../assets/images/pabbleWaterHeater.png'),
+          },
+        ],
+      },
+      {
+        id: '2',
+        name: 'Electric Inductions',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '3',
+        name: 'Washing Machines',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '4',
+        name: 'Refrigerators',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '5',
+        name: 'Refrigerators',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '6',
+        name: 'Refrigerators',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '7',
+        name: 'Refrigerators',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+      {
+        id: '8',
+        name: 'Refrigerators',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        subcategories: [],
+      },
+    ],
+  },
+};
