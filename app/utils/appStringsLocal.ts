@@ -254,7 +254,10 @@ export default {
     {key: 'designation', label: 'Designation'},
     {key: 'branch', label: 'Branch'},
     {key: 'officeAddress', label: 'Office Address'},
+    {key: 'select_language', label: 'Select Language'},
+    {key: 'change_language', label: 'Change Language'},
   ],
+
   hi: [
     {key: 'back', label: 'पीछे'},
     {key: 'next', label: 'अगला'},
@@ -335,4 +338,10 @@ export default {
     {key: 'branch', label: 'ब्रांच'},
     {key: 'officeAddress', label: 'कार्यालय का पता'},
   ],
+  mr: [],
+  te: [],
+  bn: [],
+  ma: [],
+  ka: [],
+  ta: [],
 };

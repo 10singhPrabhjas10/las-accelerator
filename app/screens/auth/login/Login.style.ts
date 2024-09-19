@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   LoginCard: {
-    zIndex: 1,
+    zIndex: 1000,
   },
   EnterMobile: {
     marginBottom: 10,
