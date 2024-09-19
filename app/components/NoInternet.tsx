@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {COLORS} from 'theme/colors';
 import {
@@ -11,7 +11,7 @@ import {fontConfig} from '@/theme/fonts';
 import {Image} from 'react-native';
 import CustomButton from './button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
-
+import {Text} from 'react-native-paper';
 const {width, height} = Dimensions.get('window');
 
 export const NoInternetToast = ({
@@ -20,32 +20,26 @@ export const NoInternetToast = ({
   description = " It looks like you're offline. Please check your connection and refresh.",
 }) => {
   const netInfo = useNetInfo();
-  if (
-    !netInfo.isConnected
-    // true
-  ) {
-    return (
-      <View style={styles.offlineContainer}>
-        <Image source={imageSource} style={styles.imageStyles} />
-        <Text style={styles.offlineText}>{title}</Text>
-        <Text style={styles.offlineSubText}>{description}</Text>
-        <CustomButton
-          style={styles.refreshBtn}
-          type={ButtonTypes.contained}
-          text={'Refresh'}
-          onPress={() => {}}
-          textStyle={styles.textStyle}
-          icon={
-            <Image
-              source={require('../../assets/images/refresh.png')}
-              style={styles.refeshIcon}
-            />
-          }
-        />
-      </View>
-    );
-  }
-  return null;
+  return !netInfo.isConnected ? (
+    <View style={styles.offlineContainer}>
+      <Image source={imageSource} style={styles.imageStyles} />
+      <Text style={styles.offlineText}>{title}</Text>
+      <Text style={styles.offlineSubText}>{description}</Text>
+      <CustomButton
+        style={styles.refreshBtn}
+        type={ButtonTypes.contained}
+        text={'Refresh'}
+        onPress={() => {}}
+        textStyle={styles.textStyle}
+        icon={
+          <Image
+            source={require('../../assets/images/refresh.png')}
+            style={styles.refeshIcon}
+          />
+        }
+      />
+    </View>
+  ) : null;
 };
 
 const styles = StyleSheet.create({
