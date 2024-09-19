@@ -27,21 +27,26 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   subCardContainer: {
+    borderWidth: 1,
+    borderColor: COLORS.subtleBorder,
     height: 48,
     margin: 6,
-    borderRadius: 2,
+    borderRadius: 5,
     marginVertical: 10,
+    justifyContent: 'center',
     backgroundColor: COLORS.white,
   },
   activeSubCardContainer: {
     // flex: 1,
     // width: getDeviceWidth(0.9),
     // width: 500,
+    borderWidth: 1,
+    borderColor: COLORS.darkGreen,
     marginVertical: 10,
     height: 48,
     margin: 6,
     justifyContent: 'center',
-    borderRadius: 2,
+    borderRadius: 5,
     backgroundColor: COLORS.backgroundDgreen,
   },
   disabledSubCardContainer: {
@@ -54,10 +59,13 @@ const styles = StyleSheet.create({
   columnWrapper: {
     // gap: 20,
   },
+  icon: {
+    width: 28,
+    height: 28,
+  },
   cardContent: {
     alignItems: 'center',
-
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'center',
   },

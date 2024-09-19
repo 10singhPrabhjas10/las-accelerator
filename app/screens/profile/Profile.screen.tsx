@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
 import {Image, StyleSheet, View} from 'react-native';
@@ -21,6 +21,12 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
+import LanguageSelectionList from '../selectLanguage/LanguageSelectionList';
+import CloseIcon from '../../../assets/icons/closeIcon.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import CheckCircle from '../../../assets/icons/check_circle.svg';
+import Edit from '../../../assets/icons/edit.svg';
 import LogoutIcon from '../../../assets/icons/logoutIcon.svg';
 import {fontConfig} from '@/theme/fonts';
 import CustomButton from '@/components/button/CustomButton';
@@ -33,8 +39,14 @@ const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
   // const user = useSelector((state: RootState) => state.user.user);
   // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+
+  const language = useSelector(
+    (state: RootState) => state.localization.selectedLanguage,
+  );
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
+  const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
+  const bottomSheetref = useRef();
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -119,7 +131,19 @@ const ProfileScreen = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion leftComponent={renderlanguageIcon} title="Language">
-          <View style={{height: 100, width: 200}} />
+          <View style={styles.languageDropDown}>
+            <View style={CommonStyles.flexRow}>
+              <CheckCircle />
+              <Text
+                style={CommonStyles.marginHorizontal10}
+                variant="titleMedium">
+                {language.title}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => bottomSheetref.current.present()}>
+              <Edit />
+            </TouchableOpacity>
+          </View>
         </Accordion>
       </View>
     );
@@ -250,6 +274,22 @@ const ProfileScreen = () => {
           theme={{colors: {onSurface: COLORS.black}}}
         />
       </Layout>
+      <BottomSheetModalComponent
+        minHeight={'50%'}
+        maxHeight={'70%'}
+        ref={bottomSheetref}>
+        <View style={styles.languageContainer}>
+          <View style={styles.languageHead}>
+            <Text variant="headlineSmall">
+              {getTranslationLabel('change_language')}
+            </Text>
+            <TouchableOpacity onPress={() => bottomSheetref.current.close()}>
+              <CloseIcon />
+            </TouchableOpacity>
+          </View>
+          <LanguageSelectionList />
+        </View>
+      </BottomSheetModalComponent>
     </>
   );
 
@@ -377,6 +417,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: 15,
     borderColor: COLORS.dDarkGreen,
+  },
+  languageContainer: {
+    marginHorizontal: '10%',
+    paddingBottom: '20%',
+  },
+  languageHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: '5%',
+  },
+  languageDropDown: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: 24,
   },
   top: {
     top: 2,

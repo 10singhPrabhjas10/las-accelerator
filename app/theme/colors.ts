@@ -56,6 +56,7 @@ export const COLORS = {
   dDarkGreen: '#002E33',
   neutralLight: '#f5f5f5',
   greyText: '#656767',
+  subtleBorder: '#EAEBEB',
   grey500: '#2C2D2F',
 };
 
