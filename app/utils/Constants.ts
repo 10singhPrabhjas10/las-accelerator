@@ -1,9 +1,7 @@
-import {JSX} from 'react/jsx-runtime';
-import EnglishIcon from '../../assets/images/english.svg';
 export const HELP_SUPPORT_NUMBER = '+91 ';
 export const HELP_SUPPORT_MAIL = 'info@a bc.com';
 
-export const INDIAN_MOBILE_REGEX = /^[6-9][0-9]{9}$/;
+// export const INDIAN_MOBILE_REGEX = /^[6-9][0-9]{9}$/;
 export const DL_NO_REGEX = /^[A-Z]{2}\d{2}\d{11}$/;
 export const AADHAR_REGEX =
   /^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}s[0-9]{4}s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/;
@@ -13,60 +11,52 @@ export const PAN_NO_REGEX = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 export const IFSC_REGEX = /^[A-Z]{4}[0]{1}[A-Z0-9]{6}$/;
 export const YOUTUBE_LINK_REGEX =
   /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&\n?#]+)/;
-export interface ILanguage {
-  id: string;
-  icon: any;
-  title: string;
-  svgIcon: any;
-}
+
 export const LANGUAGES = [
   {
     id: 'en',
     icon: require('../../assets/images/englishFont.png'),
     title: 'English',
-    svgIcon: require('../../assets/images/english.svg'),
   },
   {
     id: 'hi',
     icon: require('../../assets/images/hindiFont.png'),
     title: 'हिंदी',
-    svgIcon: require('../../assets/images/hindi.svg'),
   },
   {
     id: 'mr',
     icon: require('../../assets/images/hindiFont.png'),
     title: 'मराठी',
-    svgIcon: require('../../assets/images/hindi.svg'),
   },
   {
     id: 'te',
     icon: require('../../assets/images/teluguFont.png'),
     title: 'తెలుగు',
-    svgIcon: require('../../assets/images/Telgu.svg'),
   },
   {
     id: 'bn',
     icon: require('../../assets/images/bengaliFont.png'),
     title: 'বাংলা',
-    svgIcon: require('../../assets/images/bengali.svg'),
   },
   {
     id: 'ma',
     icon: require('../../assets/images/malayalamFont.png'),
     title: 'മലയാളം',
-    svgIcon: require('../../assets/images/hindi.svg'),
   },
   {
     id: 'ka',
     icon: require('../../assets/images/kannadaFont.png'),
     title: 'ಕನ್ನಡ',
-    svgIcon: require('../../assets/images/kannada.svg'),
   },
   {
     id: 'ta',
     icon: require('../../assets/images/tamilFont.png'),
     title: 'தமிழ்',
-    svgIcon: require('../../assets/images/Tamil.svg'),
+  },
+  {
+    id: '', //dummy item to manage FlatList
+    icon: '',
+    title: '',
   },
 ];
 

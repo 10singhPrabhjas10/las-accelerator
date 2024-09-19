@@ -363,7 +363,7 @@ export default {
     },
     {key: 'letsBegin', label: 'चलो शुरू करें'},
     {key: 'empId', label: 'कर्मचारी ID'},
-    {key: 'sf_id', label: 'SF ID'},
+    {key: 'sf_id', label: 'एसएफ आईडी'},
     {key: 'reportingMgmr', label: 'रिपोर्टिंग मैनेजर'},
     {key: 'dateOfjoining', label: 'जॉइनिंग की तारीख'},
     {key: 'designation', label: 'पद'},
