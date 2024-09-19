@@ -167,7 +167,7 @@ const ProfileScreen = () => {
         />
         <Image
           source={
-            expanded
+            !expanded
               ? require('../../../assets/images/downArrow.png')
               : require('../../../assets/images/upArrow.png')
           }

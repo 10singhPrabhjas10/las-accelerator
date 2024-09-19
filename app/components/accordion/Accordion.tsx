@@ -52,7 +52,7 @@ const Accordion = ({
   const right = () => {
     return (
       <>
-        {expanded ? (
+        {!expanded ? (
           <Image
             source={require('../../../assets/images/downArrow.png')}
             style={[styles.iconStyle]}
@@ -74,7 +74,7 @@ const Accordion = ({
         expanded={expanded}
         onPress={handlePress}
         left={leftComponent}
-        right={!!customRight ? () => customRight(expanded) : right}
+        right={customRight ? () => customRight(expanded) : right}
         titleStyle={[styles.titleStyle, titleStyle]}
         style={[
           styles.heading,
