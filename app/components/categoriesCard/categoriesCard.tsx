@@ -1,18 +1,26 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageProps, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {heightToRatio, widthToRatio} from '@/utils/commonMethods';
+import {widthToRatio} from '@/utils/commonMethods';
 import {Image} from 'react-native';
 import {COLORS} from '@/theme/colors';
 import {fontConfig} from '@/theme/fonts';
-
-const CategoriesCard = ({title, imagePath, onPress}) => {
+interface CategoriesCardProps {
+  title: String;
+  imagePath: ImageProps;
+  onPress: () => void;
+}
+const CategoriesCard = ({
+  title = 'Water Heaters',
+  imagePath = require('../../../assets/images/demoCategorieItem.png'),
+  onPress,
+}: CategoriesCardProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.continer}>
-      <Image
-        source={require('../../../assets/images/demoCategorieItem.png')}
-        style={styles.imagestyle}
-      />
-      <Text style={styles.titleName}>Water Heaters</Text>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.continer}
+      onPress={onPress}>
+      <Image source={imagePath} style={styles.imagestyle} />
+      <Text style={styles.titleName}>{title}</Text>
     </TouchableOpacity>
   );
 };

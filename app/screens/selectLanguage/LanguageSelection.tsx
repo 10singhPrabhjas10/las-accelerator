@@ -24,7 +24,6 @@ import {getDeviceHeight, getTranslationLabel} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 import CommonStyles from '../../utils/commonStyle';
 import LanguageSelectionList from './LanguageSelectionList';
-import CategoriesCard from '@/components/categoriesCard/categoriesCard';
 
 export interface ILanguage {
   id: string;
@@ -55,7 +54,7 @@ const LanguageSelection = () => {
   };
 
   return (
-    <Layout isScrollable>
+    <Layout>
       <ScreenHeader showScreenName={false} />
       <View style={CommonStyles.rowSpaceBetweenFlex}>
         <SubHeader>
@@ -83,7 +82,6 @@ const LanguageSelection = () => {
             // });
           }}
         />
-        <CategoriesCard/>
       </View>
     </Layout>
   );
