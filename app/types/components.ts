@@ -15,6 +15,8 @@ export interface LayoutPropsType {
   isScrollable?: boolean;
   onBackPress?: () => void;
   headerTitle?: string;
+  customLogo?: () => JSX.Element | null;
+  onPressCustomLogo?: () => boolean;
 }
 
 // MenuItem

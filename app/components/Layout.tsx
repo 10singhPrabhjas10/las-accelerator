@@ -19,6 +19,8 @@ const Layout = ({
   onBackPress,
   hideStatusBar = false,
   isScrollable = false,
+  customLogo = () => null,
+  onPressCustomLogo = () => false,
 }: LayoutPropsType) => {
   const navigation = useNavigation();
 
@@ -39,6 +41,8 @@ const Layout = ({
               navigation.goBack();
             }
           }}
+          customLogo={customLogo}
+          onPressLogo={onPressCustomLogo}
           header={headerTitle}
         />
       )}

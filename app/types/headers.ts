@@ -6,6 +6,8 @@ export interface IScreenHeaderProps {
   header?: string;
   headerStyle?: ViewStyle;
   customStyle?: ViewStyle;
+  customLogo?: () => JSX.Element | null;
+  onPressLogo?: () => boolean;
 }
 
 export interface IScreenSubHeaderProps {

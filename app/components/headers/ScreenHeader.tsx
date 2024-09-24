@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {IconButton, Text} from 'react-native-paper';
 import {IScreenHeaderProps} from 'types/headers';
 import {COLORS} from 'theme/colors';
@@ -11,6 +11,8 @@ const ScreenHeader = ({
   onBackPress,
   header,
   headerStyle,
+  customLogo = () => null,
+  onPressLogo = () => false,
 }: IScreenHeaderProps) => {
   return (
     <View style={[styles.container, headerStyle]}>
@@ -26,11 +28,20 @@ const ScreenHeader = ({
           <Text variant="bodyLarge" style={styles.header}>
             {header}
           </Text>
+          <TouchableOpacity
+            disabled={!onPressLogo()}
+            onPress={onPressLogo}
+            style={styles.logoContainer}>
+            {!customLogo() ? <LogoSvg /> : customLogo()}
+          </TouchableOpacity>
         </>
       ) : (
-        <View style={styles.header}>
-          <LogoSvg />
-        </View>
+        <TouchableOpacity
+          disabled={!onPressLogo()}
+          onPress={onPressLogo}
+          style={styles.header}>
+          {!customLogo() ? <LogoSvg /> : customLogo()}
+        </TouchableOpacity>
       )}
     </View>
   );

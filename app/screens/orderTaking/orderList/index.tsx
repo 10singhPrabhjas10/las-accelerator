@@ -1,0 +1,75 @@
+import React, {useState} from 'react';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
+import {COLORS} from '@/theme/colors';
+import ListItem from '@/components/listItem/ListItem';
+import {getDeviceWidth, heightToRatio} from '@/utils/commonMethods';
+interface IOrderList {
+  data: any;
+  title: string;
+  isListhorizontal?: boolean;
+  isGrid?: boolean;
+}
+const OrderList = ({
+  data,
+  title,
+  isListhorizontal = false,
+  isGrid = false, // New prop to handle grid layout
+}: IOrderList) => {
+  const numColumns = isGrid ? 2 : 1; // Set number of columns for grid layout
+
+  return (
+    <View>
+      <View style={styles.headText}>
+        <Text variant="headlineMedium" style={styles.titleLable}>
+          {title}
+        </Text>
+        <Text variant="labelLarge" style={styles.titleLable}>
+          {data.length} results
+        </Text>
+      </View>
+      <FlatList
+        data={data}
+        horizontal={isListhorizontal}
+        showsVerticalScrollIndicator={false}
+        numColumns={numColumns} // Set the number of columns dynamically
+        renderItem={({item}) => (
+          <ListItem
+            customContainerStyle={{
+              alignItems: 'center',
+              marginHorizontal: 10,
+              width: isGrid ? getDeviceWidth(0.35) : getDeviceWidth(0.3), // Adjust width for grid layout
+              marginBottom: 20, // Add space between rows
+            }}
+            title1={item.name}
+            title2={item.price ?? ''}
+            image={item.image}
+          />
+        )}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
+        key={isGrid ? 'grid' : 'list'} // Force re-render when numColumns changes
+        contentContainerStyle={isGrid && styles.gridContainer} // Add container style for grid layout
+      />
+    </View>
+  );
+};
+export const styles = StyleSheet.create({
+  headText: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginVertical: heightToRatio(10),
+  },
+  titleLable: {
+    alignSelf: 'center',
+  },
+  titleResults: {
+    color: COLORS.greyText,
+  },
+  listContainer: {
+    flex: 1,
+    backgroundColor: COLORS.lightGreenBackground,
+  },
+  gridContainer: {},
+});
+export default OrderList;
