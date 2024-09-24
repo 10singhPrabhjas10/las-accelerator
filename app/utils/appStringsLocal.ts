@@ -288,6 +288,10 @@ export default {
     },
     {key: 'select_language', label: 'Select Language'},
     {key: 'change_language', label: 'Change Language'},
+    {
+      key: 'search_by_product_category',
+      label: 'Search by product, category...',
+    },
   ],
 
   hi: [

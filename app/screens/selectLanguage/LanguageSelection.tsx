@@ -24,6 +24,7 @@ import {getDeviceHeight, getTranslationLabel} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 import CommonStyles from '../../utils/commonStyle';
 import LanguageSelectionList from './LanguageSelectionList';
+import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 
 export interface ILanguage {
   id: string;
@@ -57,6 +58,7 @@ const LanguageSelection = () => {
     <Layout>
       <ScreenHeader showScreenName={false} />
       <View style={CommonStyles.rowSpaceBetweenFlex}>
+        <SearchInputWithCamera/>
         <SubHeader>
           <View style={styles.container}>
             <Text variant="headlineMedium" style={styles.headerTitle}>
