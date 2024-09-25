@@ -3,7 +3,12 @@ import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {COLORS} from '@/theme/colors';
 import ListItem from '@/components/listItem/ListItem';
-import {getDeviceWidth, heightToRatio} from '@/utils/commonMethods';
+import {
+  getDeviceWidth,
+  heightToRatio,
+  widthToRatio,
+} from '@/utils/commonMethods';
+import CategoriesCard from '@/components/categoriesCard/categoriesCard';
 interface IOrderList {
   data: any;
   title: string;
@@ -32,19 +37,22 @@ const OrderList = ({
         data={data}
         horizontal={isListhorizontal}
         showsVerticalScrollIndicator={false}
+        columnWrapperStyle={styles.coloumnWrapperStyle}
         numColumns={numColumns} // Set the number of columns dynamically
-        renderItem={({item}) => (
-          <ListItem
-            customContainerStyle={{
+        renderItem={({item, index}) => (
+          <View
+            style={{
+              flex: 1,
               alignItems: 'center',
-              marginHorizontal: 10,
-              width: isGrid ? getDeviceWidth(0.35) : getDeviceWidth(0.3), // Adjust width for grid layout
-              marginBottom: 20, // Add space between rows
-            }}
-            title1={item.name}
-            title2={item.price ?? ''}
-            image={item.image}
-          />
+              backgroundColor: COLORS.lightGreenBackground,
+              marginVertical: 10,
+            }}>
+            <CategoriesCard
+              title={item.name}
+              imagePath={item.image}
+              onPress={() => {}}
+            />
+          </View>
         )}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
@@ -55,10 +63,15 @@ const OrderList = ({
   );
 };
 export const styles = StyleSheet.create({
+  coloumnWrapperStyle: {
+    paddingHorizontal: widthToRatio(6),
+    paddingBottom: 10,
+  },
   headText: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginVertical: heightToRatio(10),
+    marginHorizontal: widthToRatio(14),
   },
   titleLable: {
     alignSelf: 'center',

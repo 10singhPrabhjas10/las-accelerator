@@ -13,6 +13,8 @@ import OrderBg from '../../../assets/images/orderBg.svg';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import OrderList from './orderList';
 import Layout from '@/components/Layout';
+import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
+import ProductDivion from './productDivision';
 //--------old screen
 // const OrderTaking = () => {
 //   const navigation = useNavigation<RootNavigationProp>();
@@ -51,8 +53,6 @@ import Layout from '@/components/Layout';
 //--------new screen--------
 
 const OrderTaking = () => {
-  const productData = orderDashboard.data.pastOrders;
-  const categoryData = orderDashboard.data.categories;
   return (
     <Layout
       headerTitle={'Product Categories'}
@@ -60,41 +60,13 @@ const OrderTaking = () => {
         console.log('log');
         return false;
       }}
-      style={{paddingHorizontal: widthToRatio(24)}}
       customLogo={() => <ShoppingCartIcon />}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.listContainer}>
-          <OrderList
-            isListhorizontal={true}
-            title={'Past Orders'}
-            data={productData}
-          />
-
-          <OrderList
-            title={'Categories'}
-            data={categoryData}
-            isGrid={true} // Pass isGrid as a prop to display items in a grid
-          />
-        </View>
+        <ProductDivion />
       </ScrollView>
     </Layout>
   );
 };
 export default OrderTaking;
 
-export const styles = StyleSheet.create({
-  titleLable: {
-    fontSize: 16,
-    fontWeight: '700',
-    letterSpacing: 0,
-    lineHeight: 20,
-    marginLeft: 16,
-    color: COLORS.black,
-    marginVertical: heightToRatio(20),
-  },
-
-  listContainer: {
-    flex: 1,
-    backgroundColor: COLORS.lightGreenBackground,
-  },
-});
+export const styles = StyleSheet.create({});
