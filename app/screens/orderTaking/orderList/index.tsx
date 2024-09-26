@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Text} from 'react-native-paper';
 import {COLORS} from '@/theme/colors';
 import ListItem from '@/components/listItem/ListItem';
@@ -14,12 +20,14 @@ interface IOrderList {
   title: string;
   isListhorizontal?: boolean;
   isGrid?: boolean;
+  onPressListItem: () => null;
 }
 const OrderList = ({
   data,
   title,
   isListhorizontal = false,
   isGrid = false, // New prop to handle grid layout
+  onPressListItem,
 }: IOrderList) => {
   const numColumns = isGrid ? 2 : 1; // Set number of columns for grid layout
 
@@ -39,20 +47,20 @@ const OrderList = ({
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={styles.coloumnWrapperStyle}
         numColumns={numColumns} // Set the number of columns dynamically
-        renderItem={({item, index}) => (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: COLORS.lightGreenBackground,
-              marginVertical: 10,
-            }}>
-            <CategoriesCard
-              title={item.name}
-              imagePath={item.image}
-              onPress={() => {}}
+        renderItem={({item}) => (
+          <TouchableOpacity onPress={onPressListItem}>
+            <ListItem
+              customContainerStyle={{
+                alignItems: 'center',
+                marginHorizontal: 10,
+                width: isGrid ? getDeviceWidth(0.35) : getDeviceWidth(0.3), // Adjust width for grid layout
+                marginBottom: 20, // Add space between rows
+              }}
+              title1={item.name}
+              title2={item.price ?? ''}
+              image={item.image}
             />
-          </View>
+          </TouchableOpacity>
         )}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}

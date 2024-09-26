@@ -58,6 +58,7 @@ export const COLORS = {
   portalBackground: 'rgba(0, 66, 75, 0.5)',
   subtleBorder: '#EAEBEB',
   grey500: '#2C2D2F',
+  accentGreen:'#EEF9EC'
 };
 
 export const PIE_CHART_COLORS = [

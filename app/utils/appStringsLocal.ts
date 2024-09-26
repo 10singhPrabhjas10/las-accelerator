@@ -292,6 +292,10 @@ export default {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
     },
+    {
+      key: 'product_series',
+      label: 'Product Series',
+    },
   ],
 
   hi: [
