@@ -53,6 +53,7 @@ import Layout from '@/components/Layout';
 const OrderTaking = () => {
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
+  const navigation = useNavigation();
   return (
     <Layout
       headerTitle={'Product Categories'}
@@ -69,11 +70,13 @@ const OrderTaking = () => {
             title={'Past Orders'}
             data={productData}
           />
-
           <OrderList
             title={'Categories'}
             data={categoryData}
             isGrid={true} // Pass isGrid as a prop to display items in a grid
+            onPressListItem={() => {
+              navigation.navigate('ProductSeries');
+            }}
           />
         </View>
       </ScrollView>

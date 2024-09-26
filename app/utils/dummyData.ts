@@ -404,3 +404,62 @@ export const orderDashboard = {
     ],
   },
 };
+
+export const productSeries = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    filters: [
+      {
+        id: 1,
+        name: 'Schemes',
+      },
+      {
+        id: 2,
+        name: 'In-stock',
+      },
+      {
+        id: 3,
+        name: 'Past Orders',
+      },
+    ],
+    relatedProducts: [
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [1, 2],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2, 3],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2],
+      },
+      {
+        discount: '12% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [3],
+      },
+    ],
+  },
+};
