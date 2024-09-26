@@ -14,9 +14,9 @@ import Camera_alt from '../../../assets/images/camera_alt.svg';
 import Search from '../../../assets/images/search.svg';
 
 interface SearchInputWithCameraProps {
-  onChangeText: (String) => void;
-  placeholder: String;
-  value: String;
+  onChangeText: (arg0: String) => void;
+  placeholder: string;
+  value: string;
   setPhoto: () => void;
   continerStyles: StyleProp<ViewStyle>;
 }

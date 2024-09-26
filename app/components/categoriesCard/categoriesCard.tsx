@@ -1,4 +1,10 @@
-import {ImageProps, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  ImageProps,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {widthToRatio} from '@/utils/commonMethods';
 import {Image} from 'react-native';
@@ -8,16 +14,18 @@ interface CategoriesCardProps {
   title: String;
   imagePath: ImageProps;
   onPress: () => void;
+  style?: any;
 }
 const CategoriesCard = ({
   title = 'Water Heaters',
   imagePath = require('../../../assets/images/demoCategorieItem.png'),
   onPress,
+  style = {},
 }: CategoriesCardProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.continer}
+      style={styles.container}
       onPress={onPress}>
       <Image source={imagePath} style={styles.imagestyle} />
       <Text style={styles.titleName}>{title}</Text>
@@ -28,12 +36,11 @@ const CategoriesCard = ({
 export default CategoriesCard;
 
 const styles = StyleSheet.create({
-  continer: {
+  container: {
     width: widthToRatio(148),
     borderRadius: 8,
     padding: 8,
     backgroundColor: COLORS.white,
-    marginBottom: 50,
     shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
@@ -41,12 +48,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 15.46,
-
-    elevation: 20,
+    elevation: 7,
   },
   imagestyle: {
     width: widthToRatio(78),
     aspectRatio: 1,
+    alignSelf: 'center',
   },
   titleName: {
     ...fontConfig.labelMedium,

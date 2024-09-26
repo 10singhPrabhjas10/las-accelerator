@@ -9,7 +9,12 @@ import {
 import {Text} from 'react-native-paper';
 import {COLORS} from '@/theme/colors';
 import ListItem from '@/components/listItem/ListItem';
-import {getDeviceWidth, heightToRatio} from '@/utils/commonMethods';
+import {
+  getDeviceWidth,
+  heightToRatio,
+  widthToRatio,
+} from '@/utils/commonMethods';
+import CategoriesCard from '@/components/categoriesCard/categoriesCard';
 interface IOrderList {
   data: any;
   title: string;
@@ -40,6 +45,7 @@ const OrderList = ({
         data={data}
         horizontal={isListhorizontal}
         showsVerticalScrollIndicator={false}
+        columnWrapperStyle={styles.coloumnWrapperStyle}
         numColumns={numColumns} // Set the number of columns dynamically
         renderItem={({item}) => (
           <TouchableOpacity onPress={onPressListItem}>
@@ -65,10 +71,15 @@ const OrderList = ({
   );
 };
 export const styles = StyleSheet.create({
+  coloumnWrapperStyle: {
+    paddingHorizontal: widthToRatio(6),
+    paddingBottom: 10,
+  },
   headText: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginVertical: heightToRatio(10),
+    marginHorizontal: widthToRatio(14),
   },
   titleLable: {
     alignSelf: 'center',
