@@ -13,6 +13,7 @@ import OrderBg from '../../../assets/images/orderBg.svg';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import OrderList from './orderList';
 import Layout from '@/components/Layout';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 //--------old screen
 // const OrderTaking = () => {
 //   const navigation = useNavigation<RootNavigationProp>();
@@ -51,14 +52,14 @@ import Layout from '@/components/Layout';
 //--------new screen--------
 
 const OrderTaking = () => {
+  const navigation = useNavigation<RootNavigationProp>();
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
   return (
     <Layout
       headerTitle={'Product Categories'}
       onPressCustomLogo={() => {
-        console.log('log');
-        return false;
+        navigation.navigate('OrderSummary');
       }}
       style={{paddingHorizontal: widthToRatio(24)}}
       customLogo={() => <ShoppingCartIcon />}>

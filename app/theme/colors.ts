@@ -1,6 +1,7 @@
 export const COLORS = {
   white: '#FFFFFF',
   black: '#000104',
+  black1: '#2C2C2C',
   grey: '#5B5B5B',
   grey2: '#808080',
   grey3: '#A4A4A4',
@@ -51,6 +52,7 @@ export const COLORS = {
   olympicBlue: '#AFCCF0',
   // new Colors
   dgreen: '#26890D',
+  appliedGreen: '#F1FCF4',
   backgroundDgreen: '#DDF2D9',
   dDarkGreen: '#002E33',
   neutralLight: '#f5f5f5',

@@ -16,7 +16,7 @@ export interface LayoutPropsType {
   onBackPress?: () => void;
   headerTitle?: string;
   customLogo?: () => JSX.Element | null;
-  onPressCustomLogo?: () => boolean;
+  onPressCustomLogo?: () => void;
 }
 
 // MenuItem
