@@ -158,6 +158,8 @@ import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarg
 import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
 import ProductSeries from '../screens/productSeries/productSeries';
 
+import Home from '@/screens/orderTaking/home';
+import ProductDivion from '@/screens/orderTaking/productDivision';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -376,6 +378,7 @@ export type RootNavigationTypes = {
     categoryId: string;
   };
   VolumeTarget: {categoryId: string; categoryName: string};
+  OrderHome: undefined;
 };
 
 export type RootNavigationProp = NativeStackNavigationProp<RootNavigationTypes>;
@@ -594,6 +597,9 @@ export default function RootNavigation() {
   const OrderTakingStack = (
     <>
       <RootStack.Screen name={'OrderTaking'} component={OrderTaking} />
+      <RootStack.Screen name={'OrderHome'} component={Home} />
+      <RootStack.Screen name={'ProductDivision'} component={ProductDivion} />
+
       <RootStack.Screen name={'OrderTask'} component={OrderTaskScreen} />
       <RootStack.Screen
         name={'OrderCreation'}
