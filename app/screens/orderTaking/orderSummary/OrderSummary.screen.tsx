@@ -23,6 +23,7 @@ import AdditionalSchemes from './additionalSchemes/AdditionalSchemes';
 import Spacer from '@/components/spacer';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
+import CompleteKycModal from '@/components/completeKycModal/CompleteKycModal';
 
 interface ISchemeProps {
   id: number;
@@ -36,6 +37,7 @@ const cartItemsData = cartItems.data;
 const OrderSummary = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const [showModal, setShowModal] = useState(false);
+  const [showKYCModal, setShowKCModal] = useState<boolean>(false);
   const [schemesSelected, setSchemesSelected] = useState<ISchemeProps>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const totalQuantity = cartItems?.data?.reduce(
@@ -207,7 +209,9 @@ const OrderSummary = () => {
               <Spacer size={16} />
               <CustomButton
                 text="Get OTP & Confirm Order"
-                onPress={() => {}}
+                onPress={() => {
+                  setShowKCModal(true);
+                }}
                 type={ButtonTypes.contained}
               />
               <Spacer size={16} />
@@ -224,6 +228,10 @@ const OrderSummary = () => {
           </BottomSheetModalComponent>
         </>
       )}
+      <CompleteKycModal
+        showModal={showKYCModal}
+        setShowModal={setShowKCModal}
+      />
     </>
   );
 };
