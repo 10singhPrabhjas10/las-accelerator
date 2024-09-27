@@ -66,6 +66,9 @@ const ProfileScreen = () => {
   const [profilePicture, setProfilePicture] = useState<any | null>(null);
   const [isUpdatingPicture, setIsUpdatingPicture] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [emailToggle, setEmailToggle] = useState<boolean>(false);
+  const [smsToggle, setSmsToggle] = useState<boolean>(false);
+  const [inAppToggle, setInAppToggle] = useState<boolean>(false);
   const language = useSelector(
     (state: RootState) => state.localization.selectedLanguage,
   );
@@ -276,8 +279,10 @@ const ProfileScreen = () => {
               <SvgEmail />
               <Text style={styles.switchText}>Email</Text>
               <Switch
-                value={true}
-                onValueChange={() => {}}
+                value={emailToggle}
+                onValueChange={() => {
+                  setEmailToggle(!emailToggle);
+                }}
                 style={styles.switchStyles}
               />
             </View>
@@ -285,8 +290,10 @@ const ProfileScreen = () => {
               <SMS />
               <Text style={styles.switchText}>SMS</Text>
               <Switch
-                value={true}
-                onValueChange={() => {}}
+                value={smsToggle}
+                onValueChange={() => {
+                  setSmsToggle(!smsToggle);
+                }}
                 style={styles.switchStyles}
               />
             </View>
@@ -294,8 +301,10 @@ const ProfileScreen = () => {
               <InApp />
               <Text style={styles.switchText}>In-App</Text>
               <Switch
-                value={true}
-                onValueChange={() => {}}
+                value={inAppToggle}
+                onValueChange={() => {
+                  setInAppToggle(!inAppToggle);
+                }}
                 style={styles.switchStyles}
               />
             </View>
