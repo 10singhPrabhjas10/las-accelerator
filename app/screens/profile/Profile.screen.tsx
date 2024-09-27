@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {updateTabIndex} from 'store/redux/modalSlice';
-import {Text} from 'react-native-paper';
+import {Switch, Text} from 'react-native-paper';
 import Spacer from 'components/spacer';
 import {COLORS} from '../../theme/colors';
 // import ScreenHeader from '@/components/headers/ScreenHeader';
@@ -26,6 +26,8 @@ import {
   widthToRatio,
   pickFromCamera,
   pickFromGallery,
+  callNumber,
+  sendMail,
 } from 'utils/commonMethods';
 
 import ModalComponent from '../../modals/ModalComponent';
@@ -37,6 +39,9 @@ import SvgDelete from '@/../assets/icons/delete.svg';
 import SvgClose from '@/../assets/icons/closeIcon.svg';
 import SvgCall from '@/../assets/icons/callIcon.svg';
 import SvgEmail from '@/../assets/icons/email.svg';
+import InApp from '@/../assets/icons/inApp.svg';
+import SMS from '@/../assets/icons/sms.svg';
+
 import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import LanguageSelectionList from '../selectLanguage/LanguageSelectionList';
 import CloseIcon from '../../../assets/icons/closeIcon.svg';
@@ -49,6 +54,7 @@ import {ButtonTypes} from '@/types/buttons';
 import SuccessFailureModal from '@/modals/SuccessFailureModal';
 import {clearUser} from '@/store/redux/userSlice';
 import {clearStorage} from '@/utils/AppStorage';
+import RowItem from '@/components/rowItem/RowItem';
 // import {boolean} from 'yup';
 
 const ProfileScreen = () => {
@@ -265,7 +271,35 @@ const ProfileScreen = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion leftComponent={renderNotificationIcon} title="Notification">
-          <View style={{height: 100, width: 200}} />
+          <View style={{marginRight: 16, marginVertical: 16, marginLeft: -24}}>
+            <View style={[CommonStyles.flexRow, {marginBottom: 8}]}>
+              <SvgEmail />
+              <Text style={styles.switchText}>Email</Text>
+              <Switch
+                value={true}
+                onValueChange={() => {}}
+                style={styles.switchStyles}
+              />
+            </View>
+            <View style={[CommonStyles.flexRow, {marginBottom: 8}]}>
+              <SMS />
+              <Text style={styles.switchText}>SMS</Text>
+              <Switch
+                value={true}
+                onValueChange={() => {}}
+                style={styles.switchStyles}
+              />
+            </View>
+            <View style={[CommonStyles.flexRow]}>
+              <InApp />
+              <Text style={styles.switchText}>In-App</Text>
+              <Switch
+                value={true}
+                onValueChange={() => {}}
+                style={styles.switchStyles}
+              />
+            </View>
+          </View>
         </Accordion>
       </View>
     );
@@ -282,8 +316,9 @@ const ProfileScreen = () => {
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion
           leftComponent={renderLogoutIcon}
+          // removeRightIcon={true}
           title="Logout"
-          // customRight={() => {}}
+          customRight={() => {}}
           onCustomPress={onCustomPressLogout}>
           <></>
         </Accordion>
@@ -340,22 +375,30 @@ const ProfileScreen = () => {
               {getTranslationLabel('profile-modal-subHeading')}
             </Text>
             <View style={styles.contactContainer}>
-              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+              <TouchableOpacity
+                onPress={() => {
+                  callNumber(getTranslationLabel('profile-modal-contact'));
+                }}
+                style={[CommonStyles.flexRow, CommonStyles.center]}>
                 <SvgCall width={heightToRatio(18)} height={heightToRatio(18)} />
                 <Text style={styles.modalContact}>
-                  {getTranslationLabel('profile-modal-email')}
+                  {getTranslationLabel('profile-modal-contact')}
                 </Text>
-              </View>
+              </TouchableOpacity>
               <Spacer size={20} />
-              <View style={[CommonStyles.flexRow, CommonStyles.center]}>
+              <TouchableOpacity
+                onPress={() => {
+                  sendMail(getTranslationLabel('profile-modal-email'));
+                }}
+                style={[CommonStyles.flexRow, CommonStyles.center]}>
                 <SvgEmail
                   width={heightToRatio(18)}
                   height={heightToRatio(18)}
                 />
                 <Text style={styles.modalContact}>
-                  {getTranslationLabel('profile-modal-contact')}
+                  {getTranslationLabel('profile-modal-email')}
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

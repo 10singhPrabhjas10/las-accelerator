@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     shadowRadius: 2,
     elevation: 2,
+    top:4
   },
   innerContainer: {
     backgroundColor: COLORS.white,

@@ -163,5 +163,15 @@ const styles = StyleSheet.create({
     ...fontConfig.labelMedium,
     color: COLORS.white,
   },
+  switchStyles:{
+    bottom:2,
+    marginLeft:"auto"
+  },
+  switchText:{
+    marginLeft:8,
+    bottom:2,
+    
+
+  }
 });
 export default styles;
