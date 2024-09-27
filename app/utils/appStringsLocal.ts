@@ -308,6 +308,10 @@ export default {
       key: 'past_orders',
       label: 'Past Orders',
     },
+    {
+      key: 'retailer_KYC_Pending',
+      label: 'Retailer KYC Pending',
+    },
   ],
 
   hi: [
