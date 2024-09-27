@@ -32,7 +32,7 @@ interface ISchemeProps {
   description: string;
 }
 
-const cartItemsData = cartItems.data;
+const cartItemsData = cartItems?.data;
 
 const OrderSummary = () => {
   const navigation = useNavigation<RootNavigationProp>();
