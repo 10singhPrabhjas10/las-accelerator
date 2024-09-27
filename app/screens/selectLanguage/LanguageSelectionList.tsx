@@ -59,12 +59,14 @@ const LanguageSelectionList = ({onlanguageChange}: ILanguage) => {
               style={{
                 flexDirection: 'row',
                 width: '40%',
-                justifyContent: 'space-between',
+                // justifyContent: 'space-between',
               }}>
               <Text variant="bodyMedium" ellipsizeMode="tail" numberOfLines={1}>
                 {item.title}
               </Text>
-              {selectedLanguage.id === item.id ? <CheckCircle /> : null}
+              {selectedLanguage.id === item.id ? (
+                <CheckCircle width={40} />
+              ) : null}
             </View>
             <Image style={styles.icon} source={item.icon} />
           </Card.Content>

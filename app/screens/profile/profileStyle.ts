@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   kycButton: {
     marginLeft: 'auto',
-    marginRight: 24,
+    marginRight: 16,
     marginVertical: 16,
     height: heightToRatio(32),
   },

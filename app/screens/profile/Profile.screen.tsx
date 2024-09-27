@@ -193,7 +193,11 @@ const ProfileScreen = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion leftComponent={renderlanguageIcon} title="Language">
-          <View style={styles.languageDropDown}>
+          <View
+            style={[
+              styles.languageDropDown,
+              {marginRight: 24, marginLeft: -24},
+            ]}>
             <View style={CommonStyles.flexRow}>
               <CheckCircle />
               <Text
@@ -246,7 +250,8 @@ const ProfileScreen = () => {
           leftComponent={renderKycIcon}
           customRight={customRightKyc}
           childrenStyles={styles.accordionchildrenStyles}>
-          <View style={CommonStyles.flexRow}>
+          <View
+            style={[CommonStyles.flexRow, {marginRight: 16, marginLeft: -24}]}>
             <Text style={[fontConfig.labelLarge, styles.kyctextStyle]}>
               KYC not done yet?
             </Text>
