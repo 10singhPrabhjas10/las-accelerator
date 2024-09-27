@@ -15,6 +15,8 @@ import OrderList from './orderList';
 import Layout from '@/components/Layout';
 import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 import ProductDivion from './productDivision';
+import ProductSeries from '../productSeries/productSeries';
+import Home from './home';
 //--------old screen
 // const OrderTaking = () => {
 //   const navigation = useNavigation<RootNavigationProp>();
@@ -56,33 +58,7 @@ const OrderTaking = () => {
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
   const navigation = useNavigation();
-  return (
-    <Layout
-      headerTitle={'Product Categories'}
-      onPressCustomLogo={() => {
-        console.log('log');
-        return false;
-      }}
-      customLogo={() => <ShoppingCartIcon />}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.listContainer}>
-          <OrderList
-            isListhorizontal={true}
-            title={'Past Orders'}
-            data={productData}
-          />
-          <OrderList
-            title={'Categories'}
-            data={categoryData}
-            isGrid={true} // Pass isGrid as a prop to display items in a grid
-            onPressListItem={() => {
-              navigation.navigate('ProductSeries');
-            }}
-          />
-        </View>
-      </ScrollView>
-    </Layout>
-  );
+  return <Text onPress={() => navigation.navigate('OrderHome')}>PressMe</Text>;
 };
 export default OrderTaking;
 

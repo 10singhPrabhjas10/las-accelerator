@@ -15,10 +15,15 @@ import {Text} from 'react-native-paper';
 import SeriesCard from '../orderTaking/components/SeriesCard';
 import Cross from '../../../assets/icons/cross.svg';
 import {productSeries} from '../../utils/dummyData';
+import CommonStyles from '@/utils/commonStyle';
+import OrderSearch from '@/components/orderSearch';
 
 const ProductSeries = () => {
   const {filters, relatedProducts} = productSeries.data;
   const [selectedFilters, setselectedFilters] = useState([]);
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchImg, setSearchImg] = useState<any>();
+
   const onFilterPress = (id: Number) => {
     if (selectedFilters.includes(id)) {
       setselectedFilters(selectedFilters.filter(num => num !== id));
@@ -35,72 +40,74 @@ const ProductSeries = () => {
     );
   };
   return (
-    <Layout
-      headerTitle={getTranslationLabel('product_series')}
-      onPressCustomLogo={() => {
-        console.log('log');
-        return false;
-      }}
-      customLogo={() => <ShoppingCartIcon />}>
-      <SearchInputWithCamera continerStyles={styles.continerStyles} />
-      <View style={styles.headText}>
-        <Text variant="headlineMedium" style={styles.titleLable}>
-          Aqua Water Heaters
-        </Text>
-        <Text variant="labelLarge" style={styles.titleLable}>
-          {getFilteredList().length} results
-        </Text>
+    <>
+      <OrderSearch onChangeImage={setSearchImg} onChangeText={setSearchText} />
+      <View style={styles.parent}>
+        <FlatList
+          data={filters}
+          horizontal={true}
+          style={CommonStyles.marginVertical10}
+          renderItem={({item}) => {
+            const isSelected = selectedFilters.includes(item.id);
+            console.log(isSelected, selectedFilters);
+            return (
+              <TouchableOpacity
+                style={[
+                  styles.chipsContiner,
+                  isSelected ? styles.selectedchipsContiner : {},
+                ]}
+                onPress={() => onFilterPress(item.id)}>
+                <Text>{item.name}</Text>
+                {isSelected && (
+                  <View style={styles.crossIcon}>
+                    <Cross />
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          }}
+        />
+
+        <View style={styles.headText}>
+          <Text variant="headlineMedium" style={styles.titleLable}>
+            Aqua Water Heaters
+          </Text>
+          <Text variant="labelLarge" style={styles.titleLable}>
+            {getFilteredList().length} results
+          </Text>
+        </View>
+
+        <FlatList
+          data={getFilteredList()}
+          renderItem={({item}) => {
+            return (
+              <SeriesCard
+                title={item.discount}
+                onAddPress={() => {}}
+                image={<Image source={item.image} style={{width: 50}} />}
+                seriesName={item.name}
+                skuName={item.avl}
+                skuId={item.avl}
+                price={item.price}
+              />
+            );
+          }}
+        />
       </View>
-      <FlatList
-        data={filters}
-        horizontal={true}
-        renderItem={({item}) => {
-          const isSelected = selectedFilters.includes(item.id);
-          console.log(isSelected, selectedFilters);
-
-          return (
-            <TouchableOpacity
-              style={[
-                styles.chipsContiner,
-                isSelected ? styles.selectedchipsContiner : {},
-              ]}
-              onPress={() => onFilterPress(item.id)}>
-              <Text>{item.name}</Text>
-              {isSelected && (
-                <View style={styles.crossIcon}>
-                  <Cross />
-                </View>
-              )}
-            </TouchableOpacity>
-          );
-        }}
-      />
-
-      <FlatList
-        data={getFilteredList()}
-        renderItem={({item}) => {
-          return (
-            <SeriesCard
-              title={item.discount}
-              onAddPress={() => {}}
-              image={<Image source={item.image} style={{width: 50}} />}
-              seriesName={item.name}
-              skuName={item.avl}
-              skuId={item.avl}
-            />
-          );
-        }}
-      />
-    </Layout>
+    </>
   );
 };
 
 export default ProductSeries;
 
 const styles = StyleSheet.create({
-  continerStyles: {
-    padding: heightToRatio(24),
+  containerStyles: {
+    padding: 10,
     backgroundColor: COLORS.dDarkGreen,
+    height: heightToRatio(88),
+  },
+  parent: {
+    paddingHorizontal: 10,
   },
   rowView: {
     flexDirection: 'row',
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginVertical: heightToRatio(10),
-    paddingHorizontal: 24,
+    paddingHorizontal: 10,
   },
   titleLable: {
     alignSelf: 'center',

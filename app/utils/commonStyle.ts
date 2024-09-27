@@ -19,6 +19,8 @@ const CommonStyles = StyleSheet.create({
   padding12: {padding: 12},
   padding10: {padding: 10},
   padding5: {padding: 5},
+  paddingL10: {paddingLeft: 10},
+  paddingR10: {paddingRight: 10},
   flexOne: {flex: 1},
   flexGrow: {flexGrow: 1},
   flexRow: {flexDirection: 'row'},
@@ -35,6 +37,7 @@ const CommonStyles = StyleSheet.create({
   marginHorizontal10: {marginHorizontal: 10},
   marginVertical16: {marginVertical: 16},
   marginVertical10: {marginVertical: 10},
+  marginL10: {marginLeft: 10},
   scrollViewContainer: {
     flexGrow: 1,
     paddingHorizontal: 20,

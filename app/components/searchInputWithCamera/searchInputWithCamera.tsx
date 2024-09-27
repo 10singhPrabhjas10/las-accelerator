@@ -14,23 +14,23 @@ import Camera_alt from '../../../assets/images/camera_alt.svg';
 import Search from '../../../assets/images/search.svg';
 
 interface SearchInputWithCameraProps {
-  onChangeText: (arg0: String) => void;
-  placeholder: string;
+  onChangeText: (arg0: string) => void;
+  placeholder?: string;
   value: string;
-  setPhoto: () => void;
-  continerStyles: StyleProp<ViewStyle>;
+  setPhoto: (img: any) => void;
+  containerStyles: StyleProp<ViewStyle>;
 }
 
 const SearchInputWithCamera = ({
   onChangeText = () => {},
   placeholder = getTranslationLabel('search_by_product_category'),
   value = '',
-  setPhoto = () => {},
-  continerStyles = {},
+  setPhoto = (img: any = {}) => {},
+  containerStyles = {},
 }: SearchInputWithCameraProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={continerStyles}>
+    <View style={containerStyles}>
       <View style={styles.container}>
         <View style={styles.icon}>
           <Search />
