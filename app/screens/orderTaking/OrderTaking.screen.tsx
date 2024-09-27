@@ -14,6 +14,8 @@ import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import OrderList from './orderList';
 import Layout from '@/components/Layout';
 import {RootNavigationProp} from '@/routes/RootNavigation';
+import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
+import ProductDivion from './productDivision';
 //--------old screen
 // const OrderTaking = () => {
 //   const navigation = useNavigation<RootNavigationProp>();
@@ -55,13 +57,13 @@ const OrderTaking = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
+  const navigation = useNavigation();
   return (
     <Layout
       headerTitle={'Product Categories'}
       onPressCustomLogo={() => {
         navigation.navigate('OrderSummary');
       }}
-      style={{paddingHorizontal: widthToRatio(24)}}
       customLogo={() => <ShoppingCartIcon />}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.listContainer}>
@@ -70,11 +72,13 @@ const OrderTaking = () => {
             title={'Past Orders'}
             data={productData}
           />
-
           <OrderList
             title={'Categories'}
             data={categoryData}
             isGrid={true} // Pass isGrid as a prop to display items in a grid
+            onPressListItem={() => {
+              navigation.navigate('ProductSeries');
+            }}
           />
         </View>
       </ScrollView>
@@ -83,19 +87,4 @@ const OrderTaking = () => {
 };
 export default OrderTaking;
 
-export const styles = StyleSheet.create({
-  titleLable: {
-    fontSize: 16,
-    fontWeight: '700',
-    letterSpacing: 0,
-    lineHeight: 20,
-    marginLeft: 16,
-    color: COLORS.black,
-    marginVertical: heightToRatio(20),
-  },
-
-  listContainer: {
-    flex: 1,
-    backgroundColor: COLORS.lightGreenBackground,
-  },
-});
+export const styles = StyleSheet.create({});

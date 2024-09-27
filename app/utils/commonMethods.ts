@@ -30,8 +30,8 @@ export const callNumber = (phone: string) => {
   return Linking.openURL(phoneNumber);
 };
 
-export const sendMail = () => {
-  return Linking.openURL('mailto:info@abc.com');
+export const sendMail = email => {
+  return Linking.openURL(`mailto:${email}`);
 };
 
 export const secondsToMinutes = (time: number) => {

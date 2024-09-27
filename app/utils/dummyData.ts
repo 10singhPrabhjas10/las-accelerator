@@ -269,6 +269,183 @@ export const mappedChannelPartnersRes = {
   },
 };
 
+export const currentOffers = {
+  ///Offer
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    offers: [
+      {
+        id: '1',
+        title: 'title',
+        subTitle: 'subTitle',
+        offerImage: 'https://www.dummy.png',
+        offerAction: 'Place Order',
+        offerActionId: '1',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: 'https://www.dummy.png',
+        },
+      },
+      {
+        id: '2',
+        title: 'title2',
+        subTitle: 'subTitle2',
+        offerImage: 'https://www.dummy.png',
+        offerAction: 'Know More',
+        offerActionId: '2',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: 'https://www.dummy.png',
+        },
+      },
+    ],
+  },
+};
+export const pastOrder = {
+  /////Past Orders
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    past_order: [
+      {
+        product_id: '1',
+        product_name: 'Pebble Water Heater',
+        product_image_url: 'url',
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: 'https://www.dummy.png',
+        },
+        sub_category: {
+          id: '12',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '2',
+        product_name: 'Pebble Water Heater',
+        product_image_url: 'url',
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '2',
+          name: 'Water Heater',
+          image: 'https://www.dummy.png',
+        },
+        sub_category: {
+          id: '22',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: 'url',
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: 'https://www.dummy.png',
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+    ],
+  },
+};
+export const categoryOrder = {
+  ///category
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    pages: 5,
+    total_items: 45,
+    per_page: 10,
+    current_page: 1,
+    isFilter: false,
+    categories: [
+      {
+        id: '1',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '2',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '3',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '4',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '5',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+    ],
+  },
+};
+export const subCategoryOrder = {
+  ///category
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    category: {
+      id: '1',
+      name: 'Water Heater',
+      image: 'https://www.dummy.png',
+    },
+    sub_categories: [
+      {
+        id: '1',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '2',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '3',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '4',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+      {
+        id: '5',
+        name: 'Water Heater',
+        image: 'https://www.dummy.png',
+      },
+    ],
+  },
+};
+
 export const orderDashboard = {
   success: true,
   message: 'Data retrieved successfully',
@@ -510,3 +687,61 @@ export const additionalSchemes = [
     description: 'On Order Value > ₹50,000',
   },
 ];
+export const productSeries = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    filters: [
+      {
+        id: 1,
+        name: 'Schemes',
+      },
+      {
+        id: 2,
+        name: 'In-stock',
+      },
+      {
+        id: 3,
+        name: 'Past Orders',
+      },
+    ],
+    relatedProducts: [
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [1, 2],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2, 3],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2],
+      },
+      {
+        discount: '12% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450 avl',
+        price: '₹8,999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [3],
+      },
+    ],
+  },
+};

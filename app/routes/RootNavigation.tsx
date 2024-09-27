@@ -154,7 +154,9 @@ import Performance from 'screens/Retailer/performance/Performance.screen';
 import PrimarySales from 'screens/primaryCP/primarySales/PrimarySales.screen';
 import PrimarySalesPerformance from 'screens/primaryCP/primarySales/primarySalesPerformance/PrimarySalesPerformance.screen';
 import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarget.screen';
+
 import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
+import ProductSeries from '../screens/productSeries/productSeries';
 
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
@@ -607,6 +609,7 @@ export default function RootNavigation() {
         component={PrimaryOrderCreationScreen}
       />
       <RootStack.Screen name={'OrderSummary'} component={OrderSummary} />
+      <RootStack.Screen name={'ProductSeries'} component={ProductSeries} />
     </>
   );
 
