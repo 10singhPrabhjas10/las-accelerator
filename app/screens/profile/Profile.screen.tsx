@@ -100,7 +100,7 @@ const ProfileScreen = () => {
           otherSubHeaderContent={
             <ProfileSubHeader
               title="Gururaj Chandrea"
-              imageUrl={activeDp.current}
+              imageUrl={profilePicture?.path}
               isImageEdit
               imageUploadHandler={bottomSheetHandler}
               children={
@@ -335,8 +335,11 @@ const ProfileScreen = () => {
         result = await pickFromGallery();
       }
       if (result) {
-        setIsUpdatingPicture(true);
+        // setIsUpdatingPicture(true);
         setProfilePicture(result);
+        console.log(result.path, 'result');
+
+        activeDp.current = result?.path;
       }
     } catch (err) {
       console.log(err);

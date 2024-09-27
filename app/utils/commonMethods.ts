@@ -583,7 +583,7 @@ export const pickFromCamera = async (
     width: 300,
     height: 300,
     mediaType: 'photo',
-    cropping: false,
+    cropping: true,
     includeBase64: true,
     compressImageQuality: 0.7,
     includeExif: true,
