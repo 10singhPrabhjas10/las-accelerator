@@ -538,7 +538,7 @@ const ProfileScreen = () => {
           secondaryBtnTitle={getTranslationLabel('logout')}
           title={getTranslationLabel('logout')}
           icon={<LogoutIcon width="40" height="40" />}
-          label={getTranslationLabel('logout_description')}
+          // label={getTranslationLabel('logout_description')}
           onPrimaryBtnHandler={() => setShowLogoutModal(false)}
           onSecondaryBtnHandler={() => {
             handleLogout();
