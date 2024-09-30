@@ -10,11 +10,12 @@ import Layout from '@/components/Layout';
 import CartLogo from '../../../../assets/icons/shopping_cart.svg';
 import {ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 const Home = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
   const categoryData = categoryOrder.data.categories;
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootNavigationProp>();
   const gotoDivision = () => {
     navigation.navigate('ProductDivision');
     return null;
@@ -23,7 +24,7 @@ const Home = () => {
     <Layout
       headerTitle={'Product OverView'}
       onPressCustomLogo={() => {
-        console.log('log');
+        navigation.navigate('OrderSummary');
         return false;
       }}
       customLogo={() => <CartLogo />}>

@@ -12,7 +12,7 @@ const ScreenHeader = ({
   header,
   headerStyle,
   customLogo = () => null,
-  onPressLogo = () => false,
+  onPressLogo,
 }: IScreenHeaderProps) => {
   return (
     <View style={[styles.container, headerStyle]}>
@@ -29,7 +29,7 @@ const ScreenHeader = ({
             {header}
           </Text>
           <TouchableOpacity
-            disabled={!onPressLogo()}
+            disabled={!onPressLogo}
             onPress={onPressLogo}
             style={styles.logoContainer}>
             {!customLogo() ? <LogoSvg /> : customLogo()}
@@ -37,7 +37,7 @@ const ScreenHeader = ({
         </>
       ) : (
         <TouchableOpacity
-          disabled={!onPressLogo()}
+          disabled={!onPressLogo}
           onPress={onPressLogo}
           style={styles.header}>
           {!customLogo() ? <LogoSvg /> : customLogo()}

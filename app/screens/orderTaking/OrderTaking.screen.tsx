@@ -13,6 +13,7 @@ import OrderBg from '../../../assets/images/orderBg.svg';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import OrderList from './orderList';
 import Layout from '@/components/Layout';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 import ProductDivion from './productDivision';
 import ProductSeries from '../productSeries/productSeries';
@@ -55,9 +56,10 @@ import Home from './home';
 //--------new screen--------
 
 const OrderTaking = () => {
+  const navigation = useNavigation<RootNavigationProp>();
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
-  const navigation = useNavigation();
+
   return <Text onPress={() => navigation.navigate('OrderHome')}>PressMe</Text>;
 };
 export default OrderTaking;
