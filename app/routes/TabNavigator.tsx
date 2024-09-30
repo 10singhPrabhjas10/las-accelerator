@@ -32,26 +32,27 @@ const TabNavigator = () => {
       key: 'Home',
       title: getTranslationLabel('home'),
       focusedIcon: () => <HomeIconSvg style={{color: COLORS.dgreen}} />,
-      unfocusedIcon: () => <HomeIconSvg style={{color: 'black'}} />,
-      color: 'green',
+      unfocusedIcon: () => <HomeIconSvg style={{color: COLORS.black}} />,
     },
     {
       key: 'Notification',
       title: getTranslationLabel('notification'),
       focusedIcon: () => <NotificationIconSvg style={{color: COLORS.dgreen}} />,
-      unfocusedIcon: () => <NotificationIconSvg style={{color: 'black'}} />,
+      unfocusedIcon: () => (
+        <NotificationIconSvg style={{color: COLORS.black}} />
+      ),
     },
     {
       key: 'Helpdesk',
       title: getTranslationLabel('helpdesk'),
       focusedIcon: () => <HelpDeskIconSvg style={{color: COLORS.dgreen}} />,
-      unfocusedIcon: () => <HelpDeskIconSvg style={{color: 'black'}} />,
+      unfocusedIcon: () => <HelpDeskIconSvg style={{color: COLORS.black}} />,
     },
     {
       key: 'Profile',
       title: getTranslationLabel('profile'),
       focusedIcon: () => <ProfileIconSvg style={{color: COLORS.dgreen}} />,
-      unfocusedIcon: () => <ProfileIconSvg style={{color: 'black'}} />,
+      unfocusedIcon: () => <ProfileIconSvg style={{color: COLORS.black}} />,
     },
   ];
 
@@ -84,7 +85,7 @@ const TabNavigator = () => {
       renderScene={renderScene}
       barStyle={{}}
       activeColor={COLORS.dgreen}
-      activeIndicatorStyle={{backgroundColor: '#ffffff00'}}
+      activeIndicatorStyle={{backgroundColor: '#ffffff00'}} //transparent background
     />
   );
 };
