@@ -154,7 +154,10 @@ import Performance from 'screens/Retailer/performance/Performance.screen';
 import PrimarySales from 'screens/primaryCP/primarySales/PrimarySales.screen';
 import PrimarySalesPerformance from 'screens/primaryCP/primarySales/primarySalesPerformance/PrimarySalesPerformance.screen';
 import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarget.screen';
+
+import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
 import ProductSeries from '../screens/productSeries/productSeries';
+
 import Home from '@/screens/orderTaking/home';
 import ProductDivion from '@/screens/orderTaking/productDivision';
 export type RootNavigationTypes = {
@@ -257,6 +260,7 @@ export type RootNavigationTypes = {
   };
   CheckIn: {item: IStoreBeatPlanItem; date: string; refreshData: () => void};
   OrderTaking: undefined;
+  OrderSummary: undefined;
   OrderTask: {
     relation?: string;
     navigationFrom: string;
@@ -610,6 +614,7 @@ export default function RootNavigation() {
         name={'PrimaryOrderCreation'}
         component={PrimaryOrderCreationScreen}
       />
+      <RootStack.Screen name={'OrderSummary'} component={OrderSummary} />
       <RootStack.Screen name={'ProductSeries'} component={ProductSeries} />
     </>
   );
@@ -819,7 +824,6 @@ export default function RootNavigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{headerShown: false}}>
-        {console.log(isFirstTimeAppLaunch)}
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen

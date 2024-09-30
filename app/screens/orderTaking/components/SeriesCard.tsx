@@ -1,6 +1,6 @@
 import CardWrapper from '@/components/card/Card';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, ImageProps, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
@@ -10,13 +10,14 @@ import {TouchableOpacity} from 'react-native';
 import DeleteIcon from '../../../../assets/icons/deleteIcon.svg';
 
 interface ISeriesCardProps {
-  title: string;
+  title?: string;
   onAddPress: () => void;
-  image: React.ReactNode;
+  image: ImageProps;
   seriesName: string;
   skuName: string;
   skuId: string;
   price: string;
+  itemQuantity: number;
   gradientColors?: string[];
   header?: boolean;
   onDeletePress?: () => void;
@@ -44,8 +45,9 @@ const SeriesCard = ({
   onDeletePress,
   gradientColors = linearGradientColors,
   header = true,
+  itemQuantity = 0,
 }: ISeriesCardProps) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(itemQuantity);
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAdd = () => {
@@ -75,7 +77,7 @@ const SeriesCard = ({
         </LinearGradient>
       )}
       <View style={[styles.bodyStyle, header ? {marginTop: 10} : undefined]}>
-        {image}
+        <Image source={image} style={{width: 70, height: 70}} />
         <View style={styles.descriptionStyle}>
           <View style={styles.descriptionView}>
             <View>
@@ -93,7 +95,7 @@ const SeriesCard = ({
           </View>
           <View style={styles.footerAction}>
             <Text style={styles.price}>{price}</Text>
-            {isAdded ? (
+            {isAdded || quantity > 0 ? (
               <View style={styles.stepperView}>
                 <TouchableOpacity onPress={handleDecrement}>
                   <Icon color={COLORS.dgreen} size={20} source={'minus'}></Icon>

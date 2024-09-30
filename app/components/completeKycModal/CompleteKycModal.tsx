@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {SetStateAction, useState} from 'react';
 import {
   callNumber,
   getTranslationLabel,
@@ -20,16 +20,20 @@ import CustomButton from '../button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import {fontConfig} from '@/theme/fonts';
 
-const CompleteKycModal = () => {
-  const [showModal, setShowModal] = useState<boolean>(true);
-
+const CompleteKycModal = ({
+  showModal,
+  setShowModal,
+}: {
+  showModal: boolean;
+  setShowModal: SetStateAction<any>;
+}) => {
   return (
     <ModalComponent showModal={showModal}>
       <View style={styles.modalTopContainer}>
         <TouchableOpacity
           onPress={() => setShowModal(!showModal)}
           style={CommonStyles.selfFlexEnd}>
-          <SvgClose width={16} height={16} />
+          <SvgClose width={18} height={18} />
         </TouchableOpacity>
         <View style={{alignItems: 'center'}}>
           <Error />
