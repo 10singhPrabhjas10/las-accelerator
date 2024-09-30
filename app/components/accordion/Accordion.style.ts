@@ -9,10 +9,19 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     shadowRadius: 2,
     elevation: 2,
+    top: 4,
   },
   innerContainer: {
     backgroundColor: COLORS.white,
     paddingVertical: 10,
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 6,
+    elevation: 2,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
   titleStyle: {
     color: COLORS.darkYellow,

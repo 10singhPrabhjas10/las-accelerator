@@ -30,7 +30,7 @@ export const callNumber = (phone: string) => {
   return Linking.openURL(phoneNumber);
 };
 
-export const sendMail = email => {
+export const sendMail = (email: string) => {
   return Linking.openURL(`mailto:${email}`);
 };
 
@@ -99,7 +99,7 @@ export const getCameraPermission = async () => {
 };
 
 export const isMobileNumberValid = (mobileNumber: string) => {
-  return mobileNumber.length === 10 && mobileNumber.match(INDIAN_MOBILE_REGEX);
+  return mobileNumber.length === 10; //&& mobileNumber.match(INDIAN_MOBILE_REGEX);
 };
 const showEnableLocationAlert = async () => {
   //ask user to open setting manually and allow location service
@@ -582,7 +582,7 @@ export const pickFromCamera = async (
     width: 300,
     height: 300,
     mediaType: 'photo',
-    cropping: false,
+    cropping: true,
     includeBase64: true,
     compressImageQuality: 0.7,
     includeExif: true,

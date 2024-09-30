@@ -9,7 +9,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 16,
   },
-
+  notificationToggle: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
   iconStyle: {
     alignSelf: 'center',
     marginLeft: 10,
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 24,
+    marginLeft: -24,
   },
   top: {
     top: 2,
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
   },
   kycButton: {
     marginLeft: 'auto',
-    marginRight: 24,
+    marginRight: 16,
     marginVertical: 16,
     height: heightToRatio(32),
   },
@@ -162,6 +166,14 @@ const styles = StyleSheet.create({
     height: 46,
     ...fontConfig.labelMedium,
     color: COLORS.white,
+  },
+  switchStyles: {
+    bottom: 2,
+    marginLeft: 'auto',
+  },
+  switchText: {
+    marginLeft: 8,
+    bottom: 2,
   },
 });
 export default styles;
