@@ -812,7 +812,6 @@ export default function RootNavigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{headerShown: false}}>
-        {console.log(isFirstTimeAppLaunch)}
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen

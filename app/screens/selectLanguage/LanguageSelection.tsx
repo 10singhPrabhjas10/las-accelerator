@@ -58,7 +58,6 @@ const LanguageSelection = () => {
     <Layout>
       <ScreenHeader showScreenName={false} />
       <View style={CommonStyles.rowSpaceBetweenFlex}>
-        <SearchInputWithCamera/>
         <SubHeader>
           <View style={styles.container}>
             <Text variant="headlineMedium" style={styles.headerTitle}>

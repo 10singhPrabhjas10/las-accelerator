@@ -19,7 +19,7 @@ interface ILanguage {
   onlanguageChange: (lan: ILanguage) => void;
 }
 
-const LanguageSelectionList = ({onlanguageChange}: ILanguage) => {
+const LanguageSelectionList = ({onlanguageChange = () => {}}: ILanguage) => {
   const activeLanguage = useSelector(
     (state: RootState) => state?.localization?.selectedLanguage,
   );
