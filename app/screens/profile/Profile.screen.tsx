@@ -193,11 +193,7 @@ const ProfileScreen = () => {
     return (
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion leftComponent={renderlanguageIcon} title="Language">
-          <View
-            style={[
-              styles.languageDropDown,
-              {marginRight: 24, marginLeft: -24},
-            ]}>
+          <View style={styles.languageDropDown}>
             <View style={CommonStyles.flexRow}>
               <CheckCircle />
               <Text
@@ -280,7 +276,7 @@ const ProfileScreen = () => {
       <View style={CommonStyles.marginHorizontal24}>
         <Accordion leftComponent={renderNotificationIcon} title="Notification">
           <View style={{marginRight: 16, marginVertical: 16, marginLeft: -24}}>
-            <View style={[CommonStyles.flexRow, {marginBottom: 8}]}>
+            <View style={styles.notificationToggle}>
               <SvgEmail />
               <Text style={styles.switchText}>Email</Text>
               <Switch
@@ -291,7 +287,7 @@ const ProfileScreen = () => {
                 style={styles.switchStyles}
               />
             </View>
-            <View style={[CommonStyles.flexRow, {marginBottom: 8}]}>
+            <View style={styles.notificationToggle}>
               <SMS />
               <Text style={styles.switchText}>SMS</Text>
               <Switch
@@ -351,8 +347,6 @@ const ProfileScreen = () => {
       if (result) {
         // setIsUpdatingPicture(true);
         setProfilePicture(result);
-        console.log(result.path, 'result');
-
         activeDp.current = result?.path;
       }
     } catch (err) {

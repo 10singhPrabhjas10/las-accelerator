@@ -9,7 +9,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 16,
   },
-
+  notificationToggle: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
   iconStyle: {
     alignSelf: 'center',
     marginLeft: 10,
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 24,
+    marginLeft: -24,
   },
   top: {
     top: 2,
@@ -163,15 +167,13 @@ const styles = StyleSheet.create({
     ...fontConfig.labelMedium,
     color: COLORS.white,
   },
-  switchStyles:{
-    bottom:2,
-    marginLeft:"auto"
+  switchStyles: {
+    bottom: 2,
+    marginLeft: 'auto',
   },
-  switchText:{
-    marginLeft:8,
-    bottom:2,
-    
-
-  }
+  switchText: {
+    marginLeft: 8,
+    bottom: 2,
+  },
 });
 export default styles;
