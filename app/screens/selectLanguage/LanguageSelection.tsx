@@ -24,7 +24,6 @@ import {getDeviceHeight, getTranslationLabel} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 import CommonStyles from '../../utils/commonStyle';
 import LanguageSelectionList from './LanguageSelectionList';
-import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 
 export interface ILanguage {
   id: string;

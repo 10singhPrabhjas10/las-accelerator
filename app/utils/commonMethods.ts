@@ -99,7 +99,7 @@ export const getCameraPermission = async () => {
 };
 
 export const isMobileNumberValid = (mobileNumber: string) => {
-  return mobileNumber.length === 10 && mobileNumber.match(INDIAN_MOBILE_REGEX);
+  return mobileNumber.length === 10; //&& mobileNumber.match(INDIAN_MOBILE_REGEX);
 };
 const showEnableLocationAlert = async () => {
   //ask user to open setting manually and allow location service

@@ -6,11 +6,12 @@ import {COLORS} from 'theme/colors';
 interface ICardProps {
   children: ReactNode;
   cardStyle?: ViewStyle;
+  onItemPress?: () => void;
 }
 
-const CardWrapper = ({children, cardStyle}: ICardProps) => {
+const CardWrapper = ({children, cardStyle, onItemPress}: ICardProps) => {
   return (
-    <Card style={[styles.container, cardStyle]}>
+    <Card style={[styles.container, cardStyle]} onPress={onItemPress}>
       <Card.Content style={styles.cardContent}>{children}</Card.Content>
     </Card>
   );

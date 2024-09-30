@@ -6,6 +6,7 @@ export const COLORS = {
   grey3: '#A4A4A4',
   grey4: '#6D6E71',
   grey5: '#1D1B20',
+  grey6: '#797C7C',
   yellow: '#FDC300',
   orange: '#F39200',
   dividerGrey: '#C7C9C9',
@@ -57,6 +58,7 @@ export const COLORS = {
   portalBackground: 'rgba(0, 66, 75, 0.5)',
   subtleBorder: '#EAEBEB',
   grey500: '#2C2D2F',
+  accentGreen:'#EEF9EC'
 };
 
 export const PIE_CHART_COLORS = [

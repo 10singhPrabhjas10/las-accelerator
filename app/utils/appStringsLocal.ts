@@ -292,6 +292,26 @@ export default {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
     },
+    {
+      key: 'product_series',
+      label: 'Product Series',
+    },
+    {
+      key: 'search_products',
+      label: 'Search Products',
+    },
+    {
+      key: 'currrent_offers',
+      label: 'Current Offers',
+    },
+    {
+      key: 'past_orders',
+      label: 'Past Orders',
+    },
+    {
+      key: 'retailer_KYC_Pending',
+      label: 'Retailer KYC Pending',
+    },
   ],
 
   hi: [
