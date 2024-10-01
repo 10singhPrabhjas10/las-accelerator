@@ -160,6 +160,7 @@ import ProductSeries from '../screens/productSeries/productSeries';
 
 import Home from '@/screens/orderTaking/home';
 import ProductDivion from '@/screens/orderTaking/productDivision';
+import ProductSubDivion from '@/screens/orderTaking/productSubDivision';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -265,6 +266,9 @@ export type RootNavigationTypes = {
     relation?: string;
     navigationFrom: string;
   };
+  ProductDivision: undefined;
+  ProductSubDivision: undefined;
+  ProductSeries: undefined;
   OrderCreation: {navigationFrom: string; relation: string | undefined};
   OrderStatus: {navigationFrom: string; relation: string | undefined};
   SecondaryOrderStatus: undefined;
@@ -599,6 +603,10 @@ export default function RootNavigation() {
       <RootStack.Screen name={'OrderTaking'} component={OrderTaking} />
       <RootStack.Screen name={'OrderHome'} component={Home} />
       <RootStack.Screen name={'ProductDivision'} component={ProductDivion} />
+      <RootStack.Screen
+        name={'ProductSubDivision'}
+        component={ProductSubDivion}
+      />
 
       <RootStack.Screen name={'OrderTask'} component={OrderTaskScreen} />
       <RootStack.Screen

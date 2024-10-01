@@ -72,15 +72,13 @@ const Dashboard = () => {
     },
     {
       title: getTranslationLabel('self_management'),
-      image: (
-        <SelfManagementIcon height={24} width={24} />
-      ),
+      image: <SelfManagementIcon height={24} width={24} />,
       onPress: () => navigation.navigate('SelfManagement'),
     },
     {
       title: getTranslationLabel('order_taking'),
       image: <OrderTakingIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('OrderTaking'),
+      onPress: () => navigation.navigate('OrderHome'),
     },
     {
       title: getTranslationLabel('product_price_list'),

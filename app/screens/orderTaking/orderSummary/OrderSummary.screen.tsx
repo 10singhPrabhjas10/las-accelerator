@@ -92,7 +92,7 @@ const OrderSummary = () => {
                 }}
               />
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.popToTop()}
                 style={styles.addMoreProducts}>
                 <Icon color={COLORS.dgreen} source={'plus'} size={20} />
                 <Text style={{color: COLORS.dgreen}} variant="bodyLarge">

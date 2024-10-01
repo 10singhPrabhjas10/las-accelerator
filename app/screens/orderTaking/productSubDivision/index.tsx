@@ -18,18 +18,18 @@ import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInpu
 import CommonStyles from '@/utils/commonStyle';
 import OrderSearch from '@/components/orderSearch';
 import CartLogo from '../../../../assets/icons/shopping_cart.svg';
-import {divisionOrder} from '@/utils/dummyData';
-import {RootNavigationProp, RootNavigationTypes} from '@/routes/RootNavigation';
-const ProductDivion = () => {
+import {divisionOrder, subCategoryOrder} from '@/utils/dummyData';
+import {RootNavigationProp} from '@/routes/RootNavigation';
+const ProductSubDivion = () => {
   const [inDivision, setDivision] = useState<number>(1);
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
-  const divisionList = divisionOrder.data;
   const navigation = useNavigation<RootNavigationProp>();
+  const divisionList = subCategoryOrder.data;
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
-  const goToSubDivision = () => {
-    navigation.navigate('ProductSubDivision');
+  const goToProductSeries = () => {
+    navigation.navigate('ProductSeries');
     return null;
   };
   const goToOrderSummary = () => {
@@ -38,7 +38,7 @@ const ProductDivion = () => {
   return (
     <>
       <Layout
-        headerTitle={'Product Division'}
+        headerTitle={'Product Sub Division'}
         onPressCustomLogo={goToOrderSummary}
         customLogo={() => <CartLogo />}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -49,8 +49,8 @@ const ProductDivion = () => {
           <View style={styles.listContainer}>
             <OrderList
               title={divisionList.category.name}
-              data={divisionList.division}
-              onPressListItem={goToSubDivision}
+              data={divisionList.sub_categories}
+              onPressListItem={goToProductSeries}
               isGrid={true} // Pass isGrid as a prop to display items in a grid
             />
           </View>
@@ -59,7 +59,7 @@ const ProductDivion = () => {
     </>
   );
 };
-export default ProductDivion;
+export default ProductSubDivion;
 
 export const styles = StyleSheet.create({
   titleLable: {

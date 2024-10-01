@@ -129,7 +129,7 @@ export default SeriesCard;
 const styles = StyleSheet.create({
   cardWrapper: {
     position: 'relative',
-    margin:8
+    margin: 8,
   },
   linearGradient: {
     height: 22,

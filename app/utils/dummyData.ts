@@ -542,7 +542,7 @@ export const subCategoryOrder = {
   data: {
     category: {
       id: '1',
-      name: 'Water Heater',
+      name: 'Storage Water Heater',
       image: require('../../assets/images/offer_dummy_image.png'),
     },
     division: {
@@ -573,6 +573,21 @@ export const subCategoryOrder = {
       },
       {
         id: '5',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '6',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '7',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '8',
         name: 'Water Heater',
         image: require('../../assets/images/pabbleWaterHeater.png'),
       },

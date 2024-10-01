@@ -17,12 +17,15 @@ import Cross from '../../../assets/icons/cross.svg';
 import {productSeries} from '../../utils/dummyData';
 import CommonStyles from '@/utils/commonStyle';
 import OrderSearch from '@/components/orderSearch';
-
+import CartLogo from '../../../assets/icons/shopping_cart.svg';
+import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 const ProductSeries = () => {
   const {filters, relatedProducts} = productSeries.data;
   const [selectedFilters, setselectedFilters] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
+  const navigation = useNavigation<RootNavigationProp>();
 
   const onFilterPress = (id: Number) => {
     if (selectedFilters.includes(id)) {
@@ -39,8 +42,14 @@ const ProductSeries = () => {
       product.categories.some(category => selectedFilters.includes(category)),
     );
   };
+  const goToOrderSummary = () => {
+    navigation.navigate('OrderSummary');
+  };
   return (
-    <>
+    <Layout
+      headerTitle="Product Series"
+      onPressCustomLogo={goToOrderSummary}
+      customLogo={() => <CartLogo />}>
       <OrderSearch onChangeImage={setSearchImg} onChangeText={setSearchText} />
       <View style={styles.parent}>
         <FlatList
@@ -84,7 +93,7 @@ const ProductSeries = () => {
               <SeriesCard
                 title={item.discount}
                 onAddPress={() => {}}
-                image={<Image source={item.image} style={{width: 50}} />}
+                image={item.image}
                 seriesName={item.name}
                 skuName={item.avl}
                 skuId={item.avl}
@@ -94,7 +103,7 @@ const ProductSeries = () => {
           }}
         />
       </View>
-    </>
+    </Layout>
   );
 };
 
