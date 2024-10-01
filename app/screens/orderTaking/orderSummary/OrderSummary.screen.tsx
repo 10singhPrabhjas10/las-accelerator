@@ -63,7 +63,7 @@ const OrderSummary = () => {
                 <TouchableOpacity
                   onPress={() => setShowModal(true)}
                   style={styles.headerRight}>
-                  <ClearCart width={16} height={16} />
+                  <ClearCart width={16} height={16} color={COLORS.dgreen} />
                   <Text style={styles.clearCartText} variant="labelLarge">
                     Clear Cart
                   </Text>
