@@ -10,6 +10,7 @@ import CommonStyles from '@/utils/commonStyle';
 import Spacer from '@/components/spacer';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import Schemes from './Schemes';
+import {getTranslationLabel} from '@/utils/commonMethods';
 
 export interface IScheme {
   id: number;
@@ -26,13 +27,12 @@ const AdditionalSchemes = ({
   onClose: () => void;
 }) => {
   const [selectedScheme, setSelectedScheme] = useState<IScheme>();
-  console.log(!!selectedScheme);
 
   return (
     <>
       <View style={styles.mainView}>
         <Text variant="bodyLarge" style={styles.additionalText}>
-          Additional Schemes
+          {getTranslationLabel('additional_schemes')}
         </Text>
         <TouchableOpacity onPress={onClose}>
           <Icon color={COLORS.grey6} source={'close'} size={20} />
@@ -64,7 +64,7 @@ const AdditionalSchemes = ({
         })}
       </BottomSheetScrollView>
       <CustomButton
-        text="Apply"
+        text={getTranslationLabel('apply')}
         onPress={() => {
           onApplySchemes(selectedScheme);
         }}

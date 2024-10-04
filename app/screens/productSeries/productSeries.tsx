@@ -47,7 +47,7 @@ const ProductSeries = () => {
   };
   return (
     <Layout
-      headerTitle="Product Series"
+      headerTitle={getTranslationLabel('product_series')}
       onPressCustomLogo={goToOrderSummary}
       customLogo={() => <CartLogo />}>
       <OrderSearch onChangeImage={setSearchImg} onChangeText={setSearchText} />
@@ -58,7 +58,7 @@ const ProductSeries = () => {
           style={CommonStyles.marginVertical10}
           renderItem={({item}) => {
             const isSelected = selectedFilters.includes(item.id);
-            console.log(isSelected, selectedFilters);
+
             return (
               <TouchableOpacity
                 style={[
@@ -82,7 +82,7 @@ const ProductSeries = () => {
             Aqua Water Heaters
           </Text>
           <Text variant="labelLarge" style={styles.titleLable}>
-            {getFilteredList().length} results
+            {getFilteredList().length} {getTranslationLabel('results')}
           </Text>
         </View>
 

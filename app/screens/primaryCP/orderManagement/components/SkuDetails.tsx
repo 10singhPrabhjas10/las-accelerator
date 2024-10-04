@@ -29,7 +29,6 @@ const SkuDetails = ({prevData, onSubmit}: ISkuDetails) => {
     };
     updateAddNewSkuData(requestBody, () => onSubmit());
   };
-  console.log('prev', prevData);
 
   return (
     <View style={CommonStyles.flexOne}>

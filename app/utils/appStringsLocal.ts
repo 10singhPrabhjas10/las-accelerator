@@ -312,6 +312,55 @@ export default {
       key: 'retailer_KYC_Pending',
       label: 'Retailer KYC Pending',
     },
+    {
+      key: 'order_summary',
+      label: 'Order Summary',
+    },
+    {
+      key: 'cart_items',
+      label: 'Cart Items',
+    },
+    {
+      key: 'clear_cart',
+      label: 'Clear Cart',
+    },
+    {
+      key: 'add_more_products',
+      label: ' Add More Products',
+    },
+    {
+      key: 'cart_empty',
+      label: 'Your Cart is empty!',
+    },
+    {
+      key: 'add_more_products',
+      label: 'Add products for it to start appearing here',
+    },
+    {key: 'add_products', label: 'Add Products'},
+    {key: 'view_additional_schemes', label: 'View Additional Schemes'},
+    {key: 'applied', label: 'Applied'},
+    {key: 'total_amount', label: 'Total Amount'},
+    {
+      key: 'total_amount_indicative',
+      label:
+        'The total amount is indicative and excludes schemes and discounts',
+    },
+    {
+      key: 'estimated_delivery',
+      label: '**Estimated delivery time between 5-7 days',
+    },
+    {key: 'get_otp_confirm_order', label: 'Get OTP & Confirm Order'},
+    {
+      key: 'want_clear_cart',
+      label: 'Are you sure you want to clear your cart?',
+    },
+    {key: 'clear', label: 'Clear'},
+    {key: 'additional_schemes', label: 'Additional Schemes'},
+    {key: 'apply', label: 'Apply'},
+    {key: 'added', label: 'Added'},
+    {key: 'add', label: 'Add'},
+    {key: 'results', label: 'results'},
+    {key: 'save_order_go_home', label: 'Save Order & Go Home'},
   ],
 
   hi: [

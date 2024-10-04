@@ -54,7 +54,6 @@ export const AttendanceLandingScreen: React.FC<
     values: FormValues,
     helpers: FormikHelpers<FormValues>,
   ) => {
-    console.log(values);
     helpers.setSubmitting(false);
     store.dispatch(updateIsAuthenticated(true));
   };

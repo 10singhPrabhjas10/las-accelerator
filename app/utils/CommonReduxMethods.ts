@@ -5,7 +5,6 @@ import {showSnackbar} from 'store/redux/snackbarSlice';
 import {store} from 'store/redux/store';
 
 export const handleApiError = (error: any) => {
-  console.log('API error', error);
   store.dispatch(
     showSnackbar({
       isVisible: true,

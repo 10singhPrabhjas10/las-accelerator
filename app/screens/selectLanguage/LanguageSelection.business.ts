@@ -8,13 +8,14 @@ import {setCurrentLanguage} from 'store/redux/localizationSlice';
 import {handleApiError, setReduxLoading} from 'utils/CommonReduxMethods';
 import Config from 'react-native-config';
 import appStringsLocal from 'utils/appStringsLocal';
+import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 
 export const handleLanguageChange = async (
   selectedLanguage: ILanguage,
   onSuccess: () => void,
 ) => {
   setReduxLoading(true);
-  console.log('selectedLanguage', selectedLanguage);
+  store.dispatch(updateIsFirstTimeAppLaunch(false));
   store.dispatch(
     setCurrentLanguage({
       selectedLanguageTranslation: appStringsLocal[selectedLanguage.id],
