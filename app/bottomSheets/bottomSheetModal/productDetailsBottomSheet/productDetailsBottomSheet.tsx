@@ -42,6 +42,7 @@ const ProductDetailsBottomSheet = ({
   const [quantity, setQuantity] = useState(0);
   const [uomValue, setUomValue] = useState('');
   const [showUomDropdown, setShowUomDropdown] = useState(false);
+  const [showRecordUomDropdown, setShowRecordUomDropdown] = useState(false);
 
   const target = 7; // Set the target quantity to unlock discount //Change it during development
 
@@ -189,9 +190,9 @@ const ProductDetailsBottomSheet = ({
                       setUomValue(data);
                     }}
                     label=""
-                    visible={showUomDropdown}
+                    visible={showRecordUomDropdown}
                     onChangeDropdownState={() => {
-                      setShowUomDropdown(!showUomDropdown);
+                      setShowRecordUomDropdown(!showRecordUomDropdown);
                     }}
                     textInputStyle={styles.textInputStyle}
                     placeholder="UoM"
@@ -228,7 +229,7 @@ const ProductDetailsBottomSheet = ({
       <CustomButton
         type={ButtonTypes.contained}
         text={'Add to Cart'}
-        onPress={() => {}}
+        onPress={onClose}
         style={styles.button}
       />
     </BottomSheetModalComponent>
