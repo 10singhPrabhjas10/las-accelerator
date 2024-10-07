@@ -18,7 +18,7 @@ interface ISeriesCardProps {
   skuName: string;
   skuId: string;
   price: string;
-  itemQuantity: number;
+  itemQuantity?: number;
   gradientColors?: string[];
   header?: boolean;
   onDeletePress?: () => void;

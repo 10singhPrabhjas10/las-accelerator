@@ -56,7 +56,7 @@ const ProductSeries = () => {
   };
   return (
     <Layout
-      headerTitle="Product Series"
+      headerTitle={getTranslationLabel('product_series')}
       onPressCustomLogo={goToOrderSummary}
       customLogo={() => <CartLogo />}>
       <OrderSearch onChangeImage={setSearchImg} onChangeText={setSearchText} />
@@ -90,7 +90,7 @@ const ProductSeries = () => {
             Aqua Water Heaters
           </Text>
           <Text variant="labelLarge" style={styles.titleLable}>
-            {getFilteredList().length} results
+            {getFilteredList().length} {getTranslationLabel('results')}
           </Text>
         </View>
 

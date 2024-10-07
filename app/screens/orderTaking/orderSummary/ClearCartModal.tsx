@@ -5,6 +5,7 @@ import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import {COLORS} from '@/theme/colors';
 import Spacer from '@/components/spacer';
+import {getTranslationLabel} from '@/utils/commonMethods';
 
 interface CartModalProps {
   setShowModal: SetStateAction<any>;
@@ -20,19 +21,19 @@ const ClearCartModal = ({setShowModal, onClearPress}: CartModalProps) => {
       </TouchableOpacity>
       <View style={styles.titleView}>
         <Text variant="titleMedium" style={styles.titleText}>
-          Are you sure you want to clear your cart?
+          {getTranslationLabel('want_clear_cart')}
         </Text>
       </View>
       <Spacer size={16} />
       <View style={styles.buttonView}>
         <CustomButton
-          text="Back"
+          text={getTranslationLabel('back')}
           onPress={() => setShowModal(false)}
           type={ButtonTypes.outline}
           textStyle={{color: COLORS.dgreen}}
         />
         <CustomButton
-          text="Clear"
+          text={getTranslationLabel('clear')}
           onPress={onClearPress}
           type={ButtonTypes.contained}
         />

@@ -9,7 +9,10 @@ import {COLORS} from '@/theme/colors';
 import {cartItems} from '@/utils/dummyData';
 import SeriesCard from '../components/SeriesCard';
 
-import {formatNumberWithCommas} from '@/utils/commonMethods';
+import {
+  formatNumberWithCommas,
+  getTranslationLabel,
+} from '@/utils/commonMethods';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import ModalComponent from '@/modals/ModalComponent';
@@ -53,20 +56,22 @@ const OrderSummary = () => {
 
   return (
     <>
-      <Layout headerTitle="Order Summary" style={CommonStyles.padding}>
+      <Layout
+        headerTitle={getTranslationLabel('order_summary')}
+        style={CommonStyles.padding}>
         {cartItemsData?.length > 0 ? (
           <>
             <View style={CommonStyles.flexOne}>
               <View style={styles.header}>
                 <Text style={styles.titleWeight} variant="bodyLarge">
-                  Cart Items ({totalQuantity})
+                  {getTranslationLabel('cart_items')} ({totalQuantity})
                 </Text>
                 <TouchableOpacity
                   onPress={() => setShowModal(true)}
                   style={styles.headerRight}>
-                  <ClearCart width={16} height={16} />
+                  <ClearCart width={16} height={16} color={COLORS.dgreen} />
                   <Text style={styles.clearCartText} variant="labelLarge">
-                    Clear Cart
+                    {getTranslationLabel('clear_cart')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -93,11 +98,11 @@ const OrderSummary = () => {
                 }}
               />
               <TouchableOpacity
-                onPress={() => navigation.popToTop()}
+                onPress={() => navigation.navigate('OrderHome')}
                 style={styles.addMoreProducts}>
                 <Icon color={COLORS.dgreen} source={'plus'} size={20} />
                 <Text style={{color: COLORS.dgreen}} variant="bodyLarge">
-                  Add More Products
+                  {getTranslationLabel('add_more_products')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -115,14 +120,14 @@ const OrderSummary = () => {
           <View style={styles.emptyCartView}>
             <EmptyCartIcon />
             <Text style={{color: COLORS.black1}} variant="titleMedium">
-              Your Cart is empty!
+              {getTranslationLabel('cart_empty')}
             </Text>
             <Text style={{color: COLORS.black1}} variant="bodyMedium">
-              Add products for it to start appearing here
+              {getTranslationLabel('add_more_products')}
             </Text>
             <CustomButton
               onPress={() => {}}
-              text="Add Products"
+              text={getTranslationLabel('add_products')}
               type={ButtonTypes.contained}
             />
           </View>
@@ -147,7 +152,9 @@ const OrderSummary = () => {
                     <Text variant="titleMedium">{schemesSelected?.reason}</Text>
                   </View>
                 ) : (
-                  <Text variant="titleMedium">View Additional Schemes</Text>
+                  <Text variant="titleMedium">
+                    {getTranslationLabel('view_additional_schemes')}
+                  </Text>
                 )}
               </View>
               {schemesSelected ? (
@@ -164,7 +171,7 @@ const OrderSummary = () => {
                   onClose={() => {
                     setSchemesSelected(undefined);
                   }}>
-                  Applied
+                  {getTranslationLabel('applied')}
                 </Chip>
               ) : (
                 <TouchableOpacity
@@ -186,7 +193,9 @@ const OrderSummary = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <Text variant="titleMedium">Total Amount *</Text>
+                  <Text variant="titleMedium">
+                    {getTranslationLabel('total_amount')} *
+                  </Text>
                   <Text variant="titleMedium">
                     ₹{formatNumberWithCommas(200973)}
                   </Text>
@@ -196,20 +205,19 @@ const OrderSummary = () => {
                   <>
                     <Text
                       style={{fontSize: 11, lineHeight: 12, fontWeight: '400'}}>
-                      The total amount is indicative and excludes schemes and
-                      discounts
+                      {getTranslationLabel('total_amount_indicative')}
                     </Text>
                     <Spacer size={6} />
                     <Text
                       style={{fontSize: 11, lineHeight: 12, fontWeight: '400'}}>
-                      **Estimated delivery time between 5-7 days
+                      {getTranslationLabel('estimated_delivery')}
                     </Text>
                   </>
                 )}
               </View>
               <Spacer size={16} />
               <CustomButton
-                text="Get OTP & Confirm Order"
+                text={getTranslationLabel('get_otp_confirm_order')}
                 onPress={() => {
                   navigation.navigate('OrderConfirmation', {
                     mobileNumber: DummyMobile,

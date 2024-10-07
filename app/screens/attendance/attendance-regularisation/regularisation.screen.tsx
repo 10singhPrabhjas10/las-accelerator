@@ -188,7 +188,7 @@ export const AttendanceRegularisationScreen = () => {
         }}
         validateOnChange={true}
         validateOnBlur={false}
-        validate={values => console.log('values ==>', values)}
+        validate={values => {}}
         onSubmit={values => {
           submitRegularisationRequest(values);
         }}>
