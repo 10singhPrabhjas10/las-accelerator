@@ -2,13 +2,13 @@ import React from 'react';
 import {View} from 'react-native';
 import {Text} from 'react-native-paper';
 import SupprtAgent from '../../../assets/icons/support_agent.svg';
-
 import {getTranslationLabel} from '@/utils/commonMethods';
 import styles from './HelpCard.styles.ts';
 import CommonStyles from '@/utils/commonStyle.ts';
 import Accordion from '../accordion/Accordion.tsx';
 import Spacer from '../spacer/index.tsx';
 import {COLORS} from '@/theme/colors.ts';
+import {DummyMobile} from '@/utils/Constants.ts';
 const HelpCard = () => {
   const renderLeftComponent = () => (
     <View style={styles.Icon}>
@@ -30,7 +30,7 @@ const HelpCard = () => {
           variant="bodyMedium">
           {getTranslationLabel('phone')}{' '}
           <Text variant="bodyMedium" style={styles.greenText}>
-            +91 9876567890
+            {DummyMobile}
           </Text>{' '}
         </Text>
         <View style={CommonStyles.padding5} />

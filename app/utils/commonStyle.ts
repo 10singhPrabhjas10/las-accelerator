@@ -38,6 +38,7 @@ const CommonStyles = StyleSheet.create({
   marginVertical16: {marginVertical: 16},
   marginVertical10: {marginVertical: 10},
   marginL10: {marginLeft: 10},
+  marginR10: {marginRight: 10},
   scrollViewContainer: {
     flexGrow: 1,
     paddingHorizontal: 20,

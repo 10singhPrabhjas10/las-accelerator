@@ -14,7 +14,6 @@ const PastOrders = () => {
         data={pastOrders}
         horizontal
         style={CommonStyles.marginVertical10}
-        contentContainerStyle={CommonStyles.paddingR10}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => {
           return (
