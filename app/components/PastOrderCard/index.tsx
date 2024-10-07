@@ -25,38 +25,41 @@ const PastOrderCard = ({
   currency = '$',
 }: IPastOrderCard) => {
   return (
-    <CardWrapper cardStyle={style.parent}>
-      <Image style={style.image} source={image} />
-      <Text numberOfLines={2} variant="titleMedium">
-        {title}
-      </Text>
-      <View style={style.cartView}>
-        <View style={CommonStyles.flexRow}>
-          <Text variant="titleMedium">{currency}</Text>
-          <Text variant="titleMedium">{price}</Text>
+    <View style={CommonStyles.padding10}>
+      <CardWrapper cardStyle={style.parent}>
+        <Image style={style.image} source={image} />
+        <Text numberOfLines={2} variant="titleMedium">
+          {title}
+        </Text>
+        <View style={style.cartView}>
+          <View style={CommonStyles.flexRow}>
+            <Text variant="titleMedium">{currency}</Text>
+            <Text variant="titleMedium">{price}</Text>
+          </View>
+          <TouchableOpacity>
+            <GreenCart />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <GreenCart />
-        </TouchableOpacity>
-      </View>
-      <OrderSticker style={style.sticker} />
-    </CardWrapper>
+        <OrderSticker width={38} height={36} style={style.sticker} />
+      </CardWrapper>
+    </View>
   );
 };
 const style = StyleSheet.create({
   parent: {
     width: widthToRatio(100),
-    height: widthToRatio(160),
+    minHeight: widthToRatio(160),
     alignItems: 'center',
   },
   cartView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   sticker: {
     position: 'absolute',
-    top: -10,
-    left: 10,
+    top: -15,
+    left: 0,
   },
   image: {
     width: widthToRatio(88),
