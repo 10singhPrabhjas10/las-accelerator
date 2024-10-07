@@ -8,7 +8,7 @@ import {categoryOrder} from '@/utils/dummyData';
 import OrderList from '../orderList';
 import Layout from '@/components/Layout';
 import CartLogo from '../../../../assets/icons/shopping_cart.svg';
-import {ScrollView} from 'react-native';
+import {FlatList, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
 const Home = () => {
@@ -28,21 +28,27 @@ const Home = () => {
         return false;
       }}
       customLogo={() => <CartLogo />}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <OrderSearch
-          title={getTranslationLabel('search_products')}
-          onChangeImage={setSearchImg}
-          onChangeText={setSearchText}
-        />
-        <Offers />
-        <PastOrders />
-        <OrderList
-          data={categoryData}
-          isGrid
-          title={'Categories'}
-          onPressListItem={gotoDivision}
-        />
-      </ScrollView>
+      <FlatList
+        data={[]}
+        ListHeaderComponent={
+          <>
+            <OrderSearch
+              title={getTranslationLabel('search_products')}
+              onChangeImage={setSearchImg}
+              onChangeText={setSearchText}
+            />
+            <Offers />
+            <PastOrders />
+            <OrderList
+              data={categoryData}
+              isGrid
+              title={'Categories'}
+              onPressListItem={gotoDivision}
+            />
+          </>
+        }
+        renderItem={() => <></>}
+      />
     </Layout>
   );
 };

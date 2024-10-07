@@ -1,93 +1,33 @@
 //External dependencies
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Text, TextInput} from 'react-native-paper';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 
 //Internal dependencies
 import Layout from 'components/Layout';
-// import ContactFooter from 'components/contactFooter/ContactFooter';
-import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {AuthNavigationTypes} from 'routes/AuthNavigator';
-import {handleVerifyOtp} from '../Auth.business';
+import {handleVerifyOtp} from '../../auth/Auth.business';
 import CustomButton from 'components/button/CustomButton';
 import ScreenHeader from 'components/headers/ScreenHeader';
 import {AuthNavigationProp} from 'routes/AuthNavigator';
 
 //Styles, Constants and interfaces
-import {COLORS} from 'theme/colors';
-import styles from './OtpVerification.style';
+import styles from './styles';
 import {getTranslationLabel, secondsToMinutes} from 'utils/commonMethods';
-import WarningSvg from './../../../../assets/icons/warning-circle.svg';
 import {ButtonTypes} from 'types/buttons';
-// import CardWrapper from '@/components/card/Card';
-import HelpCard from '@/components/helpCard/HelpCard';
-import DialPad from '../../../../assets/icons/dialpad.svg';
-import CheckCircle from '../../../../assets/icons/check_circle.svg';
-import ModalComponent from '@/modals/ModalComponent';
-import CloseIcon from '../../../../assets/icons/closeIcon.svg';
-import ErrorIcon from '../../../../assets/icons/error.svg';
-import EmailIcon from '../../../../assets/icons/email.svg';
-import PhoneIcon from '../../../../assets/icons/phone.svg';
 import CommonStyles from '@/utils/commonStyle';
-import SubHeader from '@/components/subHeader/subHeader';
-import {DummyMobile} from '@/utils/Constants';
-const OtpVerification = () => {
-  const route = useRoute<RouteProp<AuthNavigationTypes, 'OtpVerification'>>();
-  const otpTimer = 60; // route.params?.resendBlockDurationSeconds;
-  const bannerTime = 5;
+import OtpCard from '@/components/otpVerification';
+import {RootNavigationProp, RootNavigationTypes} from '@/routes/RootNavigation';
+const OrderConfirmation = () => {
+  const route = useRoute<RouteProp<RootNavigationTypes, 'OrderConfirmation'>>();
   const [otp, setOtp] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
-  const [resendOtpTimer, setResendOtpTimer] = useState<number>(otpTimer);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [otpAttempts, setOTPattempts] = useState<number>(0);
-  // const [otpDisabled, setOtpDisabled] = useState<boolean>(false);
-  const [resendBannerTimmer, setResendTimerBanner] =
-    useState<number>(bannerTime);
-  const [showModal, setShowModal] = useState<boolean>(false);
 
-  const navigation = useNavigation<AuthNavigationProp>();
+  const navigation = useNavigation<RootNavigationProp>();
 
   const mobileNumber = route.params?.mobileNumber;
-
-  // const textTheme = {colors: {onSurface: COLORS.grey4}};
-  // const resendOtpTheme = {colors: {onSurface: COLORS.blue}};
-
-  // const resendOtpLabel = getTranslationLabel('resend_otp');
-  // const resendOtpInLabel = getTranslationLabel('resend_otp_in');
-
-  const warningIcon = () => <WarningSvg height={20} width={20} />;
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      if (resendOtpTimer > 0) {
-        setResendOtpTimer(resendOtpTimer - 1);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [resendOtpTimer]);
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      if (resendBannerTimmer > 0) {
-        setResendTimerBanner(resendBannerTimmer - 1);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [resendBannerTimmer]);
-
-  const ResendOTP = () => {
-    if (otpAttempts >= 5) {
-      setShowModal(true);
-      return;
-    }
-    setResendTimerBanner(bannerTime);
-    setResendOtpTimer(otpTimer);
-    setOTPattempts(attempts => attempts + 1);
-  };
 
   const verifyOtpHandler = async (): Promise<void> => {
     try {
@@ -103,130 +43,27 @@ const OtpVerification = () => {
         setErrorMsg,
         setOtp,
       );
-      navigation.navigate('attendance', {title: 'Dummy User'});
+      navigation.replace('PlacedOrder');
     } catch (err) {
       console.log(err);
     }
   };
-
   const BackButton = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
     }
   };
 
-  const renderModal = (
-    showModal: boolean,
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
-  ) => {
-    return (
-      <ModalComponent showModal={showModal}>
-        <View style={styles.modalTopContainer}>
-          <TouchableOpacity onPress={() => setShowModal(!showModal)}>
-            <CloseIcon width={16} height={16} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.modalcontainerBottom}>
-          <ErrorIcon />
-          <View style={CommonStyles.padding10} />
-          <Text variant="headlineSmall">
-            {getTranslationLabel('otp_attempts_exhausted')}
-          </Text>
-          <View style={styles.helpTextContainer} />
-          <Text variant="titleMedium">
-            {getTranslationLabel('get_in_touch_with_support')}
-          </Text>
-          <View style={[styles.contactGroup, styles.marginTop]}>
-            <PhoneIcon />
-            <Text variant="titleMedium" style={styles.greenText}>
-              {DummyMobile}
-            </Text>
-          </View>
-          <View style={CommonStyles.padding10} />
-          <View style={styles.contactGroup}>
-            <EmailIcon width={24} height={24} />
-            <Text variant="titleMedium" style={styles.greenText}>
-              info@deloitte.com
-            </Text>
-          </View>
-          <View style={CommonStyles.padding10} />
-        </View>
-      </ModalComponent>
-    );
-  };
-
   return (
     <Layout isScrollable>
-      <ScreenHeader showScreenName={false} />
+      <ScreenHeader
+        onBackPress={BackButton}
+        header="Order Confirmation"
+        showScreenName={true}
+      />
       <View style={[CommonStyles.rowSpaceBetweenFlex]}>
-        <View style={CommonStyles.flexOne}>
-          <SubHeader>
-            <View style={styles.bodyContainer}>
-              <View style={styles.group}>
-                <View style={styles.IconContainer}>
-                  {!resendBannerTimmer ? (
-                    <DialPad />
-                  ) : (
-                    <View style={styles.OTPbanner}>
-                      <CheckCircle />
-                      <Text variant="titleSmall" style={styles.OTPBannerText}>
-                        {getTranslationLabel('otp_sent_to')} {mobileNumber}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-
-                <Text variant="headlineSmall">
-                  {getTranslationLabel('verification')}
-                </Text>
-              </View>
-
-              <PrimaryTextInput
-                placeHolder={getTranslationLabel('six_digits')}
-                titleText={getTranslationLabel('enter_otp')}
-                isRequired={false}
-                value={otp}
-                keyboardType="numeric"
-                returnKeyType="done"
-                maxLength={6}
-                ThemeColors={{primary: COLORS.dgreen}}
-                onChangeText={val => setOtp(val)}
-                containerStyle={styles.textInputContainer}
-                error={errorMsg.length !== 0}
-                errorText={errorMsg}
-                right={
-                  errorMsg.length !== 0 ? (
-                    <TextInput.Icon icon={warningIcon} />
-                  ) : null
-                }
-              />
-              <View style={styles.resendContainer}>
-                <Text
-                  onPress={!resendOtpTimer ? ResendOTP : () => {}}
-                  style={!resendOtpTimer ? styles.ResendOTP : {}}
-                  variant="labelMedium">
-                  {getTranslationLabel('resend_otp')} {`(${otpAttempts}/5)`}
-                </Text>
-
-                {resendOtpTimer ? (
-                  <Text variant="labelMedium" style={styles.ResendOTP}>
-                    {getTranslationLabel('resend_otp_in_')}{' '}
-                    {secondsToMinutes(resendOtpTimer)}
-                  </Text>
-                ) : (
-                  <Text variant="labelMedium" style={styles.ResendOTPDisabled}>
-                    {getTranslationLabel('resend_otp_in_') + ' 1:00'}
-                  </Text>
-                )}
-              </View>
-            </View>
-
-            {renderModal(showModal, setShowModal)}
-          </SubHeader>
-          <View
-            style={[CommonStyles.marginHorizontal24, CommonStyles.marginTop]}>
-            <HelpCard />
-          </View>
+        <View style={[CommonStyles.flexOne, CommonStyles.marginVertical20]}>
+          <OtpCard otp={otp} setOtp={setOtp} />
         </View>
         <View style={styles.ButtonContainer}>
           <CustomButton
@@ -250,7 +87,7 @@ const OtpVerification = () => {
   );
 };
 
-export default OtpVerification;
+export default OrderConfirmation;
 
 /////----------------------OLD SCREEN --------------------------------------------------
 // //External dependencies
