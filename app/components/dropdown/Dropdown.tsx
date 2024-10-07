@@ -247,6 +247,7 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
           maxWidth: inputLayout?.width,
           width: inputLayout?.width,
           marginTop: inputLayout?.height,
+          backgroundColor:"red"
         }}>
         <ScrollView
           bounces={false}

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Layout from '@/components/Layout';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import {getTranslationLabel, heightToRatio} from '../../utils/commonMethods';
@@ -20,13 +20,14 @@ import OrderSearch from '@/components/orderSearch';
 import CartLogo from '../../../assets/icons/shopping_cart.svg';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
+import ProductDetailsBottomSheet from '@/bottomSheets/bottomSheetModal/productDetailsBottomSheet/productDetailsBottomSheet';
 const ProductSeries = () => {
   const {filters, relatedProducts} = productSeries.data;
   const [selectedFilters, setselectedFilters] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
   const navigation = useNavigation<RootNavigationProp>();
-
+  const sheetRef = useRef();
   const onFilterPress = (id: Number) => {
     if (selectedFilters.includes(id)) {
       setselectedFilters(selectedFilters.filter(num => num !== id));
@@ -90,19 +91,27 @@ const ProductSeries = () => {
           data={getFilteredList()}
           renderItem={({item}) => {
             return (
-              <SeriesCard
-                title={item.discount}
-                onAddPress={() => {}}
-                image={item.image}
-                seriesName={item.name}
-                skuName={item.avl}
-                skuId={item.avl}
-                price={item.price}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  sheetRef.current?.present();
+                }}>
+                <SeriesCard
+                  title={item.discount}
+                  onAddPress={() => {}}
+                  image={item.image}
+                  seriesName={item.name}
+                  skuName={item.avl}
+                  skuId={item.avl}
+                  price={item.price}
+                />
+              </TouchableOpacity>
             );
           }}
         />
       </View>
+
+      <ProductDetailsBottomSheet
+        sheetRef={sheetRef}></ProductDetailsBottomSheet>
     </Layout>
   );
 };

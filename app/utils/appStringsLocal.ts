@@ -312,6 +312,10 @@ export default {
       key: 'retailer_KYC_Pending',
       label: 'Retailer KYC Pending',
     },
+    {
+      key: 'product_detils',
+      label: 'Product Details',
+    },
   ],
 
   hi: [
