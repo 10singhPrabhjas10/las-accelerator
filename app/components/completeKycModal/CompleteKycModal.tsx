@@ -43,7 +43,7 @@ const CompleteKycModal = ({
           <CustomButton
             style={styles.kycButton}
             type={ButtonTypes.contained}
-            text={'Save Order & Go Home'}
+            text={getTranslationLabel('save_order_go_home')}
             onPress={() => {}}
             textStyle={styles.kycBtntextStyle}
           />

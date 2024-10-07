@@ -30,7 +30,6 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
     }
     return '';
   };
-  console.log(imageUrl);
   return (
     <View style={styles.container}>
       {isImageEdit ? (

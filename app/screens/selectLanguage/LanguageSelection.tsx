@@ -72,14 +72,13 @@ const LanguageSelection = () => {
           text={'Proceed'}
           // loading={isLoading}
           onPress={() => {
-            dispatch(updateIsFirstTimeAppLaunch(false));
-            // handleLanguageChange(selectedLanguage, () => {
-            //   const navigateTo = route?.params?.navigateTo
-            //     ? route?.params?.navigateTo
-            //     : 'OnboardingScreens';
+            handleLanguageChange(selectedLanguage, () => {
+              const navigateTo = route?.params?.navigateTo
+                ? route?.params?.navigateTo
+                : 'OnboardingScreens';
 
-            //   navigation.navigate(navigateTo as never);
-            // });
+              navigation.navigate(navigateTo as never);
+            });
           }}
         />
       </View>

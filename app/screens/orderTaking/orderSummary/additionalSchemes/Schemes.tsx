@@ -8,6 +8,7 @@ import DisabledSchemesIcon from '../../../../../assets/icons/disabledScheme.svg'
 import {COLORS} from '@/theme/colors';
 import {ButtonTypes} from '@/types/buttons';
 import {IScheme} from './AdditionalSchemes';
+import {getTranslationLabel} from '@/utils/commonMethods';
 
 interface ISchemesProps {
   offerTitle: string;
@@ -56,7 +57,7 @@ const Schemes = ({
         </View>
       </View>
       <CustomButton
-        text={schemesAdded ? 'Added' : 'Add'}
+        text={getTranslationLabel(schemesAdded ? 'added' : 'add')}
         textStyle={{color: COLORS.dgreen}}
         type={ButtonTypes.outline}
         isDisabled={schemesAdded || isSchemeDisabled}
