@@ -53,6 +53,7 @@ interface IDropdownProps {
   error?: string;
   labelRequired?: boolean;
   updateDisplayValue?: (item: string) => string;
+  textInputStyle?: ViewStyle;
 }
 
 const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
@@ -81,6 +82,7 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
     labelRequired = false,
     setData = () => {},
     updateDisplayValue,
+    textInputStyle,
   } = props;
 
   const [displayValue, setDisplayValue] = useState('');
@@ -153,15 +155,19 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
 
   return (
     <View>
-      <View style={styles.titleView}>
-        <Text variant="bodyMedium">{label}</Text>
-        {isRequired && (
-          <Text variant="labelMedium" style={styles.requiredText}>
-            {'*'}
-          </Text>
-        )}
-      </View>
-      <Spacer size={5} />
+      {label && (
+        <>
+          <View style={styles.titleView}>
+            <Text variant="bodyMedium">{label}</Text>
+            {isRequired && (
+              <Text variant="labelMedium" style={styles.requiredText}>
+                {'*'}
+              </Text>
+            )}
+          </View>
+          <Spacer size={5} />
+        </>
+      )}
       <Menu
         visible={visible}
         onDismiss={() => {
@@ -230,12 +236,15 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
                       icon={visible ? 'chevron-up' : 'chevron-down'}
                     />
                   }
-                  style={{
-                    height: 45,
-                    backgroundColor: isDisabled
-                      ? COLORS.lightGrey2
-                      : 'transparent',
-                  }}
+                  style={[
+                    {
+                      height: 45,
+                      backgroundColor: isDisabled
+                        ? COLORS.lightGrey2
+                        : 'transparent',
+                    },
+                    textInputStyle,
+                  ]}
                   error={error && error?.length > 0 ? true : false}
                 />
               )}
@@ -247,7 +256,6 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
           maxWidth: inputLayout?.width,
           width: inputLayout?.width,
           marginTop: inputLayout?.height,
-          backgroundColor:"red"
         }}>
         <ScrollView
           bounces={false}

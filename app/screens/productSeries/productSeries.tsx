@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import Layout from '@/components/Layout';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
@@ -21,14 +15,28 @@ import CartLogo from '../../../assets/icons/shopping_cart.svg';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
 import ProductDetailsBottomSheet from '@/bottomSheets/bottomSheetModal/productDetailsBottomSheet/productDetailsBottomSheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+
+export interface ISeriesCardProps {
+  discount: string;
+  name: string;
+  sku: string;
+  avl: string;
+  price: string;
+  image: any;
+  categories: number[];
+}
 const ProductSeries = () => {
   const {filters, relatedProducts} = productSeries.data;
-  const [selectedFilters, setselectedFilters] = useState([]);
+  const [selectedFilters, setselectedFilters] = useState<number[]>([]);
+  const [selectedCardITem, setSelectedCardItem] =
+    useState<ISeriesCardProps | null>(null);
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
   const navigation = useNavigation<RootNavigationProp>();
-  const sheetRef = useRef();
-  const onFilterPress = (id: Number) => {
+  const sheetRef = useRef<BottomSheetModal>(null);
+
+  const onFilterPress = (id: number) => {
     if (selectedFilters.includes(id)) {
       setselectedFilters(selectedFilters.filter(num => num !== id));
     } else {
@@ -59,7 +67,6 @@ const ProductSeries = () => {
           style={CommonStyles.marginVertical10}
           renderItem={({item}) => {
             const isSelected = selectedFilters.includes(item.id);
-            console.log(isSelected, selectedFilters);
             return (
               <TouchableOpacity
                 style={[
@@ -94,15 +101,17 @@ const ProductSeries = () => {
               <TouchableOpacity
                 onPress={() => {
                   sheetRef.current?.present();
+                  setSelectedCardItem(item);
                 }}>
                 <SeriesCard
                   title={item.discount}
                   onAddPress={() => {}}
                   image={item.image}
                   seriesName={item.name}
-                  skuName={item.avl}
+                  skuName={item.sku}
                   skuId={item.avl}
                   price={item.price}
+                  itemQuantity={0}
                 />
               </TouchableOpacity>
             );
@@ -111,7 +120,10 @@ const ProductSeries = () => {
       </View>
 
       <ProductDetailsBottomSheet
-        sheetRef={sheetRef}></ProductDetailsBottomSheet>
+        onClose={() => sheetRef.current?.close()}
+        sheetRef={sheetRef}
+        selectedCardItem={selectedCardITem}
+      />
     </Layout>
   );
 };

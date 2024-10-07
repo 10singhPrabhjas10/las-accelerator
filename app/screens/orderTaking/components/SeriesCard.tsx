@@ -8,6 +8,7 @@ import {COLORS} from '@/theme/colors';
 import {Text, Icon} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native';
 import DeleteIcon from '../../../../assets/icons/deleteIcon.svg';
+import {formatNumberWithCommas} from '@/utils/commonMethods';
 
 interface ISeriesCardProps {
   title?: string;
@@ -83,7 +84,8 @@ const SeriesCard = ({
             <View>
               <Text style={{fontSize: 18}}>{seriesName}</Text>
               <Text style={styles.skuStyle}>
-                {skuName} .<Text style={styles.skuIdStyle}>{skuId}</Text>
+                SKU: {skuName} •{' '}
+                <Text style={styles.skuIdStyle}>{skuId} AVL</Text>
               </Text>
             </View>
             {onDeletePress && (
@@ -94,7 +96,9 @@ const SeriesCard = ({
             )}
           </View>
           <View style={styles.footerAction}>
-            <Text style={styles.price}>{price}</Text>
+            <Text style={styles.price}>
+              ₹ {formatNumberWithCommas(parseInt(price))}
+            </Text>
             {isAdded || quantity > 0 ? (
               <View style={styles.stepperView}>
                 <TouchableOpacity onPress={handleDecrement}>
