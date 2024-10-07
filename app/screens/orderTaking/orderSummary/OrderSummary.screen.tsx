@@ -69,7 +69,7 @@ const OrderSummary = () => {
                 <TouchableOpacity
                   onPress={() => setShowModal(true)}
                   style={styles.headerRight}>
-                  <ClearCart width={16} height={16} />
+                  <ClearCart width={16} height={16} color={COLORS.dgreen} />
                   <Text style={styles.clearCartText} variant="labelLarge">
                     {getTranslationLabel('clear_cart')}
                   </Text>
@@ -98,7 +98,7 @@ const OrderSummary = () => {
                 }}
               />
               <TouchableOpacity
-                onPress={() => navigation.popToTop()}
+                onPress={() => navigation.navigate('OrderHome')}
                 style={styles.addMoreProducts}>
                 <Icon color={COLORS.dgreen} source={'plus'} size={20} />
                 <Text style={{color: COLORS.dgreen}} variant="bodyLarge">
