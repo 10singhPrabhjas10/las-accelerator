@@ -24,6 +24,7 @@ import Spacer from '@/components/spacer';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
 import CompleteKycModal from '@/components/completeKycModal/CompleteKycModal';
+import {DummyMobile} from '@/utils/Constants';
 
 interface ISchemeProps {
   id: number;
@@ -210,7 +211,10 @@ const OrderSummary = () => {
               <CustomButton
                 text="Get OTP & Confirm Order"
                 onPress={() => {
-                  setShowKCModal(true);
+                  navigation.navigate('OrderConfirmation', {
+                    mobileNumber: DummyMobile,
+                  });
+                  //  setShowKCModal(true);
                 }}
                 type={ButtonTypes.contained}
               />

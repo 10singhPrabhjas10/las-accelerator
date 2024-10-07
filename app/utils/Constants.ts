@@ -254,3 +254,5 @@ export enum SECONDARY_SALES_TYPE {
   MTD = 'MTD',
   YTD = 'YTD',
 }
+
+export const DummyMobile = '+91 9876567890';
