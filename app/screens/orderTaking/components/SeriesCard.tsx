@@ -108,7 +108,7 @@ const SeriesCard = ({
             <View style={styles.footerAction}>
               <Text style={styles.price}>
                 ₹ {formatNumberWithCommas(parseInt(price))}
-                {quantity &&<Text style={styles.quantity}> X {quantity}</Text>}
+                {quantity && <Text style={styles.quantity}> X {quantity}</Text>}
               </Text>
 
               {isAdded || quantity > 0 ? (

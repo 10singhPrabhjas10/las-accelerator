@@ -137,7 +137,6 @@ const ProductSeries = () => {
                   skuId={item.avl}
                   price={item.price}
                   itemQuantity={0}
-                  isBorderGradient={index % 2 == 0}
                 />
               </TouchableOpacity>
             );
