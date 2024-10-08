@@ -365,6 +365,15 @@ export default {
     {key: 'add', label: 'Add'},
     {key: 'results', label: 'results'},
     {key: 'save_order_go_home', label: 'Save Order & Go Home'},
+    {key: 'add_to_cart', label: 'Add to Cart'},
+    {key: 'order_amount', label: 'Order Amount'},
+    {key: 'uom', label: 'UoM'},
+    {key: 'quantity', label: 'Quantity'},
+    {key: 'done', label: 'Done'},
+    {key: 'record_exs_stock', label: 'Record existing stock'},
+    {key: 'current_stock', label: 'Current stock'},
+    {key: 'available', label: 'available'},
+    {key: 'sku', label: 'SKU'},
   ],
 
   hi: [

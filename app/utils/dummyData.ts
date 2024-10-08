@@ -853,6 +853,14 @@ export const productSeries = {
         id: 3,
         name: 'Past Orders',
       },
+      {
+        id: 4,
+        name: 'Past Orders',
+      },
+      {
+        id: 5,
+        name: 'Past Orders',
+      },
     ],
     relatedProducts: [
       {
@@ -894,3 +902,8 @@ export const productSeries = {
     ],
   },
 };
+
+export const uomList = [
+  {value: '1', label: 'Pieces'},
+  {value: '2', label: 'Boxes'},
+];

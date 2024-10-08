@@ -1,21 +1,28 @@
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import Layout from '@/components/Layout';
-import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
-import {getTranslationLabel, heightToRatio} from '../../utils/commonMethods';
-import SearchInputWithCamera from '../../components/searchInputWithCamera/searchInputWithCamera';
+import ShoppingCartIcon from '../../../../assets/icons/shopping_cart.svg';
+import {getTranslationLabel, heightToRatio} from '../../../utils/commonMethods';
+import SearchInputWithCamera from '../../../components/searchInputWithCamera/searchInputWithCamera';
 import {COLORS} from '@/theme/colors';
-import {Text} from 'react-native-paper';
-import SeriesCard from '../orderTaking/components/SeriesCard';
-import Cross from '../../../assets/icons/cross.svg';
-import {productSeries} from '../../utils/dummyData';
+import {Chip, Icon, Text} from 'react-native-paper';
+import SeriesCard from '../components/SeriesCard';
+import {productSeries} from '../../../utils/dummyData';
 import CommonStyles from '@/utils/commonStyle';
 import OrderSearch from '@/components/orderSearch';
-import CartLogo from '../../../assets/icons/shopping_cart.svg';
+import CartLogo from '../../../../assets/icons/shopping_cart.svg';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
-import ProductDetailsBottomSheet from '@/bottomSheets/bottomSheetModal/productDetailsBottomSheet/productDetailsBottomSheet';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import Spacer from '@/components/spacer';
+import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
+import ProductDetailsBottomSheet from '../components/productDetailsBottomSheet/productDetailsBottomSheet';
 
 export interface ISeriesCardProps {
   discount: string;
@@ -61,29 +68,45 @@ const ProductSeries = () => {
       customLogo={() => <CartLogo />}>
       <OrderSearch onChangeImage={setSearchImg} onChangeText={setSearchText} />
       <View style={styles.parent}>
-        <FlatList
-          data={filters}
-          horizontal={true}
-          style={CommonStyles.marginVertical10}
-          renderItem={({item}) => {
-            const isSelected = selectedFilters.includes(item.id);
+        <Spacer size={16} />
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={CommonStyles.flexRow}>
+          {filters?.map(filter => {
+            const isSelected = selectedFilters.includes(filter.id);
             return (
-              <TouchableOpacity
+              <Chip
+                mode="outlined"
                 style={[
-                  styles.chipsContiner,
-                  isSelected ? styles.selectedchipsContiner : {},
+                  styles.chip,
+                  {
+                    borderColor: isSelected
+                      ? COLORS.dgreen
+                      : COLORS.dividerGrey,
+                  },
                 ]}
-                onPress={() => onFilterPress(item.id)}>
-                <Text>{item.name}</Text>
-                {isSelected && (
-                  <View style={styles.crossIcon}>
-                    <Cross />
-                  </View>
-                )}
-              </TouchableOpacity>
+                textStyle={{color: COLORS.black1}}
+                selectedColor={COLORS.accentGreen}
+                onClose={
+                  isSelected
+                    ? () => {
+                        onFilterPress(filter.id);
+                      }
+                    : undefined
+                }
+                closeIcon={() =>
+                  isSelected ? (
+                    <Icon color={COLORS.black1} size={16} source={'close'} />
+                  ) : null
+                }
+                onPress={() => onFilterPress(filter.id)}
+                key={filter?.id}>
+                {filter?.name}
+              </Chip>
             );
-          }}
-        />
+          })}
+        </ScrollView>
 
         <View style={styles.headText}>
           <Text variant="headlineMedium" style={styles.titleLable}>
@@ -96,6 +119,7 @@ const ProductSeries = () => {
 
         <FlatList
           data={getFilteredList()}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -118,12 +142,16 @@ const ProductSeries = () => {
           }}
         />
       </View>
-
-      <ProductDetailsBottomSheet
-        onClose={() => sheetRef.current?.close()}
-        sheetRef={sheetRef}
-        selectedCardItem={selectedCardITem}
-      />
+      <BottomSheetModalComponent
+        maxHeight={'80%'}
+        minHeight={'75%'}
+        ref={sheetRef}>
+        <ProductDetailsBottomSheet
+          onClose={() => sheetRef.current?.close()}
+          onAddToCart={() => {}} //use this to get quantity and UOM
+          selectedCardItem={selectedCardITem}
+        />
+      </BottomSheetModalComponent>
     </Layout>
   );
 };
@@ -138,6 +166,7 @@ const styles = StyleSheet.create({
   },
   parent: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   rowView: {
     flexDirection: 'row',
@@ -163,6 +192,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     paddingVertical: 8,
     paddingHorizontal: 16,
+  },
+  chip: {
+    marginHorizontal: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
   },
   selectedchipsContiner: {
     borderColor: COLORS.dgreen,

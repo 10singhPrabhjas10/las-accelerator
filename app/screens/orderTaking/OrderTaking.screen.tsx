@@ -16,7 +16,7 @@ import Layout from '@/components/Layout';
 import {RootNavigationProp} from '@/routes/RootNavigation';
 import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 import ProductDivion from './productDivision';
-import ProductSeries from '../productSeries/productSeries';
+import ProductSeries from './productSeries/productSeries';
 import Home from './home';
 //--------old screen
 // const OrderTaking = () => {

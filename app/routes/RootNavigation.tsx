@@ -156,7 +156,7 @@ import PrimarySalesPerformance from 'screens/primaryCP/primarySales/primarySales
 import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarget.screen';
 
 import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
-import ProductSeries from '../screens/productSeries/productSeries';
+import ProductSeries from '../screens/orderTaking/productSeries/productSeries';
 
 import Home from '@/screens/orderTaking/home';
 import ProductDivion from '@/screens/orderTaking/productDivision';
