@@ -1,16 +1,17 @@
 import CardWrapper from '@/components/card/Card';
-import React, {useState} from 'react';
+import React from 'react';
 import {Image, ImageProps, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import {COLORS} from '@/theme/colors';
-import {Text, Icon} from 'react-native-paper';
-import {TouchableOpacity} from 'react-native';
+import {Text} from 'react-native-paper';
 import DeleteIcon from '../../../../assets/icons/deleteIcon.svg';
 import {formatNumberWithCommas} from '@/utils/commonMethods';
+import {ProductList} from '../productSeries/productSeries';
 
 interface ISeriesCardProps {
+  id: number;
   title?: string;
   onAddPress: () => void;
   image: ImageProps;
@@ -18,10 +19,11 @@ interface ISeriesCardProps {
   skuName: string;
   skuId: string;
   price: string;
-  itemQuantity?: number;
   gradientColors?: string[];
   header?: boolean;
   onDeletePress?: () => void;
+  productsAdded?: ProductList | undefined;
+  fromSummaryScreen?: boolean;
 }
 
 const linearGradientColors = [
@@ -36,6 +38,7 @@ const linearGradientColors = [
 ];
 
 const SeriesCard = ({
+  id,
   title,
   onAddPress,
   image,
@@ -44,27 +47,13 @@ const SeriesCard = ({
   skuId,
   price,
   onDeletePress,
+  productsAdded,
   gradientColors = linearGradientColors,
   header = true,
-  itemQuantity = 0,
+  fromSummaryScreen = false,
 }: ISeriesCardProps) => {
-  const [quantity, setQuantity] = useState(itemQuantity);
-  const [isAdded, setIsAdded] = useState(false);
-
-  const handleAdd = () => {
-    setIsAdded(true);
-    setQuantity(1); // Start with 1 item
-  };
-
-  const handleIncrement = () => setQuantity(quantity + 1);
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    } else {
-      setIsAdded(false); // Hide stepper and show "Add" button again if quantity is 0
-      setQuantity(0);
-    }
-  };
+  const product = productsAdded?.[id];
+  const isAddedToCart = product?.quantity && product?.quantity > 1;
 
   return (
     <CardWrapper cardStyle={styles.cardWrapper}>
@@ -99,28 +88,16 @@ const SeriesCard = ({
             <Text style={styles.price}>
               ₹ {formatNumberWithCommas(parseInt(price))}
             </Text>
-            {isAdded || quantity > 0 ? (
-              <View style={styles.stepperView}>
-                <TouchableOpacity onPress={handleDecrement}>
-                  <Icon color={COLORS.dgreen} size={20} source={'minus'}></Icon>
-                </TouchableOpacity>
-                <Text style={styles.quantityStyle}>{quantity}</Text>
-                <TouchableOpacity onPress={handleIncrement}>
-                  <Icon color={COLORS.dgreen} size={20} source={'plus'}></Icon>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <CustomButton
-                type={ButtonTypes.outline}
-                text="Add"
-                style={styles.button}
-                textStyle={{color: COLORS.dgreen}}
-                onPress={() => {
-                  onAddPress();
-                  handleAdd();
-                }}
-              />
-            )}
+
+            <CustomButton
+              type={ButtonTypes.outline}
+              text={isAddedToCart || fromSummaryScreen ? 'Edit' : 'Add'}
+              style={styles.button}
+              textStyle={{color: COLORS.dgreen}}
+              onPress={() => {
+                onAddPress();
+              }}
+            />
           </View>
         </View>
       </View>

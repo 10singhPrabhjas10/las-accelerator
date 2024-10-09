@@ -31,13 +31,31 @@ export interface ISeriesCardProps {
   avl: string;
   price: string;
   image: any;
-  categories: number[];
+  categories?: number[];
+  id: number;
 }
+type Product = {
+  id: number;
+  quantity: number;
+};
+
+export type ProductList = {
+  [key: string]: Product;
+};
 const ProductSeries = () => {
   const {filters, relatedProducts} = productSeries.data;
   const [selectedFilters, setselectedFilters] = useState<number[]>([]);
-  const [selectedCardITem, setSelectedCardItem] =
-    useState<ISeriesCardProps | null>(null);
+  const [productsAdded, setProductsAdded] = useState<ProductList>();
+  const [selectedCardITem, setSelectedCardItem] = useState<ISeriesCardProps>({
+    discount: '',
+    name: '',
+    sku: '',
+    avl: '',
+    price: '',
+    image: '',
+    categories: [],
+    id: 0,
+  });
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
   const navigation = useNavigation<RootNavigationProp>();
@@ -61,6 +79,22 @@ const ProductSeries = () => {
   const goToOrderSummary = () => {
     navigation.navigate('OrderSummary');
   };
+
+  const handleAddProduct = (
+    existingQuantity: number,
+    quantity: number,
+    uomValue: string,
+    existingUomValue: string,
+    id: number,
+  ) => {
+    setProductsAdded((prev: any) => {
+      return {
+        ...prev,
+        [id]: {quantity, id},
+      };
+    });
+  };
+
   return (
     <Layout
       headerTitle={getTranslationLabel('product_series')}
@@ -129,13 +163,16 @@ const ProductSeries = () => {
                 }}>
                 <SeriesCard
                   title={item.discount}
-                  onAddPress={() => {}}
+                  onAddPress={() => {
+                    sheetRef.current?.present();
+                  }}
                   image={item.image}
                   seriesName={item.name}
                   skuName={item.sku}
                   skuId={item.avl}
                   price={item.price}
-                  itemQuantity={0}
+                  id={item.id}
+                  productsAdded={productsAdded}
                 />
               </TouchableOpacity>
             );
@@ -148,8 +185,23 @@ const ProductSeries = () => {
         ref={sheetRef}>
         <ProductDetailsBottomSheet
           onClose={() => sheetRef.current?.close()}
-          onAddToCart={() => {}} //use this to get quantity and UOM
+          onAddToCart={(
+            existingQuantity,
+            quantity,
+            uomValue,
+            existingUomValue,
+            id,
+          ) => {
+            handleAddProduct(
+              existingQuantity,
+              quantity,
+              uomValue,
+              existingUomValue,
+              id,
+            );
+          }} //use this to get quantity and UOM
           selectedCardItem={selectedCardITem}
+          productsAdded={productsAdded}
         />
       </BottomSheetModalComponent>
     </Layout>
