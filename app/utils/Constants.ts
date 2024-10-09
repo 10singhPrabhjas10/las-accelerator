@@ -256,3 +256,6 @@ export enum SECONDARY_SALES_TYPE {
 }
 
 export const DummyMobile = '+91 9876567890';
+
+export const CurrencyCode = '₹';
+export const dot = '•';

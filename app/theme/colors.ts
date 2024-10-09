@@ -11,6 +11,7 @@ export const COLORS = {
   yellow: '#FDC300',
   orange: '#F39200',
   dividerGrey: '#C7C9C9',
+  disabledGrey: '#8C8C8C',
   lightGreenBackground: '#EEF7F9',
   red: '#CD2A13',
   red2: '#EB4028',
@@ -60,7 +61,7 @@ export const COLORS = {
   portalBackground: 'rgba(0, 66, 75, 0.5)',
   subtleBorder: '#EAEBEB',
   grey500: '#2C2D2F',
-  accentGreen:'#EEF9EC'
+  accentGreen: '#EEF9EC',
 };
 
 export const PIE_CHART_COLORS = [
