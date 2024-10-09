@@ -86,7 +86,7 @@ const ProductSeries = () => {
                       : COLORS.dividerGrey,
                   },
                 ]}
-                textStyle={{color: COLORS.black1}}
+                textStyle={{color: COLORS.black1, paddingBottom: 5}}
                 selectedColor={COLORS.accentGreen}
                 onClose={
                   isSelected
@@ -109,7 +109,7 @@ const ProductSeries = () => {
         </ScrollView>
 
         <View style={styles.headText}>
-          <Text variant="headlineMedium" style={styles.titleLable}>
+          <Text variant="headlineSmall" style={styles.titleLable}>
             Aqua Water Heaters
           </Text>
           <Text variant="labelLarge" style={styles.titleLable}>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.dgreen,
     backgroundColor: COLORS.accentGreen,
     paddingRight: 8,
-    height: heightToRatio(31),
+    height: 5,
   },
   crossIcon: {
     paddingLeft: 4,

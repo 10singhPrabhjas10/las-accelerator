@@ -63,14 +63,14 @@ const OrderSummary = () => {
           <>
             <View style={CommonStyles.flexOne}>
               <View style={styles.header}>
-                <Text style={styles.titleWeight} variant="bodyLarge">
+                <Text style={[styles.titleWeight, {marginLeft: 10, fontSize: 18}]} variant="bodyLarge">
                   {getTranslationLabel('cart_items')} ({totalQuantity})
                 </Text>
                 <TouchableOpacity
                   onPress={() => setShowModal(true)}
                   style={styles.headerRight}>
                   <ClearCart width={16} height={16} color={COLORS.dgreen} />
-                  <Text style={styles.clearCartText} variant="labelLarge">
+                  <Text style={[styles.clearCartText, {marginRight: 10}]} variant="labelLarge">
                     {getTranslationLabel('clear_cart')}
                   </Text>
                 </TouchableOpacity>
@@ -184,7 +184,7 @@ const OrderSummary = () => {
                 </TouchableOpacity>
               )}
             </View>
-            <Divider style={CommonStyles.horizontalDivider} />
+            <Divider style={[CommonStyles.horizontalDivider,{marginHorizontal:5}]} />
             <>
               <View style={styles.totalAmount}>
                 <View
@@ -192,6 +192,8 @@ const OrderSummary = () => {
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    marginLeft: 5,
+                    marginRight: 5,
                   }}>
                   <Text variant="titleMedium">
                     {getTranslationLabel('total_amount')} *
@@ -200,7 +202,7 @@ const OrderSummary = () => {
                     ₹{formatNumberWithCommas(200973)}
                   </Text>
                 </View>
-                <Spacer size={10} />
+                <Spacer size={8} />
                 {schemesSelected && (
                   <>
                     <Text
@@ -270,6 +272,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 5,
+    paddingTop: 5,
   },
   emptyCartView: {
     flex: 1,

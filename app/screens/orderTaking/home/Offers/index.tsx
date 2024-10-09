@@ -9,7 +9,7 @@ const Offers = () => {
   const data = currentOffers.data.offers;
   return (
     <View style={styles.parent}>
-      <Text style={CommonStyles.marginVertical10} variant="headlineMedium">
+      <Text style={[CommonStyles.marginVertical10, CommonStyles.marginL10]} variant="headlineSmall">
         {getTranslationLabel('currrent_offers')}
       </Text>
       <FlatList

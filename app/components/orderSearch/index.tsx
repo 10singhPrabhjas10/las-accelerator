@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
   searchView: {
     backgroundColor: COLORS.dDarkGreen,
     minHeight: heightToRatio(88),
-    paddingVertical: heightToRatio(10),
+    paddingVertical: heightToRatio(15),
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   text: {
     color: COLORS.white,

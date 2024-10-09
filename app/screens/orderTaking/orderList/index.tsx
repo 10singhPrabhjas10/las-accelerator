@@ -34,7 +34,7 @@ const OrderList = ({
   return (
     <View>
       <View style={styles.headText}>
-        <Text variant="headlineMedium" style={styles.titleLable}>
+        <Text variant="headlineSmall" style={styles.titleLable}>
           {title}
         </Text>
         <Text variant="labelLarge" style={styles.titleLable}>
@@ -79,6 +79,8 @@ export const styles = StyleSheet.create({
   },
   titleLable: {
     alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   titleResults: {
     color: COLORS.greyText,

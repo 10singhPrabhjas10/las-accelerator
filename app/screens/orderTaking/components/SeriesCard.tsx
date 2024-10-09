@@ -74,7 +74,7 @@ const SeriesCard = ({
           end={{x: 1, y: 0}}
           colors={gradientColors}
           style={styles.linearGradient}>
-          <Text style={{color: COLORS.white}}>{title}</Text>
+          <Text style={{color: COLORS.white, paddingVertical: 1}}>{title}</Text>
         </LinearGradient>
       )}
       <View style={[styles.bodyStyle, header ? {marginTop: 10} : undefined]}>
@@ -82,7 +82,7 @@ const SeriesCard = ({
         <View style={styles.descriptionStyle}>
           <View style={styles.descriptionView}>
             <View>
-              <Text style={{fontSize: 18}}>{seriesName}</Text>
+              <Text style={{fontSize: 19}}>{seriesName}</Text>
               <Text style={styles.skuStyle}>
                 SKU: {skuName} •{' '}
                 <Text style={styles.skuIdStyle}>{skuId} AVL</Text>
@@ -114,7 +114,7 @@ const SeriesCard = ({
                 type={ButtonTypes.outline}
                 text="Add"
                 style={styles.button}
-                textStyle={{color: COLORS.dgreen}}
+                textStyle={{color: COLORS.dgreen, fontSize: 17}}
                 onPress={() => {
                   onAddPress();
                   handleAdd();
@@ -163,23 +163,24 @@ const styles = StyleSheet.create({
   },
   skuStyle: {
     paddingTop: 6,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '500',
     color: COLORS.grey6,
   },
   price: {
-    fontSize: 17,
+    paddingTop: 8,
+    fontSize: 18,
     lineHeight: 20,
     fontWeight: '500',
   },
-  skuIdStyle: {fontSize: 12, fontWeight: '500', color: COLORS.grey6},
+  skuIdStyle: {fontSize: 13, fontWeight: '500', color: COLORS.grey6},
   footerAction: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  button: {height: 40, width: 90, borderColor: COLORS.dgreen},
+  button: {height: 40, width: 89, borderColor: COLORS.dgreen},
   stepperView: {
     display: 'flex',
     flexDirection: 'row',
