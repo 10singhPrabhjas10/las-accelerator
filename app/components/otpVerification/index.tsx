@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Card, Text, TextInput} from 'react-native-paper';
-import {TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Card, Text} from 'react-native-paper';
+import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp, AuthNavigationTypes} from '@/routes/AuthNavigator';
@@ -21,11 +21,13 @@ import {secondsToMinutes} from '@/utils/commonMethods';
 import ModalComponent from '@/modals/ModalComponent';
 import CommonStyles from '@/utils/commonStyle';
 import {DummyMobile} from '@/utils/Constants';
+import {OTPInput} from './otpBox';
 interface IOtpCard {
   otp: string;
   setOtp: Function;
+  style?: ViewStyle;
 }
-const OtpCard = ({otp = '', setOtp = () => {}}: IOtpCard) => {
+const OtpCard = ({otp = '', setOtp = () => {}, style = {}}: IOtpCard) => {
   const route = useRoute<RouteProp<AuthNavigationTypes, 'OtpVerification'>>();
   const otpTimer = 60; // route.params?.resendBlockDurationSeconds;
   const bannerTime = 5;
@@ -37,9 +39,6 @@ const OtpCard = ({otp = '', setOtp = () => {}}: IOtpCard) => {
   const [resendBannerTimmer, setResendTimerBanner] =
     useState<number>(bannerTime);
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  const navigation = useNavigation<AuthNavigationProp>();
-
   const mobileNumber = route.params?.mobileNumber;
   useEffect(() => {
     let interval = setInterval(() => {
@@ -85,6 +84,7 @@ const OtpCard = ({otp = '', setOtp = () => {}}: IOtpCard) => {
         </View>
         <View style={styles.modalcontainerBottom}>
           <ErrorIcon />
+
           <View style={CommonStyles.padding10} />
           <Text variant="headlineSmall">
             {getTranslationLabel('otp_attempts_exhausted')}
@@ -113,7 +113,7 @@ const OtpCard = ({otp = '', setOtp = () => {}}: IOtpCard) => {
   };
 
   return (
-    <Card style={styles.card}>
+    <Card style={[styles.card, style]}>
       <View style={styles.bodyContainer}>
         <View style={styles.group}>
           <View style={styles.IconContainer}>
@@ -133,42 +133,27 @@ const OtpCard = ({otp = '', setOtp = () => {}}: IOtpCard) => {
             {getTranslationLabel('verification')}
           </Text>
         </View>
-
-        <PrimaryTextInput
-          placeHolder={getTranslationLabel('six_digits')}
-          titleText={getTranslationLabel('enter_otp')}
-          isRequired={false}
-          value={otp}
-          keyboardType="numeric"
-          returnKeyType="done"
-          maxLength={6}
-          ThemeColors={{primary: COLORS.dgreen}}
-          onChangeText={val => setOtp(val)}
-          containerStyle={styles.textInputContainer}
-          error={errorMsg.length !== 0}
-          errorText={errorMsg}
-          right={
-            errorMsg.length !== 0 ? <TextInput.Icon icon={warningIcon} /> : null
-          }
-        />
+        <Text variant="labelLarge" style={CommonStyles.marginVertical10}>
+          {getTranslationLabel('enter_otp')}
+        </Text>
+        <OTPInput otp={otp} setOtp={setOtp} />
         <View style={styles.resendContainer}>
-          <Text
-            onPress={!resendOtpTimer ? ResendOTP : () => {}}
-            style={!resendOtpTimer ? styles.ResendOTP : {}}
-            variant="labelMedium">
-            {getTranslationLabel('resend_otp')} {`(${otpAttempts}/5)`}
-          </Text>
-
           {resendOtpTimer ? (
             <Text variant="labelMedium" style={styles.ResendOTP}>
-              {getTranslationLabel('resend_otp_in_')}{' '}
+              {getTranslationLabel('resend_otp')}{' '}
               {secondsToMinutes(resendOtpTimer)}
             </Text>
           ) : (
             <Text variant="labelMedium" style={styles.ResendOTPDisabled}>
-              {getTranslationLabel('resend_otp_in_') + ' 1:00'}
+              {getTranslationLabel('resend_otp') + ' 1:00'}
             </Text>
           )}
+          <Text
+            onPress={!resendOtpTimer ? ResendOTP : () => {}}
+            style={!resendOtpTimer ? styles.ResendOTP : {}}
+            variant="labelMedium">
+            {getTranslationLabel('Attempts')} {`(${otpAttempts}/5)`}
+          </Text>
         </View>
       </View>
       {renderModal(showModal, setShowModal)}

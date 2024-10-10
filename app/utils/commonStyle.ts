@@ -13,6 +13,7 @@ const CommonStyles = StyleSheet.create({
   },
   margin: {margin: 20},
   marginTop: {marginTop: 24},
+  marginBottom10: {marginBottom: 10},
   marginBottom20: {marginBottom: 20},
   padding: {padding: 20},
   padding16: {padding: 16},
