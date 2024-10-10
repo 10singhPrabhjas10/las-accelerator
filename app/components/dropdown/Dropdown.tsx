@@ -53,6 +53,7 @@ interface IDropdownProps {
   error?: string;
   labelRequired?: boolean;
   updateDisplayValue?: (item: string) => string;
+  textInputStyle?: ViewStyle;
 }
 
 const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
@@ -81,6 +82,7 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
     labelRequired = false,
     setData = () => {},
     updateDisplayValue,
+    textInputStyle,
   } = props;
 
   const [displayValue, setDisplayValue] = useState('');
@@ -232,12 +234,15 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
                       icon={visible ? 'chevron-up' : 'chevron-down'}
                     />
                   }
-                  style={{
-                    height: 45,
-                    backgroundColor: isDisabled
-                      ? COLORS.lightGrey2
-                      : 'transparent',
-                  }}
+                  style={[
+                    {
+                      height: 45,
+                      backgroundColor: isDisabled
+                        ? COLORS.lightGrey2
+                        : 'transparent',
+                    },
+                    textInputStyle,
+                  ]}
                   error={error && error?.length > 0 ? true : false}
                 />
               )}

@@ -80,6 +80,7 @@ const CommonStyles = StyleSheet.create({
   flatListMargin: {margin: 20, marginBottom: 0},
   flexOneMargin0: {flex: 1, margin: 0},
   selfFlexEnd: {alignSelf: 'flex-end'},
+  rowAlignCenter: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default CommonStyles;
