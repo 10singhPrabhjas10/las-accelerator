@@ -120,9 +120,10 @@ const ProductSeries = () => {
         <FlatList
           data={getFilteredList()}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
             return (
               <TouchableOpacity
+                activeOpacity={0.9}
                 onPress={() => {
                   sheetRef.current?.present();
                   setSelectedCardItem(item);
