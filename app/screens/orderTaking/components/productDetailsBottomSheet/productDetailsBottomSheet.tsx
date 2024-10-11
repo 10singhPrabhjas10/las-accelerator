@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   formatNumberWithCommas,
   getTranslationLabel,
@@ -24,7 +24,10 @@ import {ButtonTypes} from '@/types/buttons';
 import {Divider, Icon, ProgressBar, Text} from 'react-native-paper';
 import Spacer from '@/components/spacer';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {ISeriesCardProps} from '@/screens/orderTaking/productSeries/productSeries';
+import {
+  ISeriesCardProps,
+  ProductList,
+} from '@/screens/orderTaking/productSeries/productSeries';
 import {uomList} from '@/utils/dummyData';
 import {CurrencyCode, dot} from '@/utils/Constants';
 
@@ -34,20 +37,23 @@ interface IProductDetailsProps {
     quantity: number,
     uomValue: string,
     existingUomValue: string,
+    id: number,
   ) => void;
   onClose: () => void;
-  selectedCardItem: ISeriesCardProps | null;
+  selectedCardItem: ISeriesCardProps;
+  productsAdded?: ProductList | undefined;
 }
 
 const ProductDetailsBottomSheet = ({
   onAddToCart,
   onClose,
   selectedCardItem,
+  productsAdded,
 }: IProductDetailsProps) => {
   const [isRecordTextVisible, setIsRecordTextVisible] =
     useState<boolean>(false);
   const [addedExistingStock, setAddedExistingStock] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState<number>(0);
   const [existingQuantity, setExistingQuantity] = useState(1);
   const [uomValue, setUomValue] = useState('');
   const [existingUomValue, setExistingUomValue] = useState('');
@@ -58,6 +64,13 @@ const ProductDetailsBottomSheet = ({
 
   // Calculate progress, ensuring it's between 0 and 1
   const progress = Math.min(quantity / target, 1);
+
+  useEffect(() => {
+    const product = productsAdded?.[selectedCardItem?.id];
+    if (productsAdded?.[selectedCardItem.id]) {
+      setQuantity(product?.quantity as unknown as number);
+    }
+  }, [productsAdded, selectedCardItem.id]);
 
   const handleIncrement = (item: string) => {
     item === 'quantity'
@@ -79,9 +92,12 @@ const ProductDetailsBottomSheet = ({
       }
     }
   };
+  const recordStock = () => {
+    setIsRecordTextVisible(true);
+  };
 
   const totalPrice = quantity * parseInt(selectedCardItem?.price ?? '0');
-
+  console.log(selectedCardItem);
   return (
     <TouchableWithoutFeedback>
       <View style={CommonStyles.flexOne}>
@@ -211,7 +227,9 @@ const ProductDetailsBottomSheet = ({
             </TouchableOpacity>
             <View>
               {!isRecordTextVisible && !addedExistingStock ? (
-                <Icon source={'plus'} size={17} color={COLORS.dgreen} />
+                <TouchableOpacity onPress={recordStock}>
+                  <Icon source={'plus'} size={17} color={COLORS.dgreen} />
+                </TouchableOpacity>
               ) : addedExistingStock && !isRecordTextVisible ? (
                 <View style={CommonStyles.rowAlignCenter}>
                   <TouchableOpacity
@@ -330,7 +348,13 @@ const ProductDetailsBottomSheet = ({
           isDisabled={isRecordTextVisible}
           onPress={() => {
             onClose();
-            onAddToCart(existingQuantity, quantity, uomValue, existingUomValue);
+            onAddToCart(
+              existingQuantity,
+              quantity,
+              uomValue,
+              existingUomValue,
+              selectedCardItem.id,
+            );
           }}
           style={styles.button}
         />

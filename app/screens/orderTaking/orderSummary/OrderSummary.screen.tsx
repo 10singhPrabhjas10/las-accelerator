@@ -28,6 +28,8 @@ import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
 import CompleteKycModal from '@/components/completeKycModal/CompleteKycModal';
 import {DummyMobile} from '@/utils/Constants';
+import ProductDetailsBottomSheet from '../components/productDetailsBottomSheet/productDetailsBottomSheet';
+import {ISeriesCardProps} from '../productSeries/productSeries';
 
 interface ISchemeProps {
   id: number;
@@ -44,6 +46,17 @@ const OrderSummary = () => {
   const [showKYCModal, setShowKCModal] = useState<boolean>(false);
   const [schemesSelected, setSchemesSelected] = useState<ISchemeProps>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const [selectedCardITem, setSelectedCardItem] = useState<ISeriesCardProps>({
+    discount: '',
+    name: '',
+    sku: '',
+    avl: '',
+    price: '',
+    image: '',
+    categories: [],
+    id: 0,
+  });
   const totalQuantity = cartItems?.data?.reduce(
     (acc, currValue) => acc + currValue.itemQuantity,
     0,
@@ -82,17 +95,21 @@ const OrderSummary = () => {
                 renderItem={({item}) => {
                   return (
                     <SeriesCard
-                      itemQuantity={item.itemQuantity}
                       image={item.image}
-                      onAddPress={() => {}}
+                      id={item.id}
+                      onAddPress={() => {
+                        sheetRef.current?.present();
+                        setSelectedCardItem(item);
+                      }}
                       price={item.price}
-                      key={item.skuId}
-                      seriesName={item.seriesName}
-                      skuId={item.skuId}
-                      skuName={item.skuName}
-                      header={item.title?.length > 0}
-                      title={item?.title}
+                      key={item.id}
+                      seriesName={item.name}
+                      skuId={item.avl}
+                      skuName={item.sku}
+                      header={item.name?.length > 0}
+                      title={item?.discount}
                       onDeletePress={() => {}}
+                      fromSummaryScreen
                     />
                   );
                 }}
@@ -236,6 +253,23 @@ const OrderSummary = () => {
             <AdditionalSchemes
               onClose={() => bottomSheetModalRef.current?.dismiss()}
               onApplySchemes={handleApplySchemes}
+            />
+          </BottomSheetModalComponent>
+          <BottomSheetModalComponent
+            maxHeight={'80%'}
+            minHeight={'75%'}
+            ref={sheetRef}>
+            <ProductDetailsBottomSheet
+              onClose={() => sheetRef.current?.close()}
+              onAddToCart={(
+                existingQuantity,
+                quantity,
+                uomValue,
+                existingUomValue,
+                id,
+              ) => {}} //use this to get quantity and UOM
+              selectedCardItem={selectedCardITem}
+              // productsAdded={productsAdded}
             />
           </BottomSheetModalComponent>
         </>
