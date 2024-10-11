@@ -9,7 +9,7 @@ const PastOrders = () => {
   const pastOrders = pastOrder.data.past_order;
   return (
     <View style={style.parent}>
-      <Text variant="headlineMedium">{getTranslationLabel('past_orders')}</Text>
+      <Text variant="headlineSmall" style={[CommonStyles.marginVertical5, CommonStyles.marginL10]}>{getTranslationLabel('past_orders')}</Text>
       <FlatList
         data={pastOrders}
         horizontal
@@ -17,7 +17,7 @@ const PastOrders = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => {
           return (
-            <View style={CommonStyles.paddingR10}>
+            <View style={CommonStyles.padding5}>
               <PastOrderCard
                 title={item.product_name}
                 price={item.product_price}

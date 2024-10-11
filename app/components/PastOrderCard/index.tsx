@@ -25,10 +25,10 @@ const PastOrderCard = ({
   currency = '$',
 }: IPastOrderCard) => {
   return (
-    <View style={CommonStyles.padding10}>
+    <View style={CommonStyles.padding5}>
       <CardWrapper cardStyle={style.parent}>
         <Image style={style.image} source={image} />
-        <Text numberOfLines={2} variant="titleMedium">
+        <Text numberOfLines={2} variant="titleMedium" style={style.titleText}>
           {title}
         </Text>
         <View style={style.cartView}>
@@ -47,8 +47,8 @@ const PastOrderCard = ({
 };
 const style = StyleSheet.create({
   parent: {
-    width: widthToRatio(100),
-    minHeight: widthToRatio(160),
+    width: widthToRatio(126),
+    minHeight: widthToRatio(165),
     alignItems: 'center',
   },
   cartView: {
@@ -64,6 +64,10 @@ const style = StyleSheet.create({
   image: {
     width: widthToRatio(88),
     aspectRatio: 1,
+    alignSelf:'center',
+  },
+  titleText: {
+    textAlign: 'center'
   },
 });
 export default PastOrderCard;

@@ -211,26 +211,27 @@ const styles = StyleSheet.create({
   },
   skuStyle: {
     paddingTop: 6,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '500',
     color: COLORS.grey6,
   },
   price: {
-    fontSize: 17,
+    paddingTop: 8,
+    fontSize: 18,
     lineHeight: 20,
     fontWeight: '500',
   },
+  skuIdStyle: {fontSize: 13, fontWeight: '500', color: COLORS.grey6},
   quantity: {
     color: COLORS.disabledGrey,
   },
-  skuIdStyle: {fontSize: 12, fontWeight: '500', color: COLORS.grey6},
   footerAction: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  button: {height: 40, width: 90, borderColor: COLORS.dgreen},
+  button: {height: 40, width: 89, borderColor: COLORS.dgreen},
   stepperView: {
     display: 'flex',
     flexDirection: 'row',
