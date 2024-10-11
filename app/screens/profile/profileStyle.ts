@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
     lineHeight: heightToRatio(20),
     color: COLORS.neutralLight,
   },
+  viewPartner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.dgreen,
+    padding: 5,
+    borderRadius: 5,
+    marginTop: heightToRatio(10),
+  },
   bottomSheetContainer: {
     flex: 1,
     paddingHorizontal: 20,

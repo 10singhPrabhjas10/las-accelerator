@@ -51,7 +51,7 @@ const ProductSeries = () => {
     name: '',
     sku: '',
     avl: '',
-    price: '',
+    price: '10',
     image: '',
     categories: [],
     id: 0,
@@ -154,17 +154,19 @@ const ProductSeries = () => {
         <FlatList
           data={getFilteredList()}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
             return (
               <TouchableOpacity
+                activeOpacity={0.9}
                 onPress={() => {
-                  sheetRef.current?.present();
-                  setSelectedCardItem(item);
+                  // sheetRef.current?.present();
+                  // setSelectedCardItem(item);
                 }}>
                 <SeriesCard
                   title={item.discount}
                   onAddPress={() => {
                     sheetRef.current?.present();
+                    setSelectedCardItem(item);
                   }}
                   image={item.image}
                   seriesName={item.name}
@@ -218,7 +220,6 @@ const styles = StyleSheet.create({
   },
   parent: {
     paddingHorizontal: 10,
-    flex: 1,
   },
   rowView: {
     flexDirection: 'row',
@@ -250,6 +251,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
+    height: heightToRatio(40),
   },
   selectedchipsContiner: {
     borderColor: COLORS.dgreen,

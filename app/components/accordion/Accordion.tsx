@@ -81,6 +81,7 @@ const Accordion = ({
           {
             backgroundColor: COLORS.white,
           },
+          expanded && {borderBottomLeftRadius: 0, borderBottomRightRadius: 0},
           headingStyle,
         ]}>
         <View style={[styles.innerContainer, childrenStyles]}>{children}</View>

@@ -62,8 +62,21 @@ export default {
       label: 'Resend OTP',
     },
     {
+      key: 'View_Mapped_Channel_Partner',
+      label: 'View Mapped Channel Partner',
+    },
+
+    {
       key: 'resend_otp_in_',
       label: 'Resend OTP in',
+    },
+    {
+      key: 'enter_otp',
+      label: 'Enter OTP',
+    },
+    {
+      key: 'invlid_otp_please_try_again',
+      label: 'Invalid OTP. Please Try again',
     },
     {
       key: 'resend_otp_in',
@@ -96,6 +109,10 @@ export default {
     {
       key: 'otp_attempts_exhausted',
       label: 'OTP Attempts Exhausted',
+    },
+    {
+      key: 'Attempts',
+      label: 'Attempts',
     },
     {
       key: 'otp_sent_successfully',

@@ -92,9 +92,12 @@ const ProductDetailsBottomSheet = ({
       }
     }
   };
+  const recordStock = () => {
+    setIsRecordTextVisible(true);
+  };
 
   const totalPrice = quantity * parseInt(selectedCardItem?.price ?? '0');
-
+  console.log(selectedCardItem);
   return (
     <TouchableWithoutFeedback>
       <View style={CommonStyles.flexOne}>
@@ -224,7 +227,9 @@ const ProductDetailsBottomSheet = ({
             </TouchableOpacity>
             <View>
               {!isRecordTextVisible && !addedExistingStock ? (
-                <Icon source={'plus'} size={17} color={COLORS.dgreen} />
+                <TouchableOpacity onPress={recordStock}>
+                  <Icon source={'plus'} size={17} color={COLORS.dgreen} />
+                </TouchableOpacity>
               ) : addedExistingStock && !isRecordTextVisible ? (
                 <View style={CommonStyles.rowAlignCenter}>
                   <TouchableOpacity

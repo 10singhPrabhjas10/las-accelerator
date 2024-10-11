@@ -19,6 +19,7 @@ import Accordion from '@/components/accordion/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import StartIcon from '../../../assets/icons/start.svg';
 import ProfileSubHeader from '../../components/profilesubHeader/profileSubHeader';
 import {
   heightToRatio,
@@ -97,7 +98,7 @@ const ProfileScreen = () => {
 
   const renderProfilesDetailsSection = () => {
     return (
-      <View style={CommonStyles.marginBottom20}>
+      <View style={CommonStyles.marginBottom10}>
         <SubHeader
           shouldShowCardView={true}
           otherSubHeaderContent={
@@ -110,20 +111,18 @@ const ProfileScreen = () => {
                 <View>
                   <Text style={styles.titleText}>Gururaj Chandrea</Text>
 
-                  <CustomButton
-                    style={{
-                      borderRadius: 10,
-                      height: heightToRatio(32),
-                      marginTop: 20,
-                      // backgroundColor: 'blue',
-                    }}
-                    type={ButtonTypes.contained}
-                    text={'View mapped channel partner'}
+                  <TouchableOpacity
+                    style={styles.viewPartner}
                     onPress={() => {
                       navigation.navigate('MappedChannelPartner');
-                    }}
-                    textStyle={styles.greenLabel}
-                  />
+                    }}>
+                    <Text
+                      variant="labelMedium"
+                      style={{color: COLORS.white, paddingHorizontal: 5}}>
+                      {getTranslationLabel('View_Mapped_Channel_Partner')}
+                    </Text>
+                    <StartIcon />
+                  </TouchableOpacity>
                   {/*  add view mapped channel partner button code here */}
                 </View>
               }

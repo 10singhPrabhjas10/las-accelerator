@@ -156,18 +156,16 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
   return (
     <View>
       {label && (
-        <>
-          <View style={styles.titleView}>
-            <Text variant="bodyMedium">{label}</Text>
-            {isRequired && (
-              <Text variant="labelMedium" style={styles.requiredText}>
-                {'*'}
-              </Text>
-            )}
-          </View>
-          <Spacer size={5} />
-        </>
+        <View style={styles.titleView}>
+          <Text variant="bodyMedium">{label}</Text>
+          {isRequired && (
+            <Text variant="labelMedium" style={styles.requiredText}>
+              {'*'}
+            </Text>
+          )}
+        </View>
       )}
+      <Spacer size={5} />
       <Menu
         visible={visible}
         onDismiss={() => {
