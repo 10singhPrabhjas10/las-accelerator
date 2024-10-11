@@ -41,8 +41,8 @@ const OfferCard = ({
       end={{x: 1, y: 0}}
       colors={gradientColors}
       style={styles.parent}>
-      <View style={[CommonStyles.flexOne, {width: 135}]}>
-        <Text style={[styles.textColor, {fontWeight: 'bold', fontSize: 26}]} variant="titleMedium">
+      <View style={[CommonStyles.flexOne, styles.textContainer]}> 
+        <Text style={[styles.textColor, styles.textFont]} variant="titleMedium">
           {title}
         </Text>
         <Text style={styles.textColor} variant="titleSmall">
@@ -78,6 +78,13 @@ const styles = StyleSheet.create({
     width: widthToRatio(100),
     paddingLeft: 30,
     aspectRatio: 1,
+  },
+  textContainer: {
+    width: widthToRatio(135)
+  },
+  textFont: {
+    fontWeight: 'bold', 
+    fontSize: 26
   },
   textColor: {
     color: COLORS.white,

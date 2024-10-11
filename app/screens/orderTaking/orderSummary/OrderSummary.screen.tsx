@@ -63,7 +63,7 @@ const OrderSummary = () => {
           <>
             <View style={CommonStyles.flexOne}>
               <View style={styles.header}>
-                <Text style={[styles.titleWeight, {marginLeft: 10, fontSize: 18}]} variant="bodyLarge">
+                <Text style={[styles.titleWeight, styles.titleFontStyle]} variant="bodyLarge">
                   {getTranslationLabel('cart_items')} ({totalQuantity})
                 </Text>
                 <TouchableOpacity
@@ -260,6 +260,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleWeight: {fontWeight: '700'},
+  titleFontStyle: {
+    marginLeft: 10,
+    fontSize: 18,
+  },
   headerRight: {
     flexDirection: 'row',
     alignItems: 'center',

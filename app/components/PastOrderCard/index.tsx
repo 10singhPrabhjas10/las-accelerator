@@ -27,8 +27,8 @@ const PastOrderCard = ({
   return (
     <View style={CommonStyles.padding5}>
       <CardWrapper cardStyle={style.parent}>
-        <Image style={[style.image, {alignSelf:'center'}]} source={image} />
-        <Text numberOfLines={2} variant="titleMedium" style={{ textAlign: 'center'}}>
+        <Image style={style.image} source={image} />
+        <Text numberOfLines={2} variant="titleMedium" style={style.titleText}>
           {title}
         </Text>
         <View style={style.cartView}>
@@ -64,6 +64,10 @@ const style = StyleSheet.create({
   image: {
     width: widthToRatio(88),
     aspectRatio: 1,
+    alignSelf:'center',
+  },
+  titleText: {
+    textAlign: 'center'
   },
 });
 export default PastOrderCard;
