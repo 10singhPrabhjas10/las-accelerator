@@ -41,11 +41,14 @@ const OfferCard = ({
       end={{x: 1, y: 0}}
       colors={gradientColors}
       style={styles.parent}>
-      <View style={[CommonStyles.flexOne, styles.textContainer]}> 
-        <Text style={[styles.textColor, styles.textFont]} variant="titleMedium">
+      <View style={CommonStyles.flexOne}>
+        <Text style={styles.textColor} variant="headlineSmall">
           {title}
         </Text>
-        <Text style={styles.textColor} variant="titleSmall">
+        <Text
+          style={[styles.textColor, styles.text]}
+          numberOfLines={2}
+          variant="titleSmall">
           {subTitle}
         </Text>
         <TouchableOpacity onPress={onAction} style={styles.button}>
@@ -80,17 +83,15 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   textContainer: {
-    width: widthToRatio(135)
+    width: widthToRatio(135),
   },
-  textFont: {
-    fontWeight: 'bold', 
-    fontSize: 26
+  text: {
+    maxWidth: widthToRatio(135),
   },
   textColor: {
     color: COLORS.white,
   },
   button: {
-    width: 100,
     padding: 10,
     backgroundColor: COLORS.white,
     borderRadius: 4,

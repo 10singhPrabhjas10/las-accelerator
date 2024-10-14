@@ -8,7 +8,11 @@ import {
 import React, {useRef, useState} from 'react';
 import Layout from '@/components/Layout';
 import ShoppingCartIcon from '../../../../assets/icons/shopping_cart.svg';
-import {getTranslationLabel, heightToRatio} from '../../../utils/commonMethods';
+import {
+  getTranslationLabel,
+  heightToRatio,
+  widthToRatio,
+} from '../../../utils/commonMethods';
 import SearchInputWithCamera from '../../../components/searchInputWithCamera/searchInputWithCamera';
 import {COLORS} from '@/theme/colors';
 import {Chip, Icon, Text} from 'react-native-paper';
@@ -106,7 +110,7 @@ const ProductSeries = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={CommonStyles.flexRow}>
+          style={styles.scrollView}>
           {filters?.map(filter => {
             const isSelected = selectedFilters.includes(filter.id);
             return (
@@ -218,8 +222,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.dDarkGreen,
     height: heightToRatio(88),
   },
+  scrollView: {
+    maxHeight: widthToRatio(50),
+    height: widthToRatio(50),
+  },
   parent: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   rowView: {
     flexDirection: 'row',
