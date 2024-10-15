@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SearchInputWithCamera from '../searchInputWithCamera/searchInputWithCamera';
+import CardboardSVG from '../../../assets/images/cardboradImage.svg'
 import CommonStyles from '@/utils/commonStyle';
 import {heightToRatio} from '@/utils/commonMethods';
 import {COLORS} from '@/theme/colors';
@@ -32,6 +33,7 @@ const OrderSearch = ({
           {title}
         </Text>
       )}
+      <CardboardSVG style={styles.cardboardSvgStyle}/>
       <SearchInputWithCamera
         onChangeText={text => textHandle(text)}
         value={searchText}
@@ -52,6 +54,11 @@ const styles = StyleSheet.create({
   text: {
     color: COLORS.white,
     paddingHorizontal: 10,
+  },
+  cardboardSvgStyle: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
 export default OrderSearch;
