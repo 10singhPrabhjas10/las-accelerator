@@ -118,13 +118,9 @@ const ProductSeries = () => {
                 mode="outlined"
                 style={[
                   styles.chip,
-                  {
-                    borderColor: isSelected
-                      ? COLORS.dgreen
-                      : COLORS.dividerGrey,
-                  },
+                  isSelected ? styles.chipSelected : styles.chipNotSelected,
                 ]}
-                textStyle={{color: COLORS.black1, paddingBottom: 5}}
+                textStyle={{color: COLORS.black1}}
                 selectedColor={COLORS.accentGreen}
                 onClose={
                   isSelected
@@ -228,7 +224,6 @@ const styles = StyleSheet.create({
   },
   parent: {
     paddingHorizontal: 10,
-    flex: 1,
   },
   rowView: {
     flexDirection: 'row',
@@ -256,11 +251,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   chip: {
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     height: heightToRatio(40),
+  },
+  chipSelected: {
+    borderColor: COLORS.dgreen,
+    borderWidth: 3,
+    height: 62,
+  },
+  chipNotSelected: {
+    borderColor: COLORS.dividerGrey,
   },
   selectedchipsContiner: {
     borderColor: COLORS.dgreen,

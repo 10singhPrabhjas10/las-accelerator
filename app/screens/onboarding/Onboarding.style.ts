@@ -1,4 +1,4 @@
-import {getDeviceHeight, getDeviceWidth} from '@/utils/commonMethods';
+import {getDeviceHeight, getDeviceWidth, heightToRatio} from '@/utils/commonMethods';
 import {StyleSheet} from 'react-native';
 import {COLORS} from 'theme/colors';
 
@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
-
   onboardingContainer: {
     backgroundColor: COLORS.dDarkGreen,
     // flex: 1,
@@ -20,7 +19,8 @@ const styles = StyleSheet.create({
   },
   contentView: {
     backgroundColor: '#EEF7F9',
-    flex: 1,
+    height: heightToRatio(110),
+    marginHorizontal: 15,
   },
   button: {
     marginHorizontal: 20,

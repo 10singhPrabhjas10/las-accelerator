@@ -1,5 +1,6 @@
 import {COLORS} from 'theme/colors';
 import {StyleSheet} from 'react-native';
+import { heightToRatio, widthToRatio } from '@/utils/commonMethods';
 
 const styles = StyleSheet.create({
   cardBackground: {
@@ -17,12 +18,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: heightToRatio(3),
   },
   logo: {
-    width: 30,
-    height: 30,
-    paddingLeft: 20,
-    marginRight: 6,
+    height: heightToRatio(30),
+    width: widthToRatio(30),
+    marginHorizontal: 8,
+    transform: [{ rotate: '180deg' }],
   },
   profileView: {
     height: 70,
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 8,
     alignItems: 'center',
+    marginHorizontal: 4,
   },
   userIcon: {
     justifyContent: 'center',
