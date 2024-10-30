@@ -13,6 +13,10 @@ import {styles} from './styles';
 import GreyCheck from '../../../../assets/icons/check_grey.svg';
 import RotateIcon from '../../../../assets/icons/rotate_grey.svg';
 import CommonStyles from '@/utils/commonStyle';
+import SnackBar from '@/components/snackbar/SnackBar';
+import {useDispatch} from 'react-redux';
+import {showSnackbar} from '@/store/redux/snackbarSlice';
+import {PostionEnum, SnackBarEnum} from '@/constants/modalTypes';
 interface IOptimiseRoute {
   ref: React.RefObject<BottomSheetModal> | null;
 }
@@ -36,9 +40,20 @@ const OptimiseRoute = forwardRef<BottomSheetModal, IOptimiseRoute>(
   ({}, ref) => {
     const [routeFilter, setRouteFilter] = useState(routesFilter[1].value);
     const [updating, setUpdating] = useState(false);
+    const dispatch = useDispatch();
     const update = () => {
       setUpdating(true);
-      setTimeout(() => setUpdating(false), 2000);
+      setTimeout(() => {
+        setUpdating(false);
+        dispatch(
+          showSnackbar({
+            isVisible: true,
+            text: getTranslationLabel('Routes_Success'),
+            type: SnackBarEnum.SUCCESS,
+            position: PostionEnum.TOP,
+          }),
+        );
+      }, 2000);
     };
     useEffect(() => {
       console.log(routeFilter);

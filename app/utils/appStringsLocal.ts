@@ -317,6 +317,10 @@ export default {
       key: 'Sales_Potential',
       label: 'Sales Potential',
     },
+    {
+      key: 'Routes_Success',
+      label: 'Routes Updated successfully!',
+    },
 
     ///End Beat Plan
   ],

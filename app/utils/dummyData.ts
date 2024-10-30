@@ -35,36 +35,289 @@ export const uploadProfilePhotoResponse = {
 
 /* Response*/
 
+export const TodaysBeatPlan = [
+  {
+    name: 'Aarav Sharma',
+    mobile_number: '98765-43210',
+    location: {
+      street: '10, 1st Main',
+      city: 'Bengaluru',
+    },
+    coordinates: {
+      latitude: 12.9716,
+      longitude: 77.5946,
+    },
+    eta: '30 mins',
+    distance: '12 km',
+  },
+  {
+    name: 'Vivaan Gupta',
+    mobile_number: '87654-32109',
+    location: {
+      street: '23, A Block',
+      city: 'Delhi',
+    },
+    coordinates: {
+      latitude: 28.6139,
+      longitude: 77.209,
+    },
+    eta: '25 mins',
+    distance: '8 km',
+  },
+  {
+    name: 'Reyansh Patel',
+    mobile_number: '76543-21098',
+    location: {
+      street: '456, Patel Nagar',
+      city: 'Mumbai',
+    },
+    coordinates: {
+      latitude: 19.076,
+      longitude: 72.8777,
+    },
+    eta: '15 mins',
+    distance: '5 km',
+  },
+  {
+    name: 'Vihaan Reddy',
+    mobile_number: '65432-10987',
+    location: {
+      street: '78, MG Road',
+      city: 'Hyderabad',
+    },
+    coordinates: {
+      latitude: 17.385,
+      longitude: 78.4867,
+    },
+    eta: '20 mins',
+    distance: '7 km',
+  },
+  {
+    name: 'Arjun Mehta',
+    mobile_number: '54321-09876',
+    location: {
+      street: '89, 2nd Cross',
+      city: 'Chennai',
+    },
+    coordinates: {
+      latitude: 13.0827,
+      longitude: 80.2707,
+    },
+    eta: '35 mins',
+    distance: '14 km',
+  },
+  {
+    name: 'Sai Kumar',
+    mobile_number: '43210-98765',
+    location: {
+      street: '12, 4th Street',
+      city: 'Ahmedabad',
+    },
+    coordinates: {
+      latitude: 23.0225,
+      longitude: 72.5714,
+    },
+    eta: '40 mins',
+    distance: '16 km',
+  },
+  {
+    name: 'Ishaan Singh',
+    mobile_number: '32109-87654',
+    location: {
+      street: '34, Sardar Patel Road',
+      city: 'Jaipur',
+    },
+    coordinates: {
+      latitude: 26.9124,
+      longitude: 75.7873,
+    },
+    eta: '30 mins',
+    distance: '12 km',
+  },
+  {
+    name: 'Kabir Khan',
+    mobile_number: '21098-76543',
+    location: {
+      street: '56, Raja Street',
+      city: 'Kolkata',
+    },
+    coordinates: {
+      latitude: 22.5726,
+      longitude: 88.3639,
+    },
+    eta: '50 mins',
+    distance: '18 km',
+  },
+  {
+    name: 'Krishna Rao',
+    mobile_number: '10987-65432',
+    location: {
+      street: '90, Nehru Road',
+      city: 'Pune',
+    },
+    coordinates: {
+      latitude: 18.5214,
+      longitude: 73.8567,
+    },
+    eta: '45 mins',
+    distance: '15 km',
+  },
+  {
+    name: 'Nishant Verma',
+    mobile_number: '09876-54321',
+    location: {
+      street: '100, Main Bazaar',
+      city: 'Surat',
+    },
+    coordinates: {
+      latitude: 21.1702,
+      longitude: 72.8311,
+    },
+    eta: '60 mins',
+    distance: '25 km',
+  },
+];
+
 export const ChannelPartnerData = [
   {
-    nameOfFirm: 'A. S. A. ASSOCIATES',
-    code: '6546363',
-    channelPartnerId: 'gdsfgsgs',
+    name: 'Aarav Sharma',
+    mobile_number: '98765-43210',
+    location: {
+      street: '10, 1st Main',
+      city: 'Bengaluru',
+    },
+    coordinates: {
+      latitude: 12.9716,
+      longitude: 77.5946,
+    },
+    eta: '30 mins',
+    distance: '12 km',
   },
   {
-    nameOfFirm: 'ALTIUS BUSINESS CORPORATION.',
-    code: '456456456',
-    channelPartnerId: 'dgfdfg',
+    name: 'Vivaan Gupta',
+    mobile_number: '87654-32109',
+    location: {
+      street: '23, A Block',
+      city: 'Delhi',
+    },
+    coordinates: {
+      latitude: 28.6139,
+      longitude: 77.209,
+    },
+    eta: '25 mins',
+    distance: '8 km',
   },
   {
-    nameOfFirm: 'PEGASUS ASSOCIATES',
-    code: '65464564',
-    channelPartnerId: 'gdfgd3453',
+    name: 'Reyansh Patel',
+    mobile_number: '76543-21098',
+    location: {
+      street: '456, Patel Nagar',
+      city: 'Mumbai',
+    },
+    coordinates: {
+      latitude: 19.076,
+      longitude: 72.8777,
+    },
+    eta: '15 mins',
+    distance: '5 km',
   },
   {
-    nameOfFirm: 'RAMDEV METAL MART',
-    code: '4353453',
-    channelPartnerId: 'fsdfs',
+    name: 'Vihaan Reddy',
+    mobile_number: '65432-10987',
+    location: {
+      street: '78, MG Road',
+      city: 'Hyderabad',
+    },
+    coordinates: {
+      latitude: 17.385,
+      longitude: 78.4867,
+    },
+    eta: '20 mins',
+    distance: '7 km',
   },
   {
-    nameOfFirm: 'Deloitte',
-    code: '52345245',
-    channelPartnerId: 'fdsfs',
+    name: 'Arjun Mehta',
+    mobile_number: '54321-09876',
+    location: {
+      street: '89, 2nd Cross',
+      city: 'Chennai',
+    },
+    coordinates: {
+      latitude: 13.0827,
+      longitude: 80.2707,
+    },
+    eta: '35 mins',
+    distance: '14 km',
   },
   {
-    nameOfFirm: 'ANJALI AGENCIES',
-    code: '34525234',
-    channelPartnerId: 'fsdf',
+    name: 'Sai Kumar',
+    mobile_number: '43210-98765',
+    location: {
+      street: '12, 4th Street',
+      city: 'Ahmedabad',
+    },
+    coordinates: {
+      latitude: 23.0225,
+      longitude: 72.5714,
+    },
+    eta: '40 mins',
+    distance: '16 km',
+  },
+  {
+    name: 'Ishaan Singh',
+    mobile_number: '32109-87654',
+    location: {
+      street: '34, Sardar Patel Road',
+      city: 'Jaipur',
+    },
+    coordinates: {
+      latitude: 26.9124,
+      longitude: 75.7873,
+    },
+    eta: '30 mins',
+    distance: '12 km',
+  },
+  {
+    name: 'Kabir Khan',
+    mobile_number: '21098-76543',
+    location: {
+      street: '56, Raja Street',
+      city: 'Kolkata',
+    },
+    coordinates: {
+      latitude: 22.5726,
+      longitude: 88.3639,
+    },
+    eta: '50 mins',
+    distance: '18 km',
+  },
+  {
+    name: 'Krishna Rao',
+    mobile_number: '10987-65432',
+    location: {
+      street: '90, Nehru Road',
+      city: 'Pune',
+    },
+    coordinates: {
+      latitude: 18.5214,
+      longitude: 73.8567,
+    },
+    eta: '45 mins',
+    distance: '15 km',
+  },
+  {
+    name: 'Nishant Verma',
+    mobile_number: '09876-54321',
+    location: {
+      street: '100, Main Bazaar',
+      city: 'Surat',
+    },
+    coordinates: {
+      latitude: 21.1702,
+      longitude: 72.8311,
+    },
+    eta: '60 mins',
+    distance: '25 km',
   },
 ];
 
