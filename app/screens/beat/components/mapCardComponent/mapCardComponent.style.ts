@@ -90,11 +90,11 @@ const styles = StyleSheet.create({
     color: COLORS.darkBlue,
   },
   checkInButton: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: COLORS.dgreen,
-    borderRadius: 9,
+    borderRadius: 8,
     height: heightToRatio(32),
-    width: widthToRatio(98),
+    width: widthToRatio(91.4),
   },
   checkInButtonText: {
     color: COLORS.dgreen,

@@ -50,16 +50,6 @@ function MapCardComponent({ count, name, address, distance, time }: MapCardCompo
                         onPress={() => {  }}
                     />
                 </View>
-                {/* <View style={styles.detailsContainer}>
-                    <Text style={styles.navigationlinkText}>Start Navigation</Text>
-                    <CustomButton
-                        type={ButtonTypes.outline}
-                        text="Check In"
-                        style={styles.checkInButton}
-                        textStyle={styles.checkInButtonText}
-                        onPress={() => {  }}
-                    />
-                </View> */}
             </TouchableOpacity>
         </View>
   );

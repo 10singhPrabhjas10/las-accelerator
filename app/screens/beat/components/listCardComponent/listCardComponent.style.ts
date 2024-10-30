@@ -68,18 +68,15 @@ const styles = StyleSheet.create({
     color: '#656767',
   },
   checkInButton: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: COLORS.dgreen,
     borderRadius: 8,
-    height: 32,
-    width: 'auto',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: heightToRatio(32),
+    width: widthToRatio(91.4),
   },
   checkInButtonText: {
     color: COLORS.dgreen,
     fontSize: 12,
-    padding:0,
     lineHeight:14.25,
   },
 });
