@@ -33,6 +33,10 @@ import {
 } from 'screens/beat/Beat.interface';
 import {TouchableOpacity} from 'react-native';
 
+import ListCardComponent from '../../../components/listCardComponent/listCardComponent';
+import MapCardComponent from '../../../components/mapCardComponent/mapCardComponent';
+import { beatListCardData } from '@/utils/dummyData';
+
 const MyBeatPlanScreen = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -231,6 +235,8 @@ const MyBeatPlanScreen = () => {
     }
   };
 
+  const sortedData = [... beatListCardData.data].sort((a, b) => a.priority - b.priority);
+
   return (
     <Layout headerTitle="Beat Plan">
       <View style={styles.container}>
@@ -244,6 +250,43 @@ const MyBeatPlanScreen = () => {
             <Pencil width={40} height={40} style={styles.pencilIcon} />
           </TouchableOpacity>
         </View>
+
+        {/* ListCardComponent */}
+        <View>
+          <FlatList
+            data={beatListCardData.data}
+            renderItem={({item}) => (
+              <ListCardComponent 
+                image={item.image}
+                name={item.name}
+                address={item.address}
+                distance={item.distance}
+                time={item.time}
+              />
+            )}
+            keyExtractor={(item) => item.name}
+          />
+        </View>
+
+        {/* MapCardComponent */}
+        <View>
+          <FlatList
+            data={sortedData}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item, index}) => (
+              <MapCardComponent 
+                count = {index + 1}
+                name={item.name}
+                address={item.address}
+                distance={item.distance}
+                time={item.time}
+              />
+            )}
+            keyExtractor={(item) => item.name}
+          />
+        </View>
+
         {showCalendar && (
           <View style={styles.calendar}>
             <Calendar
@@ -333,5 +376,4 @@ const MyBeatPlanScreen = () => {
     </Layout>
   );
 };
-
 export default MyBeatPlanScreen;
