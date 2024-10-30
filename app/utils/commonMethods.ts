@@ -527,7 +527,6 @@ export const getNotificationFilterDateDropDown = () => {
 export const getTranslationLabel = (key: string) => {
   const translations = store.getState().localization.translations;
   // const translations = appStringsLocal.hi;
-  console.log(translations);
   const translation = translations?.find((element: any) => element.key === key);
   return translation?.label || '';
 };

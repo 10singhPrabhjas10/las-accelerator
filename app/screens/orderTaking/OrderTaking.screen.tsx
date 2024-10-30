@@ -57,7 +57,6 @@ const OrderTaking = () => {
     <Layout
       headerTitle={'Product Categories'}
       onPressCustomLogo={() => {
-        console.log('log');
         return false;
       }}
       customLogo={() => <ShoppingCartIcon />}>

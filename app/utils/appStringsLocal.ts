@@ -292,6 +292,33 @@ export default {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
     },
+    ///Beat Plan
+    {key: 'today_beat_plan', label: "Today's Beat Plan"},
+    {key: 'Optimise_Route', label: 'Optimise Route'},
+    {key: 'Search', label: 'Search'},
+    {
+      key: 'Routes Updated',
+      label:
+        'We’ve updated the routes. Please proceed to check the revised routes',
+    },
+    {
+      key: 'Routes Updating',
+      label: 'We’re updating the routes based on ',
+    },
+    {
+      key: 'traffic',
+      label: 'Trafic',
+    },
+    {
+      key: 'Store_Priority',
+      label: 'Store Priority',
+    },
+    {
+      key: 'Sales_Potential',
+      label: 'Sales Potential',
+    },
+
+    ///End Beat Plan
   ],
 
   hi: [

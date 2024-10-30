@@ -36,7 +36,7 @@ import ShippingDetails from 'screens/primaryCP/profileDetails/shippingDetail/Shi
 import PrimaryPartnerSearch from 'screens/primaryCP/primaryPartnerSearch/PrimaryPartnerSearch.screen';
 import AccountOutstanding from 'screens/primaryCP/financialInformation/accountOutstanding/AccountOutstanding.screen';
 import AccountStatement from 'screens/primaryCP/financialInformation/accountStatement/AccountStatement.screen';
-import BeatScreen from 'screens/beat/Beat.screen';
+import BeatPlan from '@/screens/beatPlan'; //import BeatScreen from 'screens/beat/Beat.screen';
 import BeatPlanScreen from 'screens/beat/PlanModule/beatPlan/BeatPlan.screen';
 import AddBeatscreen from 'screens/beat/PlanModule/beatPlan/addBeat/AddBeat.screen';
 import ModifyBeatScreen from 'screens/beat/PlanModule/beatPlan/modifyBeat/ModifyBeat.screen';
@@ -512,7 +512,7 @@ export default function RootNavigation() {
     <>
       {/* Beat Plan */}
       <RootStack.Screen name={'BeatPlan'} component={BeatPlanScreen} />
-      <RootStack.Screen name={'Beat'} component={BeatScreen} />
+      <RootStack.Screen name={'Beat'} component={BeatPlan} />
       <RootStack.Screen name={'AddBeat'} component={AddBeatscreen} />
       <RootStack.Screen name={'ModifyBeat'} component={ModifyBeatScreen} />
       <RootStack.Screen name={'AddNewStore'} component={AddNewStoreScreen} />
@@ -812,7 +812,6 @@ export default function RootNavigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{headerShown: false}}>
-        {console.log(isFirstTimeAppLaunch)}
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen
