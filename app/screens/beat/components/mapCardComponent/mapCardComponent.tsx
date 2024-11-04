@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {Text} from 'react-native-paper';
+import CardWrapper from 'components/card/Card';
 
 import styles from './mapCardComponent.style'
 import CustomButton from '@/components/button/CustomButton';
@@ -18,15 +20,15 @@ interface MapCardComponentProps {
 
 function MapCardComponent({ count, name, address, distance, time }: MapCardComponentProps) {
   return (
-        <View style={styles.container}>
+        <CardWrapper cardStyle={styles.container}>
             <TouchableOpacity  onPress={() => {  }} >
                 <View style={styles.infoContainer}>
                     <View style={styles.numberContainer}>
                         <Text style={styles.numberText}>{count}</Text>
                     </View>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.nameText}>{name}</Text>
-                        <Text style={styles.addressText}>{address}</Text>
+                        <Text variant='titleMedium' style={styles.nameText}>{name}</Text>
+                        <Text variant='labelLarge' style={styles.addressText}>{address}</Text>
                     </View>
                     <TouchableOpacity style={styles.phoneimageContainer} 
                                       onPress={() => {  }}>
@@ -36,9 +38,9 @@ function MapCardComponent({ count, name, address, distance, time }: MapCardCompo
                 <View style={styles.detailsContainer}>
                     <View style={styles.navInfoContainer}>
                         <NavIconImg style={styles.navImg} />
-                        <Text style={styles.distanceTimeText}> {distance} | {time}</Text>
+                        <Text variant='labelLarge' style={styles.distanceTimeText}> {distance} | {time}</Text>
                         <TouchableOpacity onPress={() => { }}>
-                        <Text style={styles.navigationlinkText}>Start Navigation</Text>
+                        <Text variant='labelLarge' style={styles.navigationlinkText}>Start Navigation</Text>
                         </TouchableOpacity>
                     </View>
                       
@@ -51,7 +53,7 @@ function MapCardComponent({ count, name, address, distance, time }: MapCardCompo
                     />
                 </View>
             </TouchableOpacity>
-        </View>
+        </CardWrapper>
   );
 }
 

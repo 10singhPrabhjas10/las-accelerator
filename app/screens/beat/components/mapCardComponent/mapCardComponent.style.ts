@@ -6,11 +6,11 @@ import { green } from 'react-native-reanimated/lib/typescript/Colors';
 const styles = StyleSheet.create({
   container: {
     width: widthToRatio(285),
-    padding: 10,
-    paddingTop: 5,
+    height: heightToRatio(128),
+    padding: 1,
     marginVertical: 10,
     marginHorizontal: 5,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.white,
     borderRadius: 15,
     shadowColor: COLORS.black,
     shadowOffset: {
@@ -21,9 +21,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   infoContainer: {
-    padding: 2,
+    padding: 1,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: -3,
   },
   numberContainer: {
     width: widthToRatio(30),
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     top: 14.5,
   },
   numberText: {
-    borderColor: '#797C7C',
+    borderColor: COLORS.grey2,
     borderWidth: 2,
     textAlign: 'center',
     alignItems: 'center',
@@ -40,22 +41,21 @@ const styles = StyleSheet.create({
     padding: 3,
     borderRadius: 50,
     color: COLORS.white,
-    backgroundColor: '#797C7C',
+    backgroundColor: COLORS.grey2,
   },
   infoTextContainer: {
-    width: widthToRatio(215),
+    width: widthToRatio(200),
     padding: 10,
     marginRight: 4.5,
     marginLeft: 23,
   },
   nameText: {
-    fontSize: 14,
     fontWeight: 'bold',
     color: COLORS.black,
   },
   addressText: {
     fontSize: 12,
-    color: '#796767',
+    color: COLORS.grey,
   },
   phoneimageContainer: {
     marginTop: 14,
@@ -79,14 +79,12 @@ const styles = StyleSheet.create({
   },
   distanceTimeText: {
     marginLeft: 18,
-    padding: 5,
-    fontSize: 12,
-    color: '#656767',
+    padding: 1,
+    color: COLORS.grey,
   },
   navigationlinkText: {
-    paddingBottom: 2,
+    padding: 2,
     marginHorizontal: 4,
-    fontSize: 13,
     color: COLORS.darkBlue,
   },
   checkInButton: {

@@ -4,9 +4,9 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 1,
     marginVertical: 5,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.white,
     borderRadius: 15,
     shadowColor: COLORS.black,
     shadowOffset: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     padding: 2,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   imageContainer: {
     flexDirection: 'row',
@@ -33,18 +33,15 @@ const styles = StyleSheet.create({
     height: 32,
   },
   infoTextContainer: {
-    width: widthToRatio(215),
+    width: widthToRatio(200),
     padding: 10,
     marginHorizontal: 5,
   },
   nameText: {
-    fontSize: 14,
-    fontWeight: 'bold',
     color: COLORS.black,
   },
   addressText: {
-    fontSize: 12,
-    color: '#796767',
+    color: COLORS.grey,
   },
   phoneimageContainer: {
     marginTop: 14,
@@ -64,8 +61,7 @@ const styles = StyleSheet.create({
   distanceTimeText: {
     marginLeft: 18,
     padding: 5,
-    fontSize: 12,
-    color: '#656767',
+    color: COLORS.grey,
   },
   checkInButton: {
     borderWidth: 2,

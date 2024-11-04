@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {Text} from 'react-native-paper';
+import CardWrapper from 'components/card/Card';
 
 import styles from './listCardComponent.style'
 import CustomButton from '@/components/button/CustomButton';
@@ -19,7 +21,7 @@ interface ListCardComponentProps {
 
 function ListCardComponent({ image, name, address, distance, time }: ListCardComponentProps) {
   return (
-        <View style={styles.container}>
+        <CardWrapper cardStyle={styles.container}>
             <TouchableOpacity>
                 <View style={styles.infoContainer}>
                     <View style={styles.imageContainer}>
@@ -29,8 +31,8 @@ function ListCardComponent({ image, name, address, distance, time }: ListCardCom
                         }                        
                     </View>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.nameText}>{name}</Text>
-                        <Text style={styles.addressText}>{address}</Text>
+                        <Text variant='titleMedium' style={styles.nameText}>{name}</Text>
+                        <Text variant='labelLarge'style={styles.addressText}>{address}</Text>
                     </View>
                     <TouchableOpacity style={styles.phoneimageContainer} 
                                       onPress={() => {  }}>
@@ -40,7 +42,7 @@ function ListCardComponent({ image, name, address, distance, time }: ListCardCom
                 <View style={styles.detailsContainer}>
                     <View>
                         <NavIconImg style={styles.navImg} />
-                        <Text style={styles.distanceTimeText}>{distance} | {time}</Text>
+                        <Text variant='labelLarge' style={styles.distanceTimeText}>{distance} | {time}</Text>
                     </View>
                     <CustomButton
                         type={ButtonTypes.outline}
@@ -51,7 +53,7 @@ function ListCardComponent({ image, name, address, distance, time }: ListCardCom
                     />
                 </View>
             </TouchableOpacity>
-        </View>
+        </CardWrapper>
   );
 }
 
