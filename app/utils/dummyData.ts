@@ -657,3 +657,211 @@ export const orderDashboard = {
     ],
   },
 };
+
+export const cartItems = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: [
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 10,
+    },
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 20,
+    },
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 20,
+    },
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 20,
+    },
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 20,
+    },
+    {
+      title: '12% Discount Applicable*',
+      image: require('../../assets/images/pabbleWaterHeater.png'),
+      seriesName: 'Aqua Water Heater',
+      skuName: '144589',
+      skuId: '450',
+      price: '7999',
+      itemQuantity: 20,
+    },
+  ],
+};
+
+export const additionalSchemes = [
+  {
+    id: 1,
+    title: 'Loyalty Offer',
+    reason: '15% off Discount 15% off Discount 15% off Discount',
+    description: 'On Order Value worth 50,000',
+  },
+  {
+    id: 2,
+    title: 'Bulk Offer',
+    reason: 'Free Shipping',
+    description: 'On Order Value Worth ₹5,000 more (₹94,000)',
+  },
+  {
+    id: 3,
+    title: 'Diwali Special',
+    reason: '5% off Discount',
+    description: 'On Order Value > ₹30,000',
+  },
+  {
+    id: 4,
+    title: 'Clearance Special',
+    reason: 'Receive Gifts',
+    description: 'On Order Value > ₹50,000',
+  },
+  {
+    id: 5,
+    title: 'Clearance Special',
+    reason: 'Receive Gifts',
+    description: 'On Order Value > ₹50,000',
+  },
+  {
+    id: 6,
+    title: 'Clearance Special',
+    reason: 'Receive Gifts',
+    description: 'On Order Value > ₹50,000',
+  },
+  {
+    id: 7,
+    title: 'Clearance Special',
+    reason: 'Receive Gifts',
+    description: 'On Order Value > ₹50,000',
+  },
+];
+export const productSeries = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    filters: [
+      {
+        id: 1,
+        name: 'Schemes',
+      },
+      {
+        id: 2,
+        name: 'In-stock',
+      },
+      {
+        id: 3,
+        name: 'Past Orders',
+      },
+      {
+        id: 4,
+        name: 'Past Orders',
+      },
+      {
+        id: 5,
+        name: 'Past Orders',
+      },
+    ],
+    relatedProducts: [
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450',
+        price: '8999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [1, 2],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Pebble Water Heater',
+        sku: '155789',
+        avl: '470',
+        price: '6999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2, 3],
+      },
+      {
+        discount: '20% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450',
+        price: '8999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [2],
+      },
+      {
+        discount: '12% Discount Applicable*',
+        name: 'Aqua Water Heater',
+        sku: '144689',
+        avl: '450',
+        price: '8999',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+        categories: [3],
+      },
+    ],
+  },
+};
+
+export const uomList = [
+  {value: '1', label: 'Pieces'},
+  {value: '2', label: 'Boxes'},
+];
+
+export const beatListCardData = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: [
+  {
+     image: '',
+      name: "Laxmi Traders1",
+      address: "Koramangala, Bengaluru",
+      distance: "1.2 km",
+      time: "14 mins",
+      priority: 2
+  },
+  {
+    image: require('../../assets/images/beatProfileImg.png'),
+      name: "Laxmi Traders2",
+      address: "Koramangala, Bengaluru",
+      distance: "1.2 km",
+      time: "14 mins",
+      priority: 1
+  },
+  {
+    image: require('../../assets/images/beatProfileImg.png'),
+      name: "Laxmi Traders3",
+      address: "Koramangala, Bengaluru",
+      distance: "1.2 km",
+      time: "14 mins",
+      priority: 3
+  },
+],
+};
