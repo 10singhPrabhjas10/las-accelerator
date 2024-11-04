@@ -33,8 +33,8 @@ import {
 } from 'screens/beat/Beat.interface';
 import {TouchableOpacity} from 'react-native';
 
-import ListCardComponent from '../../../components/listCardComponent/listCardComponent';
-import MapCardComponent from '../../../components/mapCardComponent/mapCardComponent';
+import ListCard from '../../../components/cardComponents/listCard/listCard';
+import MapCard from '../../../components/cardComponents/mapCard/mapCard';
 import { beatListCardData } from '@/utils/dummyData';
 
 const MyBeatPlanScreen = () => {
@@ -251,12 +251,12 @@ const MyBeatPlanScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* ListCardComponent */}
+        {/* NewListCard Component */}
         <View>
           <FlatList
             data={beatListCardData.data}
             renderItem={({item}) => (
-              <ListCardComponent 
+              <ListCard
                 image={item.image}
                 name={item.name}
                 address={item.address}
@@ -267,15 +267,15 @@ const MyBeatPlanScreen = () => {
             keyExtractor={(item) => item.name}
           />
         </View>
-
-        {/* MapCardComponent */}
+        
+        {/* NewMapCard Component */}
         <View>
           <FlatList
             data={sortedData}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
-              <MapCardComponent 
+              <MapCard 
                 count = {index + 1}
                 name={item.name}
                 address={item.address}

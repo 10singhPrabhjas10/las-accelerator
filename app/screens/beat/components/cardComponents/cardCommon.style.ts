@@ -21,19 +21,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
-  imageContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 5,
-    marginVertical: 5,
-    borderRadius: 10,
-  },
-  image: {
-    width: 32,
-    height: 32,
-  },
   infoTextContainer: {
-    width: widthToRatio(200),
+    width: widthToRatio(215),
     padding: 10,
     marginHorizontal: 5,
   },
@@ -52,16 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  navImg: {
-    marginHorizontal: 5,
-    position: 'absolute',
-    marginVertical: 5,
-  },
-  distanceTimeText: {
-    marginLeft: 18,
-    padding: 5,
-    color: COLORS.grey,
   },
   checkInButton: {
     borderWidth: 2,
