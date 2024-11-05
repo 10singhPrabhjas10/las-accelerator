@@ -1,5 +1,5 @@
-import { COLORS } from '@/theme/colors';
-import { heightToRatio, widthToRatio } from '@/utils/commonMethods';
+import {COLORS} from '@/theme/colors';
+import {heightToRatio, widthToRatio} from '@/utils/commonMethods';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -7,18 +7,12 @@ const styles = StyleSheet.create({
     width: widthToRatio(30),
     height: heightToRatio(30),
     top: 17,
-  },
-  numberText: {
-    borderColor: COLORS.grey2,
-    borderWidth: 2,
-    textAlign: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    width: widthToRatio(26),
-    padding: 3,
-    borderRadius: 50,
-    color: COLORS.white,
-    backgroundColor: COLORS.grey2,
+    borderRadius: 30,
+    backgroundColor: COLORS.grey,
   },
+  numberText: {color: COLORS.white},
   navInfoContainer: {
     margin: 2,
     padding: 4,

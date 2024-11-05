@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, {ReactNode, useEffect} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
@@ -18,7 +18,11 @@ import ProductPriceListIcon from '../../../assets/icons/productPriceListIcon.svg
 import BeatIcon from '../../../assets/icons/beat.svg';
 import {COLORS, spacing} from 'theme/theme';
 import AttendaceIcon from '../../../assets/icons/attendance.svg';
-import {getTranslationLabel} from 'utils/commonMethods';
+import {getDeviceWidth, getTranslationLabel} from 'utils/commonMethods';
+import {getCurrentLocation} from '@/utils/Permissions';
+import {TodaysBeatPlan} from '@/utils/dummyData';
+import ListCard from '../beatPlan/cardComponents/listCard/listCard';
+import PerformanceCard from './components/performanceCard';
 
 interface IDashboardTileProps {
   title: string;
@@ -72,9 +76,7 @@ const Dashboard = () => {
     },
     {
       title: getTranslationLabel('self_management'),
-      image: (
-        <SelfManagementIcon height={24} width={24} />
-      ),
+      image: <SelfManagementIcon height={24} width={24} />,
       onPress: () => navigation.navigate('SelfManagement'),
     },
     {
@@ -99,10 +101,40 @@ const Dashboard = () => {
       onPress: () => navigation.navigate('PerformanceManagement'),
     },
   ];
-
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
   return (
     <Layout>
       <DashboardHeader />
+
+      <PerformanceCard />
+
+      <View style={{paddingLeft: '5%', marginVertical: '5%'}}>
+        <Text variant="bodyLarge" style={{fontWeight: '700'}}>
+          {getTranslationLabel('Todays_Visits')}
+        </Text>
+        <FlatList
+          data={TodaysBeatPlan}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}) => (
+            <ListCard
+              image={''}
+              name={item.name}
+              address={item.location.street + ',' + item.location.city}
+              distance={item.distance}
+              time={item.eta}
+              number={item.mobile_number}
+              customStyle={{
+                alignSelf: 'flex-start',
+                minWidth: getDeviceWidth(0.8),
+              }}
+            />
+          )}
+        />
+      </View>
+
       <FlatList
         data={tilesData}
         renderItem={({item}) => (

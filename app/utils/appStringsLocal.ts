@@ -321,6 +321,10 @@ export default {
       key: 'Routes_Success',
       label: 'Routes Updated successfully!',
     },
+    {
+      key: 'Todays_Visits',
+      label: 'Planned Visits for today >',
+    },
 
     ///End Beat Plan
   ],

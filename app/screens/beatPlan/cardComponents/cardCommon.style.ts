@@ -1,28 +1,16 @@
-import { COLORS } from '@/theme/colors';
-import { heightToRatio, widthToRatio } from '@/utils/commonMethods';
+import {COLORS} from '@/theme/colors';
+import {heightToRatio, widthToRatio} from '@/utils/commonMethods';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 1,
-    marginVertical: 5,
-    backgroundColor: COLORS.white,
-    borderRadius: 15,
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.75,
-    shadowRadius: 2,
-  },
+  container: {},
   infoContainer: {
     padding: 2,
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   infoTextContainer: {
-    width: widthToRatio(215),
     padding: 10,
     marginHorizontal: 5,
   },
@@ -52,7 +40,7 @@ const styles = StyleSheet.create({
   checkInButtonText: {
     color: COLORS.dgreen,
     fontSize: 12,
-    lineHeight:14.25,
+    lineHeight: 14.25,
   },
 });
 

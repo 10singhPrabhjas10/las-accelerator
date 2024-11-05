@@ -72,5 +72,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access needed for user to know nearest store location and navigation to it</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Access needed for user to know nearest store location and navigation to it</string>
+
 </dict>
 </plist>

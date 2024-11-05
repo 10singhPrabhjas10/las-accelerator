@@ -1,10 +1,11 @@
 import {COLORS} from '@/theme/colors';
-import {heightToRatio} from '@/utils/commonMethods';
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {styles} from './styles';
 import {TodaysBeatPlan} from '@/utils/dummyData';
+import ListCard from '../cardComponents/listCard/listCard';
+import {getDeviceWidth} from '@/utils/commonMethods';
 function BeatList() {
   return (
     <>
@@ -19,7 +20,18 @@ function BeatList() {
       <FlatList
         contentContainerStyle={styles.flatListContainer}
         data={TodaysBeatPlan}
-        renderItem={item => <Text>{item.item.name}</Text>}
+        showsVerticalScrollIndicator={false}
+        renderItem={item => (
+          <ListCard
+            image={''}
+            name={item.item.name}
+            address={item.item.location.street + ',' + item.item.location.city}
+            distance={item.item.distance}
+            time={item.item.eta}
+            number={item.item.mobile_number}
+            customStyle={{width: getDeviceWidth(0.85)}}
+          />
+        )}
       />
     </>
   );

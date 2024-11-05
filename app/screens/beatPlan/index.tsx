@@ -22,6 +22,7 @@ import CustomRadioButton from '@/components/radioButton/CustomRadioButton';
 import {fontConfig} from '@/theme/fonts';
 import OptimiseRoute from './optimiseRoute';
 import {useNavigation} from '@react-navigation/native';
+import {getCurrentLocation} from '@/utils/Permissions';
 interface ISelector {
   Switch: boolean;
   setSwitch: Function;
@@ -51,6 +52,10 @@ function BeatPlan() {
   const PresentModal = () => {
     ref.current?.present();
   };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   return (
     <Layout style={styles.layout}>

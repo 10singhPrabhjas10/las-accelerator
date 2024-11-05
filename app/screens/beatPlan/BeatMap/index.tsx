@@ -1,15 +1,14 @@
-import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
-import CommonStyles from '@/utils/commonStyle';
-import React, {useEffect, useRef} from 'react';
-import {View} from 'react-native';
+import React from 'react';
+import {FlatList} from 'react-native';
 import MapView from 'react-native-maps';
-import {Text} from 'react-native-paper';
-
+import {TodaysBeatPlan} from '@/utils/dummyData';
+import MapCard from '../cardComponents/mapCard/mapCard';
+import {styles} from './styles';
 function BeatMap() {
   return (
     <>
       <MapView
-        style={{width: '100%', height: '100%'}}
+        style={styles.map}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
@@ -20,6 +19,23 @@ function BeatMap() {
         //showsMyLocationButton={false}
         zoomEnabled={true}
         loadingEnabled={true}
+      />
+      <FlatList
+        data={TodaysBeatPlan}
+        style={styles.list}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item, index}) => (
+          <MapCard
+            count={index + 1}
+            name={item.name}
+            customStyle={styles.card}
+            address={item.location.street + ',' + item.location.city}
+            distance={item.distance}
+            time={item.eta}
+            number={item.mobile_number}
+          />
+        )}
       />
     </>
   );

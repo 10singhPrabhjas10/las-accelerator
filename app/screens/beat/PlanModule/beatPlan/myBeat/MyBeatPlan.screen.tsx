@@ -33,9 +33,7 @@ import {
 } from 'screens/beat/Beat.interface';
 import {TouchableOpacity} from 'react-native';
 
-import ListCard from '../../../components/cardComponents/listCard/listCard';
-import MapCard from '../../../components/cardComponents/mapCard/mapCard';
-import { beatListCardData } from '@/utils/dummyData';
+import {beatListCardData} from '@/utils/dummyData';
 
 const MyBeatPlanScreen = () => {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -235,7 +233,9 @@ const MyBeatPlanScreen = () => {
     }
   };
 
-  const sortedData = [... beatListCardData.data].sort((a, b) => a.priority - b.priority);
+  const sortedData = [...beatListCardData.data].sort(
+    (a, b) => a.priority - b.priority,
+  );
 
   return (
     <Layout headerTitle="Beat Plan">
@@ -252,7 +252,7 @@ const MyBeatPlanScreen = () => {
         </View>
 
         {/* NewListCard Component */}
-        <View>
+        {/* <View>
           <FlatList
             data={beatListCardData.data}
             renderItem={({item}) => (
@@ -266,10 +266,10 @@ const MyBeatPlanScreen = () => {
             )}
             keyExtractor={(item) => item.name}
           />
-        </View>
-        
+        </View> */}
+
         {/* NewMapCard Component */}
-        <View>
+        {/* <View>
           <FlatList
             data={sortedData}
             horizontal
@@ -285,7 +285,7 @@ const MyBeatPlanScreen = () => {
             )}
             keyExtractor={(item) => item.name}
           />
-        </View>
+        </View> */}
 
         {showCalendar && (
           <View style={styles.calendar}>
