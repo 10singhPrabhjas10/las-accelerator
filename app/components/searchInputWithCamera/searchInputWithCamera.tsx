@@ -1,4 +1,11 @@
-import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS} from '@/theme/colors';
 import {getTranslationLabel, heightToRatio} from '@/utils/commonMethods';
@@ -7,45 +14,49 @@ import Camera_alt from '../../../assets/images/camera_alt.svg';
 import Search from '../../../assets/images/search.svg';
 
 interface SearchInputWithCameraProps {
-  onChangeText: (arg0: String) => void;
-  placeholder: string;
+  onChangeText: (arg0: string) => void;
+  placeholder?: string;
   value: string;
-  setPhoto: () => void;
+  setPhoto: (img: any) => void;
+  containerStyles: StyleProp<ViewStyle>;
 }
 
 const SearchInputWithCamera = ({
   onChangeText = () => {},
   placeholder = getTranslationLabel('search_by_product_category'),
   value = '',
-  setPhoto = () => {},
+  setPhoto = (img: any = {}) => {},
+  containerStyles = {},
 }: SearchInputWithCameraProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={styles.container}>
-      <View style={styles.icon}>
-        <Search />
+    <View style={containerStyles}>
+      <View style={styles.container}>
+        <View style={styles.icon}>
+          <Search />
+        </View>
+        <TextInput
+          style={[styles.textInputView]}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={text => onChangeText(text)}
+        />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          style={styles.icon}>
+          <Camera_alt />
+        </TouchableOpacity>
+        <UploadImageBottomSheet
+          setPhoto={newPhoto =>
+            setPhoto((prevPhoto: any) => [...prevPhoto, newPhoto])
+          }
+          visible={modalVisible}
+          onDismiss={() => setModalVisible(false)}
+        />
       </View>
-      <TextInput
-        style={[styles.textInputView]}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={text => onChangeText(text)}
-      />
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        style={styles.icon}>
-        <Camera_alt />
-      </TouchableOpacity>
-      <UploadImageBottomSheet
-        setPhoto={newPhoto => {
-          setPhoto((prevPhoto: any) => [...prevPhoto, newPhoto]);
-        }}
-        visible={modalVisible}
-        onDismiss={() => setModalVisible(false)}
-      />
     </View>
   );
 };
@@ -55,7 +66,6 @@ export default SearchInputWithCamera;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    margin: 30,
     backgroundColor: COLORS.white,
     height: heightToRatio(40),
     borderRadius: 8,

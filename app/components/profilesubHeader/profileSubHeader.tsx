@@ -5,7 +5,6 @@ import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
 import PencilIcon from '@/../assets/icons/pencilGray.svg';
 import CommonStyles from '../../utils/commonStyle';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
 interface HeaderProps {
   title?: string;
   imageUrl?: string;
@@ -30,7 +29,6 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
     }
     return '';
   };
-  console.log(imageUrl);
   return (
     <View style={styles.container}>
       {isImageEdit ? (
@@ -76,8 +74,9 @@ const ProfileSubHeader: React.FC<HeaderProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginLeft: widthToRatio(24),
-    marginTop: heightToRatio(6),
+    marginTop: heightToRatio(16),
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   childrenContainer: {

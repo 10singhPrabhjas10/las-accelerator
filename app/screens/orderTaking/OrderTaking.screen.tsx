@@ -13,8 +13,11 @@ import OrderBg from '../../../assets/images/orderBg.svg';
 import ShoppingCartIcon from '../../../assets/icons/shopping_cart.svg';
 import OrderList from './orderList';
 import Layout from '@/components/Layout';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 import SearchInputWithCamera from '@/components/searchInputWithCamera/searchInputWithCamera';
 import ProductDivion from './productDivision';
+import ProductSeries from './productSeries/productSeries';
+import Home from './home';
 //--------old screen
 // const OrderTaking = () => {
 //   const navigation = useNavigation<RootNavigationProp>();
@@ -53,19 +56,11 @@ import ProductDivion from './productDivision';
 //--------new screen--------
 
 const OrderTaking = () => {
-  return (
-    <Layout
-      headerTitle={'Product Categories'}
-      onPressCustomLogo={() => {
-        console.log('log');
-        return false;
-      }}
-      customLogo={() => <ShoppingCartIcon />}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ProductDivion />
-      </ScrollView>
-    </Layout>
-  );
+  const navigation = useNavigation<RootNavigationProp>();
+  const productData = orderDashboard.data.pastOrders;
+  const categoryData = orderDashboard.data.categories;
+
+  return <Text onPress={() => navigation.navigate('OrderHome')}>PressMe</Text>;
 };
 export default OrderTaking;
 

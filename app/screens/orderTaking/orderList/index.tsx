@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Text} from 'react-native-paper';
 import {COLORS} from '@/theme/colors';
 import ListItem from '@/components/listItem/ListItem';
@@ -14,19 +20,21 @@ interface IOrderList {
   title: string;
   isListhorizontal?: boolean;
   isGrid?: boolean;
+  onPressListItem: () => null;
 }
 const OrderList = ({
   data,
   title,
   isListhorizontal = false,
   isGrid = false, // New prop to handle grid layout
+  onPressListItem,
 }: IOrderList) => {
   const numColumns = isGrid ? 2 : 1; // Set number of columns for grid layout
 
   return (
     <View>
       <View style={styles.headText}>
-        <Text variant="headlineMedium" style={styles.titleLable}>
+        <Text variant="headlineSmall" style={styles.titleLable}>
           {title}
         </Text>
         <Text variant="labelLarge" style={styles.titleLable}>
@@ -37,20 +45,13 @@ const OrderList = ({
         data={data}
         horizontal={isListhorizontal}
         showsVerticalScrollIndicator={false}
-        columnWrapperStyle={styles.coloumnWrapperStyle}
         numColumns={numColumns} // Set the number of columns dynamically
-        renderItem={({item, index}) => (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: COLORS.lightGreenBackground,
-              marginVertical: 10,
-            }}>
+        renderItem={({item}) => (
+          <View style={styles.coloumnStyle}>
             <CategoriesCard
               title={item.name}
               imagePath={item.image}
-              onPress={() => {}}
+              onPress={onPressListItem}
             />
           </View>
         )}
@@ -63,18 +64,23 @@ const OrderList = ({
   );
 };
 export const styles = StyleSheet.create({
-  coloumnWrapperStyle: {
-    paddingHorizontal: widthToRatio(6),
+  coloumnStyle: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: COLORS.lightGreenBackground,
+    marginVertical: 10,
     paddingBottom: 10,
   },
   headText: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginVertical: heightToRatio(10),
-    marginHorizontal: widthToRatio(14),
+    marginHorizontal: 10,
   },
   titleLable: {
     alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   titleResults: {
     color: COLORS.greyText,

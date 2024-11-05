@@ -37,9 +37,10 @@ export default CategoriesCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: widthToRatio(148),
+    width: widthToRatio(155),
     borderRadius: 8,
     padding: 8,
+    marginVertical: -4,
     backgroundColor: COLORS.white,
     shadowColor: COLORS.black,
     shadowOffset: {

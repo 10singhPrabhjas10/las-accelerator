@@ -72,7 +72,7 @@ const Login = () => {
       <KeyboardAvoidingView style={CommonStyles.flexOne}>
         <View style={[CommonStyles.rowSpaceBetweenFlex]}>
           <View style={CommonStyles.flexOne}>
-            <SubHeader>
+            <SubHeader cardStyle={{zIndex: 1}}>
               <View style={styles.bodyContainer}>
                 <View style={styles.group}>
                   <Icon name="mobile1" size={32} color={COLORS.black} />
@@ -86,7 +86,7 @@ const Login = () => {
                     {getTranslationLabel('enter_mobile_num')}
                   </Text>
                 </View>
-                <View style={{zIndex: 100, elevation: 5}}>
+                <View style={{elevation: 5}}>
                   <PhoneInput
                     phoneNumber={mobileNumber}
                     onPhoneNumberChange={number => setMobileNumber(number)}

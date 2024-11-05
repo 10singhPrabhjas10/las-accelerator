@@ -15,11 +15,12 @@ import CheckCircle from '../../../assets/icons/check_circle.svg';
 import appStringsLocal from '@/utils/appStringsLocal';
 import {store} from '../../store/redux/store';
 import {setCurrentLanguage} from '@/store/redux/localizationSlice';
+import {Svg, SvgAst} from 'react-native-svg';
 interface ILanguage {
   onlanguageChange: (lan: ILanguage) => void;
 }
 
-const LanguageSelectionList = ({onlanguageChange}: ILanguage) => {
+const LanguageSelectionList = ({onlanguageChange = () => {}}: ILanguage) => {
   const activeLanguage = useSelector(
     (state: RootState) => state?.localization?.selectedLanguage,
   );
@@ -59,14 +60,16 @@ const LanguageSelectionList = ({onlanguageChange}: ILanguage) => {
               style={{
                 flexDirection: 'row',
                 width: '40%',
-                justifyContent: 'space-between',
+                // justifyContent: 'space-between',
               }}>
               <Text variant="bodyMedium" ellipsizeMode="tail" numberOfLines={1}>
                 {item.title}
               </Text>
-              {selectedLanguage.id === item.id ? <CheckCircle /> : null}
+              {selectedLanguage.id === item.id ? (
+                <CheckCircle width={40} />
+              ) : null}
             </View>
-            <Image style={styles.icon} source={item.icon} />
+            {item?.img && item.img}
           </Card.Content>
         </Card>
       )}

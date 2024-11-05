@@ -18,7 +18,7 @@ const CustomButton = ({
   contentStyle,
 }: ICustomButtonProps) => {
   const containedButtonTheme = {
-    roundness: 1,
+    roundness: 2,
     colors: {
       onSurface: COLORS.black,
     },

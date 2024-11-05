@@ -20,7 +20,7 @@ const Layout = ({
   hideStatusBar = false,
   isScrollable = false,
   customLogo = () => null,
-  onPressCustomLogo = () => false,
+  onPressCustomLogo,
 }: LayoutPropsType) => {
   const navigation = useNavigation();
 

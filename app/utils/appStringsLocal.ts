@@ -62,8 +62,21 @@ export default {
       label: 'Resend OTP',
     },
     {
+      key: 'View_Mapped_Channel_Partner',
+      label: 'View Mapped Channel Partner',
+    },
+
+    {
       key: 'resend_otp_in_',
       label: 'Resend OTP in',
+    },
+    {
+      key: 'enter_otp',
+      label: 'Enter OTP',
+    },
+    {
+      key: 'invlid_otp_please_try_again',
+      label: 'Invalid OTP. Please Try again',
     },
     {
       key: 'resend_otp_in',
@@ -96,6 +109,10 @@ export default {
     {
       key: 'otp_attempts_exhausted',
       label: 'OTP Attempts Exhausted',
+    },
+    {
+      key: 'Attempts',
+      label: 'Attempts',
     },
     {
       key: 'otp_sent_successfully',
@@ -292,6 +309,88 @@ export default {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
     },
+    {
+      key: 'product_series',
+      label: 'Product Series',
+    },
+    {
+      key: 'search_products',
+      label: 'Search Products',
+    },
+    {
+      key: 'currrent_offers',
+      label: 'Current Offers',
+    },
+    {
+      key: 'past_orders',
+      label: 'Past Orders',
+    },
+    {
+      key: 'retailer_KYC_Pending',
+      label: 'Retailer KYC Pending',
+    },
+    {
+      key: 'product_detils',
+      label: 'Product Details',
+    },
+    {
+      key: 'order_summary',
+      label: 'Order Summary',
+    },
+    {
+      key: 'cart_items',
+      label: 'Cart Items',
+    },
+    {
+      key: 'clear_cart',
+      label: 'Clear Cart',
+    },
+    {
+      key: 'add_more_products',
+      label: ' Add More Products',
+    },
+    {
+      key: 'cart_empty',
+      label: 'Your Cart is empty!',
+    },
+    {
+      key: 'add_more_products',
+      label: 'Add products for it to start appearing here',
+    },
+    {key: 'add_products', label: 'Add Products'},
+    {key: 'view_additional_schemes', label: 'View Additional Schemes'},
+    {key: 'applied', label: 'Applied'},
+    {key: 'total_amount', label: 'Total Amount'},
+    {
+      key: 'total_amount_indicative',
+      label:
+        'The total amount is indicative and excludes schemes and discounts',
+    },
+    {
+      key: 'estimated_delivery',
+      label: '**Estimated delivery time between 5-7 days',
+    },
+    {key: 'get_otp_confirm_order', label: 'Get OTP & Confirm Order'},
+    {
+      key: 'want_clear_cart',
+      label: 'Are you sure you want to clear your cart?',
+    },
+    {key: 'clear', label: 'Clear'},
+    {key: 'additional_schemes', label: 'Additional Schemes'},
+    {key: 'apply', label: 'Apply'},
+    {key: 'added', label: 'Added'},
+    {key: 'add', label: 'Add'},
+    {key: 'results', label: 'results'},
+    {key: 'save_order_go_home', label: 'Save Order & Go Home'},
+    {key: 'add_to_cart', label: 'Add to Cart'},
+    {key: 'order_amount', label: 'Order Amount'},
+    {key: 'uom', label: 'UoM'},
+    {key: 'quantity', label: 'Quantity'},
+    {key: 'done', label: 'Done'},
+    {key: 'record_exs_stock', label: 'Record existing stock'},
+    {key: 'current_stock', label: 'Current stock'},
+    {key: 'available', label: 'available'},
+    {key: 'sku', label: 'SKU'},
   ],
 
   hi: [

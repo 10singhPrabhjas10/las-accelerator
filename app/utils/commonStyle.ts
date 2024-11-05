@@ -13,12 +13,15 @@ const CommonStyles = StyleSheet.create({
   },
   margin: {margin: 20},
   marginTop: {marginTop: 24},
+  marginBottom10: {marginBottom: 10},
   marginBottom20: {marginBottom: 20},
   padding: {padding: 20},
   padding16: {padding: 16},
   padding12: {padding: 12},
   padding10: {padding: 10},
   padding5: {padding: 5},
+  paddingL10: {paddingLeft: 10},
+  paddingR10: {paddingRight: 10},
   flexOne: {flex: 1},
   flexGrow: {flexGrow: 1},
   flexRow: {flexDirection: 'row'},
@@ -35,6 +38,9 @@ const CommonStyles = StyleSheet.create({
   marginHorizontal10: {marginHorizontal: 10},
   marginVertical16: {marginVertical: 16},
   marginVertical10: {marginVertical: 10},
+  marginVertical5: {marginVertical: 5},
+  marginL10: {marginLeft: 10},
+  marginR10: {marginRight: 10},
   scrollViewContainer: {
     flexGrow: 1,
     paddingHorizontal: 20,
@@ -75,6 +81,7 @@ const CommonStyles = StyleSheet.create({
   flatListMargin: {margin: 20, marginBottom: 0},
   flexOneMargin0: {flex: 1, margin: 0},
   selfFlexEnd: {alignSelf: 'flex-end'},
+  rowAlignCenter: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default CommonStyles;

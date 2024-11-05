@@ -54,7 +54,6 @@ export const AttendanceLandingScreen: React.FC<
     values: FormValues,
     helpers: FormikHelpers<FormValues>,
   ) => {
-    console.log(values);
     helpers.setSubmitting(false);
     store.dispatch(updateIsAuthenticated(true));
   };
@@ -91,17 +90,15 @@ export const AttendanceLandingScreen: React.FC<
       case 1:
         return (
           <CustomRadioButton
-            title="1. Mark your attendance"
+            title=""
             onChange={val => setFieldValue('attendance', val)}
             value={values.attendance}
-            isRequired
             data={[
               {value: 'present', label: 'Present'},
               {value: 'absent', label: 'Absent'},
             ]}
             containerStyle={styles.radioGroup}
             isVerticalButtons
-            vrButtonContainerStyle={styles.vrButtonContainerStyle}
             labelStyle={styles.labelStyle}
           />
         );
@@ -115,7 +112,7 @@ export const AttendanceLandingScreen: React.FC<
               {value: '3', label: 'Task 3'},
               {value: '4', label: 'Task 4'},
             ]}
-            label="2. Today's primary task"
+            label=""
             placeholder="Select Task"
             isRequired
             updateDisplayValue={value => value}
@@ -127,9 +124,6 @@ export const AttendanceLandingScreen: React.FC<
       case 3:
         return (
           <View>
-            <Text style={styles.taskTextStyle}>
-              3. Take Selfie <Text style={styles.asterik}>*</Text>
-            </Text>
             <Text style={styles.selfieDirection}>
               Your face needs to be clearly visible
             </Text>
@@ -180,7 +174,11 @@ export const AttendanceLandingScreen: React.FC<
             <SubHeader
               otherSubHeaderContent={
                 <ProfileSubHeader title={title}>
-                  <View style={CommonStyles.flexColumn}>
+                  <View
+                    style={[
+                      CommonStyles.flexColumn,
+                      {justifyContent: 'center'},
+                    ]}>
                     <Text style={styles.welcomeText}>Welcome</Text>
                     <Text style={styles.titleText}>{title}</Text>
                   </View>
@@ -191,7 +189,9 @@ export const AttendanceLandingScreen: React.FC<
                   width={heightToRatio(25)}
                   height={heightToRatio(25)}
                 />
-                <Text style={styles.salesTextStyle}>Sales Operations</Text>
+                <Text style={styles.salesTextStyle} variant="bodySmall">
+                  Sales Operations
+                </Text>
               </View>
               <Text style={styles.headingTextStyle}>Today’s Attendance</Text>
               <Text style={styles.dateTextStyle}>{currentDate}</Text>
@@ -229,13 +229,11 @@ const styles = StyleSheet.create({
   },
   salesTextStyle: {
     color: COLORS.dDarkGreen,
-    fontSize: heightToRatio(10),
-    fontWeight: '400',
-    lineHeight: heightToRatio(12.5),
     textAlignVertical: 'center',
     backgroundColor: COLORS.neutralLight,
     paddingHorizontal: widthToRatio(8),
     paddingVertical: heightToRatio(8),
+    borderRadius: 5,
   },
   dateTextStyle: {
     fontSize: heightToRatio(14),

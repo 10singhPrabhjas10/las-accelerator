@@ -155,6 +155,14 @@ import PrimarySales from 'screens/primaryCP/primarySales/PrimarySales.screen';
 import PrimarySalesPerformance from 'screens/primaryCP/primarySales/primarySalesPerformance/PrimarySalesPerformance.screen';
 import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarget.screen';
 
+import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
+import ProductSeries from '../screens/orderTaking/productSeries/productSeries';
+
+import Home from '@/screens/orderTaking/home';
+import ProductDivion from '@/screens/orderTaking/productDivision';
+import ProductSubDivion from '@/screens/orderTaking/productSubDivision';
+import OrderConfirmation from '@/screens/orderTaking/orderConfirmation';
+import OrderPlaced from '@/screens/orderTaking/placedOrder';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -255,10 +263,16 @@ export type RootNavigationTypes = {
   };
   CheckIn: {item: IStoreBeatPlanItem; date: string; refreshData: () => void};
   OrderTaking: undefined;
+  OrderSummary: undefined;
+  OrderConfirmation: {mobileNumber: string};
   OrderTask: {
     relation?: string;
     navigationFrom: string;
   };
+  PlacedOrder: undefined;
+  ProductDivision: undefined;
+  ProductSubDivision: undefined;
+  ProductSeries: undefined;
   OrderCreation: {navigationFrom: string; relation: string | undefined};
   OrderStatus: {navigationFrom: string; relation: string | undefined};
   SecondaryOrderStatus: undefined;
@@ -372,6 +386,7 @@ export type RootNavigationTypes = {
     categoryId: string;
   };
   VolumeTarget: {categoryId: string; categoryName: string};
+  OrderHome: undefined;
 };
 
 export type RootNavigationProp = NativeStackNavigationProp<RootNavigationTypes>;
@@ -590,6 +605,13 @@ export default function RootNavigation() {
   const OrderTakingStack = (
     <>
       <RootStack.Screen name={'OrderTaking'} component={OrderTaking} />
+      <RootStack.Screen name={'ProductDivision'} component={ProductDivion} />
+      <RootStack.Screen name={'PlacedOrder'} component={OrderPlaced} />
+      <RootStack.Screen
+        name={'ProductSubDivision'}
+        component={ProductSubDivion}
+      />
+
       <RootStack.Screen name={'OrderTask'} component={OrderTaskScreen} />
       <RootStack.Screen
         name={'OrderCreation'}
@@ -603,6 +625,12 @@ export default function RootNavigation() {
       <RootStack.Screen
         name={'PrimaryOrderCreation'}
         component={PrimaryOrderCreationScreen}
+      />
+      <RootStack.Screen name={'OrderSummary'} component={OrderSummary} />
+      <RootStack.Screen name={'ProductSeries'} component={ProductSeries} />
+      <RootStack.Screen
+        name={'OrderConfirmation'}
+        component={OrderConfirmation}
       />
     </>
   );
@@ -812,7 +840,6 @@ export default function RootNavigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{headerShown: false}}>
-        {console.log(isFirstTimeAppLaunch)}
         {isFirstTimeAppLaunch ? (
           <>
             <RootStack.Screen
@@ -857,6 +884,8 @@ export default function RootNavigation() {
               name="MappedRetailer"
               component={MappedRetailer}
             />
+            <RootStack.Screen name={'OrderHome'} component={Home} />
+
             {BeatMappingStack}
             {LeadManagementStack}
             {AttendanceManagementStack}

@@ -1,3 +1,13 @@
+import React from 'react';
+import BengaliIcon from '../../assets/images/bengali.svg';
+import EnglishIcom from '../../assets/images/english.svg';
+import HindiIcon from '../../assets/images/hindi.svg';
+import TamilIcon from '../../assets/images/Tamil.svg';
+import TelguIcon from '../../assets/images/Telgu.svg';
+import MalyalalmIcon from '../../assets/images/malyalam.svg';
+import MarathiIcon from '../../assets/images/hindi.svg';
+import KannadaIcon from '../../assets/images/kannada.svg';
+import {SvgProps} from 'react-native-svg';
 export const HELP_SUPPORT_NUMBER = '+91 ';
 export const HELP_SUPPORT_MAIL = 'info@a bc.com';
 
@@ -11,52 +21,60 @@ export const PAN_NO_REGEX = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 export const IFSC_REGEX = /^[A-Z]{4}[0]{1}[A-Z0-9]{6}$/;
 export const YOUTUBE_LINK_REGEX =
   /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&\n?#]+)/;
-
+const Svg = (icon: React.FC<SvgProps>) => {
+  return React.createElement(icon, {
+    width: 28,
+    height: 28,
+  });
+};
 export const LANGUAGES = [
   {
     id: 'en',
     icon: require('../../assets/images/englishFont.png'),
     title: 'English',
+    img: Svg(EnglishIcom),
   },
   {
     id: 'hi',
     icon: require('../../assets/images/hindiFont.png'),
     title: 'हिंदी',
+    img: Svg(HindiIcon),
   },
   {
     id: 'mr',
     icon: require('../../assets/images/hindiFont.png'),
     title: 'मराठी',
+    img: Svg(MarathiIcon),
   },
   {
     id: 'te',
     icon: require('../../assets/images/teluguFont.png'),
     title: 'తెలుగు',
+    img: Svg(TelguIcon),
   },
   {
     id: 'bn',
     icon: require('../../assets/images/bengaliFont.png'),
     title: 'বাংলা',
+    img: Svg(BengaliIcon),
   },
   {
     id: 'ma',
     icon: require('../../assets/images/malayalamFont.png'),
     title: 'മലയാളം',
+    img: Svg(MalyalalmIcon),
   },
   {
     id: 'ka',
     icon: require('../../assets/images/kannadaFont.png'),
     title: 'ಕನ್ನಡ',
+    img: Svg(KannadaIcon),
   },
   {
     id: 'ta',
     icon: require('../../assets/images/tamilFont.png'),
     title: 'தமிழ்',
-  },
-  {
-    id: '', //dummy item to manage FlatList
-    icon: '',
-    title: '',
+    img: Svg(TamilIcon),
   },
 ];
 
@@ -254,3 +272,9 @@ export enum SECONDARY_SALES_TYPE {
   MTD = 'MTD',
   YTD = 'YTD',
 }
+
+export const DummyMobile = '+91 9876567890';
+export const DummyMail = 'info@deloitte.com';
+
+export const CurrencyCode = '₹';
+export const dot = '•';
