@@ -118,7 +118,11 @@ const ProductSeries = () => {
                 mode="outlined"
                 style={[
                   styles.chip,
-                  isSelected ? styles.chipSelected : styles.chipNotSelected,
+                  {
+                    borderColor: isSelected
+                      ? COLORS.dgreen
+                      : COLORS.dividerGrey,
+                  },
                 ]}
                 textStyle={{color: COLORS.black1}}
                 selectedColor={COLORS.accentGreen}
@@ -224,6 +228,7 @@ const styles = StyleSheet.create({
   },
   parent: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   rowView: {
     flexDirection: 'row',
@@ -238,7 +243,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   chipsContiner: {
-    flexWrap: 'wrap',
     height: heightToRatio(32),
     width: 'auto',
     alignItems: 'center',
@@ -255,15 +259,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    height: heightToRatio(40),
-  },
-  chipSelected: {
-    borderColor: COLORS.dgreen,
-    borderWidth: 3,
-    height: 62,
-  },
-  chipNotSelected: {
-    borderColor: COLORS.dividerGrey,
+    maxHeight: heightToRatio(40),
   },
   selectedchipsContiner: {
     borderColor: COLORS.dgreen,

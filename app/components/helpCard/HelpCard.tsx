@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {Text} from 'react-native-paper';
 import SupprtAgent from '../../../assets/icons/support_agent.svg';
-import {getTranslationLabel} from '@/utils/commonMethods';
+import {callNumber, getTranslationLabel, sendMail} from '@/utils/commonMethods';
 import styles from './HelpCard.styles.ts';
 import CommonStyles from '@/utils/commonStyle.ts';
 import Accordion from '../accordion/Accordion.tsx';
@@ -29,12 +29,21 @@ const HelpCard = () => {
         <View style={styles.margin} />
         <Text variant="bodyMedium">
           {getTranslationLabel('phone')}{' '}
-          <Text variant="bodyMedium" style={styles.greenText}>
+          <Text
+            onPress={() => {
+              callNumber(DummyMobile);
+            }}
+            variant="bodyMedium"
+            style={styles.greenText}>
             {DummyMobile}
-          </Text>{' '}
+          </Text>
         </Text>
         <View style={CommonStyles.padding5} />
-        <Text variant="bodyMedium">
+        <Text
+          onPress={() => {
+            sendMail(DummyMail);
+          }}
+          variant="bodyMedium">
           {getTranslationLabel('email')}{' '}
           <Text variant="bodyMedium" style={styles.greenText}>
             {DummyMail}
