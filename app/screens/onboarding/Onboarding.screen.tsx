@@ -187,9 +187,11 @@ const OnboardingScreens = () => {
   return (
     <Layout>
       <ScreenHeader showScreenName={false} />
-      <View style={styles.onboardingContainer}>
-        <OnboardingLogo width="100%" />
-      </View>
+      <OnboardingLogo
+        width={'100%'}
+        height={'69%'}
+        style={{backgroundColor: COLORS.dDarkGreen}}
+      />
       <View style={styles.contentView}>
         <View style={CommonStyles.padding16}>
           <Text variant="headlineSmall">

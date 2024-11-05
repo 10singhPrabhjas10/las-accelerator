@@ -82,7 +82,7 @@ const Dashboard = () => {
     {
       title: getTranslationLabel('order_taking'),
       image: <OrderTakingIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('OrderTaking'),
+      onPress: () => navigation.navigate('OrderHome'),
     },
     {
       title: getTranslationLabel('product_price_list'),

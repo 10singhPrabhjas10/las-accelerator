@@ -51,16 +51,18 @@ const CustomRadioButton = ({
 
   return (
     <View style={containerStyle}>
-      <View style={CommonStyles.flexRow}>
-        <Text style={textStyle} variant={'bodyMedium'}>
-          {title}
-        </Text>
-        {isRequired ? (
-          <Text variant="labelMedium" theme={errorTheme}>
-            {'*'}
+      {title && (
+        <View style={CommonStyles.flexRow}>
+          <Text style={textStyle} variant={'bodyMedium'}>
+            {title}
           </Text>
-        ) : null}
-      </View>
+          {isRequired ? (
+            <Text variant="labelMedium" theme={errorTheme}>
+              {'*'}
+            </Text>
+          ) : null}
+        </View>
+      )}
       <RadioButton.Group onValueChange={onChange} value={value}>
         <View
           style={

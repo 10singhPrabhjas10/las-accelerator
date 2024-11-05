@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
   innerContainer: {
     backgroundColor: COLORS.white,
     paddingVertical: 10,
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 6,
+    elevation: 2,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
   titleStyle: {
     color: COLORS.darkYellow,

@@ -522,6 +522,332 @@ export const mappedChannelPartnersRes = {
   },
 };
 
+export const currentOffers = {
+  ///Offer
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    offers: [
+      {
+        id: '1',
+        title: '12% OFF*',
+        subTitle: 'ON MASTER WATER HEATER',
+        offerImage: '../../../assets/images/offer_dummy_image.png',
+        offerAction: 'Place Order',
+        offerActionId: '1',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+      },
+      {
+        id: '2',
+        title: 'BOGO!*',
+        subTitle: 'ON PEBBLE WATER HEATER',
+        offerImage: '../../../assets/images/offer_dummy_image.png',
+        offerAction: 'View Offer',
+        offerActionId: '2',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+      },
+      {
+        id: '3',
+        title: 'MEGA SCHEMES!*',
+        subTitle: 'ON PURCHASE OF BULK SKUs',
+        offerImage: '../../../assets/images/offer_dummy_image.png',
+        offerAction: 'Know More',
+        offerActionId: '3',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+      },
+    ],
+  },
+};
+export const pastOrder = {
+  /////Past Orders
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    past_order: [
+      {
+        product_id: '1',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '1',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '12',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '2',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '2',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '22',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+      {
+        product_id: '3',
+        product_name: 'Pebble Water Heater',
+        product_image_url: require('../../assets/images/pabbleWaterHeater.png'),
+        product_price: '123',
+        currency_symbol: '₹',
+        currency_code: 'INR',
+        category: {
+          id: '3',
+          name: 'Water Heater',
+          image: require('../../assets/images/offer_dummy_image.png'),
+        },
+        sub_category: {
+          id: '32',
+          name: 'Storage Water Heaters',
+          image: 'url',
+        },
+      },
+    ],
+  },
+};
+export const categoryOrder = {
+  ///category
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    pages: 5,
+    total_items: 45,
+    per_page: 10,
+    current_page: 1,
+    isFilter: false,
+    categories: [
+      {
+        id: '1',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '2',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '3',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '4',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '5',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+    ],
+  },
+};
+export const divisionOrder = {
+  ///Division
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    pages: 5,
+    total_items: 45,
+    per_page: 10,
+    current_page: 1,
+    isFilter: false,
+    category: {
+      id: '1',
+      name: 'Water Heater',
+      image: require('../../assets/images/offer_dummy_image.png'),
+    },
+    division: [
+      {
+        id: '1',
+        name: 'Water Heater',
+        image: require('../../assets/images/offer_dummy_image.png'),
+      },
+      {
+        id: '2',
+        name: 'Water Heater',
+        image: require('../../assets/images/offer_dummy_image.png'),
+      },
+      {
+        id: '3',
+        name: 'Water Heater',
+        image: require('../../assets/images/offer_dummy_image.png'),
+      },
+      {
+        id: '4',
+        name: 'Water Heater',
+        image: require('../../assets/images/offer_dummy_image.png'),
+      },
+      {
+        id: '5',
+        name: 'Water Heater',
+        image: require('../../assets/images/offer_dummy_image.png'),
+      },
+    ],
+  },
+};
+export const subCategoryOrder = {
+  ///sub category
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    category: {
+      id: '1',
+      name: 'Storage Water Heater',
+      image: require('../../assets/images/offer_dummy_image.png'),
+    },
+    division: {
+      id: '1',
+      name: 'Water Heater',
+      image: require('../../assets/images/offer_dummy_image.png'),
+    },
+    sub_categories: [
+      {
+        id: '1',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '2',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '3',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '4',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '5',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '6',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '7',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+      {
+        id: '8',
+        name: 'Water Heater',
+        image: require('../../assets/images/pabbleWaterHeater.png'),
+      },
+    ],
+  },
+};
+
 export const orderDashboard = {
   success: true,
   message: 'Data retrieved successfully',
@@ -661,60 +987,47 @@ export const orderDashboard = {
 export const cartItems = {
   success: true,
   message: 'Data retrieved successfully',
+
   data: [
     {
-      title: '12% Discount Applicable*',
+      id: 1,
+      discount: '12% Discount Applicable*',
       image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
+      name: 'Aqua Water Heater',
+      sku: '144589',
+      avl: '450',
       price: '7999',
       itemQuantity: 10,
     },
     {
-      title: '12% Discount Applicable*',
+      id: 2,
+      discount: '12% Discount Applicable*',
       image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
+      name: 'Aqua Water Heater',
+      sku: '144589',
+      avl: '450',
       price: '7999',
-      itemQuantity: 20,
+      itemQuantity: 10,
     },
     {
-      title: '12% Discount Applicable*',
+      id: 3,
+      discount: '12% Discount Applicable*',
       image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
+      name: 'Aqua Water Heater',
+      sku: '144589',
+      avl: '450',
       price: '7999',
-      itemQuantity: 20,
+      itemQuantity: 10,
     },
     {
-      title: '12% Discount Applicable*',
+      id: 4,
+      discount: '12% Discount Applicable*',
       image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
+      name: 'Aqua Water Heater',
+      sku: '144589',
+      avl: '450',
       price: '7999',
-      itemQuantity: 20,
-    },
-    {
-      title: '12% Discount Applicable*',
-      image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
-      price: '7999',
-      itemQuantity: 20,
-    },
-    {
-      title: '12% Discount Applicable*',
-      image: require('../../assets/images/pabbleWaterHeater.png'),
-      seriesName: 'Aqua Water Heater',
-      skuName: '144589',
-      skuId: '450',
-      price: '7999',
-      itemQuantity: 20,
+      itemQuantity: 10,
     },
   ],
 };
@@ -791,6 +1104,7 @@ export const productSeries = {
     ],
     relatedProducts: [
       {
+        id: 1,
         discount: '20% Discount Applicable*',
         name: 'Aqua Water Heater',
         sku: '144689',
@@ -800,6 +1114,7 @@ export const productSeries = {
         categories: [1, 2],
       },
       {
+        id: 2,
         discount: '20% Discount Applicable*',
         name: 'Pebble Water Heater',
         sku: '155789',
@@ -809,6 +1124,7 @@ export const productSeries = {
         categories: [2, 3],
       },
       {
+        id: 3,
         discount: '20% Discount Applicable*',
         name: 'Aqua Water Heater',
         sku: '144689',
@@ -818,6 +1134,7 @@ export const productSeries = {
         categories: [2],
       },
       {
+        id: 4,
         discount: '12% Discount Applicable*',
         name: 'Aqua Water Heater',
         sku: '144689',
@@ -839,29 +1156,29 @@ export const beatListCardData = {
   success: true,
   message: 'Data retrieved successfully',
   data: [
-  {
-     image: '',
-      name: "Laxmi Traders1",
-      address: "Koramangala, Bengaluru",
-      distance: "1.2 km",
-      time: "14 mins",
-      priority: 2
-  },
-  {
-    image: require('../../assets/images/beatProfileImg.png'),
-      name: "Laxmi Traders2",
-      address: "Koramangala, Bengaluru",
-      distance: "1.2 km",
-      time: "14 mins",
-      priority: 1
-  },
-  {
-    image: require('../../assets/images/beatProfileImg.png'),
-      name: "Laxmi Traders3",
-      address: "Koramangala, Bengaluru",
-      distance: "1.2 km",
-      time: "14 mins",
-      priority: 3
-  },
-],
+    {
+      image: '',
+      name: 'Laxmi Traders1',
+      address: 'Koramangala, Bengaluru',
+      distance: '1.2 km',
+      time: '14 mins',
+      priority: 2,
+    },
+    {
+      image: require('../../assets/images/beatProfileImg.png'),
+      name: 'Laxmi Traders2',
+      address: 'Koramangala, Bengaluru',
+      distance: '1.2 km',
+      time: '14 mins',
+      priority: 1,
+    },
+    {
+      image: require('../../assets/images/beatProfileImg.png'),
+      name: 'Laxmi Traders3',
+      address: 'Koramangala, Bengaluru',
+      distance: '1.2 km',
+      time: '14 mins',
+      priority: 3,
+    },
+  ],
 };
