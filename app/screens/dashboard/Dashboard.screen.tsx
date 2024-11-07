@@ -153,6 +153,7 @@ const Dashboard = () => {
                 alignSelf: 'flex-start',
                 minWidth: getDeviceWidth(0.8),
               }}
+              status={item.status}
             />
           )}
         />

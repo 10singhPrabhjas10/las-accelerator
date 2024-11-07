@@ -16,6 +16,7 @@ interface ListCardProps {
   time: string;
   number: string;
   customStyle: StyleProp<ViewStyle>;
+  status: string;
 }
 
 function ListCard({
@@ -26,6 +27,7 @@ function ListCard({
   time,
   number,
   customStyle,
+  status,
 }: ListCardProps) {
   const infoContainer = (
     <View style={styles.imageContainer}>
@@ -57,6 +59,7 @@ function ListCard({
       detailsContainer={detailsContainer}
       number={number}
       customStyle={customStyle}
+      status={status}
     />
   );
 }

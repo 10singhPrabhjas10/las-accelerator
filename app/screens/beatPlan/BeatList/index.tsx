@@ -30,6 +30,7 @@ function BeatList() {
             time={item.item.eta}
             number={item.item.mobile_number}
             customStyle={{width: getDeviceWidth(0.85)}}
+            status={item.item.status}
           />
         )}
       />
