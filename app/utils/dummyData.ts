@@ -1182,3 +1182,31 @@ export const beatListCardData = {
     },
   ],
 };
+
+export const PerformaceReport = {
+  success: true,
+  message: 'Data retrieved successfully',
+  data: {
+    financial_year: '2023-2024',
+    categories: [
+      {
+        target: '50lacs',
+        achieved: '50lacs',
+        category: 'Sales',
+        percentage_change: -20,
+      },
+      {
+        target: '1290',
+        achieved: '1200',
+        category: 'Orders',
+        percentage_change: 20,
+      },
+      {
+        target: '500',
+        achieved: '450',
+        category: 'Retail Visits',
+        percentage_change: 5,
+      },
+    ],
+  },
+};

@@ -151,6 +151,26 @@ export default {
       label: 'Beat',
     },
     {
+      key: 'beatplan',
+      label: 'Beat Plan',
+    },
+    {
+      key: 'retailer360',
+      label: 'Retailer 360',
+    },
+    {
+      key: 'performance360',
+      label: 'Performance 360',
+    },
+    {
+      key: 'lead_managment',
+      label: 'Lead Managment',
+    },
+    {
+      key: 'travel_expenses',
+      label: 'Travel Expenses',
+    },
+    {
       key: 'expense_management',
       label: 'Expense Management',
     },

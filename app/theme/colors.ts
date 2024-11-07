@@ -63,6 +63,10 @@ export const COLORS = {
   grey500: '#2C2D2F',
   svgGrey: '#2C2C2C',
   accentGreen: '#EEF9EC',
+  pastry: '#FBEED9',
+  backGroundColor: '#EEEEEF',
+  greenLaurel: '#227436',
+  backgroundRed: '#FDF4F4',
 };
 
 export const PIE_CHART_COLORS = [
