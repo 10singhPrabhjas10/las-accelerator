@@ -15,7 +15,7 @@ import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 
 import PendingImg from '@/../assets/icons/beatPlan_pending_img.svg';
-import CompletedImg from '@/../assets/icons/beatPlan_check_circle.svg'
+import CompletedImg from '@/../assets/icons/beatPlan_check_circle.svg';
 import PhoneImg from '@/../assets/icons/phoneGreenImg.svg';
 import CommonStyles from '@/utils/commonStyle';
 import {callNumber} from '@/utils/commonMethods';
@@ -32,16 +32,18 @@ interface CardCommonProps {
   status: string;
 }
 
-const CurrentStatus = ({ status }) => { 
+const CurrentStatus = ({status}) => {
   const StatusImage = status === 'pending' ? <PendingImg /> : <CompletedImg />;
   const StatusText = status === 'pending' ? 'Pending' : 'Completed';
   const statusTextColor = status === 'pending' ? COLORS.orange : COLORS.green;
-  return ( 
-  <View style={styles.statusContainer}>
-    {StatusImage}
-    <Text style={[styles.statusText, {color: statusTextColor}]}>{StatusText}</Text> 
-  </View> 
-  ); 
+  return (
+    <View style={styles.statusContainer}>
+      {StatusImage}
+      <Text style={[styles.statusText, {color: statusTextColor}]}>
+        {StatusText}
+      </Text>
+    </View>
+  );
 };
 
 const CardCommon = ({
@@ -79,8 +81,8 @@ const CardCommon = ({
           </TouchableOpacity>
         </View>
         <View style={styles.detailsContainer}>
-          {detailsContainer} 
-          <CurrentStatus status={status} /> 
+          {detailsContainer}
+          <CurrentStatus status={status} />
         </View>
         {/* <CustomButton
             type={ButtonTypes.outline}

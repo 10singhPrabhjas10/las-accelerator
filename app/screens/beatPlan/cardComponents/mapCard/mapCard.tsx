@@ -35,9 +35,11 @@ function MapCard({
   status,
 }: MapCardProps) {
   const infoContainer = (
-    <View style={[ styles.numberContainer, 
-                  { backgroundColor: status === 'pending' ? COLORS.grey2 : COLORS.dgreen } 
-                ]}>
+    <View
+      style={[
+        styles.numberContainer,
+        {backgroundColor: status === 'pending' ? COLORS.grey2 : COLORS.dgreen},
+      ]}>
       <Text style={styles.numberText}>{count}</Text>
     </View>
   );
