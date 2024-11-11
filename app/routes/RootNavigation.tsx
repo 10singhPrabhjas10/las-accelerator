@@ -164,6 +164,7 @@ import ProductSubDivion from '@/screens/orderTaking/productSubDivision';
 import OrderConfirmation from '@/screens/orderTaking/orderConfirmation';
 import OrderPlaced from '@/screens/orderTaking/placedOrder';
 import TodayBeatPlan from '@/screens/beatPlan/TodaysBeatPlan';
+import RetailerDetails from '@/screens/beatPlan/RetailersDetails';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -255,6 +256,7 @@ export type RootNavigationTypes = {
   };
   AddActivity: {date: string; beatPlanId: string};
   MyBeatPlan: undefined;
+  RetailerDetails: undefined;
   StoreCheckIn: undefined;
   StoreTab: {
     date: string;
@@ -537,6 +539,8 @@ export default function RootNavigation() {
       <RootStack.Screen name={'AddActivity'} component={AddActivityScreen} />
       <RootStack.Screen name={'MyBeatPlan'} component={MyBeatPlanScreen} />
       <RootStack.Screen name={'TodayBeatPlan'} component={TodayBeatPlan} />
+      <RootStack.Screen name={'RetailerDetails'} component={RetailerDetails} />
+
       {/* Store Check In */}
       <RootStack.Screen name={'StoreCheckIn'} component={StoreCheckInScreen} />
       <RootStack.Screen name={'StoreTab'} component={storeTabScreen} />

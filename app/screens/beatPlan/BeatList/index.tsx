@@ -6,7 +6,11 @@ import {styles} from './styles';
 import {TodaysBeatPlan} from '@/utils/dummyData';
 import ListCard from '../cardComponents/listCard/listCard';
 import {getDeviceWidth} from '@/utils/commonMethods';
+import {TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '@/routes/RootNavigation';
 function BeatList() {
+  const navigation = useNavigation<RootNavigationProp>();
   return (
     <>
       <View style={styles.headText}>
@@ -22,15 +26,20 @@ function BeatList() {
         data={TodaysBeatPlan}
         showsVerticalScrollIndicator={false}
         renderItem={item => (
-          <ListCard
-            image={''}
-            name={item.item.name}
-            address={item.item.location.street + ',' + item.item.location.city}
-            distance={item.item.distance}
-            time={item.item.eta}
-            number={item.item.mobile_number}
-            customStyle={{width: getDeviceWidth(0.85)}}
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('RetailerDetails')}>
+            <ListCard
+              image={''}
+              name={item.item.name}
+              address={
+                item.item.location.street + ',' + item.item.location.city
+              }
+              distance={item.item.distance}
+              time={item.item.eta}
+              number={item.item.mobile_number}
+              customStyle={{width: getDeviceWidth(0.85)}}
+            />
+          </TouchableOpacity>
         )}
       />
     </>
