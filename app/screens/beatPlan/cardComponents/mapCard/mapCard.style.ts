@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: COLORS.grey,
   },
   numberText: {color: COLORS.white},
   navInfoContainer: {

@@ -34,6 +34,7 @@ function BeatMap() {
             distance={item.distance}
             time={item.eta}
             number={item.mobile_number}
+            status={item.status}
           />
         )}
       />
