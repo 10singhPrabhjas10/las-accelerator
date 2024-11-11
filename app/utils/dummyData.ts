@@ -337,7 +337,10 @@ export const lasProfileRes = {
     aadharCardNo: 'xxxx xxxx 2345',
   },
 };
-
+export interface ISalesData {
+  date: string;
+  sales: number;
+}
 export const performanceData = {
   overallInsightReport: {
     keyPerformanceIndicators: [

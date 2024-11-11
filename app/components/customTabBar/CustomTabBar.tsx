@@ -1,7 +1,7 @@
 import {COLORS} from '@/theme/colors';
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text} from 'react-native-paper';
 interface CustomTabBarProps {
   periods: string[]; // Array of period strings
   selectedIndex: number; // The index of the currently selected period
@@ -11,7 +11,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
   periods,
   selectedIndex,
   setSelectedIndex,
-}) => {
+}: CustomTabBarProps) => {
   return (
     <View style={styles.periodContainer}>
       {periods.map((period, index) => (
@@ -23,6 +23,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
             index === selectedIndex ? styles.activePeriodButton : null,
           ]}>
           <Text
+            variant="labelMedium"
             style={[
               styles.periodText,
               index === selectedIndex ? styles.activePeriodText : null,
@@ -38,10 +39,12 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
 const styles = StyleSheet.create({
   periodContainer: {
     flexDirection: 'row',
-    backgroundColor: '#2c4248',
+    backgroundColor: COLORS.insightBackground,
     borderRadius: 8,
     marginBottom: 16,
     justifyContent: 'space-around',
+    paddingHorizontal: 5,
+    paddingVertical: 2,
   },
   periodButton: {
     flex: 1,
@@ -49,15 +52,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activePeriodButton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: COLORS.dgreen,
     borderRadius: 8,
   },
   periodText: {
-    fontSize: 16,
     color: COLORS.white,
   },
   activePeriodText: {
-    color: '#fff',
+    color: COLORS.white,
   },
 });
 

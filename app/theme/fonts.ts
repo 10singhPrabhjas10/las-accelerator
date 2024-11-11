@@ -1,10 +1,7 @@
 import {heightToRatio} from '@/utils/commonMethods';
-import {MD3Type, MD3Typescale} from 'react-native-paper/lib/typescript/types';
-interface customVarient extends MD3Typescale {
-  ///use custom font here
-  // headlineXsamle: MD3Type
-}
-export const fontConfig: Partial<customVarient> = {
+import {MD3Typescale} from 'react-native-paper/lib/typescript/types';
+
+export const fontConfig: Partial<MD3Typescale> = {
   // Heading 1 : Component Heading
   headlineLarge: {
     fontFamily: 'OpenSans-Medium',

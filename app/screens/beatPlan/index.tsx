@@ -1,87 +1,87 @@
-import CustomButton from '@/components/button/CustomButton';
-import ScreenHeader from '@/components/headers/ScreenHeader';
-import Layout from '@/components/Layout';
-import {Text} from 'react-native-paper';
-import {ButtonTypes} from '@/types/buttons';
-import {getTranslationLabel} from '@/utils/commonMethods';
 import React, {useState, useEffect, useRef} from 'react';
 import {styles} from './styles';
-import BackgroundHeader from '@/components/headers/BackgroundHeader';
-import SearchInput from '@/components/searchInput';
-import {TouchableOpacity, View} from 'react-native';
-import CommonStyles from '@/utils/commonStyle';
-import MapIconWhite from '../../../assets/icons/map_white.svg';
-import ListIconWhite from '../../../assets/icons/list_white.svg';
-import MapIconDark from '../../../assets/icons/map_dark.svg';
-import ListIconDark from '../../../assets/icons/list_dark.svg';
-import {COLORS} from '@/theme/colors';
-import BeatList from './BeatList';
-import BeatMap from './BeatMap';
-import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
-import CustomRadioButton from '@/components/radioButton/CustomRadioButton';
-import {fontConfig} from '@/theme/fonts';
-import OptimiseRoute from './optimiseRoute';
+import TodaysBeatPlan from './TodaysBeatPlan';
+import Layout from '@/components/Layout';
+import {View} from 'react-native';
+import DashboardHeader from '../dashboard/dashboardComponent/dashboardHeader/DashboardHeader';
+import ScreenHeader from '@/components/headers/ScreenHeader';
+import SubHeader from '@/components/subHeader/subHeader';
 import {useNavigation} from '@react-navigation/native';
-import {getCurrentLocation} from '@/utils/Permissions';
-interface ISelector {
-  Switch: boolean;
-  setSwitch: Function;
-}
-function Selector({Switch = true, setSwitch = () => {}}: ISelector) {
-  return (
-    <View style={styles.Selector}>
-      <TouchableOpacity
-        onPress={() => setSwitch(true)}
-        style={[styles.box, Switch && styles.whiteBackground]}>
-        {!Switch ? <ListIconWhite /> : <ListIconDark />}
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => setSwitch(false)}
-        style={[styles.box, !Switch && styles.whiteBackground]}>
-        {Switch ? <MapIconWhite /> : <MapIconDark />}
-      </TouchableOpacity>
-    </View>
-  );
-}
-
+import {getTranslationLabel} from '@/utils/commonMethods';
+import CustomTabBar from '@/components/customTabBar/CustomTabBar';
+import InsightCard from '@/components/insightCard';
+import CommonStyles from '@/utils/commonStyle';
+import {CircularProgressBase} from 'react-native-circular-progress-indicator';
+import {COLORS} from '@/theme/colors';
+import {Text} from 'react-native-paper';
+import Progress from './components/Progress';
+import CardWrapper from '@/components/card/Card';
+import QuickLinkCard from '../dashboard/components/QuickLinkCard';
+import {RootNavigationProp} from '@/routes/RootNavigation';
+import CustomBarChart from '@/components/custombarCharts';
+import CustomLineChart from '@/components/customLineCharts';
 function BeatPlan() {
-  const [search, setSearch] = useState<string>('');
-  const [Switch, setSwitch] = useState<boolean>(true);
-  const ref = React.useRef(null);
-  const navigation = useNavigation();
-  const PresentModal = () => {
-    ref.current?.present();
-  };
-
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
+  const navigation = useNavigation<RootNavigationProp>();
+  const Periods = ['Today', 'Week', 'Month', 'Custom'];
+  const [TimePeriod, setTimePeriod] = useState<number>(0);
   return (
-    <Layout style={styles.layout}>
+    <Layout isScrollable>
       <ScreenHeader
+        header={getTranslationLabel('beatplan')}
         onBackPress={navigation.goBack}
-        header={getTranslationLabel('today_beat_plan')}
       />
-      <BackgroundHeader>
-        <View style={CommonStyles.flexRow}>
-          <SearchInput
-            value={search}
-            onChangeText={text => setSearch(text)}
-            placeholder={getTranslationLabel('Search')}
-            customStyles={[CommonStyles.flexOne, styles.marginRightZero]}
-          />
-          <Selector Switch={Switch} setSwitch={setSwitch} />
-        </View>
-      </BackgroundHeader>
-      {Switch ? <BeatList /> : <BeatMap />}
-      <CustomButton
-        text={getTranslationLabel('Optimise_Route')}
-        onPress={PresentModal}
-        style={styles.Button}
-        type={ButtonTypes.contained}
+      <SubHeader
+        shouldShowCardView={false}
+        otherSubHeaderContentStyle={{
+          height: null,
+        }}
+        otherSubHeaderContent={
+          <>
+            <View style={styles.navigationParent}>
+              <CustomTabBar
+                periods={Periods}
+                selectedIndex={TimePeriod}
+                setSelectedIndex={function (
+                  value: React.SetStateAction<number>,
+                ): void {
+                  setTimePeriod(value);
+                }}
+              />
+              <Progress
+                progress={10}
+                currentVisits={2}
+                totalVisits={5}
+                tasks={3}
+              />
+
+              <View style={styles.insightParent}>
+                <InsightCard value={'20k'} title="Total Sales" />
+                <InsightCard value={'12'} title="Total Orders" />
+                <InsightCard value={'100%'} title="Attendance" />
+              </View>
+            </View>
+          </>
+        }
+        children
       />
-      <OptimiseRoute ref={ref} />
+      <View style={styles.quickLinkParent}>
+        <QuickLinkCard
+          text={'Todays Beat Plan'}
+          customStyle={styles.navigationCard}
+          onPress={function (): void {
+            navigation.navigate('TodayBeatPlan');
+          }}
+        />
+        <QuickLinkCard
+          text={'Previous Beat Plan'}
+          customStyle={styles.navigationCard}
+          onPress={function (): void {
+            //  throw new Error('Function not implemented.');
+          }}
+        />
+      </View>
+      <CustomLineChart />
+      <CustomBarChart />
     </Layout>
   );
 }

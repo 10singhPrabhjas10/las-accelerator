@@ -67,6 +67,11 @@ export const COLORS = {
   backGroundColor: '#EEEEEF',
   greenLaurel: '#227436',
   backgroundRed: '#FDF4F4',
+  insightBackground: '#003B41',
+  powderBlue: '#B2E0E5',
+  pantone: '#00454D',
+  bondiBlue: '#0097A9',
+  shamrock: '#3DD598',
 };
 
 export const PIE_CHART_COLORS = [

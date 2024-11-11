@@ -16,6 +16,7 @@ import CommonStyles from '../../../utils/commonStyle.ts';
 import CustomListItem from '../../../components/listItem/CommonListItem.tsx';
 import {performanceData} from '../../../utils/dummyData.ts';
 import {BarChart} from 'react-native-gifted-charts';
+import {lightBlue100} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const SalesReport = () => {
   const salesData = [82, 112];
@@ -123,6 +124,13 @@ const SalesReport = () => {
           <BarChart
             barWidth={22}
             noOfSections={3}
+            showLine
+            lineConfig={{
+              curved: true,
+              thickness: 2,
+              color: '#0097A9',
+              dataPointsColor: 'white',
+            }}
             barBorderRadius={4}
             frontColor="lightgray"
             data={transformedData(performanceData.salesReport.salesData)}

@@ -3,37 +3,25 @@ import {heightToRatio, widthToRatio} from '@/utils/commonMethods';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  Button: {
+  navigationParent: {
     width: '90%',
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: heightToRatio(30),
   },
-  box: {
-    width: widthToRatio(40),
-    aspectRatio: 1,
-    borderRadius: 8,
-    marginHorizontal: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: COLORS.dDarkGreen,
-  },
-  marginRightZero: {
-    marginRight: 0,
-  },
-  whiteBackground: {
-    backgroundColor: COLORS.white,
-  },
-  trasparentBackground: {
-    backgroundColor: COLORS.trasparent,
-  },
-  Selector: {
-    width: '30%',
+  insightParent: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  layout: {
+  navigationCard: {
+    width: '45%',
+    aspectRatio: 3 / 2,
+    justifyContent: 'space-evenly',
+  },
+  quickLinkParent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    marginVertical: 20,
+    width: '90%',
+    alignSelf: 'center',
   },
 });

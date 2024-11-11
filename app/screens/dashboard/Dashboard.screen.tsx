@@ -80,7 +80,7 @@ const Dashboard = () => {
     {
       title: getTranslationLabel('performance360'),
       image: <BeatIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('Beat'),
+      onPress: () => navigation.navigate('PerformanceManagement'),
     },
     {
       title: getTranslationLabel('lead_managment'),
