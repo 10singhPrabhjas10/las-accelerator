@@ -38,6 +38,7 @@ function BeatList() {
               time={item.item.eta}
               number={item.item.mobile_number}
               customStyle={{width: getDeviceWidth(0.85)}}
+              status={Math.random() > 0.5 ? 'pending' : 'completed'}
             />
           </TouchableOpacity>
         )}

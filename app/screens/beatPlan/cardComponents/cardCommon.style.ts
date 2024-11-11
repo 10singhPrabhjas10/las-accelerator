@@ -30,18 +30,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  checkInButton: {
-    borderWidth: 2,
-    borderColor: COLORS.dgreen,
-    borderRadius: 8,
-    height: heightToRatio(32),
-    width: widthToRatio(91.4),
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 2,
   },
-  checkInButtonText: {
-    color: COLORS.dgreen,
-    fontSize: 12,
-    lineHeight: 14.25,
+  statusText: {
+    marginHorizontal: 2,
   },
+  // checkInButton: {
+  //   borderWidth: 2,
+  //   borderColor: COLORS.dgreen,
+  //   borderRadius: 8,
+  //   height: heightToRatio(32),
+  //   width: widthToRatio(91.4),
+  // },
+  // checkInButtonText: {
+  //   color: COLORS.dgreen,
+  //   fontSize: 12,
+  //   lineHeight: 14.25,
+  // },
 });
 
 export default styles;

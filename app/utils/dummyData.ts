@@ -49,6 +49,7 @@ export const TodaysBeatPlan = [
     },
     eta: '30 mins',
     distance: '12 km',
+    status: 'completed',
   },
   {
     name: 'Vivaan Gupta',
@@ -63,6 +64,7 @@ export const TodaysBeatPlan = [
     },
     eta: '25 mins',
     distance: '8 km',
+    status: 'pending',
   },
   {
     name: 'Reyansh Patel',
@@ -77,6 +79,7 @@ export const TodaysBeatPlan = [
     },
     eta: '15 mins',
     distance: '5 km',
+    status: 'pending',
   },
   {
     name: 'Vihaan Reddy',
@@ -91,6 +94,7 @@ export const TodaysBeatPlan = [
     },
     eta: '20 mins',
     distance: '7 km',
+    status: 'completed',
   },
   {
     name: 'Arjun Mehta',
@@ -105,6 +109,7 @@ export const TodaysBeatPlan = [
     },
     eta: '35 mins',
     distance: '14 km',
+    status: 'pending',
   },
   {
     name: 'Sai Kumar',
@@ -119,6 +124,7 @@ export const TodaysBeatPlan = [
     },
     eta: '40 mins',
     distance: '16 km',
+    status: 'completed',
   },
   {
     name: 'Ishaan Singh',
@@ -133,6 +139,7 @@ export const TodaysBeatPlan = [
     },
     eta: '30 mins',
     distance: '12 km',
+    status: 'completed',
   },
   {
     name: 'Kabir Khan',
@@ -147,6 +154,7 @@ export const TodaysBeatPlan = [
     },
     eta: '50 mins',
     distance: '18 km',
+    status: 'pending',
   },
   {
     name: 'Krishna Rao',
@@ -161,6 +169,7 @@ export const TodaysBeatPlan = [
     },
     eta: '45 mins',
     distance: '15 km',
+    status: 'pending',
   },
   {
     name: 'Nishant Verma',
@@ -175,6 +184,7 @@ export const TodaysBeatPlan = [
     },
     eta: '60 mins',
     distance: '25 km',
+    status: 'completed',
   },
 ];
 

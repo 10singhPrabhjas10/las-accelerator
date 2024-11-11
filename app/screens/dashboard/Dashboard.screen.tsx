@@ -27,6 +27,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import QuickLinkCard from './components/QuickLinkCard';
 import CommonStyles from '@/utils/commonStyle';
 
+import ListComponent from '../beatPlan/components/listComponent/listComponent';
+
 interface IDashboardTileProps {
   title: string;
   icon: ReactNode;
@@ -153,10 +155,13 @@ const Dashboard = () => {
                 alignSelf: 'flex-start',
                 minWidth: getDeviceWidth(0.8),
               }}
+              status={item.status}
             />
           )}
         />
       </View>
+
+      <ListComponent />
 
       <View style={[styles.component, styles.marginBottom50]}>
         <Text variant="headlineSmall" style={CommonStyles.marginVertical10}>
