@@ -40,7 +40,7 @@ export const TodaysBeatPlan = [
     name: 'Aarav Sharma',
     mobile_number: '98765-43210',
     location: {
-      street: '10, 1st Main',
+      street: '10 , 1st Main',
       city: 'Bengaluru',
     },
     coordinates: {
