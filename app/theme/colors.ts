@@ -72,6 +72,8 @@ export const COLORS = {
   pantone: '#00454D',
   bondiBlue: '#0097A9',
   shamrock: '#3DD598',
+  aliceBlue: '#ECF7F9',
+  opalgreen: '#005C66'
 };
 
 export const PIE_CHART_COLORS = [
