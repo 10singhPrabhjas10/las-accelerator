@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 10,
     marginHorizontal: 20,
+    marginVertical: 10,
   },
   itemContainer: {
     borderColor: COLORS.lightGrey,

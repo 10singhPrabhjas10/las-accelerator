@@ -1,5 +1,5 @@
 //External dependencies
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
@@ -19,7 +19,9 @@ import {ButtonTypes} from 'types/buttons';
 import CommonStyles from '@/utils/commonStyle';
 import OtpCard from '@/components/otpVerification';
 import {RootNavigationProp, RootNavigationTypes} from '@/routes/RootNavigation';
-const OrderConfirmation = () => {
+import {BEAT_PLAN} from '@/services/constants';
+import {BeatPlan, OrderConfirmed} from '@/utils/Constants';
+const OrderConfirmation = (props: any) => {
   const route = useRoute<RouteProp<RootNavigationTypes, 'OrderConfirmation'>>();
   const [otp, setOtp] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -28,7 +30,6 @@ const OrderConfirmation = () => {
   const navigation = useNavigation<RootNavigationProp>();
 
   const mobileNumber = route.params?.mobileNumber;
-
   const verifyOtpHandler = async (): Promise<void> => {
     try {
       if (otp.length < 6) {
@@ -43,7 +44,15 @@ const OrderConfirmation = () => {
         setErrorMsg,
         setOtp,
       );
-      navigation.replace('PlacedOrder');
+      if (props.route.params?.from === BeatPlan) {
+        navigation.navigate('RetailerDetails', {
+          from: OrderConfirmed,
+        });
+        return;
+      }
+      navigation.replace('PlacedOrder', {
+        ...props.route.params,
+      });
     } catch (err) {
       console.log(err);
     }

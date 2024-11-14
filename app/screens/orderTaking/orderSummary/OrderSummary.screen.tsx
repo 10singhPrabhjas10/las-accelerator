@@ -40,7 +40,7 @@ interface ISchemeProps {
 
 const cartItemsData = cartItems?.data;
 
-const OrderSummary = () => {
+const OrderSummary = (props: any) => {
   const navigation = useNavigation<RootNavigationProp>();
   const [showModal, setShowModal] = useState(false);
   const [showKYCModal, setShowKCModal] = useState<boolean>(false);
@@ -76,14 +76,18 @@ const OrderSummary = () => {
           <>
             <View style={CommonStyles.flexOne}>
               <View style={styles.header}>
-                <Text style={[styles.titleWeight, styles.titleFontStyle]} variant="bodyLarge">
+                <Text
+                  style={[styles.titleWeight, styles.titleFontStyle]}
+                  variant="bodyLarge">
                   {getTranslationLabel('cart_items')} ({totalQuantity})
                 </Text>
                 <TouchableOpacity
                   onPress={() => setShowModal(true)}
                   style={styles.headerRight}>
                   <ClearCart width={16} height={16} color={COLORS.dgreen} />
-                  <Text style={[styles.clearCartText, {marginRight: 10}]} variant="labelLarge">
+                  <Text
+                    style={[styles.clearCartText, {marginRight: 10}]}
+                    variant="labelLarge">
                     {getTranslationLabel('clear_cart')}
                   </Text>
                 </TouchableOpacity>
@@ -201,7 +205,9 @@ const OrderSummary = () => {
                 </TouchableOpacity>
               )}
             </View>
-            <Divider style={[CommonStyles.horizontalDivider,{marginHorizontal:5}]} />
+            <Divider
+              style={[CommonStyles.horizontalDivider, {marginHorizontal: 5}]}
+            />
             <>
               <View style={styles.totalAmount}>
                 <View
@@ -240,6 +246,7 @@ const OrderSummary = () => {
                 onPress={() => {
                   navigation.navigate('OrderConfirmation', {
                     mobileNumber: DummyMobile,
+                    ...props.route.params,
                   });
                   //  setShowKCModal(true);
                 }}

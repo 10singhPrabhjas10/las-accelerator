@@ -1,19 +1,30 @@
 import {COLORS} from '@/theme/colors';
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import {Text} from 'react-native-paper';
 interface CustomTabBarProps {
   periods: string[]; // Array of period strings
   selectedIndex: number; // The index of the currently selected period
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>; // Function to update the selected index
+  style: StyleProp<ViewStyle>;
+  activeText: StyleProp<TextStyle>;
 }
 const CustomTabBar: React.FC<CustomTabBarProps> = ({
   periods,
   selectedIndex,
   setSelectedIndex,
+  style = {},
+  activeText = {},
 }: CustomTabBarProps) => {
   return (
-    <View style={styles.periodContainer}>
+    <View style={[styles.periodContainer, style]}>
       {periods.map((period, index) => (
         <TouchableOpacity
           key={index}
@@ -26,6 +37,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
             variant="labelMedium"
             style={[
               styles.periodText,
+              activeText,
               index === selectedIndex ? styles.activePeriodText : null,
             ]}>
             {period}

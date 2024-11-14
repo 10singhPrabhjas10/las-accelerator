@@ -165,6 +165,7 @@ import OrderConfirmation from '@/screens/orderTaking/orderConfirmation';
 import OrderPlaced from '@/screens/orderTaking/placedOrder';
 import TodayBeatPlan from '@/screens/beatPlan/TodaysBeatPlan';
 import RetailerDetails from '@/screens/beatPlan/RetailersDetails';
+import PreviousBeatPlan from '@/screens/beatPlan/PreviousBeatPlan';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -232,6 +233,7 @@ export type RootNavigationTypes = {
   BeatPlan: undefined;
   AddBeat: undefined;
   TodayBeatPlan: undefined;
+  PreviousBeatPlan: undefined;
   ModifyBeat: {
     data: any;
     date: string;
@@ -256,7 +258,7 @@ export type RootNavigationTypes = {
   };
   AddActivity: {date: string; beatPlanId: string};
   MyBeatPlan: undefined;
-  RetailerDetails: undefined;
+  RetailerDetails?: {from: string};
   StoreCheckIn: undefined;
   StoreTab: {
     date: string;
@@ -390,7 +392,7 @@ export type RootNavigationTypes = {
     categoryId: string;
   };
   VolumeTarget: {categoryId: string; categoryName: string};
-  OrderHome: undefined;
+  OrderHome?: {from: string};
 };
 
 export type RootNavigationProp = NativeStackNavigationProp<RootNavigationTypes>;
@@ -539,6 +541,10 @@ export default function RootNavigation() {
       <RootStack.Screen name={'AddActivity'} component={AddActivityScreen} />
       <RootStack.Screen name={'MyBeatPlan'} component={MyBeatPlanScreen} />
       <RootStack.Screen name={'TodayBeatPlan'} component={TodayBeatPlan} />
+      <RootStack.Screen
+        name={'PreviousBeatPlan'}
+        component={PreviousBeatPlan}
+      />
       <RootStack.Screen name={'RetailerDetails'} component={RetailerDetails} />
 
       {/* Store Check In */}

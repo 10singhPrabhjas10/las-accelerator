@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 
 import {styles} from './styles';
@@ -17,6 +17,9 @@ import BeatList from '../BeatList';
 
 // Dummy Data for the Retailer Details
 import dummyImg from '@/../assets/images/userImg.png';
+import {OrderConfirmed} from '@/utils/Constants';
+import OrderConfirmedModal from '../components/OrderConfirmedModal';
+import {useIsFocused} from '@react-navigation/native';
 const dummyRetailerData = {
   profileImg: dummyImg,
   //profileImg: '@/../assets/images/userImg.png',
@@ -24,11 +27,17 @@ const dummyRetailerData = {
   retailerId: '1232345',
 };
 
-const RetailerDetails = () => {
+const RetailerDetails = (props: any) => {
   const [image, setImage] = useState(dummyRetailerData.profileImg);
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   const hasNotifications = true;
-
+  const focused = useIsFocused();
+  const [showPopUp, setPopUp] = useState<boolean>(
+    props.route.params?.from == OrderConfirmed,
+  );
+  useEffect(() => {
+    if (focused) setPopUp(props.route.params?.from == OrderConfirmed);
+  }, [focused]);
   return (
     <Layout
       isScrollable
@@ -48,16 +57,19 @@ const RetailerDetails = () => {
       />
       <NavActions />
       <ListComponent />
-      <BeatPlanCard />
       <RetailerSalesCard />
-      <View style={styles.beatListContainer}>
-        <BeatList />
-      </View>
+      <View style={{marginBottom: 100}} />
       <CustomButton
         text={'Check In'}
         onPress={() => {}}
         style={styles.button}
         type={ButtonTypes.contained}
+      />
+      <OrderConfirmedModal
+        showModal={showPopUp}
+        setShowModal={val => {
+          setPopUp(val);
+        }}
       />
     </Layout>
   );

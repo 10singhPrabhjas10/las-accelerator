@@ -9,6 +9,7 @@ import {COLORS} from '@/theme/colors';
 import CommonStyles from '@/utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '@/routes/RootNavigation';
+import {getTranslationLabel} from '@/utils/commonMethods';
 const OrderPlaced = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const GotoTop = () => {
@@ -19,10 +20,10 @@ const OrderPlaced = () => {
       <View style={styles.container}>
         <CheckCircle />
         <Text variant="labelLarge" style={{marginTop: 10}}>
-          Order has been placed successfully!
+          {getTranslationLabel('OrderHasBeenPlacedSuccessfully')}
         </Text>
         <Text variant="bodySmall" style={{marginTop: 5}}>
-          You may share the order summary with the customer.
+          {getTranslationLabel('YouMayShareOrderSummary')}
         </Text>
         <TouchableOpacity style={styles.btn}>
           <ShareIcon style={CommonStyles.marginR10} />

@@ -32,7 +32,7 @@ interface CardCommonProps {
   status: string;
 }
 
-const CurrentStatus = ({status}) => {
+const CurrentStatus = ({status = ''}) => {
   const StatusImage = status === 'pending' ? <PendingImg /> : <CompletedImg />;
   const StatusText = status === 'pending' ? 'Pending' : 'Completed';
   const statusTextColor = status === 'pending' ? COLORS.orange : COLORS.green;

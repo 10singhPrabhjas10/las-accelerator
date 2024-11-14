@@ -24,4 +24,19 @@ export const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
   },
+  DateView: {
+    width: '90%',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: 10,
+    justifyContent: 'space-between',
+  },
+
+  ////
+  modal: {
+    width: '100%',
+    padding: '10%',
+    height: '40%',
+    justifyContent: 'center',
+  },
 });

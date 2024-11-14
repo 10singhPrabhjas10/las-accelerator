@@ -8,7 +8,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {styles} from './styles';
 import BackgroundHeader from '@/components/headers/BackgroundHeader';
 import SearchInput from '@/components/searchInput';
-import {TouchableOpacity, View} from 'react-native';
+import {SwitchBase, TouchableOpacity, View} from 'react-native';
 import CommonStyles from '@/utils/commonStyle';
 import MapIconWhite from '../../../../assets/icons/map_white.svg';
 import ListIconWhite from '../../../../assets/icons/list_white.svg';
@@ -20,11 +20,12 @@ import OptimiseRoute from '../optimiseRoute';
 import {useNavigation} from '@react-navigation/native';
 import {getCurrentLocation} from '@/utils/Permissions';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import BeatPlanCard from '../components/retailerDetailsPage/dashboardCard/beatPlanCard';
 interface ISelector {
   Switch: boolean;
   setSwitch: Function;
 }
-function Selector({Switch = true, setSwitch = () => {}}: ISelector) {
+export function Selector({Switch = true, setSwitch = () => {}}: ISelector) {
   return (
     <View style={styles.Selector}>
       <TouchableOpacity
@@ -71,6 +72,12 @@ function TodaysBeatPlan() {
           <Selector Switch={Switch} setSwitch={setSwitch} />
         </View>
       </BackgroundHeader>
+
+      {Switch && (
+        <View style={CommonStyles.marginTop}>
+          <BeatPlanCard />
+        </View>
+      )}
       {Switch ? <BeatList /> : <BeatMap />}
       <CustomButton
         text={getTranslationLabel('Optimise_Route')}
