@@ -37,14 +37,15 @@ export const styles = StyleSheet.create({
   },
   activeChip: {borderColor: COLORS.dgreen, backgroundColor: COLORS.accentGreen},
   chip: {
-    marginHorizontal: 10,
+    marginHorizontal: 3,
     paddingHorizontal: 5,
     borderWidth: 1,
     borderColor: COLORS.dividerGrey,
   },
-  listContainer: {alignSelf: 'flex-start', padding: 10},
+  listContainer: {alignSelf: 'flex-start', padding: 2},
   list: {
     alignSelf: 'flex-start',
-    width: '100%',
+    width: '90%',
+    marginHorizontal: 15,
   },
 });

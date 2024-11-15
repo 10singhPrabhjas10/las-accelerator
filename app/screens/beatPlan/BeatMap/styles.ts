@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
   },
   list: {
     position: 'absolute',
-    bottom: 150,
-    paddingLeft: '5%',
+    bottom: 95,
+    marginHorizontal: '3%',
   },
   card: {minWidth: getDeviceWidth(0.7)},
 });
