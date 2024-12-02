@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     position: 'absolute',
-    bottom: heightToRatio(30),
+    bottom: heightToRatio(16),
   },
   box: {
     width: widthToRatio(40),
