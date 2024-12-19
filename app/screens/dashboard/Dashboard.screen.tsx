@@ -141,6 +141,7 @@ const Dashboard = () => {
           data={TodaysBeatPlan}
           horizontal
           showsHorizontalScrollIndicator={false}
+          style={styles.flatListContainer}
           renderItem={({item, index}) => (
             <ListCard
               image={''}
@@ -192,6 +193,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   component: {paddingLeft: '5%'},
+  flatListContainer: {
+    marginRight: '5%',
+  },
   tile: {
     backgroundColor: COLORS.white,
     flex: 1 / 2,

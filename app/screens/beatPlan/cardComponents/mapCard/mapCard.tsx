@@ -22,6 +22,7 @@ interface MapCardProps {
   number: string;
   customStyle?: StyleProp<ViewStyle>;
   status: string;
+  onPress: () => void;
 }
 
 function MapCard({
@@ -33,6 +34,7 @@ function MapCard({
   number,
   customStyle = {},
   status,
+  onPress,
 }: MapCardProps) {
   const infoContainer = (
     <View
@@ -50,7 +52,7 @@ function MapCard({
         {' '}
         {distance} | {time}
       </Text>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={onPress}>
         <Text variant="labelLarge" style={styles.navigationlinkText}>
           Start Navigation
         </Text>

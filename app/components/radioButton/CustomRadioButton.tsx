@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     marginLeft: widthToRatio(-8),
+    paddingLeft: 10,
   },
   radioButtonView: {
     flexDirection: 'row',

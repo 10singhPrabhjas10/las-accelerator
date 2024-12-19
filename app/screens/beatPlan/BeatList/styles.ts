@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   headText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%',
+    width: '86%',
     marginVertical: '5%',
   },
   flatListContainer: {
