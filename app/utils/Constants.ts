@@ -278,3 +278,5 @@ export const DummyMail = 'info@deloitte.com';
 
 export const CurrencyCode = '₹';
 export const dot = '•';
+export const BeatPlan = 'BeatPlan';
+export const OrderConfirmed = 'OrderConfirmed';

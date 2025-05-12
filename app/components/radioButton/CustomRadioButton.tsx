@@ -26,6 +26,7 @@ interface ICustomRadioButtonProps {
   textStyle?: TextStyle;
   labelStyle?: TextStyle;
   isVerticalButtons?: boolean;
+  activeColor?: string;
 }
 
 const CustomRadioButton = ({
@@ -43,6 +44,7 @@ const CustomRadioButton = ({
   vrButtonContainerStyle,
   radioButtonContainerStyle,
   labelStyle,
+  activeColor = '',
 }: ICustomRadioButtonProps) => {
   const radioButtonTheme = {colors: {primary: COLORS.dDarkGreen}};
   const errorTheme = {colors: {onSurface: COLORS.red}};
@@ -84,6 +86,7 @@ const CustomRadioButton = ({
                   theme={radioButtonTheme}
                   value={item.value}
                   disabled={disabled}
+                  color={activeColor}
                 />
                 <Text variant="bodyMedium" style={labelStyle}>
                   {item.label}
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     marginLeft: widthToRatio(-8),
+    paddingLeft: 10,
   },
   radioButtonView: {
     flexDirection: 'row',

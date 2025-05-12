@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, {ReactNode, useEffect} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
@@ -18,7 +18,14 @@ import ProductPriceListIcon from '../../../assets/icons/productPriceListIcon.svg
 import BeatIcon from '../../../assets/icons/beat.svg';
 import {COLORS, spacing} from 'theme/theme';
 import AttendaceIcon from '../../../assets/icons/attendance.svg';
-import {getTranslationLabel} from 'utils/commonMethods';
+import {getDeviceWidth, getTranslationLabel} from 'utils/commonMethods';
+import {getCurrentLocation} from '@/utils/Permissions';
+import {TodaysBeatPlan} from '@/utils/dummyData';
+import ListCard from '../beatPlan/cardComponents/listCard/listCard';
+import PerformanceCard from './components/performanceCard';
+import {ScrollView} from 'react-native-gesture-handler';
+import QuickLinkCard from './components/QuickLinkCard';
+import CommonStyles from '@/utils/commonStyle';
 
 interface IDashboardTileProps {
   title: string;
@@ -43,78 +50,128 @@ const Dashboard = () => {
   const navigation = useNavigation<RootNavigationProp>();
 
   const tilesData = [
+    // {
+    //   title: getTranslationLabel('primary_cp'),
+    //   image: <PrimaryUserProfile height={24} width={24} />,
+    //   onPress: () =>
+    //     navigation.navigate('PrimaryPartnerSearch', {fromOrderTaking: false}),
+    // },
+    // {
+    //   title: getTranslationLabel('secondary_cp'),
+    //   image: <SecondaryProfileIcon height={24} width={24} />,
+    //   onPress: () =>
+    //     navigation.navigate('RetailerPartnerSearch', {fromOrderTaking: false}),
+    // },
+    // {
+    //   title: getTranslationLabel('attendance'),
+    //   image: <AttendaceIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('AttendanceLanding'),
+    // },
     {
-      title: getTranslationLabel('primary_cp'),
-      image: <PrimaryUserProfile height={24} width={24} />,
-      onPress: () =>
-        navigation.navigate('PrimaryPartnerSearch', {fromOrderTaking: false}),
-    },
-    {
-      title: getTranslationLabel('secondary_cp'),
-      image: <SecondaryProfileIcon height={24} width={24} />,
-      onPress: () =>
-        navigation.navigate('RetailerPartnerSearch', {fromOrderTaking: false}),
-    },
-    {
-      title: getTranslationLabel('attendance'),
-      image: <AttendaceIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('AttendanceLanding'),
-    },
-    {
-      title: getTranslationLabel('beat'),
+      title: getTranslationLabel('beatplan'),
       image: <BeatIcon height={24} width={24} />,
       onPress: () => navigation.navigate('Beat'),
     },
     {
-      title: getTranslationLabel('expense_management'),
-      image: <ExpenseManagementIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('ExpenseManagement'),
+      title: getTranslationLabel('retailer360'),
+      image: <BeatIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('Beat'),
     },
     {
-      title: getTranslationLabel('self_management'),
-      image: <SelfManagementIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('SelfManagement'),
+      title: getTranslationLabel('performance360'),
+      image: <BeatIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('PerformanceManagement'),
     },
+    {
+      title: getTranslationLabel('lead_managment'),
+      image: <BeatIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('Beat'),
+    },
+    {
+      title: getTranslationLabel('travel_expenses'),
+      image: <BeatIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('Beat'),
+    },
+    // {
+    //   title: getTranslationLabel('expense_management'),
+    //   image: <ExpenseManagementIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('ExpenseManagement'),
+    // },
+    // {
+    //   title: getTranslationLabel('self_management'),
+    //   image: <SelfManagementIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('SelfManagement'),
+    // },
     {
       title: getTranslationLabel('order_taking'),
       image: <OrderTakingIcon height={24} width={24} />,
       onPress: () => navigation.navigate('OrderHome'),
     },
-    {
-      title: getTranslationLabel('product_price_list'),
-      image: <ProductPriceListIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('ProductPriceList'),
-    },
+    // {
+    //   title: getTranslationLabel('product_price_list'),
+    //   image: <ProductPriceListIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('ProductPriceList'),
+    // },
 
-    {
-      title: getTranslationLabel('lead_management'),
-      image: <MultipleUsersIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('LeadManagement'),
-    },
-    {
-      title: getTranslationLabel('performance_management'),
-      image: <PerformanceIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('PerformanceManagement'),
-    },
+    // {
+    //   title: getTranslationLabel('lead_management'),
+    //   image: <MultipleUsersIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('LeadManagement'),
+    // },
+    // {
+    //   title: getTranslationLabel('performance_management'),
+    //   image: <PerformanceIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('PerformanceManagement'),
+    // },
   ];
-
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
   return (
-    <Layout>
+    <Layout isScrollable>
       <DashboardHeader />
-      <FlatList
-        data={tilesData}
-        renderItem={({item}) => (
-          <DashboardTile
-            title={item.title}
-            icon={item.image}
-            onPress={item.onPress}
-          />
-        )}
-        keyExtractor={(item, index) => `tile_${index}`}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.flatListContent}
-      />
+
+      <PerformanceCard customStyle={{marginTop: '-10%'}} />
+
+      <View style={styles.component}>
+        <Text variant="headlineSmall" style={CommonStyles.marginVertical10}>
+          {getTranslationLabel('Todays_Visits')}
+        </Text>
+        <FlatList
+          data={TodaysBeatPlan}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.flatListContainer}
+          renderItem={({item, index}) => (
+            <ListCard
+              image={''}
+              name={item.name}
+              address={item.location.street + ',' + item.location.city}
+              distance={item.distance}
+              time={item.eta}
+              number={item.mobile_number}
+              customStyle={{
+                alignSelf: 'flex-start',
+                minWidth: getDeviceWidth(0.8),
+              }}
+              status={item.status}
+            />
+          )}
+        />
+      </View>
+
+      <View style={[styles.component, styles.marginBottom50]}>
+        <Text variant="headlineSmall" style={CommonStyles.marginVertical10}>
+          Quick Links
+        </Text>
+        <FlatList
+          data={tilesData}
+          numColumns={3}
+          renderItem={({item, index}) => (
+            <QuickLinkCard text={item.title} onPress={item.onPress} />
+          )}
+        />
+      </View>
     </Layout>
   );
 };
@@ -126,8 +183,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  marginBottom50: {
+    marginBottom: 50,
+  },
   row: {
     gap: 8,
+  },
+  fontSize16: {
+    fontSize: 16,
+  },
+  component: {paddingLeft: '5%'},
+  flatListContainer: {
+    marginRight: '5%',
   },
   tile: {
     backgroundColor: COLORS.white,

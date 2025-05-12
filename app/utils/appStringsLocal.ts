@@ -151,6 +151,26 @@ export default {
       label: 'Beat',
     },
     {
+      key: 'beatplan',
+      label: 'Beat Plan',
+    },
+    {
+      key: 'retailer360',
+      label: 'Retailer 360',
+    },
+    {
+      key: 'performance360',
+      label: 'Performance 360',
+    },
+    {
+      key: 'lead_managment',
+      label: 'Lead Managment',
+    },
+    {
+      key: 'travel_expenses',
+      label: 'Travel Expenses',
+    },
+    {
       key: 'expense_management',
       label: 'Expense Management',
     },
@@ -309,30 +329,41 @@ export default {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
     },
+    ///Beat Plan
+    {key: 'today_beat_plan', label: "Today's Beat Plan"},
+    {key: 'Optimise_Route', label: 'Optimise Route'},
+    {key: 'Search', label: 'Search'},
     {
-      key: 'product_series',
-      label: 'Product Series',
+      key: 'Routes Updated',
+      label:
+        'We’ve updated the routes. Please proceed to check the revised routes',
     },
     {
-      key: 'search_products',
-      label: 'Search Products',
+      key: 'Routes Updating',
+      label: 'We’re updating the routes based on ',
     },
     {
-      key: 'currrent_offers',
-      label: 'Current Offers',
+      key: 'traffic',
+      label: 'Trafic',
     },
     {
-      key: 'past_orders',
-      label: 'Past Orders',
+      key: 'Store_Priority',
+      label: 'Store Priority',
     },
     {
-      key: 'retailer_KYC_Pending',
-      label: 'Retailer KYC Pending',
+      key: 'Sales_Potential',
+      label: 'Sales Potential',
     },
     {
-      key: 'product_detils',
-      label: 'Product Details',
+      key: 'Routes_Success',
+      label: 'Routes Updated successfully!',
     },
+    {
+      key: 'Todays_Visits',
+      label: 'Planned Visits for today >',
+    },
+
+    ///End Beat Plan
     {
       key: 'order_summary',
       label: 'Order Summary',
@@ -391,6 +422,34 @@ export default {
     {key: 'current_stock', label: 'Current stock'},
     {key: 'available', label: 'available'},
     {key: 'sku', label: 'SKU'},
+    {
+      key: 'search_by_product_category',
+      label: 'Search by product, category...',
+    },
+    {
+      key: 'product_series',
+      label: 'Product Series',
+    },
+    {
+      key: 'search_products',
+      label: 'Search Products',
+    },
+    {
+      key: 'currrent_offers',
+      label: 'Current Offers',
+    },
+    {
+      key: 'past_orders',
+      label: 'Past Orders',
+    },
+    {
+      key: 'OrderHasBeenPlacedSuccessfully',
+      label: 'Order has been placed successfully!',
+    },
+    {
+      key: 'YouMayShareOrderSummary',
+      label: 'You may share the order summary with the customer',
+    },
   ],
 
   hi: [

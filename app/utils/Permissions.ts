@@ -1,4 +1,7 @@
 import {PermissionStatus, PermissionsAndroid} from 'react-native';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
+
 export const requestCameraPermission = async () => {
   try {
     const granted: PermissionStatus = await PermissionsAndroid.request(
@@ -33,4 +36,47 @@ export const requestStoragePermission = async () => {
   } catch (err) {
     console.warn(err);
   }
+};
+
+export const requestLocationPermission = async () => {
+  try {
+    const result = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+
+    if (result !== RESULTS.GRANTED) {
+      const requestResult = await request(
+        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+      );
+
+      if (requestResult === RESULTS.GRANTED) {
+        return true; // Permission granted
+      } else {
+        throw new Error('Location permission denied');
+      }
+    }
+
+    return true; // Permission already granted
+  } catch (error) {
+    console.error(error);
+    return false; // Handle the error case
+  }
+};
+
+export const getCurrentLocation = async () => {
+  const hasPermission = await requestLocationPermission();
+
+  if (!hasPermission) {
+    return; // Exit if permission is not granted
+  }
+
+  Geolocation.getCurrentPosition(
+    position => {
+      console.log(position);
+      // Handle position here (e.g., display coordinates)
+    },
+    error => {
+      console.error(error);
+      // Handle error case
+    },
+    {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  );
 };

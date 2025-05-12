@@ -6,6 +6,9 @@ buildscript {
         targetSdkVersion = 34
         ndkVersion = "25.1.8937393"
         kotlinVersion = "1.9.22"
+        playServicesLocationVersion  = "21.0.1"
+        androidGradlePluginVersion = "8.7.0"
+        googlePlayServicesVersion = "18.0.0"
     }
     repositories {
         google()
@@ -20,6 +23,8 @@ buildscript {
 }
 allprojects {
     repositories {
+      google()
+      mavenCentral()
       // ADD THIS for react-native-image-crop-picker
       maven { url 'https://maven.google.com' }
       // ADD THIS for react-native-image-crop-picker

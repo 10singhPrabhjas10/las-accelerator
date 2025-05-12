@@ -36,7 +36,7 @@ import ShippingDetails from 'screens/primaryCP/profileDetails/shippingDetail/Shi
 import PrimaryPartnerSearch from 'screens/primaryCP/primaryPartnerSearch/PrimaryPartnerSearch.screen';
 import AccountOutstanding from 'screens/primaryCP/financialInformation/accountOutstanding/AccountOutstanding.screen';
 import AccountStatement from 'screens/primaryCP/financialInformation/accountStatement/AccountStatement.screen';
-import BeatScreen from 'screens/beat/Beat.screen';
+import BeatPlan from '@/screens/beatPlan'; //import BeatScreen from 'screens/beat/Beat.screen';
 import BeatPlanScreen from 'screens/beat/PlanModule/beatPlan/BeatPlan.screen';
 import AddBeatscreen from 'screens/beat/PlanModule/beatPlan/addBeat/AddBeat.screen';
 import ModifyBeatScreen from 'screens/beat/PlanModule/beatPlan/modifyBeat/ModifyBeat.screen';
@@ -163,6 +163,9 @@ import ProductDivion from '@/screens/orderTaking/productDivision';
 import ProductSubDivion from '@/screens/orderTaking/productSubDivision';
 import OrderConfirmation from '@/screens/orderTaking/orderConfirmation';
 import OrderPlaced from '@/screens/orderTaking/placedOrder';
+import TodayBeatPlan from '@/screens/beatPlan/TodaysBeatPlan';
+import RetailerDetails from '@/screens/beatPlan/RetailersDetails';
+import PreviousBeatPlan from '@/screens/beatPlan/PreviousBeatPlan';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -229,6 +232,8 @@ export type RootNavigationTypes = {
   Beat: undefined;
   BeatPlan: undefined;
   AddBeat: undefined;
+  TodayBeatPlan: undefined;
+  PreviousBeatPlan: undefined;
   ModifyBeat: {
     data: any;
     date: string;
@@ -253,6 +258,7 @@ export type RootNavigationTypes = {
   };
   AddActivity: {date: string; beatPlanId: string};
   MyBeatPlan: undefined;
+  RetailerDetails?: {from: string};
   StoreCheckIn: undefined;
   StoreTab: {
     date: string;
@@ -386,7 +392,7 @@ export type RootNavigationTypes = {
     categoryId: string;
   };
   VolumeTarget: {categoryId: string; categoryName: string};
-  OrderHome: undefined;
+  OrderHome?: {from: string};
 };
 
 export type RootNavigationProp = NativeStackNavigationProp<RootNavigationTypes>;
@@ -527,13 +533,20 @@ export default function RootNavigation() {
     <>
       {/* Beat Plan */}
       <RootStack.Screen name={'BeatPlan'} component={BeatPlanScreen} />
-      <RootStack.Screen name={'Beat'} component={BeatScreen} />
+      <RootStack.Screen name={'Beat'} component={BeatPlan} />
       <RootStack.Screen name={'AddBeat'} component={AddBeatscreen} />
       <RootStack.Screen name={'ModifyBeat'} component={ModifyBeatScreen} />
       <RootStack.Screen name={'AddNewStore'} component={AddNewStoreScreen} />
       <RootStack.Screen name={'OptionScreen'} component={OptionScreen} />
       <RootStack.Screen name={'AddActivity'} component={AddActivityScreen} />
       <RootStack.Screen name={'MyBeatPlan'} component={MyBeatPlanScreen} />
+      <RootStack.Screen name={'TodayBeatPlan'} component={TodayBeatPlan} />
+      <RootStack.Screen
+        name={'PreviousBeatPlan'}
+        component={PreviousBeatPlan}
+      />
+      <RootStack.Screen name={'RetailerDetails'} component={RetailerDetails} />
+
       {/* Store Check In */}
       <RootStack.Screen name={'StoreCheckIn'} component={StoreCheckInScreen} />
       <RootStack.Screen name={'StoreTab'} component={storeTabScreen} />

@@ -4,3 +4,7 @@ export enum SnackBarEnum {
   WARNING = 'WARNING',
   INFO = 'INFO',
 }
+export enum PostionEnum {
+  TOP = 'TOP',
+  BOTTOM = 'BOTTOM',
+}

@@ -7,11 +7,11 @@ import SuccessTickSvg from './../../../assets/icons/success-tick.svg';
 import WarningSvg from './../../../assets/icons/warning-circle.svg';
 import {COLORS} from 'theme/colors';
 import {RootState} from 'store/redux/store';
-import {SnackBarEnum} from 'constants/modalTypes';
+import {PostionEnum, SnackBarEnum} from 'constants/modalTypes';
 import {hideSnackbar} from 'store/redux/snackbarSlice';
 
 const SnackBar = () => {
-  const {isVisible, text, type} = useSelector(
+  const {isVisible, text, type, position} = useSelector(
     (state: RootState) => state.snackbar,
   );
   const dispatch = useDispatch();
@@ -26,11 +26,12 @@ const SnackBar = () => {
         },
       }}
       style={[
-        styles.snackbarView,
+        position == PostionEnum.BOTTOM ? styles.snackbarView : styles.top,
         {borderColor: isSuccess ? COLORS.darkGreen : COLORS.darkRed},
       ]}
       duration={2000}
       visible={isVisible}
+      wrapperStyle={position == PostionEnum.TOP && {top: 0}}
       onDismiss={() => dispatch(hideSnackbar())}>
       <View style={styles.content}>
         {isSuccess ? (
@@ -58,6 +59,11 @@ export default SnackBar;
 const styles = StyleSheet.create({
   snackbarView: {
     marginBottom: 20,
+    zIndex: 1,
+    borderWidth: 0.5,
+  },
+  top: {
+    top: 10,
     zIndex: 1,
     borderWidth: 0.5,
   },

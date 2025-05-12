@@ -20,7 +20,7 @@ import OrderSearch from '@/components/orderSearch';
 import CartLogo from '../../../../assets/icons/shopping_cart.svg';
 import {divisionOrder} from '@/utils/dummyData';
 import {RootNavigationProp, RootNavigationTypes} from '@/routes/RootNavigation';
-const ProductDivion = () => {
+const ProductDivion = (props: any) => {
   const [inDivision, setDivision] = useState<number>(1);
   const productData = orderDashboard.data.pastOrders;
   const categoryData = orderDashboard.data.categories;
@@ -29,11 +29,15 @@ const ProductDivion = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchImg, setSearchImg] = useState<any>();
   const goToSubDivision = () => {
-    navigation.navigate('ProductSubDivision');
+    navigation.navigate('ProductSubDivision', {
+      ...props.route.params,
+    });
     return null;
   };
   const goToOrderSummary = () => {
-    navigation.navigate('OrderSummary');
+    navigation.navigate('OrderSummary', {
+      ...props.route.params,
+    });
   };
   return (
     <>

@@ -46,7 +46,7 @@ type Product = {
 export type ProductList = {
   [key: string]: Product;
 };
-const ProductSeries = () => {
+const ProductSeries = (props: any) => {
   const {filters, relatedProducts} = productSeries.data;
   const [selectedFilters, setselectedFilters] = useState<number[]>([]);
   const [productsAdded, setProductsAdded] = useState<ProductList>();
@@ -81,7 +81,9 @@ const ProductSeries = () => {
     );
   };
   const goToOrderSummary = () => {
-    navigation.navigate('OrderSummary');
+    navigation.navigate('OrderSummary', {
+      ...props.route.params,
+    });
   };
 
   const handleAddProduct = (

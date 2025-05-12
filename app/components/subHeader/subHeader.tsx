@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {View, StyleSheet, ViewStyle} from 'react-native';
+import {View, StyleSheet, ViewStyle, StyleProp} from 'react-native';
 import {Card} from 'react-native-paper'; // Assuming you're using react-native-paper for the Card component
 import {COLORS} from '../../theme/colors'; // Adjust import as per your project structure
 import {widthToRatio, heightToRatio} from '../../utils/commonMethods';
@@ -10,6 +10,7 @@ interface HeaderProps {
   customParentstyles?: ViewStyle;
   cardStyle?: ViewStyle;
   otherSubHeaderContent?: ReactNode | boolean;
+  otherSubHeaderContentStyle?: StyleProp<ViewStyle>;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
@@ -18,6 +19,7 @@ const SubHeader: React.FC<HeaderProps> = ({
   otherSubHeaderContent,
   cardStyle,
   children,
+  otherSubHeaderContentStyle = {},
 }) => {
   const cardStyles = {
     ...styles.card,
@@ -29,7 +31,7 @@ const SubHeader: React.FC<HeaderProps> = ({
   };
   return (
     <View style={[styles.container, customParentstyles]}>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, otherSubHeaderContentStyle]}>
         {otherSubHeaderContent && otherSubHeaderContent}
       </View>
       {shouldShowCardView ? (

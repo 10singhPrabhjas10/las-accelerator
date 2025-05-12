@@ -1,11 +1,11 @@
 import React, {ReactNode} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper';
 import {COLORS} from 'theme/colors';
 
 interface ICardProps {
   children: ReactNode;
-  cardStyle?: ViewStyle;
+  cardStyle?: ViewStyle | StyleProp<ViewStyle>;
   onItemPress?: () => void;
 }
 
