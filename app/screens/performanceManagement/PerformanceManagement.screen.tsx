@@ -38,6 +38,8 @@ import {Tabs, TabScreen, TabsProvider} from 'react-native-paper-tabs';
 import {COLORS} from '@/theme/colors';
 import styles from './PerformanceStyle.ts';
 import SalesReport from './performanceTabBar/PerformanceSalesReport.screen.tsx';
+import NewRetailers from './performanceTabBar/attendence/RetailersComponent.tsx';
+import AttendenceView from './performanceTabBar/attendence/AttendenceView.tsx';
 interface InsightCardProps {
   title: string;
   value: string | number;
@@ -75,7 +77,7 @@ const PerformanceManagement: React.FC = () => {
           <Tabs theme={{colors: {surface: COLORS.white}}} disableSwipe>
             <TabScreen label={'Sales Report'}>{<SalesReport />}</TabScreen>
             <TabScreen label={'Productivity'}>{<SalesReport />}</TabScreen>
-            <TabScreen label={'Attendance'}>{<SalesReport />}</TabScreen>
+            <TabScreen label={'Attendance'}>{<AttendenceView />}</TabScreen>
           </Tabs>
         </TabsProvider>
       </>
