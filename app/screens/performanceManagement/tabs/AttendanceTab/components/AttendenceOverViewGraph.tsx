@@ -193,10 +193,10 @@ export default function AttendanceOverview({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    borderRadius: 18,
+    borderRadius: 8,
     padding: 18,
     margin: 0,
-    marginTop: 16,
+    marginTop: 4,
     marginBottom: 16,
     elevation: 2,
     shadowColor: '#000',

@@ -99,7 +99,7 @@ function DonutChartCard({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
-    borderRadius: 18,
+    borderRadius: 8,
     padding: 18,
     elevation: 2,
     shadowColor: '#000',

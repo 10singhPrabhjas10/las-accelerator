@@ -120,7 +120,7 @@ const RetailersComponent = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5F9F9',
-    borderRadius: 16,
+    borderRadius: 8,
     padding: 8,
     marginVertical: 16,
     marginHorizontal: 0,

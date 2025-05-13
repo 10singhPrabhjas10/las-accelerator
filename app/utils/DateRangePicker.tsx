@@ -123,14 +123,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 0,
     borderRadius: 8,
   },
   label: {fontSize: 16, fontWeight: '400', color: '#222426', flex: 1},
   rangeBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
+    padding: 6,
     borderRadius: 6,
   },
   rangeText: {fontSize: 16, color: '#222426'},
