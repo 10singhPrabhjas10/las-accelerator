@@ -5,14 +5,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#1c3237',
     padding: 16,
   },
+  mainContainer: {
+    flex: 1,
+  },
   containerSales: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#E6EDEE',
   },
   header: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 16,
   },
@@ -76,13 +79,13 @@ const styles = StyleSheet.create({
   },
   value: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '500',
     marginVertical: 8,
   },
   title: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 12,
   },
 
   dateRange: {
@@ -135,6 +138,74 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
+  },
+  tabContainer: {
+    flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 24,
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+  },
+  positiveContainer: {
+    backgroundColor: 'rgba(75, 181, 67, 0.15)',
+  },
+  negativeContainer: {
+    backgroundColor: 'rgba(255, 59, 48, 0.15)',
+  },
+  arrow: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  arrowCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 4,
+  },
+  positiveCircle: {
+    backgroundColor: 'rgba(75, 181, 67, 0.15)',
+  },
+  negativeCircle: {
+    backgroundColor: 'rgba(255, 59, 48, 0.15)',
+  },
+
+  cardMainContent: {
+    flex: 1,
+  },
+  arrowContainerAlt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardContent: {
+    flex: 1,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  changeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  altArrowContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
