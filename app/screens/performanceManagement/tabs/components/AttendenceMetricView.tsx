@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {Circle, ClipPath, Defs, G, Path, Rect} from 'react-native-svg';
-import { commonStyles } from '../styles/commonStyles';
+import { commonStyles } from './styles/commonStyles';
 
 const MetricCircle = ({
   value,

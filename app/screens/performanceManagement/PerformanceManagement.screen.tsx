@@ -38,6 +38,7 @@ import styles from './PerformanceStyle.ts';
 import SalesReport from './performanceTabBar/PerformanceSalesReport.screen.tsx';
 import AttendanceView from './tabs/AttendanceTab/AttendenceDashboard.tsx';
 import Svg, {G, Path} from 'react-native-svg';
+import ProductivityView from './tabs/Productivity/ProductivityDashBoard.tsx';
 
 interface InsightCardProps {
   title: string;
@@ -129,7 +130,7 @@ const PerformanceManagement: React.FC = () => {
       case 0:
         return <SalesReport />;
       case 1:
-        return <SalesReport />;
+        return <ProductivityView />;
       case 2:
         return <AttendanceView />;
       default:
@@ -238,7 +239,7 @@ const fixedStyles = StyleSheet.create({
   },
   tabButton: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 14,
     alignItems: 'center',
   },
   activeTab: {

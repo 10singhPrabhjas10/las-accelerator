@@ -43,9 +43,18 @@ export interface AttendanceDashboardData {
   retailers: RetailersData[];
   retailersChart: DonutChartData;
   ordersChart: DonutChartData;
+  productRetailerOverView: ProductivityTabData;
 }
 
 export interface AttendanceApiResponse {
   success: boolean;
   data: AttendanceDashboardData;
+}
+
+export interface ProductivityTabData {
+  targetData: string[];
+  coveredData: number[];
+  months: number[];
+  currentValue: string;
+  percentChange: string;
 }

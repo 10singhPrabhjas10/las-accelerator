@@ -3,6 +3,13 @@ import {AttendanceApiResponse} from '../../modals/tabs/attendance.model';
 export const mockAttendanceResponse: AttendanceApiResponse = {
   success: true,
   data: {
+    productRetailerOverView: {
+      targetData: [470, 490, 550, 610, 550, 450],
+      coveredData: [550, 480, 430, 560, 500, 520],
+      months: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+      currentValue: '489',
+      percentChange: '+2.%',
+    },
     attendanceOverview: {
       months: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
       workDays: [29, 30, 29, 30, 31, 29],

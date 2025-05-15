@@ -12,7 +12,7 @@ import {
 import {Image} from 'react-native';
 import type {IconProps} from 'react-native-vector-icons/Icon';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import { commonStyles } from '../styles/commonStyles';
+import {commonStyles} from './styles/commonStyles';
 
 const Feather = FeatherIcon as unknown as ComponentType<IconProps>;
 type Retailer = {
