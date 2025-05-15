@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {Circle, ClipPath, Defs, G, Path, Rect} from 'react-native-svg';
+import { commonStyles } from '../styles/commonStyles';
 
 const MetricCircle = ({
   value,
@@ -160,7 +161,7 @@ const MetricsDashboard = ({
   maxBeatAdherence = 150,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[commonStyles.card, styles.container]}>
       <MetricCircle
         value={productivity}
         color="#6FCFB5"

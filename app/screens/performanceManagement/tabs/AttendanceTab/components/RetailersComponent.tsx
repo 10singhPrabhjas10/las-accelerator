@@ -12,6 +12,7 @@ import {
 import {Image} from 'react-native';
 import type {IconProps} from 'react-native-vector-icons/Icon';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { commonStyles } from '../styles/commonStyles';
 
 const Feather = FeatherIcon as unknown as ComponentType<IconProps>;
 type Retailer = {
@@ -84,9 +85,9 @@ const RetailersComponent = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[commonStyles.card, styles.container]}>
       <View style={styles.headerRow}>
-        <Text style={styles.header}>{title}</Text>
+        <Text style={commonStyles.cardTitle}>{title}</Text>
         <View style={styles.dateBox}>
           <Text style={styles.dateText}>{dateLabel}</Text>
         </View>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg';
+import {commonStyles} from '../styles/commonStyles';
 
 type DonutSection = {
   percent: number;
@@ -55,8 +56,8 @@ function DonutChartCard({
   });
 
   return (
-    <View style={[styles.card, cardStyle]}>
-      <Text style={styles.title}>{title}</Text>
+    <View style={[commonStyles.card, styles.card, cardStyle]}>
+      <Text style={commonStyles.cardTitle}>{title}</Text>
       <View style={styles.chartContainer}>
         <Svg width={120} height={120}>
           <G rotation={-90} origin="60,60">

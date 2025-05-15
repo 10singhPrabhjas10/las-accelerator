@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 8,
-    paddingVertical: 0,
+    paddingVertical: 8,
     borderRadius: 8,
   },
   label: {fontSize: 16, fontWeight: '400', color: '#222426', flex: 1},

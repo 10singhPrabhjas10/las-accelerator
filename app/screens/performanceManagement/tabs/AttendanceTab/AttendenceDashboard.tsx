@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  ScrollView,
   ActivityIndicator,
   Text,
   TouchableOpacity,
@@ -11,9 +10,9 @@ import {
 import RetailersComponent from './components/RetailersComponent';
 import DateRangePicker from '../../../../utils/DateRangePicker';
 import {useAttendance} from '@/hooks/useAttendance';
-import MetricsDashboard from './components/AttendenceMetricView';
+import AttendenceMetricView from './components/AttendenceMetricView';
 import AttendanceOverview from './components/AttendenceOverViewGraph';
-import DonutChartCard from './components/RetailOrderView';
+import RetailOrderView from './components/RetailOrderView';
 
 const {width} = Dimensions.get('window');
 const CARD_MARGIN = 16;
@@ -58,7 +57,7 @@ export default function AttendenceView() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <View style={styles.scrollContainer}>
       <DateRangePicker value={range} onChange={handleDateRangeChange} />
 
       {data && (
@@ -72,14 +71,14 @@ export default function AttendenceView() {
           />
 
           <View style={styles.cardsRow}>
-            <DonutChartCard
+            <RetailOrderView
               title={data.retailersChart.title}
               value={data.retailersChart.value}
               cardStyle={{width: CARD_WIDTH, height: 320}}
               sections={data.retailersChart.sections}
             />
 
-            <DonutChartCard
+            <RetailOrderView
               title={data.ordersChart.title}
               value={data.ordersChart.value}
               cardStyle={{width: CARD_WIDTH, height: 320}}
@@ -87,7 +86,7 @@ export default function AttendenceView() {
             />
           </View>
 
-          <MetricsDashboard
+          <AttendenceMetricView
             productivity={data.metrics.productivity}
             beatAdherence={data.metrics.beatAdherence}
             retailerCoverage={data.metrics.retailerCoverage}
@@ -105,7 +104,7 @@ export default function AttendenceView() {
           />
         </>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
