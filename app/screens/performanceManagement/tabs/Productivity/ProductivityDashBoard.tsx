@@ -11,14 +11,14 @@ import RetailersComponent from '../components/RetailersComponent';
 import DateRangePicker from '../../../../utils/DateRangePicker';
 import {useAttendance} from '@/hooks/useAttendance';
 import AttendenceMetricView from '../components/AttendenceMetricView';
-import AttendanceOverview from '../components/AttendenceOverViewGraph';
+import RetailerOverview from '../components/ProductivityRetailerOverView';
 import RetailOrderView from '../components/RetailOrderView';
 
 const {width} = Dimensions.get('window');
 const CARD_MARGIN = 16;
 const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
-export default function AttendenceView() {
+export default function ProductivityView() {
   const [range, setRange] = useState({
     startDate: new Date('2024-07-04'),
     endDate: new Date('2024-07-19'),
@@ -62,14 +62,13 @@ export default function AttendenceView() {
 
       {data && (
         <>
-          <AttendanceOverview
-            months={data.attendanceOverview.months}
-            workDays={data.attendanceOverview.workDays}
-            presentDays={data.attendanceOverview.presentDays}
-            highlightMonth={data.attendanceOverview.highlightMonth}
-            currentMonth={data.attendanceOverview.currentMonth}
+          <RetailerOverview
+            targetData={data.productRetailerOverView.targetData}
+            coveredData={data.productRetailerOverView.coveredData}
+            months={data.productRetailerOverView.months}
+            currentValue={data.productRetailerOverView.currentValue}
+            percentChange={data.productRetailerOverView.percentChange}
           />
-
           <View style={styles.cardsRow}>
             <RetailOrderView
               title={data.retailersChart.title}

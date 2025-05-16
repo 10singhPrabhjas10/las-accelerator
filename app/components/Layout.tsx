@@ -11,6 +11,7 @@ import {LayoutPropsType} from '../types/components';
 import {COLORS} from 'theme/colors';
 import ScreenHeader from './headers/ScreenHeader';
 import {useNavigation} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Layout = ({
   children,
@@ -21,41 +22,51 @@ const Layout = ({
   isScrollable = false,
   customLogo = () => null,
   onPressCustomLogo,
+  headerScrollable = false,
 }: LayoutPropsType) => {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
+  const renderHeader = () => (
+    <ScreenHeader
+      onBackPress={() => {
+        if (onBackPress) {
+          onBackPress();
+        } else {
+          navigation.goBack();
+        }
+      }}
+      customLogo={customLogo}
+      onPressLogo={onPressCustomLogo}
+      header={headerTitle}
+    />
+  );
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
+        translucent
         animated
         barStyle="light-content"
         backgroundColor={COLORS.dDarkGreen}
         hidden={hideStatusBar}
       />
-      {headerTitle && (
-        <ScreenHeader
-          onBackPress={() => {
-            if (onBackPress) {
-              onBackPress();
-            } else {
-              navigation.goBack();
-            }
-          }}
-          customLogo={customLogo}
-          onPressLogo={onPressCustomLogo}
-          header={headerTitle}
-        />
-      )}
+      <View style={[styles.statusBarPlaceholder, {height: insets.top}]} />
+
+      {headerTitle && !headerScrollable && renderHeader()}
 
       {isScrollable ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
           automaticallyAdjustKeyboardInsets={true}>
+          {headerTitle && headerScrollable && renderHeader()}
           <View style={[styles.scrollableLayout, style]}>{children}</View>
         </ScrollView>
       ) : (
-        <View style={[styles.layout, style]}>{children}</View>
+        <View style={[styles.layout, style]}>
+          {headerTitle && headerScrollable && renderHeader()}
+          {children}
+        </View>
       )}
     </SafeAreaView>
   );
@@ -77,5 +88,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     backgroundColor: COLORS.lightGreenBackground,
+  },
+  statusBarPlaceholder: {
+    backgroundColor: COLORS.dDarkGreen,
   },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg';
-import {commonStyles} from '../styles/commonStyles';
+import {commonStyles} from './styles/commonStyles';
 
 type DonutSection = {
   percent: number;
@@ -19,9 +19,9 @@ type DonutChartCardProps = {
 };
 
 const RADIUS = 48;
-const STROKE = 12;
+const STROKE = 10;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-const GAP_DEGREES = 18;
+const GAP_DEGREES = 6;
 const GAP_LENGTH = (GAP_DEGREES / 360) * CIRCUMFERENCE;
 
 function DonutChartCard({
@@ -71,7 +71,7 @@ function DonutChartCard({
                 strokeWidth={STROKE}
                 fill="none"
                 strokeDasharray={arc.strokeDasharray}
-                strokeLinecap="round"
+                strokeLinecap="butt"
                 rotation={arc.rotation}
                 origin="60,60"
               />
