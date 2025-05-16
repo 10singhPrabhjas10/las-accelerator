@@ -17,6 +17,7 @@ export interface LayoutPropsType {
   headerTitle?: string;
   customLogo?: () => JSX.Element | null;
   onPressCustomLogo?: () => void;
+  headerScrollable?: boolean;
 }
 
 // MenuItem

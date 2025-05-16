@@ -113,7 +113,7 @@ const InsightCard: React.FC<InsightCardProps> = ({
           <AltArrow color="white" />
         </View>
       </View>
-      
+
       <Text style={styles.value}>{value}</Text>
       <Text style={styles.title}>{title}</Text>
     </View>
@@ -139,7 +139,11 @@ const PerformanceManagement: React.FC = () => {
   };
 
   return (
-    <Layout isScrollable={true} headerTitle="Performance 360">
+    <Layout
+      isScrollable={true}
+      headerTitle="Performance 360"
+      hideStatusBar={true}
+      headerScrollable={true}>
       <View style={styles.mainContainer}>
         <View style={styles.container}>
           <Text style={styles.header}>Overall Insights</Text>
