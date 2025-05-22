@@ -1,5 +1,5 @@
-import {mockAttendanceResponse} from './attendenceMocks';
-import {DateRange, AttendanceApiResponse} from './attendance.model';
+import {mockAttendanceResponse} from './performanceTabsMocks';
+import {DateRange, AttendanceApiResponse} from './performanceTabs.model';
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

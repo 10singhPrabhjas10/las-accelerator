@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
   ActivityIndicator,
   Text,
   TouchableOpacity,
@@ -10,15 +9,13 @@ import {
 import RetailersComponent from '../components/RetailersComponent';
 import DateRangePicker from '../../../../utils/DateRangePicker';
 import {useAttendance} from '@/hooks/usePerformanceTabs';
-import AttendenceMetricView from '../components/AttendenceMetricView';
-import RetailerOverview from '../components/ProductivityRetailerOverView';
-import RetailOrderView from '../components/RetailOrderView';
-
-const {width} = Dimensions.get('window');
+import EffectiveCoverageArea from '../components/SalesEffective';
+import SalesStatistics from '../components/SalesStatisticsView';
+import TopProductsSold from '../components/SalesProductSold';
+import TopProductsListItem from '../components/TotalProductList';
 const CARD_MARGIN = 16;
-const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
-export default function ProductivityDashBoard() {
+export default function SalesReportTabData() {
   const [range, setRange] = useState({
     startDate: new Date('2024-07-04'),
     endDate: new Date('2024-07-19'),
@@ -41,7 +38,7 @@ export default function ProductivityDashBoard() {
     );
   }
 
-  // Show error state
+  // Show error state once data is fetched from api
   if (error) {
     return (
       <View style={styles.errorContainer}>
@@ -59,48 +56,24 @@ export default function ProductivityDashBoard() {
   return (
     <View style={styles.scrollContainer}>
       <DateRangePicker value={range} onChange={handleDateRangeChange} />
-
       {data && (
         <>
-          <RetailerOverview
-            months={data.productRetailerTabData.retailerOverview.months}
-            target={data.productRetailerTabData.retailerOverview.targetData}
-            covered={data.productRetailerTabData.retailerOverview.coveredData}
-            maxY={800}
-            yStep={200}
-            highlightIndex={
-              data.productRetailerTabData.retailerOverview.defaultSelectedIndex
-            }
-            highlightValue={
-              data.productRetailerTabData.retailerOverview.currentValue
-            }
-            highlightChange={
-              data.productRetailerTabData.retailerOverview.percentChange
-            }
+          <SalesStatistics
+            months={data.salesPerformanceTabData.sales.months}
+            salesGoals={data.salesPerformanceTabData.sales.salesGoals}
+            achieved={data.salesPerformanceTabData.sales.achieved}
+            title={data.salesPerformanceTabData.sales.title}
+            date={data.salesPerformanceTabData.sales.date}
           />
-          <View style={styles.cardsRow}>
-            <RetailOrderView
-              title={data.commonTabData.retailersChart.title}
-              value={data.commonTabData.retailersChart.value}
-              cardStyle={{width: CARD_WIDTH, height: 320}}
-              sections={data.commonTabData.retailersChart.sections}
-            />
-
-            <RetailOrderView
-              title={data.commonTabData.ordersChart.title}
-              value={data.commonTabData.ordersChart.value}
-              cardStyle={{width: CARD_WIDTH, height: 320}}
-              sections={data.commonTabData.ordersChart.sections}
-            />
-          </View>
-
-          <AttendenceMetricView
-            productivity={data.commonTabData.metricData.productivity}
-            beatAdherence={data.commonTabData.metricData.beatAdherence}
-            retailerCoverage={data.commonTabData.metricData.retailerCoverage}
-            maxBeatAdherence={data.commonTabData.metricData.maxBeatAdherence}
+          <TopProductsSold
+            metrics={data.salesPerformanceTabData.topProductsSold.metrics}
+            title="Top Products Sold"
           />
-
+          <TopProductsListItem
+            products={data.salesPerformanceTabData.topProductsList.products}
+            title={data.salesPerformanceTabData.topProductsList.title}
+            date={data.salesPerformanceTabData.topProductsList.date}
+          />
           <RetailersComponent
             title="Top Retailers"
             dateLabel="Feb 2024"
@@ -109,6 +82,14 @@ export default function ProductivityDashBoard() {
             onEmail={retailer =>
               console.log('Custom email action for', retailer.name)
             }
+          />
+          <EffectiveCoverageArea
+            total={data.salesPerformanceTabData.effectiveCoverage.total}
+            uniqueBill={
+              data.salesPerformanceTabData.effectiveCoverage.uniqueBill
+            }
+            zeroBill={data.salesPerformanceTabData.effectiveCoverage.zeroBill}
+            date={data.salesPerformanceTabData.effectiveCoverage.date}
           />
         </>
       )}

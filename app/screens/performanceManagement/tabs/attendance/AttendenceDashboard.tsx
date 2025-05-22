@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import RetailersComponent from '../components/RetailersComponent';
 import DateRangePicker from '../../../../utils/DateRangePicker';
-import {useAttendance} from '@/hooks/useAttendance';
+import {useAttendance} from '@/hooks/usePerformanceTabs';
 import AttendenceMetricView from '../components/AttendenceMetricView';
 import AttendanceOverview from '../components/AttendenceOverViewGraph';
 import RetailOrderView from '../components/RetailOrderView';
@@ -18,7 +18,7 @@ const {width} = Dimensions.get('window');
 const CARD_MARGIN = 16;
 const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
-export default function AttendenceView() {
+export default function AttendenceDashboard() {
   const [range, setRange] = useState({
     startDate: new Date('2024-07-04'),
     endDate: new Date('2024-07-19'),
@@ -63,40 +63,44 @@ export default function AttendenceView() {
       {data && (
         <>
           <AttendanceOverview
-            months={data.attendanceOverview.months}
-            workDays={data.attendanceOverview.workDays}
-            presentDays={data.attendanceOverview.presentDays}
-            highlightMonth={data.attendanceOverview.highlightMonth}
-            currentMonth={data.attendanceOverview.currentMonth}
+            months={data.attendenceTabData.attendanceOverview.months}
+            workDays={data.attendenceTabData.attendanceOverview.workDays}
+            presentDays={data.attendenceTabData.attendanceOverview.presentDays}
+            highlightMonth={
+              data.attendenceTabData.attendanceOverview.highlightMonth
+            }
+            currentMonth={
+              data.attendenceTabData.attendanceOverview.currentMonth
+            }
           />
 
           <View style={styles.cardsRow}>
             <RetailOrderView
-              title={data.retailersChart.title}
-              value={data.retailersChart.value}
+              title={data.commonTabData.retailersChart.title}
+              value={data.commonTabData.retailersChart.value}
               cardStyle={{width: CARD_WIDTH, height: 320}}
-              sections={data.retailersChart.sections}
+              sections={data.commonTabData.retailersChart.sections}
             />
 
             <RetailOrderView
-              title={data.ordersChart.title}
-              value={data.ordersChart.value}
+              title={data.commonTabData.ordersChart.title}
+              value={data.commonTabData.ordersChart.value}
               cardStyle={{width: CARD_WIDTH, height: 320}}
-              sections={data.ordersChart.sections}
+              sections={data.commonTabData.ordersChart.sections}
             />
           </View>
 
           <AttendenceMetricView
-            productivity={data.metrics.productivity}
-            beatAdherence={data.metrics.beatAdherence}
-            retailerCoverage={data.metrics.retailerCoverage}
-            maxBeatAdherence={data.metrics.maxBeatAdherence}
+            productivity={data.commonTabData.metricData.productivity}
+            beatAdherence={data.commonTabData.metricData.beatAdherence}
+            retailerCoverage={data.commonTabData.metricData.retailerCoverage}
+            maxBeatAdherence={data.commonTabData.metricData.maxBeatAdherence}
           />
 
           <RetailersComponent
-            title="New Retailers"
-            dateLabel={data.attendanceOverview.currentMonth}
-            retailers={data.retailers}
+            title="Top Retailers"
+            dateLabel="Feb 2024"
+            retailers={data.commonTabData.retailers}
             onViewAll={() => console.log('View all retailers clicked')}
             onEmail={retailer =>
               console.log('Custom email action for', retailer.name)

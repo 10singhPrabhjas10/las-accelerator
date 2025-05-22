@@ -1,44 +1,12 @@
-// import React from 'react';
-// import Layout from 'components/Layout';
-// import CommonStyles from 'utils/commonStyle';
-// import ActionButton from 'components/button/ActionButton';
-// import {useNavigation} from '@react-navigation/native';
-// import {RootNavigationProp} from 'routes/RootNavigation';
-
-// import SalesIcon from '../../../assets/icons/sales.svg';
-// import ComplianceIcon from '../../../assets/icons/business.svg';
-// import {getTranslationLabel} from 'utils/commonMethods';
-
-// const PerformanceManagement = () => {
-//   const navigation = useNavigation<RootNavigationProp>();
-//   return (
-//     <Layout headerTitle="Performance Management" style={CommonStyles.padding}>
-//       <ActionButton
-//         icon={<SalesIcon width={24} height={24} />}
-//         title={'sales_performance'}
-//         onPress={() => navigation.navigate('SalesPerformance')}
-//       />
-//       <ActionButton
-//         icon={<ComplianceIcon width={24} height={24} />}
-//         title="Compliance Performance"
-//         onPress={() => navigation.navigate('CompliancePerformance')}
-//       />
-//     </Layout>
-//   );
-// };
-
-// export default PerformanceManagement;
-
-//---------new design-------------
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Layout from 'components/Layout';
 import CustomTabBar from '../../components/customTabBar/CustomTabBar';
 import styles from './PerformanceStyle.ts';
-import SalesReport from './performanceTabBar/PerformanceSalesReport.screen.tsx';
-import AttendanceView from './tabs/AttendanceTab/AttendenceDashboard.tsx';
 import Svg, {G, Path} from 'react-native-svg';
-import ProductivityView from './tabs/Productivity/ProductivityDashBoard.tsx';
+import SalesDashboardView from './tabs/sales/index.tsx';
+import ProductivityDashBoard from './tabs/productivity/index.tsx';
+import AttendenceDashboard from './tabs/attendance/index.tsx';
 
 interface InsightCardProps {
   title: string;
@@ -128,13 +96,13 @@ const PerformanceManagement: React.FC = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <SalesReport />;
+        return <SalesDashboardView />;
       case 1:
-        return <ProductivityView />;
+        return <ProductivityDashBoard />;
       case 2:
-        return <AttendanceView />;
+        return <AttendenceDashboard />;
       default:
-        return <SalesReport />;
+        return <SalesDashboardView />;
     }
   };
 
@@ -142,7 +110,7 @@ const PerformanceManagement: React.FC = () => {
     <Layout
       isScrollable={true}
       headerTitle="Performance 360"
-      hideStatusBar={true}
+      hideStatusBar={false}
       headerScrollable={true}>
       <View style={styles.mainContainer}>
         <View style={styles.container}>

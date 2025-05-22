@@ -1,210 +1,237 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {LineChart} from 'react-native-svg-charts';
-import {Circle, Line} from 'react-native-svg';
-import * as shape from 'd3-shape';
-import {commonStyles} from './styles/commonStyles';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import Svg, {Line, Path, Circle} from 'react-native-svg';
+import {commonStyles} from '../styles/commonStyles';
+
+const {width: screenWidth} = Dimensions.get('window');
+const CARD_WIDTH = screenWidth - 40;
+const CHART_HEIGHT = 300;
+const PADDING_LEFT = 50;
+const PADDING_RIGHT = 30;
+const PADDING_TOP = 24;
+const PADDING_BOTTOM = 40;
 
 interface RetailerOverviewProps {
-  // Chart data
-  targetData: number[];
-  coveredData: number[];
   months: string[];
-  currentValue: number;
-  percentChange: string;
-  highlightIndex?: number;
-
-  // Visual customization
+  target: number[];
+  covered: number[];
+  maxY?: number;
+  yStep?: number;
   title?: string;
-  dateBadge?: string;
-  targetColor?: string;
-  coveredColor?: string;
-  maxYValue?: number;
-  yAxisValues?: number[];
-
-  // Labels
-  targetLabel?: string;
-  coveredLabel?: string;
+  date?: string;
+  highlightIndex?: number;
+  highlightValue?: string;
+  highlightChange?: string;
 }
 
 const RetailerOverview: React.FC<RetailerOverviewProps> = ({
-  targetData = [],
-  coveredData = [],
-  months = [],
-  currentValue = 0,
-  percentChange = '',
-  highlightIndex = months.length - 2,
-
+  months,
+  target,
+  covered,
+  maxY = 800,
+  yStep = 200,
   title = 'Retailer Overview',
-  dateBadge = 'Feb 2024',
-  targetColor = '#1ABC9C',
-  coveredColor = '#6C5CE7',
-  maxYValue = 800,
-  yAxisValues = [800, 600, 400, 200, 0],
-
-  // Labels with defaults
-  targetLabel = 'Unique Retailers Target',
-  coveredLabel = 'Unique Retailers Covered',
+  date = 'Feb 2024',
+  highlightIndex = 5,
+  highlightValue = 489,
+  highlightChange = 2.0,
 }) => {
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const HorizontalLines = () => {
-    return (
-      <>
-        {yAxisValues.slice(0, -1).map(y => (
-          <Line
-            key={y}
-            x1={'0%'}
-            x2={'100%'}
-            y1={y}
-            y2={y}
-            stroke={'#ECEFF1'}
-            strokeWidth={1}
-          />
-        ))}
-      </>
-    );
+  const chartHeight = CHART_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+  //const chartWidth = CARD_WIDTH - PADDING_LEFT - PADDING_RIGHT;
+
+  const chartWidth = CARD_WIDTH - PADDING_LEFT - PADDING_RIGHT;
+  const xStep = chartWidth / (months.length - 1);
+  // Y axis labels
+  const yLabels = [];
+  for (let y = maxY; y >= 0; y -= yStep) yLabels.push(y);
+
+  // X positions for each month
+  //const xStep = chartWidth / (months.length - 1);
+
+  // Helper to get (x, y) for a value
+  const getPoint = (i: number, value: number) => {
+    const x = PADDING_LEFT + i * xStep;
+    const y = PADDING_TOP + chartHeight - (value / maxY) * chartHeight;
+    return {x, y};
   };
 
-  // Decorator that includes only dot and line
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const DataPointDecorator = ({x, y, data}) => {
-    const dotRadius = 10;
-    if (
-      !data ||
-      data.length === 0 ||
-      highlightIndex < 0 ||
-      highlightIndex >= data.length
-    ) {
-      return null;
-    }
-
-    return (
-      <>
-        {/* Blue circle */}
-        <Circle
-          key="current-value-dot"
-          cx={x(highlightIndex)}
-          cy={y(data[highlightIndex])}
-          r={dotRadius}
-          fill={coveredColor}
-          stroke={'white'}
-          strokeWidth={2}
-        />
-
-        {/* Vertical line from bottom of circle */}
-        <Line
-          key="vertical-line"
-          x1={x(highlightIndex)}
-          x2={x(highlightIndex)}
-          y1={y(data[highlightIndex]) + dotRadius}
-          y2={'100%'}
-          stroke={coveredColor}
-          strokeWidth={2}
-        />
-      </>
-    );
+  // Helper to create smooth path (cubic Bezier)
+  const getSmoothPath = (data: number[]) => {
+    return data
+      .map((v, i, arr) => {
+        const {x, y} = getPoint(i, v);
+        if (i === 0) return `M${x},${y}`;
+        const prev = getPoint(i - 1, arr[i - 1]);
+        const cpx = (prev.x + x) / 2;
+        return `C${cpx},${prev.y} ${cpx},${y} ${x},${y}`;
+      })
+      .join(' ');
   };
+
+  // Highlight point - use the provided highlightValue for positioning
+  const highlight = getPoint(highlightIndex, highlightValue);
 
   return (
-    <View style={[commonStyles.card, styles.container]}>
-      <View style={styles.header}>
+    <View style={[commonStyles.card]}>
+      {/* Header */}
+      <View style={styles.headerRow}>
         <Text style={styles.title}>{title}</Text>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{dateBadge}</Text>
+        <View style={styles.dateBadge}>
+          <Text style={styles.dateText}>{date}</Text>
         </View>
       </View>
 
-      <View style={styles.chartContainer}>
-        <View style={styles.yAxisLabels}>
-          {yAxisValues.map(value => (
-            <Text key={value} style={styles.yAxisLabel}>
-              {value}
+      {/* Chart */}
+      <View style={{height: CHART_HEIGHT, width: CARD_WIDTH}}>
+        <Svg width={CARD_WIDTH} height={CHART_HEIGHT}>
+          {/* Grid lines */}
+          {yLabels.map((y, i) => {
+            const yPos = PADDING_TOP + (chartHeight * i) / (yLabels.length - 1);
+            return (
+              <Line
+                key={y}
+                x1={PADDING_LEFT - 8}
+                y1={yPos}
+                x2={CARD_WIDTH - PADDING_RIGHT}
+                y2={yPos}
+                stroke="#E6E9F0"
+                strokeWidth={1}
+              />
+            );
+          })}
+
+          {/* Y-axis line */}
+          {/* <Line
+            x1={PADDING_LEFT - 8}
+            y1={PADDING_TOP}
+            x2={PADDING_LEFT - 8}
+            y2={PADDING_TOP + chartHeight}
+            stroke="#E6E9F0"
+            strokeWidth={1}
+          /> */}
+
+          {/* Target Line */}
+          <Path
+            d={getSmoothPath(target)}
+            stroke="#7EDFC3"
+            strokeWidth={3}
+            fill="none"
+          />
+
+          {/* Covered Line */}
+          <Path
+            d={getSmoothPath(covered)}
+            stroke="#723DFD"
+            strokeWidth={3}
+            fill="none"
+          />
+
+          {/* Highlight vertical line (solid) */}
+          <Line
+            x1={highlight.x}
+            y1={highlight.y}
+            x2={highlight.x}
+            y2={PADDING_TOP + chartHeight}
+            stroke="#723DFD"
+            strokeWidth={2}
+          />
+
+          {/* Highlight dot (filled) */}
+          <Circle
+            cx={highlight.x}
+            cy={highlight.y}
+            r={10}
+            fill="#723DFD"
+            stroke="#fff"
+            strokeWidth={3}
+          />
+        </Svg>
+
+        {/* Y axis labels - perfectly centered on grid lines */}
+        {yLabels.map((y, i) => {
+          const yPos = PADDING_TOP + (chartHeight * i) / (yLabels.length - 1);
+          return (
+            <Text
+              key={y}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: yPos - 12, // Center text vertically on line
+                color: '#444',
+                fontSize: 16,
+                width: PADDING_LEFT - 16,
+                textAlign: 'right',
+                fontWeight: '500',
+              }}>
+              {y}
             </Text>
-          ))}
-        </View>
+          );
+        })}
 
-        <View style={styles.chartContent}>
-          {targetData.length > 0 && (
-            <LineChart
-              style={styles.chart}
-              data={targetData}
-              svg={{stroke: targetColor, strokeWidth: 3}}
-              contentInset={{top: 20, bottom: 20, left: 10, right: 10}}
-              curve={shape.curveBasis}
-              yMin={0}
-              yMax={maxYValue}>
-              <HorizontalLines />
-            </LineChart>
-          )}
-
-          {coveredData.length > 0 && (
-            <LineChart
-              style={[styles.chart, styles.overlayChart]}
-              data={coveredData}
-              svg={{stroke: coveredColor, strokeWidth: 3}}
-              contentInset={{top: 20, bottom: 20, left: 10, right: 10}}
-              curve={shape.curveBasis}
-              yMin={0}
-              yMax={maxYValue}>
-              <DataPointDecorator />
-            </LineChart>
-          )}
-
-          {highlightIndex >= 0 &&
-            highlightIndex < months.length &&
-            coveredData.length > highlightIndex && (
-              <View
-                style={[
-                  styles.tooltipContainer,
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  {
-                    left: `${(highlightIndex / (months.length - 1)) * 100}%`,
-                    top: 20,
-                    transform: [{translateX: -70}],
-                  },
-                ]}>
-                <View style={styles.tooltipBubble}>
-                  <Text style={styles.tooltipValue}>{currentValue}</Text>
-                  <Text
-                    style={[
-                      styles.tooltipPercent,
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      {
-                        color: percentChange.includes('+')
-                          ? targetColor
-                          : '#FF6B6B',
-                      },
-                    ]}>
-                    {percentChange}
-                  </Text>
-                  <View style={styles.tooltipArrow} />
-                </View>
-              </View>
-            )}
-
-          <View style={styles.xAxis}>
-            {months.map((month, index) => (
-              <Text
-                key={index}
-                style={[
-                  styles.xAxisLabel,
-                  index === highlightIndex && styles.xAxisLabelHighlighted,
-                ]}>
-                {month}
-              </Text>
-            ))}
-          </View>
+        {/* Value box (absolutely positioned, moved up) */}
+        <View
+          style={[
+            styles.valueBox,
+            {
+              left: highlight.x - 45,
+              top: highlight.y - 80,
+              shadowColor: '#000',
+              shadowOpacity: 0.08,
+              shadowRadius: 8,
+              elevation: 2,
+            },
+          ]}>
+          <Text style={styles.valueText}>{highlightValue}</Text>
+          <Text style={styles.valueChange}>{highlightChange}</Text>
         </View>
       </View>
 
-      <View style={styles.legendContainer}>
+      {/* X axis labels - positioned below 0 line */}
+      <View
+        style={{
+          height: 24,
+          marginTop: -8,
+          marginBottom: 18,
+          position: 'relative',
+        }}>
+        {months.map((m, i) => (
+          <Text
+            key={m}
+            style={{
+              position: 'absolute',
+              left:
+                i === 0
+                  ? PADDING_LEFT + i * xStep - 10 // shift first label right a bit
+                  : i === months.length - 1
+                  ? PADDING_LEFT + i * xStep - 30 // shift last label left a bit
+                  : PADDING_LEFT + i * xStep - 20,
+              color: '#4A4E52',
+              fontSize: 15,
+              width: 40,
+              textAlign: 'center',
+              fontWeight: '400',
+              paddingLeft: 4,
+              paddingRight: 4,
+            }}>
+            {m}
+          </Text>
+        ))}
+      </View>
+
+      {/* Legend */}
+      <View style={styles.legendRow}>
         <View style={styles.legendItem}>
-          <View style={[styles.legendDot, {backgroundColor: targetColor}]} />
-          <Text style={styles.legendText}>{targetLabel}</Text>
+          <View style={[styles.legendDot, {backgroundColor: '#7EDFC3'}]} />
+          <Text style={styles.legendText}>
+            <Text style={styles.legendBold}>Unique Retailers Target</Text>
+          </Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendDot, {backgroundColor: coveredColor}]} />
-          <Text style={styles.legendText}>{coveredLabel}</Text>
+          <View style={[styles.legendDot, {backgroundColor: '#723DFD'}]} />
+          <Text style={styles.legendText}>
+            <Text style={styles.legendBold}>Unique Retailers Covered</Text>
+          </Text>
         </View>
       </View>
     </View>
@@ -212,135 +239,80 @@ const RetailerOverview: React.FC<RetailerOverviewProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5F9F9',
-    borderRadius: 8,
-    padding: 8,
-    marginVertical: 8,
-    marginHorizontal: 0,
-    elevation: 2,
-    width: '100%',
-  },
-  header: {
+  headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 8,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#282C3B',
-    marginLeft: 8,
   },
-  badge: {
+  dateBadge: {
     backgroundColor: '#E6EDEE',
-    paddingVertical: 8,
+    borderRadius: 5,
     paddingHorizontal: 15,
-    borderRadius: 8,
+    paddingVertical: 8,
   },
-  badgeText: {
-    fontSize: 14,
+  dateText: {
     color: '#004F59',
-  },
-  chartContainer: {
-    flexDirection: 'row',
-    height: 320,
-    marginBottom: 20,
-  },
-  yAxisLabels: {
-    width: 40,
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    paddingRight: 5,
-  },
-  yAxisLabel: {
-    color: '#7F8C8D',
+    fontWeight: '400',
     fontSize: 14,
   },
-  chartContent: {
-    flex: 1,
-    position: 'relative',
-  },
-  chart: {
-    height: '100%',
-  },
-  overlayChart: {
+  valueBox: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  xAxis: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    marginTop: 5,
-  },
-  xAxisLabel: {
-    color: '#7F8C8D',
-    fontSize: 14,
-  },
-  xAxisLabelHighlighted: {
-    fontWeight: 'bold',
-    color: '#2D3436',
-  },
-  tooltipContainer: {
-    position: 'absolute',
-    zIndex: 10,
-    width: 140,
-    alignItems: 'center',
-  },
-  tooltipBubble: {
-    backgroundColor: 'white',
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: 'white',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    width: 90,
+    height: 54,
+    backgroundColor: '#fff',
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
+    paddingTop: 6,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
   },
-  tooltipArrow: {
-    position: 'absolute',
-    bottom: -10,
-    width: 20,
-    height: 20,
-    backgroundColor: 'white',
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: 'white',
-    transform: [{rotate: '45deg'}],
+  valueText: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#232A36',
+    textAlign: 'center',
   },
-  tooltipValue: {
+  valueChange: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2D3436',
+    color: '#3CB371',
+    fontWeight: '600',
+    textAlign: 'center',
   },
-  tooltipPercent: {
-    fontSize: 12,
-    marginTop: 5,
-  },
-  legendContainer: {
-    marginTop: 20,
+  legendRow: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    gap: 8,
+    padding: 8,
+    marginTop: 8,
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginRight: 24,
+    marginBottom: 2,
   },
   legendDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 8,
-    marginRight: 10,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    marginRight: 8,
   },
   legendText: {
-    fontSize: 14,
+    color: '#4A4E52',
+    fontSize: 16,
+  },
+  legendBold: {
+    fontWeight: '400',
     color: '#4A4E52',
   },
 });
