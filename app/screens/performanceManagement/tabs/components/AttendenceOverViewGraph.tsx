@@ -24,9 +24,9 @@ const PADDING = 16;
 const Y_AXIS_WIDTH = 56;
 const Y_AXIS_MARGIN = 8;
 const BAR_WIDTH = 6;
-const GROUP_GAP = 28;
-const BAR_GAP = 2;
-const LEFT_MARGIN = 8;
+const GROUP_GAP = 24;
+const BAR_GAP = 8;
+const LEFT_MARGIN = 4;
 const RIGHT_MARGIN = 8;
 
 const CHART_WIDTH = SCREEN_WIDTH - PADDING * 2 - Y_AXIS_WIDTH - Y_AXIS_MARGIN;
@@ -233,11 +233,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   yAxisLabels: {
-    width: 56,
+    width: 54,
     height: CHART_HEIGHT,
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginRight: 32,
+    marginRight: 24,
   },
   yAxisText: {
     fontSize: 14,

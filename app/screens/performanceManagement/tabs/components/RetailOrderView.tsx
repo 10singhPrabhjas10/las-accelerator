@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     color: '#22223B',
   },
   legend: {
+    padding: 4,
     marginTop: 24,
     paddingLeft: 8,
     paddingRight: 8,

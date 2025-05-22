@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   yAxis: {
-    width: 70,
+    width: 54,
     height: 320,
     position: 'relative',
     paddingRight: 2,

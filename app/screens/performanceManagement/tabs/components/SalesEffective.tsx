@@ -188,18 +188,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 12,
+    marginRight: 6,
+    marginLeft: 6,
     width: '100%',
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 12,
+    marginHorizontal: 6,
   },
   legendDot: {
     width: 12,
     height: 12,
-    borderRadius: 7,
-    marginRight: 7,
+    borderRadius: 6,
+    marginRight: 4,
   },
   legendText: {
     color: '#8B8BA7',
