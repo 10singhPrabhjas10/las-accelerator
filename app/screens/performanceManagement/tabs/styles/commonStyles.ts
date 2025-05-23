@@ -6,7 +6,7 @@ export const CARD_MARGIN_VERTICAL = 12;
 
 export const commonStyles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderRadius: CARD_BORDER_RADIUS,
     padding: CARD_PADDING,
     marginVertical: CARD_MARGIN_VERTICAL,
@@ -19,8 +19,8 @@ export const commonStyles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#282C3B',
+    fontWeight: '500',
+    color: '#222426',
     marginBottom: 12,
   },
-}); 
+});

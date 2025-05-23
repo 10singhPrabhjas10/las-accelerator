@@ -1,21 +1,21 @@
 import {useState, useEffect} from 'react';
-//import {attendanceApi} from '@/api/mockApi/attendance.api';
+//import {performanceDashboardApi} from '@/api/mockApi/performanceTabs.api';
 import {
   DateRange,
-  AttendanceDashboardData,
-} from '@/modals/tabs/attendance.model';
-import {attendanceApi as attendanceApi} from '../api/mockApi/attendance.api';
+  PerformanceDashboardData,
+} from '@/modals/tabs/performanceTabs.model';
+import {PerformanceTabsApi as performanceApi} from '../api/mockApi/performanceTabsApi';
 export const useAttendance = (initialDateRange: DateRange) => {
   const [dateRange, setDateRange] = useState<DateRange>(initialDateRange);
-  const [data, setData] = useState<AttendanceDashboardData | null>(null);
+  const [data, setData] = useState<PerformanceDashboardData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchAttendanceData = async (range: DateRange) => {
+  const fetchPerformanceTabsData = async (range: DateRange) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await attendanceApi.getAttendenceDashboard(range);
+      const response = await performanceApi.getPerformanceDashboardData(range);
       setData(response.data);
     } catch (err) {
       setError(
@@ -28,7 +28,7 @@ export const useAttendance = (initialDateRange: DateRange) => {
     }
   };
   useEffect(() => {
-    fetchAttendanceData(dateRange);
+    fetchPerformanceTabsData(dateRange);
   }, [dateRange]);
 
   return {
@@ -37,6 +37,6 @@ export const useAttendance = (initialDateRange: DateRange) => {
     error,
     dateRange,
     setDateRange,
-    refetch: () => fetchAttendanceData(dateRange),
+    refetch: () => fetchPerformanceTabsData(dateRange),
   };
 };

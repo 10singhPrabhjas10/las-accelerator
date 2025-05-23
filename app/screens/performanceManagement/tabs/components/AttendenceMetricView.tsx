@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {Circle, ClipPath, Defs, G, Path, Rect} from 'react-native-svg';
-import { commonStyles } from './styles/commonStyles';
+import {commonStyles} from '../styles/commonStyles';
 
 const MetricCircle = ({
   value,
@@ -161,50 +161,47 @@ const MetricsDashboard = ({
   maxBeatAdherence = 150,
 }) => {
   return (
-    <View style={[commonStyles.card, styles.container]}>
-      <MetricCircle
-        value={productivity}
-        color="#6FCFB5"
-        icon={<BadgeIcon color="#6FCFB5" />}
-        primaryLabel="Productivity"
-        isPercentage={true}
-      />
+    <View style={[commonStyles.card]}>
+      <View style={styles.container}>
+        <MetricCircle
+          value={productivity}
+          color="#6FCFB5"
+          icon={<BadgeIcon color="#6FCFB5" />}
+          primaryLabel="Productivity"
+          isPercentage={true}
+        />
 
-      <MetricCircle
-        value={beatAdherence}
-        maxValue={maxBeatAdherence}
-        color="#4285F4"
-        icon={<ChartIcon color="#4285F4" />}
-        primaryLabel="Beat"
-        secondaryLabel="Adherence"
-        isPercentage={false}
-      />
+        <MetricCircle
+          value={beatAdherence}
+          maxValue={maxBeatAdherence}
+          color="#4285F4"
+          icon={<ChartIcon color="#4285F4" />}
+          primaryLabel="Beat"
+          secondaryLabel="Adherence"
+          isPercentage={false}
+        />
 
-      <MetricCircle
-        value={retailerCoverage}
-        color="#546E7A"
-        icon={<MapIcon color="#546E7A" />}
-        primaryLabel="Retailer"
-        secondaryLabel="Coverage"
-        isPercentage={true}
-      />
+        <MetricCircle
+          value={retailerCoverage}
+          color="#546E7A"
+          icon={<MapIcon color="#546E7A" />}
+          primaryLabel="Retailer"
+          secondaryLabel="Coverage"
+          isPercentage={true}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    padding: 20,
-    width: '100%',
-    borderRadius: 8,
-    marginTop: 16,
-    marginBottom: 16,
   },
   metricContainer: {
+    marginTop: 12,
     alignItems: 'center',
     justifyContent: 'center',
     width: 100,
@@ -237,7 +234,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   emptyLabelSpace: {
-    height: 20, // Approximately the height of a secondary label
+    height: 20,
   },
 });
 

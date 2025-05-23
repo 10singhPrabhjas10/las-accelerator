@@ -1,2 +1,2 @@
-import ProductivityView from './ProductivityDashboard';
-export default ProductivityView;
+import ProductivityDashBoard from './ProductivityDashBoard';
+export default ProductivityDashBoard;

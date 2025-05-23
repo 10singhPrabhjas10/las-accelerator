@@ -12,7 +12,7 @@ import {
 import {Image} from 'react-native';
 import type {IconProps} from 'react-native-vector-icons/Icon';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {commonStyles} from './styles/commonStyles';
+import {commonStyles} from '../styles/commonStyles';
 
 const Feather = FeatherIcon as unknown as ComponentType<IconProps>;
 type Retailer = {
@@ -85,7 +85,7 @@ const RetailersComponent = ({
   };
 
   return (
-    <View style={[commonStyles.card, styles.container]}>
+    <View style={[commonStyles.card]}>
       <View style={styles.headerRow}>
         <Text style={commonStyles.cardTitle}>{title}</Text>
         <View style={styles.dateBox}>
@@ -105,14 +105,16 @@ const RetailersComponent = ({
               <Text style={styles.id}>Retailer ID #{item.id}</Text>
             </View>
             <TouchableOpacity style={styles.iconButton} onPress={() => handleShare(item)}>
-              <Feather name="mail" size={24} color="#7A8D9C" />
+              <Feather name="mail" size={24} color="#92929D" />
             </TouchableOpacity>
           </TouchableOpacity>
         )}
+        // eslint-disable-next-line react/no-unstable-nested-components
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
+      <View style={styles.separator} />
       <TouchableOpacity onPress={handleViewAll}>
-        <Text style={styles.viewAll}>View All Retailers</Text>
+        <Text style={styles.viewAll}>View All</Text>
       </TouchableOpacity>
     </View>
   );
@@ -120,7 +122,7 @@ const RetailersComponent = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F5F9F9',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 8,
     marginVertical: 16,
@@ -132,6 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 16,
   },
   header: {
     fontSize: 20,
@@ -141,9 +144,9 @@ const styles = StyleSheet.create({
   },
   dateBox: {
     backgroundColor: '#E6EDEE',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
   },
   dateText: {
     color: '#004F59',
@@ -196,21 +199,22 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   separator: {
-    height: 1,
-    backgroundColor: '#E3F0ED',
+    height: 2,
+    backgroundColor: '#F1F1F5',
     marginVertical: 2,
   },
   viewAll: {
-    color: '#3A7C3A',
+    color: '#25890D',
     textAlign: 'center',
     marginTop: 16,
-    fontWeight: '600',
+    fontWeight: '500',
     textDecorationLine: 'underline',
     fontSize: 17,
+    marginBottom: 8,
   },
   iconButton: {
     marginLeft: 4,
-    padding: 12,
+    padding: 14,
   },
 });
 

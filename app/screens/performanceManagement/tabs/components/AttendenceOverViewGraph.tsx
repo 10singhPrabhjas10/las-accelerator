@@ -2,6 +2,7 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Svg, {Rect, G, Line} from 'react-native-svg';
+import { commonStyles } from '../styles/commonStyles';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -23,9 +24,9 @@ const PADDING = 16;
 const Y_AXIS_WIDTH = 56;
 const Y_AXIS_MARGIN = 8;
 const BAR_WIDTH = 6;
-const GROUP_GAP = 28;
-const BAR_GAP = 2;
-const LEFT_MARGIN = 8;
+const GROUP_GAP = 24;
+const BAR_GAP = 8;
+const LEFT_MARGIN = 4;
 const RIGHT_MARGIN = 8;
 
 const CHART_WIDTH = SCREEN_WIDTH - PADDING * 2 - Y_AXIS_WIDTH - Y_AXIS_MARGIN;
@@ -83,7 +84,7 @@ export default function AttendanceOverview({
       : presentDays[presentDays.length - 1];
 
   return (
-    <View style={styles.container}>
+    <View style={[commonStyles.card, styles.container]}>
       <View style={styles.headerRow}>
         <Text style={styles.title}>Attendance Overview</Text>
         <TouchableOpacity style={styles.monthBtn}>
@@ -192,7 +193,7 @@ export default function AttendanceOverview({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 18,
     margin: 0,
@@ -209,17 +210,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 12,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: '#22223B',
+    fontWeight: '600',
+    fontSize: 18,
+    color: '#282C3B',
   },
   monthBtn: {
     backgroundColor: '#E6EDEE',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
   },
   monthBtnText: {
     color: '#004F59',
@@ -231,17 +233,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   yAxisLabels: {
-    width: 56,
+    width: 54,
     height: CHART_HEIGHT,
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginRight: 8,
+    marginRight: 24,
   },
   yAxisText: {
-    fontSize: 15,
-    color: '#A0AEC0',
+    fontSize: 14,
+    color: '#92929D',
     textAlign: 'right',
-    fontWeight: '500',
+    fontWeight: '400',
   },
   monthLabels: {
     flexDirection: 'row',
@@ -251,12 +253,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   monthText: {
-    fontSize: 14,
-    color: '#22223B',
+    fontSize: 16,
+    color: '#92929D',
+    fontWeight: '400',
     width: 36,
     textAlign: 'center',
   },
   legendRow: {
+    paddingTop: 12,
     flexDirection: 'column',
     marginTop: 36,
     alignItems: 'flex-start',
@@ -267,16 +271,17 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   legendDot: {
-    width: 8,
-    height: 8,
+    width: 12,
+    height: 12,
     borderRadius: 6,
     marginRight: 8,
   },
   legendNumber: {
-    fontWeight: 'bold',
-    fontSize: 12,
+    fontWeight: '500',
+    fontSize: 16,
   },
   legendtext: {
-    fontSize: 12,
+    fontSize: 16,
+    fontWeight: '400',
   },
 });

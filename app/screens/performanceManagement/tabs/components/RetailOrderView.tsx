@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg';
-import {commonStyles} from './styles/commonStyles';
+import {commonStyles} from '../styles/commonStyles';
 
 type DonutSection = {
   percent: number;
@@ -19,7 +19,7 @@ type DonutChartCardProps = {
 };
 
 const RADIUS = 48;
-const STROKE = 10;
+const STROKE = 16;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 const GAP_DEGREES = 6;
 const GAP_LENGTH = (GAP_DEGREES / 360) * CIRCUMFERENCE;
@@ -56,7 +56,7 @@ function DonutChartCard({
   });
 
   return (
-    <View style={[commonStyles.card, styles.card, cardStyle]}>
+    <View style={[commonStyles.card, cardStyle]}>
       <Text style={commonStyles.cardTitle}>{title}</Text>
       <View style={styles.chartContainer}>
         <Svg width={120} height={120}>
@@ -98,18 +98,6 @@ function DonutChartCard({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 18,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    shadowOffset: {width: 0, height: 2},
-    justifyContent: 'flex-start',
-    marginTop: 16,
-  },
   title: {
     fontSize: 16,
     fontWeight: '600',
@@ -120,7 +108,6 @@ const styles = StyleSheet.create({
   chartContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 8,
     width: 120,
     height: 120,
     alignSelf: 'center',
@@ -141,13 +128,16 @@ const styles = StyleSheet.create({
     color: '#22223B',
   },
   legend: {
-    marginTop: 12,
-    paddingLeft: 4,
+    padding: 4,
+    marginTop: 24,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   legendRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 4,
+    marginTop: 4,
   },
   dot: {
     width: 14,
@@ -156,13 +146,14 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   labelTitle: {
-    fontWeight: '700',
-    color: '#22223B',
-    fontSize: 12,
+    fontWeight: '500',
+    color: '#222426',
+    fontSize: 14,
   },
   labelSubTitle: {
     fontSize: 12,
-    fontWeight: 'normal',
+    fontWeight: '500',
+    color: '#4A4E52',
   },
 });
 
