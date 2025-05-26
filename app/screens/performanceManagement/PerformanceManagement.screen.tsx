@@ -5,8 +5,8 @@ import CustomTabBar from '../../components/customTabBar/CustomTabBar';
 import styles from './PerformanceStyle.ts';
 import Svg, {G, Path} from 'react-native-svg';
 import SalesDashboardView from './tabs/sales/index.tsx';
-import ProductivityDashBoard from './tabs/productivity/index.tsx';
-import AttendenceDashboard from './tabs/attendance/index.tsx';
+import ProductivityDashBoard from './tabs/productivities';
+import AttendenceDashboard from './tabs/attendance';
 
 interface InsightCardProps {
   title: string;
