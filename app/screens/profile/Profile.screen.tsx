@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {StyleSheet, View, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
@@ -445,7 +445,7 @@ const ProfileScreen = () => {
                 )}
               </>
             ) : (
-              <SvgImagePlaceholder width="100%" />
+              <SvgImagePlaceholder width="100%" height={heightToRatio(314)} />
             )}
           </View>
         </View>
@@ -535,11 +535,10 @@ const ProfileScreen = () => {
           onPrimaryBtnHandler={() => setShowLogoutModal(false)}
           onSecondaryBtnHandler={() => {
             handleLogout();
-          }}
+          } }
           setShowModal={() => setShowLogoutModal(false)}
           showModal={showLogoutModal}
-          theme={{colors: {onSurface: COLORS.black}}}
-        />
+          theme={{ colors: { onSurface: COLORS.black } }} label={''}        />
       </Layout>
       <BottomSheetModalComponent
         minHeight={'50%'}

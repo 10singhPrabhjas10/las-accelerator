@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-paper';
 import {Formik, FormikProps, FormikHelpers} from 'formik';
-import ImagePicker from 'react-native-image-crop-picker';
 
 import Layout from 'components/Layout';
 import {store} from 'store/redux/store';
@@ -21,7 +20,6 @@ import CameraSvg from '../../../../assets/images/photo_camera.svg';
 import {
   widthToRatio,
   heightToRatio,
-  getCameraPermission,
   pickFromCamera,
 } from '../../../utils/commonMethods';
 import {ButtonTypes} from '../../../types/buttons';

@@ -591,7 +591,11 @@ export const pickFromCamera = async (
   try {
     const result = await getCameraPermission();
     if (result === 'granted') {
-      const image = await ImagePicker.openCamera(options);
+      const image = await ImagePicker.openCamera({
+        ...options,
+        useFrontCamera: true,
+        freeStyleCropEnabled: false,
+      });
       return image;
     } else {
       Alert.alert(result);
