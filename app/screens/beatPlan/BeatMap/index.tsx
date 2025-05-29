@@ -1,6 +1,11 @@
 import React, {useState, useRef} from 'react';
-import {FlatList, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
+import {FlatList, Platform, View} from 'react-native';
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Polyline,
+  PROVIDER_DEFAULT,
+} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {Text} from 'react-native-paper';
 import {TodaysBeatPlan} from '@/utils/dummyData';
@@ -61,7 +66,9 @@ function BeatMap() {
       <View style={styles.container}>
         <MapView
           ref={mapRef}
-          provider={PROVIDER_GOOGLE}
+          provider={
+            Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+          }
           style={styles.map}
           initialRegion={{
             latitude: origin.latitude - 0.02,
@@ -71,7 +78,7 @@ function BeatMap() {
           }}
           zoomEnabled={true}
           //loadingEnabled={true}
-          >
+        >
           <MapViewDirections
             origin={origin}
             destination={destination}
