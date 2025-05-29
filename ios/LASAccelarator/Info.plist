@@ -74,6 +74,11 @@
 	<string>Access needed for user to know nearest store location and navigation to it</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Access needed for user to know nearest store location and navigation to it</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>full-accuracy</key>
+		<string>Access needed for user to know your precise location temporarily</string>
+	</dict>
 
 </dict>
 </plist>

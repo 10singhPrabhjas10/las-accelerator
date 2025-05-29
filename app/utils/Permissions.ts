@@ -1,4 +1,4 @@
-import {PermissionStatus, PermissionsAndroid} from 'react-native';
+import {PermissionStatus, PermissionsAndroid, Platform} from 'react-native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -38,27 +38,49 @@ export const requestStoragePermission = async () => {
   }
 };
 
+// export const requestLocationPermission = async () => {
+//   try {
+//     const result = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+
+//     if (result !== RESULTS.GRANTED) {
+//       const requestResult = await request(
+//         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+//       );
+
+//       if (requestResult === RESULTS.GRANTED) {
+//         return true; // Permission granted
+//       } else {
+//         throw new Error('Location permission denied');
+//       }
+//     }
+
+//     return true; // Permission already granted
+//   } catch (error) {
+//     console.error(error);
+//     return false; // Handle the error case
+//   }
+// };
+
 export const requestLocationPermission = async () => {
-  try {
-    const result = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+  let permission;
 
-    if (result !== RESULTS.GRANTED) {
-      const requestResult = await request(
-        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-      );
-
-      if (requestResult === RESULTS.GRANTED) {
-        return true; // Permission granted
-      } else {
-        throw new Error('Location permission denied');
-      }
-    }
-
-    return true; // Permission already granted
-  } catch (error) {
-    console.error(error);
-    return false; // Handle the error case
+  if (Platform.OS === 'android') {
+    permission = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+  } else {
+    permission = PERMISSIONS.IOS.LOCATION_WHEN_IN_USE;
   }
+
+  const result = await check(permission);
+
+  if (result === RESULTS.DENIED) {
+    const requestResult = await request(permission);
+
+    if (requestResult !== RESULTS.GRANTED) {
+      throw new Error('Location permission denied');
+      // return false;
+    }
+  }
+  return true;
 };
 
 export const getCurrentLocation = async () => {
