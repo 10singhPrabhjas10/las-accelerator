@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-paper';
 interface CustomTabBarProps {
-  periods: string[]; // Array of period strings
-  selectedIndex: number; // The index of the currently selected period
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>; // Function to update the selected index
-  style: StyleProp<ViewStyle>;
-  activeText: StyleProp<TextStyle>;
+  periods?: string[]; // Array of period strings
+  selectedIndex?: number; // The index of the currently selected period
+  setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>; // Function to update the selected index
+  style?: StyleProp<ViewStyle>;
+  activeText?: StyleProp<TextStyle>;
 }
 const CustomTabBar: React.FC<CustomTabBarProps> = ({
   periods,

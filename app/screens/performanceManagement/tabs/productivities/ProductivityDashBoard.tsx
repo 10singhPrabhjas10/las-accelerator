@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -18,11 +18,22 @@ const {width} = Dimensions.get('window');
 const CARD_MARGIN = 16;
 const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
-export default function ProductivityDashBoard() {
-  const [range, setRange] = useState({
-    startDate: new Date('2024-07-04'),
-    endDate: new Date('2024-07-19'),
-  });
+export default function ProductivityDashBoard({dateRange}: any) {
+  const [range, setRange] = useState(() => ({
+    startDate: dateRange?.start
+      ? new Date(dateRange.start)
+      : new Date('2024-07-04'),
+    endDate: dateRange?.end ? new Date(dateRange.end) : new Date('2024-07-19'),
+  }));
+
+  useEffect(() => {
+    if (dateRange?.start && dateRange?.end) {
+      setRange({
+        startDate: new Date(dateRange.start),
+        endDate: new Date(dateRange.end),
+      });
+    }
+  }, [dateRange]);
 
   const {data, loading, error, setDateRange} = useAttendance(range);
 
@@ -31,7 +42,28 @@ export default function ProductivityDashBoard() {
     setDateRange(newRange);
   };
 
-  // Show loading state
+  // Prepare data for RetailerOverview to avoid chart errors
+  let safeRetailerOverview = data?.productRetailerTabData?.retailerOverview;
+  if (safeRetailerOverview) {
+    if (safeRetailerOverview.targetData.length < 2) {
+      safeRetailerOverview = {
+        ...safeRetailerOverview,
+        targetData: [
+          safeRetailerOverview.targetData[0],
+          safeRetailerOverview.targetData[0],
+        ],
+        coveredData: [
+          safeRetailerOverview.coveredData[0],
+          safeRetailerOverview.coveredData[0],
+        ],
+        months: [
+          safeRetailerOverview.months[0],
+          safeRetailerOverview.months[0],
+        ],
+      };
+    }
+  }
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -41,7 +73,6 @@ export default function ProductivityDashBoard() {
     );
   }
 
-  // Show error state
   if (error) {
     return (
       <View style={styles.errorContainer}>
@@ -60,23 +91,17 @@ export default function ProductivityDashBoard() {
     <View style={styles.scrollContainer}>
       <DateRangePicker value={range} onChange={handleDateRangeChange} />
 
-      {data && (
+      {data && safeRetailerOverview && (
         <>
           <RetailerOverview
-            months={data.productRetailerTabData.retailerOverview.months}
-            target={data.productRetailerTabData.retailerOverview.targetData}
-            covered={data.productRetailerTabData.retailerOverview.coveredData}
+            months={safeRetailerOverview.months}
+            target={safeRetailerOverview.targetData}
+            covered={safeRetailerOverview.coveredData}
             maxY={800}
             yStep={200}
-            highlightIndex={
-              data.productRetailerTabData.retailerOverview.defaultSelectedIndex
-            }
-            highlightValue={
-              data.productRetailerTabData.retailerOverview.currentValue
-            }
-            highlightChange={
-              data.productRetailerTabData.retailerOverview.percentChange
-            }
+            highlightIndex={safeRetailerOverview.defaultSelectedIndex}
+            highlightValue={safeRetailerOverview.currentValue}
+            highlightChange={safeRetailerOverview.percentChange}
           />
           <View style={styles.cardsRow}>
             <RetailOrderView

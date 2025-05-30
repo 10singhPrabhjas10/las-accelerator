@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -18,11 +18,22 @@ const {width} = Dimensions.get('window');
 const CARD_MARGIN = 16;
 const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
-export default function AttendenceDashboard() {
-  const [range, setRange] = useState({
-    startDate: new Date('2024-07-04'),
-    endDate: new Date('2024-07-19'),
-  });
+export default function AttendenceDashboard({dateRange}: any) {
+  const [range, setRange] = useState(() => ({
+    startDate: dateRange?.start
+      ? new Date(dateRange.start)
+      : new Date('2024-07-04'),
+    endDate: dateRange?.end ? new Date(dateRange.end) : new Date('2024-07-19'),
+  }));
+
+  useEffect(() => {
+    if (dateRange?.start && dateRange?.end) {
+      setRange({
+        startDate: new Date(dateRange.start),
+        endDate: new Date(dateRange.end),
+      });
+    }
+  }, [dateRange]);
 
   const {data, loading, error, setDateRange} = useAttendance(range);
 

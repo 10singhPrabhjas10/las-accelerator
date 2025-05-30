@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,15 +15,33 @@ import TopProductsSold from '../components/SalesProductSold';
 import TopProductsListItem from '../components/TotalProductList';
 const CARD_MARGIN = 16;
 
-export default function SalesReportTabData() {
-  const [range, setRange] = useState({
-    startDate: new Date('2024-07-04'),
-    endDate: new Date('2024-07-19'),
-  });
+export default function SalesReportTabData({dateRange}: any) {
+  const [range, setRange] = useState(() => ({
+    startDate: dateRange?.start
+      ? new Date(dateRange.start)
+      : new Date('2024-07-04'),
+    endDate: dateRange?.end ? new Date(dateRange.end) : new Date('2024-07-19'),
+  }));
+
+  useEffect(() => {
+    if (dateRange?.start && dateRange?.end) {
+      setRange({
+        startDate: new Date(dateRange.start),
+        endDate: new Date(dateRange.end),
+      });
+    }
+  }, [dateRange]);
 
   const {data, loading, error, setDateRange} = useAttendance(range);
 
-  const handleDateRangeChange = newRange => {
+  const handleDateRangeChange = (
+    newRange:
+      | {startDate: Date; endDate: Date}
+      | ((prevState: {startDate: Date; endDate: Date}) => {
+          startDate: Date;
+          endDate: Date;
+        }),
+  ) => {
     setRange(newRange);
     setDateRange(newRange);
   };
@@ -53,48 +71,49 @@ export default function SalesReportTabData() {
     );
   }
 
-  return (
-    <View style={styles.scrollContainer}>
-      <DateRangePicker value={range} onChange={handleDateRangeChange} />
-      {data && (
-        <>
-          <SalesStatistics
-            months={data.salesPerformanceTabData.sales.months}
-            salesGoals={data.salesPerformanceTabData.sales.salesGoals}
-            achieved={data.salesPerformanceTabData.sales.achieved}
-            title={data.salesPerformanceTabData.sales.title}
-            date={data.salesPerformanceTabData.sales.date}
-          />
-          <TopProductsSold
-            metrics={data.salesPerformanceTabData.topProductsSold.metrics}
-            title="Top Products Sold"
-          />
-          <TopProductsListItem
-            products={data.salesPerformanceTabData.topProductsList.products}
-            title={data.salesPerformanceTabData.topProductsList.title}
-            date={data.salesPerformanceTabData.topProductsList.date}
-          />
-          <RetailersComponent
-            title="Top Retailers"
-            dateLabel="Feb 2024"
-            retailers={data.commonTabData.retailers}
-            onViewAll={() => console.log('View all retailers clicked')}
-            onEmail={retailer =>
-              console.log('Custom email action for', retailer.name)
-            }
-          />
-          <EffectiveCoverageArea
-            total={data.salesPerformanceTabData.effectiveCoverage.total}
-            uniqueBill={
-              data.salesPerformanceTabData.effectiveCoverage.uniqueBill
-            }
-            zeroBill={data.salesPerformanceTabData.effectiveCoverage.zeroBill}
-            date={data.salesPerformanceTabData.effectiveCoverage.date}
-          />
-        </>
-      )}
-    </View>
-  );
+  if (data) {
+    const {sales, topProductsSold, topProductsList, effectiveCoverage} =
+      data.salesPerformanceTabData;
+
+    const {retailers} = data.commonTabData;
+
+    return (
+      <View style={styles.scrollContainer}>
+        <DateRangePicker value={range} onChange={handleDateRangeChange} />
+        <SalesStatistics
+          months={sales.months}
+          salesGoals={sales.salesGoals}
+          achieved={sales.achieved}
+          title={sales.title}
+          date={sales.date}
+        />
+        <TopProductsSold
+          metrics={topProductsSold.metrics}
+          title="Top Products Sold"
+        />
+        <TopProductsListItem
+          products={topProductsList.products}
+          title={topProductsList.title}
+          date={topProductsList.date}
+        />
+        <RetailersComponent
+          title="Top Retailers"
+          dateLabel="Feb 2024"
+          retailers={retailers}
+          onViewAll={() => console.log('View all retailers clicked')}
+          onEmail={retailer =>
+            console.log('Custom email action for', retailer.name)
+          }
+        />
+        <EffectiveCoverageArea
+          total={effectiveCoverage.total}
+          uniqueBill={effectiveCoverage.uniqueBill}
+          zeroBill={effectiveCoverage.zeroBill}
+          date={effectiveCoverage.date}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

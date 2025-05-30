@@ -7,6 +7,8 @@ import Svg, {G, Path} from 'react-native-svg';
 import SalesDashboardView from './tabs/sales/index.tsx';
 import ProductivityDashBoard from './tabs/productivities';
 import AttendenceDashboard from './tabs/attendance';
+import dayjs from 'dayjs';
+import DateRangePicker from '@/utils/DateRangePicker.tsx';
 
 interface InsightCardProps {
   title: string;
@@ -87,22 +89,61 @@ const InsightCard: React.FC<InsightCardProps> = ({
     </View>
   </TouchableOpacity>
 );
+
 const PerformanceManagement: React.FC = () => {
-  const periods = ['Today', 'Week', 'Month', 'Custom'];
+  // const periods = ['Today', 'Week', 'Month', 'Custom'];
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  // Generate component only upon tab selection
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 0:
-        return <SalesDashboardView />;
-      case 1:
-        return <ProductivityDashBoard />;
-      case 2:
-        return <AttendenceDashboard />;
+  const getDateRange = (type: 'today' | 'week' | 'month') => {
+    const today = dayjs();
+    switch (type) {
+      case 'today':
+        return {start: today.startOf('day'), end: today.endOf('day')};
+      case 'week':
+        return {
+          start: today.subtract(6, 'day').startOf('day'),
+          end: today.endOf('day'),
+        };
+      case 'month':
+        return {
+          start: today.subtract(29, 'day').startOf('day'),
+          end: today.endOf('day'),
+        };
       default:
-        return <SalesDashboardView />;
+        return {start: today, end: today};
+    }
+  };
+
+  const periods = [
+    {label: 'Today', range: getDateRange('today')},
+    {label: 'Week', range: getDateRange('week')},
+    {label: 'Month', range: getDateRange('month')},
+    {label: 'Custom', range: getDateRange('today')},
+  ];
+
+  const selectedRange = periods[selectedIndex].range;
+
+  const tabs = ['Sales Report', 'Productivity', 'Attendance'];
+
+  const renderTabContent = () => {
+    const rangeForDashboards = {
+      start: selectedRange.start.toDate
+        ? selectedRange.start.toDate()
+        : selectedRange.start,
+      end: selectedRange.end.toDate
+        ? selectedRange.end.toDate()
+        : selectedRange.end,
+    };
+
+    switch (activeTab) {
+      case 1:
+        return <ProductivityDashBoard dateRange={rangeForDashboards} />;
+      case 2:
+        return <AttendenceDashboard dateRange={rangeForDashboards} />;
+      case 0:
+      default:
+        return <SalesDashboardView dateRange={rangeForDashboards} />;
     }
   };
 
@@ -116,10 +157,11 @@ const PerformanceManagement: React.FC = () => {
         <View style={styles.container}>
           <Text style={styles.header}>Overall Insights</Text>
           <CustomTabBar
-            periods={periods}
+            periods={periods.map(p => p.label)}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
           />
+          {selectedIndex === 3 && <></>}
           <View style={styles.cardsContainer}>
             <InsightCard
               title="Total Sales"
@@ -148,53 +190,29 @@ const PerformanceManagement: React.FC = () => {
           </View>
         </View>
 
-        {/* Custom Tab Navigation */}
         <View style={fixedStyles.tabBarContainer}>
-          <TouchableOpacity
-            style={[
-              fixedStyles.tabButton,
-              activeTab === 0 && fixedStyles.activeTab,
-            ]}
-            onPress={() => setActiveTab(0)}>
-            <Text
-              style={[
-                fixedStyles.tabText,
-                activeTab === 0 && fixedStyles.activeTabText,
-              ]}>
-              Sales Report
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              fixedStyles.tabButton,
-              activeTab === 1 && fixedStyles.activeTab,
-            ]}
-            onPress={() => setActiveTab(1)}>
-            <Text
-              style={[
-                fixedStyles.tabText,
-                activeTab === 1 && fixedStyles.activeTabText,
-              ]}>
-              Productivity
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              fixedStyles.tabButton,
-              activeTab === 2 && fixedStyles.activeTab,
-            ]}
-            onPress={() => setActiveTab(2)}>
-            <Text
-              style={[
-                fixedStyles.tabText,
-                activeTab === 2 && fixedStyles.activeTabText,
-              ]}>
-              Attendance
-            </Text>
-          </TouchableOpacity>
+          {tabs.map((label, index) => {
+            const isActive = activeTab === index;
+            return (
+              <TouchableOpacity
+                key={label}
+                style={[
+                  fixedStyles.tabButton,
+                  isActive && fixedStyles.activeTab,
+                ]}
+                onPress={() => setActiveTab(index)}>
+                <Text
+                  style={[
+                    fixedStyles.tabText,
+                    isActive && fixedStyles.activeTabText,
+                  ]}>
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
 
-        {/* Tab Content */}
         <View style={fixedStyles.tabContentContainer}>
           {renderTabContent()}
         </View>
