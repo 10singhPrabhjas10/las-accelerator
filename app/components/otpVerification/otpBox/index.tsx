@@ -37,22 +37,32 @@ export function OTPInput({otp, setOtp = () => {}}: OTPInputProps) {
   ];
   const [errorMessages, setErrorMessages] = useState<string[] | null>();
   const onChangeCode = (text: string, index: number) => {
+    setErrorMessages(undefined);
+
     if (text.length > 1) {
-      setErrorMessages(undefined);
-      const newCodes = text.split('');
+      const newCodes = text.split('').slice(0, 6);
+      while (newCodes.length < 6) newCodes.push('');
       setCodes(newCodes);
-      refs[5]!.current?.focus();
+      setOtp(newCodes.join(''));
+      const nextEmptyIndex = newCodes.findIndex(code => code === '');
+      if (nextEmptyIndex !== -1) {
+        refs[nextEmptyIndex]?.current?.focus();
+      } else {
+        refs[5]?.current?.blur();
+      }
       return;
     }
-    setErrorMessages(undefined);
-    const newCodes = [...codes!];
+
+    const newCodes = [...codes];
     newCodes[index] = text;
     setCodes(newCodes);
     setOtp(newCodes.join(''));
+
     if (text !== '' && index < 5) {
-      refs[index + 1]!.current?.focus();
+      refs[index + 1]?.current?.focus();
     }
   };
+
   useEffect(() => {}, [codes]);
   const handleFocus = (index: number) => {
     setFocusedIndex(index);
