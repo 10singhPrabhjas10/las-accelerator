@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import Layout from 'components/Layout';
 import DataCard from 'components/dataCard/DataCard';
-import {StyleSheet, View, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import CommonStyles from 'utils/commonStyle';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from 'routes/RootNavigation';
@@ -57,6 +57,7 @@ import {clearUser} from '@/store/redux/userSlice';
 import {clearStorage} from '@/utils/AppStorage';
 import RowItem from '@/components/rowItem/RowItem';
 // import {boolean} from 'yup';
+import ImageCropperModal from 'components/ImageCropperModal';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<RootNavigationProp>();
@@ -74,6 +75,9 @@ const ProfileScreen = () => {
     (state: RootState) => state.localization.selectedLanguage,
   );
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
+  const [isCropping, setIsCropping] = useState<boolean>(false);
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const cropViewRef = useRef<any>(null);
 
   // const [profileData, setProfileData] = useState<IProfileResponse[]>([]);
   const bottomSheetref = useRef();
@@ -340,17 +344,29 @@ const ProfileScreen = () => {
       let result;
       if (type === 'camera') {
         result = await pickFromCamera();
+        if (result?.path) {
+          setImageToCrop(result.path);
+          setIsCropping(true);
+          return; // Wait for crop before setting profile picture
+        }
       } else {
         result = await pickFromGallery();
-      }
-      if (result) {
-        // setIsUpdatingPicture(true);
-        setProfilePicture(result);
-        activeDp.current = result?.path;
+        if (result) {
+          setProfilePicture(result);
+          activeDp.current = result?.path;
+        }
       }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onImageCropped = (uri: string) => {
+    const formattedUri = uri.startsWith('file://') ? uri : `file://${uri}`;
+    setProfilePicture({path: formattedUri});
+    activeDp.current = formattedUri;
+    setIsCropping(false);
+    setImageToCrop(null);
   };
 
   const updatePictureHandler = (): void => {
@@ -445,7 +461,7 @@ const ProfileScreen = () => {
                 )}
               </>
             ) : (
-              <SvgImagePlaceholder width="100%" />
+              <SvgImagePlaceholder width="100%" height={heightToRatio(314)} />
             )}
           </View>
         </View>
@@ -539,6 +555,7 @@ const ProfileScreen = () => {
           setShowModal={() => setShowLogoutModal(false)}
           showModal={showLogoutModal}
           theme={{colors: {onSurface: COLORS.black}}}
+          label={''}
         />
       </Layout>
       <BottomSheetModalComponent
@@ -559,6 +576,17 @@ const ProfileScreen = () => {
           />
         </View>
       </BottomSheetModalComponent>
+      <ImageCropperModal
+        visible={isCropping}
+        imageUri={imageToCrop!}
+        cropViewRef={cropViewRef}
+        onDone={() => cropViewRef.current?.saveImage(true, 90)}
+        onCancel={() => {
+          setIsCropping(false);
+          setImageToCrop(null);
+        }}
+        onImageCrop={onImageCropped}
+      />
     </>
   );
 };

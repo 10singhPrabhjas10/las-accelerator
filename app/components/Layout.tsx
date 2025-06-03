@@ -42,7 +42,7 @@ const Layout = ({
     />
   );
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         translucent
         animated
@@ -68,7 +68,7 @@ const Layout = ({
           {children}
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

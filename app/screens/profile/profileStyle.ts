@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   imageContainer: {
-    height: heightToRatio(280),
-    width: 'auto',
     backgroundColor: COLORS.neutralLight,
     borderRadius: heightToRatio(8),
     marginTop: heightToRatio(8),

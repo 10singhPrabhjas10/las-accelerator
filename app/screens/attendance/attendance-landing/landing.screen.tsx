@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, StyleSheet, Image, TouchableOpacity, Modal} from 'react-native';
 import {Text} from 'react-native-paper';
 import {Formik, FormikProps, FormikHelpers} from 'formik';
-import ImagePicker from 'react-native-image-crop-picker';
 
 import Layout from 'components/Layout';
 import {store} from 'store/redux/store';
@@ -21,11 +20,11 @@ import CameraSvg from '../../../../assets/images/photo_camera.svg';
 import {
   widthToRatio,
   heightToRatio,
-  getCameraPermission,
   pickFromCamera,
 } from '../../../utils/commonMethods';
 import {ButtonTypes} from '../../../types/buttons';
 import CommonStyles from '../../../utils/commonStyle';
+import ImageCropperModal from '@/components/ImageCropperModal';
 
 interface AttendanceLandingScreenProps {
   title?: string;
@@ -44,6 +43,9 @@ export const AttendanceLandingScreen: React.FC<
 > = ({title = 'Gururaj Chandera'}) => {
   const [currentTask, setCurrentTask] = useState<number>(1);
   const [showTaskType, setShowTaskType] = useState<boolean>(false);
+  const [isCropping, setIsCropping] = useState<boolean>(false);
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const cropViewRef = useRef<any>(null);
   const currentDate: string = '12/01/2024';
 
   const handleProceed = () => {
@@ -63,10 +65,34 @@ export const AttendanceLandingScreen: React.FC<
   ) => {
     try {
       const image = await pickFromCamera();
-      setFieldValue('selfie', image.path);
+      if (image?.path) {
+        setImageToCrop(image.path);
+        setIsCropping(true);
+      }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  // const takeSelfie = async (
+  //   setFieldValue: (field: string, value: string) => void,
+  // ) => {
+  //   try {
+  //     const image = await pickFromCamera();
+  //     setFieldValue('selfie', image.path);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const onImageCropped = (
+    uri: string,
+    setFieldValue: (field: string, value: string) => void,
+  ) => {
+    const formattedUri = uri.startsWith('file://') ? uri : `file://${uri}`;
+    setFieldValue('selfie', formattedUri);
+    setIsCropping(false);
+    setImageToCrop(null);
   };
 
   const checkDisabled = (values: FormValues): boolean => {
@@ -158,6 +184,18 @@ export const AttendanceLandingScreen: React.FC<
                 <Text style={styles.retakeTextStyle}>Retake Picture</Text>
               </TouchableOpacity>
             )}
+
+            <ImageCropperModal
+              visible={isCropping}
+              imageUri={imageToCrop!}
+              cropViewRef={cropViewRef}
+              onDone={() => cropViewRef.current?.saveImage(true, 90)}
+              onCancel={() => {
+                setIsCropping(false);
+                setImageToCrop(null);
+              }}
+              onImageCrop={(uri: string) => onImageCropped(uri, setFieldValue)}
+            />
           </View>
         );
       default:

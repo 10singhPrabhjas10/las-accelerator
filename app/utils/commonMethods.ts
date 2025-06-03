@@ -582,7 +582,7 @@ export const pickFromCamera = async (
     width: 300,
     height: 300,
     mediaType: 'photo',
-    cropping: true,
+    cropping: false,
     includeBase64: true,
     compressImageQuality: 0.7,
     includeExif: true,
@@ -591,15 +591,19 @@ export const pickFromCamera = async (
   try {
     const result = await getCameraPermission();
     if (result === 'granted') {
-      const image = await ImagePicker.openCamera(options);
+      const image = await ImagePicker.openCamera({
+        ...options,
+        useFrontCamera: true,
+        freeStyleCropEnabled: false,
+      });
       return image;
     } else {
       Alert.alert(result);
-      return '';
+      return null;
     }
   } catch (err) {
     console.error('Error taking selfie:', err);
-    return '';
+    return null;
   }
 };
 
