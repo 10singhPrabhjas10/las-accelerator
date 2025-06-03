@@ -1,7 +1,7 @@
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
 import React, {RefObject} from 'react';
-import {Modal, View, StyleSheet} from 'react-native';
+import {Modal, View, StyleSheet, StatusBar} from 'react-native';
 import {CropView} from 'react-native-image-crop-tools';
 
 type Props = {
@@ -25,8 +25,9 @@ const ImageCropperModal = ({
     <Modal
       visible={visible}
       animationType="slide"
-      transparent
-      presentationStyle={'fullScreen'}>
+      transparent={false}
+      presentationStyle="overFullScreen">
+      <StatusBar hidden />
       <View style={styles.container}>
         <CropView
           sourceUrl={imageUri}
