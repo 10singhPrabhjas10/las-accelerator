@@ -186,7 +186,6 @@ const OnboardingScreens = () => {
   //------new UI code------
   return (
     <Layout>
-      <ScreenHeader showScreenName={false} />
       <OnboardingLogo
         width={'100%'}
         height={'69%'}

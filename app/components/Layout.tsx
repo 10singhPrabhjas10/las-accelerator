@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StatusBar,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Platform,
-} from 'react-native';
+import {StatusBar, StyleSheet, View, ScrollView, Platform} from 'react-native';
 import {LayoutPropsType} from '../types/components';
 import {COLORS} from 'theme/colors';
 import ScreenHeader from './headers/ScreenHeader';

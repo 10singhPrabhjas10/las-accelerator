@@ -55,7 +55,6 @@ const LanguageSelection = () => {
 
   return (
     <Layout>
-      <ScreenHeader showScreenName={false} />
       <View style={CommonStyles.rowSpaceBetweenFlex}>
         <SubHeader>
           <View style={styles.container}>

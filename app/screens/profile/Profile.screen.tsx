@@ -529,8 +529,8 @@ const ProfileScreen = () => {
         {renderLogoutSection()}
         {renderModalContent()}
         <BottomSheetModalComponent
-          maxHeight={'80%'}
-          minHeight={'80%'}
+          maxHeight={'85%'}
+          minHeight={'85%'}
           enableClose={true}
           title={
             isUpdatingPicture
@@ -567,12 +567,12 @@ const ProfileScreen = () => {
             <Text variant="headlineSmall">
               {getTranslationLabel('change_language')}
             </Text>
-            <TouchableOpacity onPress={() => bottomSheetref.current.close()}>
+            <TouchableOpacity onPress={() => bottomSheetref?.current?.close()}>
               <CloseIcon />
             </TouchableOpacity>
           </View>
           <LanguageSelectionList
-            onlanguageChange={() => bottomSheetref.current.close()}
+            onlanguageChange={() => bottomSheetref.current?.close()}
           />
         </View>
       </BottomSheetModalComponent>
