@@ -92,7 +92,6 @@ export const styles = StyleSheet.create({
   },
   textInputView: {
     lineHeight: Platform.OS === 'android' ? 30 : 0,
-    height: heightToRatio(46),
   },
   requiredText: {color: COLORS.red},
 });

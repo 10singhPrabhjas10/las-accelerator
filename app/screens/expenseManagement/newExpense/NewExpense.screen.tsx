@@ -14,6 +14,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {convertDateToDisplay} from 'utils/commonMethods';
@@ -304,7 +305,7 @@ const NewExpense = () => {
         <AutocompleteDropdown
           titleText={'City'}
           placeholder="Search City"
-          initialValue={initialExpense?.city ? initialExpense?.city : null}
+          initialValue={initialExpense?.city ? initialExpense?.city : undefined}
           dataSet={searchedCityList}
           onChangeText={(value: string) => {
             if (value.length > 0) {
@@ -315,7 +316,9 @@ const NewExpense = () => {
             if (data) {
               setFieldValue('cityCategory', data?.id);
               setFieldValue('city', data?.title);
-              getCityRate(data?.title);
+              if (data?.title) {
+                getCityRate(data.title);
+              }
             }
           }}
           icon={<TextInput.Icon icon={searchIcon} />}
@@ -575,6 +578,21 @@ const NewExpense = () => {
           onBlur={handleBlur('taxAmount')}
           keyboardType="decimal-pad"
           errorText={touched?.taxAmount ? errors?.taxAmount : ''}
+        />
+        <Spacer size={15} />
+        <DropDown
+          list={PROOF_TYPE}
+          label={'Proof Type'}
+          placeholder={'Select Proof Type'}
+          value={values.proofType}
+          visible={visibility.proofTypeDropdown}
+          onChangeDropdownState={() =>
+            toggleDropDownVisibility('proofTypeDropdown')
+          }
+          setValue={data => {
+            setFieldValue('proofType', data);
+          }}
+          error={touched.proofType ? errors.proofType : ''}
         />
         <Spacer size={15} />
         <PrimaryTextInput
@@ -858,7 +876,7 @@ const NewExpense = () => {
 const styles = StyleSheet.create({
   textInput: {
     justifyContent: 'center',
-    paddingTop: 15,
+    paddingTop: Platform.OS === 'android' ? 15 : 0,
     textAlignVertical: 'center',
   },
   addNewExpenseBtn: {

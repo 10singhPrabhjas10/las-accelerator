@@ -6,14 +6,14 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import ImagePicker, {Image} from 'react-native-image-crop-picker';
+import ImagePicker, {Image, ImageOrVideo} from 'react-native-image-crop-picker';
 import {useDispatch} from 'react-redux';
 
 import styles from './UploadImageBottomSheet.style';
@@ -23,7 +23,11 @@ import GalleryIcon from './../../../assets/icons/gallery.svg';
 import DeleteIcon from './../../../assets/icons/deleteFile.svg';
 import CommonStyles from 'utils/commonStyle';
 import {BottomSheetDefaultBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
-import {convertBytesToMB, getTranslationLabel} from 'utils/commonMethods';
+import {
+  convertBytesToMB,
+  getCameraPermission,
+  getTranslationLabel,
+} from 'utils/commonMethods';
 import {showSnackbar} from 'store/redux/snackbarSlice';
 import {SnackBarEnum} from 'constants/modalTypes';
 import {requestCameraPermission} from 'utils/Permissions';
@@ -68,7 +72,7 @@ const UploadImageBottomSheet = ({
   );
 
   const uploadFromCamera = async () => {
-    pickFromCamera(true);
+    pickFromCamera(false);
   };
 
   const uploadFromGallery = async () => {
@@ -97,21 +101,62 @@ const UploadImageBottomSheet = ({
     }
   };
 
-  const pickFromCamera = (isCropImage: boolean) => {
-    ImagePicker.openCamera({
+  // const pickFromCamera = (isCropImage: boolean) => {
+  //   ImagePicker.openCamera({
+  //     width: 300,
+  //     mediaType: 'photo',
+  //     height: 300,
+  //     cropping: isCropImage,
+  //     includeBase64: true,
+  //     compressImageQuality: 0.7,
+  //     includeExif: true,
+  //   })
+  //     .then((image: Image) => {
+  //       setPhotoData(image);
+  //     })
+  //     .catch(e => console.log(e))
+  //     .finally(() => bottomSheetModalRef.current?.close());
+  // };
+
+  type CameraOptions = {
+    width?: number;
+    height?: number;
+    mediaType: MediaType;
+    cropping?: boolean;
+    includeBase64?: boolean;
+    compressImageQuality?: number;
+    includeExif?: boolean;
+  };
+
+  const pickFromCamera = async (isCropImage: boolean): Promise<void> => {
+    const options: CameraOptions = {
       width: 300,
-      mediaType: 'photo',
       height: 300,
+      mediaType: 'photo',
       cropping: isCropImage,
       includeBase64: true,
       compressImageQuality: 0.7,
       includeExif: true,
-    })
-      .then((image: Image) => {
+    };
+
+    try {
+      const permissionResult = await getCameraPermission();
+      if (permissionResult === 'granted') {
+        const image = await ImagePicker.openCamera({
+          ...options,
+          useFrontCamera: true,
+          freeStyleCropEnabled: false,
+        });
+
         setPhotoData(image);
-      })
-      .catch(e => console.log(e))
-      .finally(() => bottomSheetModalRef.current?.close());
+      } else {
+        Alert.alert(permissionResult);
+      }
+    } catch (err) {
+      console.error('Error taking selfie:', err);
+    } finally {
+      bottomSheetModalRef.current?.close();
+    }
   };
 
   const pickFromGallery = () => {

@@ -26,11 +26,11 @@ import dummyServerData from 'utils/dummyServerData';
 import OnboardingLogo from '../../../assets/icons/onBoardingIcon.svg';
 import SubHeader from '@/components/subHeader/subHeader';
 import {COLORS} from '@/theme/colors';
-import CommonStyles from '@/utils/commonStyle';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {RootNavigationProp, RootNavigationTypes} from '@/routes/RootNavigation';
-import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
+import CustomButton from '@/components/button/CustomButton';
+import CommonStyles from '@/utils/commonStyle';
 
 interface IOnboardingData {
   id: string;
