@@ -148,7 +148,6 @@ const NewExpense = () => {
   useEffect(() => {
     if (selectedExpenseToBeModified) {
       const data: IExpenseData = selectedExpenseToBeModified;
-      // Ensure expense_proofs is always an array of IExpenseProof objects
       const mappedExpenseProofs =
         data?.expense_proofs?.filter(item => item.proofFile)
           ?.map(item => ({
@@ -302,11 +301,19 @@ const NewExpense = () => {
   const resetFormData = () => {
     const freshExpense = getInitialExpense();
     setInitialExpense(freshExpense);
-    const setFieldValue = formikRef?.current?.setFieldValue;
-    Object.entries(freshExpense).forEach(([key, val]) => {
-      setFieldValue?.(key, val);
-    });
+    if (formikRef?.current?.resetForm) {
+      formikRef.current.resetForm({ values: freshExpense });
+    } else {
+      const setFieldValue = formikRef?.current?.setFieldValue;
+      Object.entries(freshExpense).forEach(([key, val]) => {
+        setFieldValue?.(key, val);
+      });
+    }
     setPhoto([]);
+    setTravelPhotos([]);
+    setLodgingPhotos([]);
+    setOtherPhotos([]);
+    setExpenseProofList([]);
   };
 
   const createReqBody = () => {
@@ -795,9 +802,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          // validationSchema={travelExpenseValidation
-          //   .concat(lodgingExpenseValidation)
-          //   .concat(otherExpenseValidation)}
+          validationSchema={travelExpenseValidation
+            .concat(lodgingExpenseValidation)
+            .concat(otherExpenseValidation)}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
