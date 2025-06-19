@@ -194,6 +194,10 @@ export const PROOF_TYPE = [
     label: 'Both',
     value: 'both',
   },
+  {
+    label: 'Other',
+    value: 'other',
+  },
 ];
 
 export const CITY_LIST = [

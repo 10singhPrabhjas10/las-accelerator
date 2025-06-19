@@ -1,4 +1,4 @@
-import {StyleSheet, View,Image} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import {Divider, Text} from 'react-native-paper';
 
@@ -26,10 +26,11 @@ export interface IPhotoProps {
 }
 
 interface IImageUploadProps {
+  title?: string;
   imageData: IPhotoProps[] | null;
   openBottomSheet: () => void;
   rightIcon?: boolean;
-  onRightIconPress?: (index :number) => void;
+  onRightIconPress?: (index: number) => void;
 }
 
 const HelperComponent = () => {
@@ -47,6 +48,7 @@ const HelperComponent = () => {
 };
 
 const ImageUpload = ({
+  title,
   imageData,
   openBottomSheet,
   rightIcon = false,
@@ -60,16 +62,16 @@ const ImageUpload = ({
     <View>
       <Spacer size={10} />
       <CustomButton
-        text="Upload"
+        text={title ?? 'Upload'}
         isDisabled={imageData?.length !== 0}
         type={ButtonTypes.contained}
         onPress={openBottomSheet}
       />
       {imageData?.length !== 0 ? (
-        imageData?.map((img,index) => {
+        imageData?.map((img, index) => {
           return (
             <FileCard
-              leftIcon={<Image source={{ uri: img?.uri }} style={styles.image}/>}
+              leftIcon={<Image source={{uri: img?.uri}} style={styles.image} />}
               fileName={img?.name ?? img?.title ?? 'Product Image.jpg'}
               fileSize={formatBytes(img?.size)}
               fileDate={getTodaysDate()}
@@ -80,7 +82,7 @@ const ImageUpload = ({
                     fill={COLORS.red2}
                     height={24}
                     width={24}
-                    onPress={()=>onRightIconPress(index)}
+                    onPress={() => onRightIconPress(index)}
                   />
                 )
               }

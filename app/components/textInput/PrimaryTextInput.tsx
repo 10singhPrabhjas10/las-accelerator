@@ -8,7 +8,7 @@ import {COLORS} from 'theme/colors';
 //Styles, Constants and interfaces
 
 interface IPrimaryTextInput extends TextInputProps {
-  placeHolder?: string;
+  placeHolder?: string | Number;
   titleText?: string;
   containerStyle?: TextStyle;
   textInputStyle?: TextStyle;
@@ -53,7 +53,7 @@ const PrimaryTextInput = ({
     <View style={containerStyle}>
       {titleText && (
         <View style={styles.titleView}>
-          <Text variant="bodyMedium">{titleText}</Text>
+          <Text variant="titleSmall">{titleText}</Text>
           {isRequired && <Text style={styles.requiredText}>{' *'}</Text>}
           <Text style={subTitleStyle} variant="bodyMedium">
             {subtitleText}
