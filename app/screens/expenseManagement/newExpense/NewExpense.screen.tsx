@@ -51,6 +51,8 @@ import {
   IExpenseData,
   IExpenseFormState,
 } from '../ExpenseManagement.Interface';
+import ArrowDown from '../../../../assets/icons/arrowDown.svg';
+import SuccessModal from '@/modals/SuccessModal';
 
 // Use a function to get a fresh initial state
 const getInitialExpense = (): IExpenseFormState => ({
@@ -104,7 +106,7 @@ const NewExpense = () => {
   }>({
     travelProofTypeDropdown: false,
     lodgingProofTypeDropdown: false,
-    otherProofTypeDropdown: false, 
+    otherProofTypeDropdown: false,
     modeOfTransportDropdown: false,
   });
 
@@ -559,7 +561,7 @@ const NewExpense = () => {
         />
         <Spacer size={15} />
 
-         <AutocompleteDropdown
+        <AutocompleteDropdown
           titleText={'City'}
           placeholder="Search City"
           initialValue={initialExpense.city ?? undefined}
@@ -578,13 +580,13 @@ const NewExpense = () => {
               }
             }
           }}
-          icon={<TextInput.Icon icon={searchIcon} />}
+          icon={<TextInput.Icon icon={ArrowDown} />}
           clearOnFocus={false}
           isRequired
           closeOnBlur={true}
           closeOnSubmit={false}
           errorText={touched?.cityCategory ? errors?.cityCategory : ''}
-        /> 
+        />
 
         <Spacer size={15} />
         <PrimaryTextInput
@@ -798,9 +800,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          // validationSchema={travelExpenseValidation
-          //   .concat(lodgingExpenseValidation)
-          //   .concat(otherExpenseValidation)}
+          validationSchema={travelExpenseValidation
+            .concat(lodgingExpenseValidation)
+            .concat(otherExpenseValidation)}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
@@ -913,14 +915,17 @@ const NewExpense = () => {
                   />
                 )}
 
-                {/* <Spacer size={15} />
+                <Spacer size={15} />
                 <CustomButton
                   type={ButtonTypes.outline}
-                  text="Add New Expense"
+                  text="Add Other Expense"
                   onPress={resetFormData}
-                  style={[{borderColor: COLORS.dgreen}, CommonStyles.flexOne]}
+                  style={[
+                    {borderColor: COLORS.dgreen, backgroundColor: COLORS.white},
+                    CommonStyles.flexOne,
+                  ]}
                   textStyle={{color: COLORS.dgreen}}
-                /> */}
+                />
                 <Spacer size={15} />
                 <CustomButton
                   type={ButtonTypes.contained}
@@ -932,7 +937,19 @@ const NewExpense = () => {
             );
           }}
         </Formik>
-        <SuccessFailureModal
+        <SuccessModal
+          visible={showSuccessModal}
+          onDismiss={() => setShowSuccessModal(false)}
+          title="Submitted"
+          message="You have successfully submitted your expenses."
+          buttonText="Dismiss"
+          onButtonPress={() => {
+            console.log('Modal closed');
+            setShowSuccessModal(false);
+          }}
+        />
+
+        {/* <SuccessFailureModal
           btnType="both"
           title={isSubmitted ? 'Submitted' : 'Failure'}
           label={
@@ -955,7 +972,7 @@ const NewExpense = () => {
           setShowModal={() => setShowSuccessModal(false)}
           showModal={showSuccessModal}
           isSuccess={isSubmitted}
-        />
+        /> */}
 
         <SuccessFailureModal
           btnType="both"

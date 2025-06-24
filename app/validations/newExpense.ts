@@ -9,7 +9,7 @@ export const travelExpenseValidation = Yup.object()
     beatEndPoint: Yup.string().required('Please enter the Beat End Point'),
     beatDistance: Yup.string().required('Please enter the Actual Beat Distance'),
     modeOfTransport: Yup.string().required('Please enter the Mode Of Transport'),
-    // cityCategory: Yup.string().required('Please enter the City'),
+    cityCategory: Yup.string().required('Please enter the City'),
     // amountExlTax: Yup.string(),
     // otherAmount: Yup.string(),
   })
@@ -29,7 +29,6 @@ export const travelExpenseValidation = Yup.object()
     lodgingAmount: Yup.string().required('Please enter the Amount'),
     noOfNight: Yup.string().required('Please enter the No of Night'),
     type: Yup.string().required('Please enter the Expense Type'),
-    // lodgingCityCategory: Yup.string().required('Please enter the City'),
   })
 
   export const otherExpenseValidation = Yup.object()

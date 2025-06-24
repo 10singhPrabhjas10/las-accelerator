@@ -46,9 +46,21 @@ export const getCityList = async (
     if (status === HttpStatusCode.OK && data) {
       const dropdownData = mapCityResponseToAutoComplete(data?.data);
       setSearchedCityData(dropdownData);
+    } else {
+      throw new Error('API failed, using mock data');
     }
   } catch (error: any) {
-    handleApiError(error?.data?.error?.message);
+    console.warn('Using mock city list due to error:', error?.message);
+
+    const mockCityData = [
+      {id: 'C001', title: 'Mumbai'},
+      {id: 'C002', title: 'Delhi'},
+      {id: 'C003', title: 'Bangalore'},
+      {id: 'C004', title: 'Chennai'},
+    ];
+
+    setSearchedCityData(mockCityData);
+    handleApiError(error?.data?.error?.message ?? 'Using mock data');
   } finally {
     setReduxLoading(false);
   }
@@ -57,8 +69,8 @@ export const getCityList = async (
 //API to create Primary Lead
 
 export const addNewOrUpdateExpense = async (
-  addOrUpdate,
-  requestBody,
+  addOrUpdate: string,
+  requestBody: any,
   onSuccess: () => void,
   onFailure: () => void,
 ) => {
