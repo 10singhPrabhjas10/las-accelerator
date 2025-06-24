@@ -37,8 +37,6 @@ export interface IExpenseData {
   noOfNight: string;
   city: string;
   cityCategory: string | null;
-  lodgingCity: string;
-  lodgingCityCategory: string | null;
   createdAt: string;
   updatedAt: string;
   totalAmount: number;
@@ -96,8 +94,6 @@ export interface IExpenseFormState {
   noOfNight: string | null;
   city: string | null;
   cityCategory: string | number | null;
-  lodgingCity: string | null;
-  lodgingCityCategory: string | number | null;
   calculatedAmount: string | null;
   lodgingComments: string | null;
   otherComments: string | null;

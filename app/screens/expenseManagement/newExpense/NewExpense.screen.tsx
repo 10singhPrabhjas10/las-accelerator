@@ -69,8 +69,6 @@ const getInitialExpense = (): IExpenseFormState => ({
   noOfNight: null,
   city: null,
   cityCategory: null,
-  lodgingCity: null,
-  lodgingCityCategory: null,
   lodgingComments: '',
   otherComments: '',
   expense_proofs: [],
@@ -106,7 +104,7 @@ const NewExpense = () => {
   }>({
     travelProofTypeDropdown: false,
     lodgingProofTypeDropdown: false,
-    otherProofTypeDropdown: false,
+    otherProofTypeDropdown: false, 
     modeOfTransportDropdown: false,
   });
 
@@ -149,12 +147,13 @@ const NewExpense = () => {
     if (selectedExpenseToBeModified) {
       const data: IExpenseData = selectedExpenseToBeModified;
       const mappedExpenseProofs =
-        data?.expense_proofs?.filter(item => item.proofFile)
+        data?.expense_proofs
+          ?.filter(item => item.proofFile)
           ?.map(item => ({
             id: item.id ?? null,
             expenseName: item.expenseName ?? '',
             proofFile: item.proofFile,
-          })) ?? []; 
+          })) ?? [];
       const updatedExpense: IExpenseFormState = {
         id: data.id ?? null,
         fromDate: data.fromDate ?? null,
@@ -171,8 +170,6 @@ const NewExpense = () => {
           ? String(data.calculatedAmount)
           : null,
         noOfNight: data.noOfNight ?? null,
-        lodgingCity: data.lodgingCity ?? null,
-        lodgingCityCategory: data.lodgingCityCategory ?? null,
         lodgingAmount:
           data.expenseType === 'LA'
             ? String(data.totalAmount)
@@ -302,7 +299,7 @@ const NewExpense = () => {
     const freshExpense = getInitialExpense();
     setInitialExpense(freshExpense);
     if (formikRef?.current?.resetForm) {
-      formikRef.current.resetForm({ values: freshExpense });
+      formikRef.current.resetForm({values: freshExpense});
     } else {
       const setFieldValue = formikRef?.current?.setFieldValue;
       Object.entries(freshExpense).forEach(([key, val]) => {
@@ -328,9 +325,9 @@ const NewExpense = () => {
 
       // Build expense_proofs array with type and uri
       const expense_proofs = [
-        ...travelPhotos.map(photo => ({ type: 'travel', uri: photo.uri })),
-        ...lodgingPhotos.map(photo => ({ type: 'lodging', uri: photo.uri })),
-        ...otherPhotos.map(photo => ({ type: 'other', uri: photo.uri })),
+        ...travelPhotos.map(photo => ({type: 'travel', uri: photo.uri})),
+        ...lodgingPhotos.map(photo => ({type: 'lodging', uri: photo.uri})),
+        ...otherPhotos.map(photo => ({type: 'other', uri: photo.uri})),
       ];
 
       const requestBody = {
@@ -402,7 +399,7 @@ const NewExpense = () => {
           errorText={touched?.beatEndPoint ? errors?.beatEndPoint : ''}
         />
 
-        <Spacer size={15} />
+        {/* <Spacer size={15} />
         <AutocompleteDropdown
           titleText={'City'}
           placeholder="Search City"
@@ -428,7 +425,7 @@ const NewExpense = () => {
           closeOnBlur={true}
           closeOnSubmit={false}
           errorText={touched?.cityCategory ? errors?.cityCategory : ''}
-        />
+        /> */}
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Actual Beat Distance'}
@@ -561,20 +558,21 @@ const NewExpense = () => {
           errorText={touched?.noOfNight ? errors?.noOfNight : ''}
         />
         <Spacer size={15} />
-        <AutocompleteDropdown
+
+         <AutocompleteDropdown
           titleText={'City'}
           placeholder="Search City"
-          initialValue={initialExpense.lodgingCity ?? undefined}
+          initialValue={initialExpense.city ?? undefined}
           dataSet={searchedCityList}
-          onChangeText={value => {
+          onChangeText={(value: string) => {
             if (value.length > 0) {
               handleCitySearch(value);
             }
           }}
           onSelectItem={data => {
             if (data) {
-              setFieldValue('lodgingCityCategory', data?.id);
-              setFieldValue('lodgingCity', data?.title);
+              setFieldValue('cityCategory', data?.id);
+              setFieldValue('city', data?.title);
               if (data?.title && typeof data.title === 'string') {
                 getCityRate(data.title as string);
               }
@@ -585,10 +583,8 @@ const NewExpense = () => {
           isRequired
           closeOnBlur={true}
           closeOnSubmit={false}
-          errorText={
-            touched?.lodgingCityCategory ? errors?.lodgingCityCategory : ''
-          }
-        />
+          errorText={touched?.cityCategory ? errors?.cityCategory : ''}
+        /> 
 
         <Spacer size={15} />
         <PrimaryTextInput
@@ -802,9 +798,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          validationSchema={travelExpenseValidation
-            .concat(lodgingExpenseValidation)
-            .concat(otherExpenseValidation)}
+          // validationSchema={travelExpenseValidation
+          //   .concat(lodgingExpenseValidation)
+          //   .concat(otherExpenseValidation)}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
@@ -917,6 +913,14 @@ const NewExpense = () => {
                   />
                 )}
 
+                {/* <Spacer size={15} />
+                <CustomButton
+                  type={ButtonTypes.outline}
+                  text="Add New Expense"
+                  onPress={resetFormData}
+                  style={[{borderColor: COLORS.dgreen}, CommonStyles.flexOne]}
+                  textStyle={{color: COLORS.dgreen}}
+                /> */}
                 <Spacer size={15} />
                 <CustomButton
                   type={ButtonTypes.contained}
