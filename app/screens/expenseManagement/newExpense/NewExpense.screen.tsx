@@ -66,21 +66,19 @@ const getInitialExpense = (): IExpenseFormState => ({
   calculatedAmount: null,
   lodgingAmount: null,
   lodgingTaxAmount: null,
-  otherAmount: null,
-  otherTaxAmount: null,
   noOfNight: null,
   city: null,
   cityCategory: null,
   lodgingComments: '',
-  otherComments: '',
-  expense_proofs: [],
-  files: [],
   travelProofType: null,
   lodgingProofType: null,
-  otherProofType: null,
   travelProofComments: '',
   lodgingProofComments: '',
-  otherProofComments: '',
+  otherAmount: null,
+  otherTaxAmount: null,
+  otherProofType: null,
+  otherProofComments: null,
+  otherComments: '',
 });
 
 const GREY_TEXT_THEME = {colors: {onSurface: COLORS.grey2}};
@@ -124,6 +122,15 @@ const NewExpense = () => {
   const route = useRoute<RouteProp<RootNavigationTypes, 'NewExpense'>>();
   const {selectedExpenseToBeModified = null} = route?.params || {};
 
+  const [otherExpenses, setOtherExpenses] = useState<IExpenseFormState[]>([
+    getInitialExpense(),
+  ]);
+
+  // Add this state for per-section dropdown visibility
+  const [otherProofDropdowns, setOtherProofDropdowns] = useState<boolean[]>([
+    false,
+  ]);
+
   const toggleDropDownVisibility = (
     key:
       | 'travelProofTypeDropdown'
@@ -148,14 +155,6 @@ const NewExpense = () => {
   useEffect(() => {
     if (selectedExpenseToBeModified) {
       const data: IExpenseData = selectedExpenseToBeModified;
-      const mappedExpenseProofs =
-        data?.expense_proofs
-          ?.filter(item => item.proofFile)
-          ?.map(item => ({
-            id: item.id ?? null,
-            expenseName: item.expenseName ?? '',
-            proofFile: item.proofFile,
-          })) ?? [];
       const updatedExpense: IExpenseFormState = {
         id: data.id ?? null,
         fromDate: data.fromDate ?? null,
@@ -184,8 +183,6 @@ const NewExpense = () => {
         otherTaxAmount: String(data.otherTaxAmount),
         lodgingComments: data.lodgingComments ?? null,
         otherComments: data.otherComments ?? null,
-        expense_proofs: mappedExpenseProofs,
-        files: [],
         travelProofType: data.travelProofType ?? null,
         lodgingProofType: data.lodgingProofType ?? null,
         otherProofType: data.otherProofType ?? null,
@@ -194,7 +191,6 @@ const NewExpense = () => {
         otherProofComments: data.otherProofComments ?? null,
       };
       setInitialExpense(updatedExpense);
-      setExpenseProofList(mappedExpenseProofs.map(item => item.proofFile));
       setSearchedCityList([
         {
           id: data.cityCategory ?? '',
@@ -313,6 +309,25 @@ const NewExpense = () => {
     setLodgingPhotos([]);
     setOtherPhotos([]);
     setExpenseProofList([]);
+    setOtherExpenses([getInitialExpense()]);
+    setOtherProofDropdowns([false]);
+  };
+
+  const handleAddOtherExpense = () => {
+    setOtherExpenses(prev => [...prev, getInitialExpense()]);
+    setOtherProofDropdowns(prev => [...prev, false]);
+  };
+
+  const handleDeleteOtherExpense = (index: number) => {
+    setOtherExpenses(prev => prev.filter((_, idx) => idx !== index));
+    setOtherProofDropdowns(prev => prev.filter((_, idx) => idx !== index));
+  };
+
+  // Toggle dropdown for a specific section
+  const toggleOtherProofDropdown = (idx: number) => {
+    setOtherProofDropdowns(prev =>
+      prev.map((open, i) => (i === idx ? !open : false)),
+    );
   };
 
   const createReqBody = () => {
@@ -323,29 +338,43 @@ const NewExpense = () => {
         return;
       }
 
-      const photoList = photo?.map(item => item.uri) || [];
+      const {
+        otherAmount,
+        otherTaxAmount,
+        otherProofType,
+        otherProofComments,
+        otherComments,
+        ...mainValues
+      } = values;
 
-      // Build expense_proofs array with type and uri
-      const expense_proofs = [
-        ...travelPhotos.map(photo => ({type: 'travel', uri: photo.uri})),
-        ...lodgingPhotos.map(photo => ({type: 'lodging', uri: photo.uri})),
-        ...otherPhotos.map(photo => ({type: 'other', uri: photo.uri})),
-      ];
+      const travel_expense_proof = travelPhotos.map(photo => photo.uri);
+      const lodging_expense_proof = lodgingPhotos.map(photo => photo.uri);
+      const other_expense_proofs = otherExpenses.map((oe, idx) => {
+        return otherPhotos.map(photo => photo.uri);
+      });
+
+      const otherExpensesReq = otherExpenses.map(oe => ({
+        otherAmount:
+          Number(oe.otherAmount || 0) + Number(oe.otherTaxAmount || 0),
+        otherTaxAmount: Number(oe.otherTaxAmount || 0),
+        otherProofType: oe.otherProofType,
+        otherProofComments: oe.otherProofComments,
+        otherComments: oe.otherComments,
+      }));
 
       const requestBody = {
-        ...values,
-        files: [...expenseProofList, ...photoList],
-        expense_proofs,
+        ...mainValues,
+        travel_expense_proof,
+        lodging_expense_proof,
+        other_expense_proofs,
         calculatedAmount: Number(values?.calculatedAmount),
         lodgingAmount:
           Number(values?.lodgingAmount || 0) +
           Number(values?.lodgingTaxAmount || 0),
-        otherAmount:
-          Number(values?.otherAmount || 0) +
-          Number(values?.otherTaxAmount || 0),
         beatDistance: Number(values?.beatDistance),
         fromDate: moment(values?.fromDate).format(DateFormats.YYYY_MM_DD),
         toDate: moment(values?.toDate).format(DateFormats.YYYY_MM_DD),
+        otherExpenses: otherExpensesReq,
       };
       console.log(requestBody);
 
@@ -367,6 +396,14 @@ const NewExpense = () => {
     }
   };
 
+  const updateOtherExpense = (index: number, field: string, value: any) => {
+    setOtherExpenses(prev =>
+      prev.map((item, idx) =>
+        idx === index ? {...item, [field]: value} : item,
+      ),
+    );
+  };
+
   const renderTravelAllowance = (
     handleBlur: (field: string) => void,
     values: IExpenseFormState,
@@ -383,7 +420,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Beat Start Point'}
-          value={values?.beatStartPoint ?? undefined}
+          value={values?.beatStartPoint ?? ''}
           isRequired
           onChangeText={val => setFieldValue('beatStartPoint', val)}
           placeHolder={'Enter Start Point'}
@@ -394,7 +431,7 @@ const NewExpense = () => {
         <PrimaryTextInput
           titleText={'Beat End Point'}
           isRequired
-          value={values?.beatEndPoint ?? undefined}
+          value={values?.beatEndPoint ?? ''}
           onChangeText={val => setFieldValue('beatEndPoint', val)}
           placeHolder={'Enter End Point'}
           onBlur={() => handleBlur('beatEndPoint')}
@@ -431,7 +468,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Actual Beat Distance'}
-          value={values?.beatDistance ?? undefined}
+          value={values?.beatDistance ?? ''}
           isRequired
           onChangeText={val => {
             setFieldValue('beatDistance', val);
@@ -480,7 +517,7 @@ const NewExpense = () => {
         {values.travelProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
-            value={values.travelProofComments ?? undefined}
+            value={values.travelProofComments ?? ''}
             onChangeText={val => setFieldValue('travelProofComments', val)}
             placeHolder={'Enter Other Proof Type'}
             onBlur={() => handleBlur('travelProofComments')}
@@ -523,7 +560,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Calculated Amount'}
-          value={values?.calculatedAmount ?? undefined}
+          value={values?.calculatedAmount ?? ''}
           isRequired
           onChangeText={val => setFieldValue('calculatedAmount', val)}
           placeHolder={'Enter Calculated Amount'}
@@ -551,7 +588,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'No. of Night'}
-          value={values?.noOfNight ?? undefined}
+          value={values?.noOfNight ?? ''}
           isRequired
           onChangeText={val => setFieldValue('noOfNight', val)}
           placeHolder={'Enter No. of Night'}
@@ -564,7 +601,7 @@ const NewExpense = () => {
         <AutocompleteDropdown
           titleText={'City'}
           placeholder="Search City"
-          initialValue={initialExpense.city ?? undefined}
+          initialValue={initialExpense.city ?? ''}
           dataSet={searchedCityList}
           onChangeText={(value: string) => {
             if (value.length > 0) {
@@ -591,7 +628,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Amount (excl. tax)'}
-          value={values?.lodgingAmount ?? undefined}
+          value={values?.lodgingAmount ?? ''}
           onChangeText={val => setFieldValue('lodgingAmount', val)}
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
@@ -602,7 +639,7 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Tax Amount'}
-          value={values?.lodgingTaxAmount ?? undefined}
+          value={values?.lodgingTaxAmount ?? ''}
           onChangeText={val => setFieldValue('lodgingTaxAmount', val)}
           placeHolder={'Enter Tax Amount'}
           onBlur={() => handleBlur('lodgingTaxAmount')}
@@ -630,7 +667,7 @@ const NewExpense = () => {
         {values.lodgingProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
-            value={values.lodgingProofComments ?? undefined}
+            value={values.lodgingProofComments ?? ''}
             onChangeText={val => setFieldValue('lodgingProofComments', val)}
             placeHolder={'Enter Other Proof Type'}
             onBlur={() => handleBlur('lodgingProofComments')}
@@ -644,7 +681,7 @@ const NewExpense = () => {
           multiline
           numberOfLines={4}
           titleText="Comments"
-          value={values?.lodgingComments ?? undefined}
+          value={values?.lodgingComments ?? ''}
           onChangeText={val => {
             setFieldValue('lodgingComments', val);
           }}
@@ -684,82 +721,94 @@ const NewExpense = () => {
   };
 
   const renderOtherAllowance = (
-    handleBlur: (field: string) => void,
-    values: IExpenseFormState,
-    errors: any,
-    setFieldValue: (field: string, value: any) => void,
-    touched: any,
+    otherExpense: IExpenseFormState,
+    idx: number,
+    updateOtherExpense: (index: number, field: string, value: any) => void,
+    deleteOtherExpense: (index: number) => void,
   ) => {
     return (
       <>
         <Spacer size={15} />
-        <Text variant="bodyMedium" theme={GREY_TEXT_THEME}>
-          Other Expense
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Text variant="bodyMedium" theme={GREY_TEXT_THEME}>
+            Other Expense {otherExpenses.length > 1 ? `#${idx + 1}` : ''}
+          </Text>
+          {otherExpenses.length > 1 && (
+            <TouchableOpacity onPress={() => deleteOtherExpense(idx)}>
+              <DeleteIcon fill={COLORS.red2} height={22} width={22} />
+            </TouchableOpacity>
+          )}
+        </View>
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Amount (excl. tax)'}
-          value={values?.otherAmount ?? undefined}
-          onChangeText={val => setFieldValue('otherAmount', val)}
+          value={
+            otherExpense?.otherAmount !== undefined &&
+            otherExpense?.otherAmount !== null
+              ? String(otherExpense.otherAmount)
+              : ''
+          }
+          onChangeText={val => updateOtherExpense(idx, 'otherAmount', val)}
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
-          onBlur={() => handleBlur('otherAmount')}
           keyboardType="decimal-pad"
-          errorText={touched?.otherAmount ? errors?.otherAmount : ''}
         />
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Tax Amount'}
-          value={values?.otherTaxAmount ?? undefined}
-          onChangeText={val => setFieldValue('otherTaxAmount', val)}
+          value={
+            otherExpense?.otherTaxAmount !== undefined &&
+            otherExpense?.otherTaxAmount !== null
+              ? String(otherExpense.otherTaxAmount)
+              : ''
+          }
+          onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', val)}
           placeHolder={'Enter Tax Amount'}
-          onBlur={() => handleBlur('otherTaxAmount')}
           keyboardType="decimal-pad"
-          errorText={touched?.otherTaxAmount ? errors?.otherTaxAmount : ''}
         />
         <Spacer size={15} />
         <DropDown
           list={PROOF_TYPE}
           label={'Proof Type'}
           placeholder={'Select Proof Type'}
-          value={values.otherProofType}
-          visible={visibility.otherProofTypeDropdown}
-          onChangeDropdownState={() =>
-            toggleDropDownVisibility('otherProofTypeDropdown')
-          }
+          value={otherExpense.otherProofType}
+          visible={otherProofDropdowns[idx]}
+          onChangeDropdownState={() => toggleOtherProofDropdown(idx)}
           setValue={data => {
-            setFieldValue('otherProofType', data);
+            updateOtherExpense(idx, 'otherProofType', data);
             if (data !== 'Other')
-              setFieldValue('otherProofComments', undefined);
+              updateOtherExpense(idx, 'otherProofComments', undefined);
+            setTimeout(() => {
+              setOtherProofDropdowns(prev =>
+                prev.map((open, i) => (i === idx ? false : open)),
+              );
+            }, 0);
           }}
-          error={touched.otherProofType ? errors.otherProofType : ''}
         />
-
         <Spacer size={15} />
-        {values.otherProofType === 'other' && (
+        {otherExpense.otherProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
-            value={values.otherProofComments ?? undefined}
-            onChangeText={val => setFieldValue('otherProofComments', val)}
-            placeHolder={'Enter Other Proof Type'}
-            onBlur={() => handleBlur('otherProofComments')}
-            errorText={
-              touched?.otherProofComments ? errors?.otherProofComments : ''
+            value={otherExpense.otherProofComments ?? undefined}
+            onChangeText={val =>
+              updateOtherExpense(idx, 'otherProofComments', val)
             }
+            placeHolder={'Enter Other Proof Type'}
           />
         )}
         <Spacer size={15} />
         <PrimaryTextInput
           multiline
           numberOfLines={4}
-          titleText="Comments"
-          value={values?.otherComments ?? undefined}
-          onChangeText={val => {
-            setFieldValue('otherComments', val);
-          }}
+          titleText="Comment"
+          value={otherExpense?.otherComments ?? undefined}
+          onChangeText={val => updateOtherExpense(idx, 'otherComments', val)}
           placeHolder="Type Comments"
-          onBlur={() => handleBlur('otherComments')}
-          errorText={touched?.otherComments ? errors?.otherComments : ''}
           textInputStyle={styles.textInput}
         />
         <Spacer size={15} />
@@ -800,9 +849,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          validationSchema={travelExpenseValidation
-            .concat(lodgingExpenseValidation)
-            .concat(otherExpenseValidation)}
+          // validationSchema={travelExpenseValidation
+          //   .concat(lodgingExpenseValidation)
+          //   .concat(otherExpenseValidation)}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
@@ -825,7 +874,7 @@ const NewExpense = () => {
             touched,
           }) => {
             return (
-              <View>
+              <>
                 <DatePicker
                   label="From Date"
                   isRequired
@@ -883,13 +932,26 @@ const NewExpense = () => {
                   setFieldValue,
                   touched,
                 )}
-                {renderOtherAllowance(
-                  handleBlur,
-                  values,
-                  errors,
-                  setFieldValue,
-                  touched,
-                )}
+                {otherExpenses.map((otherExpense, idx) => (
+                  <View key={idx} style={{marginBottom: 20}}>
+                    {renderOtherAllowance(
+                      otherExpense,
+                      idx,
+                      updateOtherExpense,
+                      handleDeleteOtherExpense,
+                    )}
+                  </View>
+                ))}
+                <CustomButton
+                  type={ButtonTypes.outline}
+                  onPress={handleAddOtherExpense}
+                  text="Add Other Expense"
+                  style={[
+                    {borderColor: COLORS.dgreen, backgroundColor: COLORS.white},
+                    CommonStyles.flexOne,
+                  ]}
+                  textStyle={{color: COLORS.dgreen}}
+                />
 
                 <Spacer size={15} />
                 {expenseProofList && (
@@ -915,25 +977,13 @@ const NewExpense = () => {
                   />
                 )}
 
-                <Spacer size={15} />
-                <CustomButton
-                  type={ButtonTypes.outline}
-                  text="Add Other Expense"
-                  onPress={resetFormData}
-                  style={[
-                    {borderColor: COLORS.dgreen, backgroundColor: COLORS.white},
-                    CommonStyles.flexOne,
-                  ]}
-                  textStyle={{color: COLORS.dgreen}}
-                />
-                <Spacer size={15} />
                 <CustomButton
                   type={ButtonTypes.contained}
                   text="Submit"
                   onPress={handleSubmit}
                   style={CommonStyles.flexOne}
                 />
-              </View>
+              </>
             );
           }}
         </Formik>

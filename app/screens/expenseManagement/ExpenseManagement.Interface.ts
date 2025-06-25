@@ -49,14 +49,24 @@ export interface IExpenseData {
   expenseType: string;
   allowedAmount: string | null;
   createdBy: string | null;
-  files: string[];
   travelProofType: string | null;
   lodgingProofType: string | null;
   otherProofType: string | null;
   travelProofComments: string | null;
   lodgingProofComments: string | null;
   otherProofComments: string | null;
-  expense_proofs: IExpenseProof[];
+  travel_expense_proof: string[];
+  lodging_expense_proof: string[];
+  other_expense_proofs: string[][];
+  otherExpenses: IExpenseOther[];
+}
+
+export interface IExpenseOther {
+  otherAmount: number;
+  otherTaxAmount: number;
+  otherProofType: string | null;
+  otherProofComments: string | null;
+  otherComments: string | null;
 }
 
 export interface IExpenseFilterRequestBody {
@@ -97,12 +107,10 @@ export interface IExpenseFormState {
   calculatedAmount: string | null;
   lodgingComments: string | null;
   otherComments: string | null;
-  files: string[];
   travelProofType: string | null;
   lodgingProofType: string | null;
   otherProofType: string | null;
   travelProofComments: string | null;
   lodgingProofComments: string | null;
   otherProofComments: string | null;
-  expense_proofs: IExpenseProof[];
 }

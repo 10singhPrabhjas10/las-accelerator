@@ -9,7 +9,6 @@ export const travelExpenseValidation = Yup.object()
     beatEndPoint: Yup.string().required('Please enter the Beat End Point'),
     beatDistance: Yup.string().required('Please enter the Actual Beat Distance'),
     modeOfTransport: Yup.string().required('Please enter the Mode Of Transport'),
-    cityCategory: Yup.string().required('Please enter the City'),
     // amountExlTax: Yup.string(),
     // otherAmount: Yup.string(),
   })
