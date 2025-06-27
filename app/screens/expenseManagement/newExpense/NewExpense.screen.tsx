@@ -94,7 +94,7 @@ const NewExpense = () => {
 
   const [travelPhotos, setTravelPhotos] = useState<IPhotoProps[]>([]);
   const [lodgingPhotos, setLodgingPhotos] = useState<IPhotoProps[]>([]);
-  const [otherPhotos, setOtherPhotos] = useState<IPhotoProps[]>([]);
+  const [otherPhotos, setOtherPhotos] = useState<IPhotoProps[][]>([[]]);
 
   const [visibility, setVisibility] = useState<{
     travelProofTypeDropdown: boolean;
@@ -126,10 +126,11 @@ const NewExpense = () => {
     getInitialExpense(),
   ]);
 
-  // Add this state for per-section dropdown visibility
   const [otherProofDropdowns, setOtherProofDropdowns] = useState<boolean[]>([
     false,
   ]);
+
+  const [currentOtherIdx, setCurrentOtherIdx] = useState<number | null>(null);
 
   const toggleDropDownVisibility = (
     key:
@@ -197,13 +198,26 @@ const NewExpense = () => {
           title: data.city ?? '',
         },
       ]);
+      if (data.otherExpenses && Array.isArray(data.otherExpenses)) {
+        setOtherPhotos(Array(data.otherExpenses.length).fill([]));
+      } else {
+        setOtherPhotos([[]]);
+      }
     } else {
       resetFormData();
     }
   }, []);
 
-  const handleAddMoreProof = (proofType: 'travel' | 'lodging' | 'other') => {
+  const handleAddMoreProof = (
+    proofType: 'travel' | 'lodging' | 'other',
+    idx?: number,
+  ) => {
     setCurrentProofType(proofType);
+    if (proofType === 'other' && typeof idx === 'number') {
+      setCurrentOtherIdx(idx);
+    } else {
+      setCurrentOtherIdx(null);
+    }
     setShowUploadImageBottomSheet(true);
   };
 
@@ -307,7 +321,7 @@ const NewExpense = () => {
     setPhoto([]);
     setTravelPhotos([]);
     setLodgingPhotos([]);
-    setOtherPhotos([]);
+    setOtherPhotos([[]]);
     setExpenseProofList([]);
     setOtherExpenses([getInitialExpense()]);
     setOtherProofDropdowns([false]);
@@ -316,11 +330,13 @@ const NewExpense = () => {
   const handleAddOtherExpense = () => {
     setOtherExpenses(prev => [...prev, getInitialExpense()]);
     setOtherProofDropdowns(prev => [...prev, false]);
+    setOtherPhotos(prev => [...prev, []]);
   };
 
   const handleDeleteOtherExpense = (index: number) => {
     setOtherExpenses(prev => prev.filter((_, idx) => idx !== index));
     setOtherProofDropdowns(prev => prev.filter((_, idx) => idx !== index));
+    setOtherPhotos(prev => prev.filter((_, idx) => idx !== index));
   };
 
   // Toggle dropdown for a specific section
@@ -349,9 +365,9 @@ const NewExpense = () => {
 
       const travel_expense_proof = travelPhotos.map(photo => photo.uri);
       const lodging_expense_proof = lodgingPhotos.map(photo => photo.uri);
-      const other_expense_proofs = otherExpenses.map((oe, idx) => {
-        return otherPhotos.map(photo => photo.uri);
-      });
+      const other_expense_proofs = otherPhotos.map(photoArr =>
+        photoArr.map(photo => photo.uri),
+      );
 
       const otherExpensesReq = otherExpenses.map(oe => ({
         otherAmount:
@@ -707,8 +723,8 @@ const NewExpense = () => {
         {lodgingPhotos.length > 0 && (
           <CustomButton
             type={ButtonTypes.outline}
+            textStyle={{color: COLORS.black}}
             onPress={() => handleAddMoreProof('lodging')}
-            icon={<Icon size={16} source={'plus'} />}
             text="Add More Proof"
             isDisabled={combinedImageCountExceedsLimit(
               lodgingPhotos,
@@ -815,24 +831,30 @@ const NewExpense = () => {
 
         <ImageUpload
           title="Upload Other Proof"
-          imageData={otherPhotos}
+          imageData={otherPhotos[idx] || []}
           rightIcon
-          openBottomSheet={() => handleAddMoreProof('other')}
-          onRightIconPress={index =>
-            setOtherPhotos(prev => [
-              ...prev.slice(0, index),
-              ...prev.slice(index + 1),
-            ])
+          openBottomSheet={() => handleAddMoreProof('other', idx)}
+          onRightIconPress={indexToRemove =>
+            setOtherPhotos(prev =>
+              prev.map((arr, i) =>
+                i === idx
+                  ? [
+                      ...arr.slice(0, indexToRemove),
+                      ...arr.slice(indexToRemove + 1),
+                    ]
+                  : arr,
+              ),
+            )
           }
         />
-        {otherPhotos.length > 0 && (
+        {otherPhotos[idx] && otherPhotos[idx].length > 0 && (
           <CustomButton
             type={ButtonTypes.outline}
-            onPress={() => handleAddMoreProof('other')}
-            icon={<Icon size={16} source={'plus'} />}
+            textStyle={{color: COLORS.black}}
+            onPress={() => handleAddMoreProof('other', idx)}
             text="Add More Proof"
             isDisabled={combinedImageCountExceedsLimit(
-              otherPhotos,
+              otherPhotos[idx],
               expenseProofList,
             )}
           />
@@ -1051,8 +1073,16 @@ const NewExpense = () => {
             setTravelPhotos(prev => [...prev, newPhoto as IPhotoProps]);
           } else if (currentProofType === 'lodging' && newPhoto) {
             setLodgingPhotos(prev => [...prev, newPhoto as IPhotoProps]);
-          } else if (currentProofType === 'other' && newPhoto) {
-            setOtherPhotos(prev => [...prev, newPhoto as IPhotoProps]);
+          } else if (
+            currentProofType === 'other' &&
+            newPhoto &&
+            currentOtherIdx !== null
+          ) {
+            setOtherPhotos(prev =>
+              prev.map((arr, i) =>
+                i === currentOtherIdx ? [...arr, newPhoto as IPhotoProps] : arr,
+              ),
+            );
           }
         }}
         visible={showUploadImageBottomSheet}
