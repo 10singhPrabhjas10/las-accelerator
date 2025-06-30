@@ -1,14 +1,12 @@
 import Layout from 'components/Layout';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import CommonStyles from 'utils/commonStyle';
-import {Calendar, CalendarUtils} from 'react-native-calendars';
+import {CalendarUtils} from 'react-native-calendars';
 import {COLORS} from 'theme/colors';
-import {Pressable, Text} from 'react-native';
+import {FlatList, Modal, Pressable, Text} from 'react-native';
 import {View} from 'react-native';
 import {styles} from './checkinout.styles';
 import moment from 'moment';
-import RightArrowIcon from '../../../../assets/icons/bold-right-arrow.svg';
-import LeftArrowIcon from '../../../../assets/icons/bold-arrow-left-.svg';
 import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import CustomButton from 'components/button/CustomButton';
 import {ButtonTypes} from 'types/buttons';
@@ -17,13 +15,9 @@ import Geolocation, {
   GeolocationError,
   GeolocationResponse,
 } from '@react-native-community/geolocation';
-import NetworkRequest from 'services/networkRequest';
-import {POST} from 'constants/httpConstants';
-import {GET_ATTENDANCE_DATA, SUBMIT_ATTENDANCE} from 'services/constants';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
 import {useNavigation} from '@react-navigation/native';
-import {getTranslationLabel} from 'utils/commonMethods';
-
+import CommonCalendar from '../../../components/calendar/CommonCalendar';
 type DayInfo = {
   date?: string;
   time?: string;
@@ -31,158 +25,39 @@ type DayInfo = {
   isCheckIn?: boolean;
 };
 
-interface IScheduleInfo {
-  type: string;
-  date: string;
-  [key: string]: string | number;
-}
-
 export const CheckInCheckOutScreen = () => {
   const navigation = useNavigation();
 
   const [checkinInfo, setCheckIn] = useState<DayInfo | undefined>();
   const [checkoutInfo, setCheckOut] = useState<DayInfo | undefined>();
-  const [calendarData, setCalendarData] = useState<{[key: string]: object}>();
-  const [totalLeaves, setTotalLeaves] = useState(0);
-  const [totalRegularized, setTotalRegularized] = useState(0);
-  const [totalcheckedIn, setTotalcheckedIn] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState(new Date());
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [scheduleInfo, setScheduleInfo] = useState<IScheduleInfo[]>([]);
+  const attendanceData = [
+    {date: '2025-06-05', type: 'present'},
+    {date: '2025-06-02', type: 'present'},
+    {date: '2025-06-03', type: 'present'},
+    {date: '2025-06-04', type: 'present'},
+    {date: '2025-06-25', type: 'present'},
+    //absent
+    {date: '2025-06-09', type: 'absent'},
+    {date: '2025-06-10', type: 'absent'},
+    {date: '2025-06-11', type: 'absent'},
+    //holiday
+    {date: '2025-06-23', type: 'holiday'},
+    {date: '2025-06-24', type: 'holiday'},
+    //pending
+    {date: '2025-06-17', type: 'pending'},
+    {date: '2025-06-18', type: 'pending'},
+  ];
 
-  const getCalendarInfo = useCallback(async () => {
-    try {
-      const selectedMonth = moment(selectedValue).get('month') + 1;
-
-      const response = await NetworkRequest(POST, GET_ATTENDANCE_DATA, {
-        month: selectedMonth,
-      });
-
-      if (response && response?.data) {
-        setScheduleInfo(response?.data?.data ?? []);
-      }
-    } catch (error) {
-      console.log('Calendar data could not be loaded ===>', error);
-    }
-  }, [selectedValue]);
-
-  useEffect(() => {
-    getCalendarInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (scheduleInfo?.length) {
-      marked(scheduleInfo);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleInfo]);
-
-  const findTodayStatus = () => {
-    try {
-      const today = CalendarUtils.getCalendarDateString(new Date());
-
-      const [dateRecord] = scheduleInfo.filter(rec => rec.date === today);
-
-      if (dateRecord) {
-        const {
-          checkInTime,
-          checkOutTime,
-          checkInLocation,
-          date,
-          checkOutLocation,
-        } = dateRecord;
-
-        if (checkInTime) {
-          setCheckIn({
-            ...checkinInfo,
-            date,
-            time: checkInTime as string,
-            location: checkInLocation as string,
-          });
-        }
-        if (checkOutTime) {
-          setCheckOut({
-            ...checkoutInfo,
-            date,
-            time: checkOutTime as string,
-            location: checkOutLocation as string,
-          });
-        }
-      }
-    } catch (error) {
-      console.log('Error in findTodayStatus()', error);
-    }
-  };
-
-  const marked = (dates: {[key: string]: any}[]) => {
-    const dateMarkings: {[key: string]: object} = {};
-
-    const createColorMarking = (color: string) => {
-      return {
-        customStyles: {
-          container: {
-            backgroundColor: color,
-          },
-        },
-      };
-    };
-
-    // find if today is checked In
-    findTodayStatus();
-
-    let regularizedDates = 0;
-    let appliedLeave = 0;
-    let checkedIn = 0;
-    dates.forEach(dt => {
-      const day: string = CalendarUtils.getCalendarDateString(dt.date);
-
-      switch (dt.type) {
-        case 'regularizedDates':
-          dateMarkings[day] = createColorMarking(COLORS.lightOrange2);
-          regularizedDates = regularizedDates + 1;
-          break;
-        case 'appliedLeave':
-          dateMarkings[day] = createColorMarking(COLORS.olympicBlue);
-          appliedLeave = appliedLeave + 1;
-          break;
-        case 'checkedIn':
-          checkedIn = checkedIn + 1;
-          dateMarkings[day] = createColorMarking(COLORS.kellyGreen);
-      }
-    });
-    setTotalRegularized(regularizedDates);
-    setTotalcheckedIn(checkedIn);
-    setTotalLeaves(appliedLeave);
-
-    setCalendarData(dateMarkings);
-  };
-
-  const CustomHeaderTitle = (
-    <View style={styles.calendarHeaderWrap}>
-      <View style={styles.calenderTitleWrap}>
-        <Text style={styles.calenderTitle}>
-          {moment(Date.now()).format('ddd, MMM DD')}
-        </Text>
-      </View>
-      <View style={styles.calendarSubTitleWrap}>
-        <Pressable>
-          <Text style={styles.monthDisplay}>
-            {moment(selectedValue).format('MMMM')} {selectedValue.getFullYear()}
-          </Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-
-  const handleArrowRender = (direction: string) => {
-    return direction === 'left' ? (
-      <LeftArrowIcon height={15} />
-    ) : (
-      <RightArrowIcon height={15} />
-    );
+  const TYPE_COLORS = {
+    present: COLORS.lightGreen,
+    absent: COLORS.lightRed,
+    pending: COLORS.lightOrange,
+    holiday: COLORS.lightBlue,
+    weekoff: COLORS.gray,
   };
 
   const getNow = () => ({
@@ -279,23 +154,6 @@ export const CheckInCheckOutScreen = () => {
     },
     [selectedValue],
   );
-  const onPressArrowLeft = useCallback(
-    (subtract: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, false);
-      setSelectedValue(newDate);
-      subtract();
-    },
-    [getNewSelectedDate],
-  );
-
-  const onPressArrowRight = useCallback(
-    (add: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, true);
-      setSelectedValue(newDate);
-      add();
-    },
-    [getNewSelectedDate],
-  );
 
   const attendanceSubmitHandler = async () => {
     try {
@@ -328,70 +186,122 @@ export const CheckInCheckOutScreen = () => {
         body.checkOutLocation = checkoutInfo.location ?? '';
       }
 
-      const response = await NetworkRequest(POST, SUBMIT_ATTENDANCE, body);
-
-      if (response && response.data) {
-        setIsSubmitted(true);
-        setShowSuccessModal(true);
-      }
-    } catch (error) {
-      setIsSubmitted(false);
       setShowSuccessModal(true);
+      setIsSubmitted(true);
+    } catch (error) {
+      //setIsSubmitted(false);
+      //setShowSuccessModal(true);
     }
+  };
+  const markedDates = attendanceData.reduce<Record<string, any>>(
+    (acc, item) => {
+      acc[item.date] = {
+        customStyles: {
+          container: {
+            backgroundColor: TYPE_COLORS[item.type as keyof typeof TYPE_COLORS],
+            borderRadius: 20,
+            width: 40,
+            height: 40,
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          text: {
+            color: '#222',
+            fontWeight: 'bold',
+            fontSize: 16,
+          },
+        },
+      };
+      return acc;
+    },
+    {},
+  );
+  const today = CalendarUtils.getCalendarDateString(new Date());
+  if (!markedDates[today]) {
+    markedDates[today] = {
+      customStyles: {
+        container: {
+          backgroundColor: '#e0e0e0',
+          borderRadius: 20,
+          width: 36,
+          height: 36,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        text: {
+          color: '#222',
+          fontWeight: 'bold',
+          fontSize: 16,
+        },
+      },
+      selected: true,
+    };
+  }
+  const monthsList = Array.from({length: 12}, (_, i) =>
+    moment().month(i).format('MMMM'),
+  );
+  const [isMonthPickerVisible, setMonthPickerVisible] = useState(false);
+
+  const handleMonthSelect = (index: number) => {
+    const newDate = new Date(selectedValue);
+    newDate.setMonth(index);
+    setSelectedValue(newDate);
+    setMonthPickerVisible(false);
   };
 
   return (
     <Layout
-      headerTitle={getTranslationLabel('check_in_check_out')}
+      headerTitle={'Check-in & Check-Out'}
       style={[CommonStyles.padding16, styles.root]}
       isScrollable={true}>
-      <Calendar
-        mode="multiple"
-        current={CalendarUtils.getCalendarDateString(Date.now())}
-        enableSwipeMonths
-        markingType="custom"
-        markedDates={calendarData}
-        customHeaderTitle={CustomHeaderTitle}
-        onPressArrowLeft={onPressArrowLeft}
-        onPressArrowRight={onPressArrowRight}
-        hideExtraDays={true}
-        theme={{
-          todayTextColor: COLORS.black,
-          textDayStyle: {
-            textTransform: 'capitalize',
-          },
-          textDayFontFamily: 'soleto_regular',
-          textDayHeaderFontSize: 16,
-          textSectionTitleColor: COLORS.black,
-          arrowStyle: {
-            padding: 0,
-            marginTop: 8,
-            justifyContent: 'center',
-          },
-        }}
-        renderArrow={handleArrowRender}
-        style={styles.calendarContainer}
+      <CommonCalendar
+        markedDates={markedDates}
+        selectedValue={selectedValue}
+        onMonthChange={setSelectedValue}
       />
-
+      <Modal
+        visible={isMonthPickerVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setMonthPickerVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select Month</Text>
+            <FlatList
+              data={monthsList}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item, index}) => (
+                <Pressable
+                  style={styles.monthItem}
+                  onPress={() => handleMonthSelect(index)}>
+                  <Text style={styles.monthItemText}>{item}</Text>
+                </Pressable>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
+      <View style={styles.summaryRow}></View>
       <View style={styles.daysInfoWrap}>
         <View style={[styles.infoWrap, styles.rightBorder]}>
-          <Text style={[styles.numberInfo, styles.present]}>
-            {totalcheckedIn}
-          </Text>
-          <Text style={styles.numberTypeInfo}>
-            {getTranslationLabel('present')}
-          </Text>
+          <Text style={[styles.numberInfo, styles.present]}>5</Text>
+          <Text style={styles.numberTypeInfo}>{'Present'}</Text>
         </View>
         <View style={[styles.infoWrap, styles.rightBorder]}>
-          <Text style={[styles.numberInfo, styles.pending]}>
-            {totalRegularized}
-          </Text>
-          <Text style={styles.numberTypeInfo}>
-            {getTranslationLabel('pending')}
-          </Text>
+          <Text style={[styles.numberInfo, styles.pending]}>2</Text>
+          <Text style={styles.numberTypeInfo}>{'Pending'}</Text>
         </View>
         <View style={styles.infoWrap}>
-          <Text style={[styles.numberInfo, styles.holiday]}>{totalLeaves}</Text>
+          <Text style={[styles.numberInfo, styles.holiday]}>3</Text>
+          <Text style={styles.numberTypeInfo}>Absent</Text>
+        </View>
+        <View style={styles.infoWrap}>
+          <Text style={[styles.numberInfo, styles.holiday]}>0</Text>
+          <Text style={styles.numberTypeInfo}>Week-Off</Text>
+        </View>
+
+        <View style={styles.infoWrap}>
+          <Text style={[styles.numberInfo, styles.holiday]}>2</Text>
           <Text style={styles.numberTypeInfo}>Holiday</Text>
         </View>
       </View>
@@ -441,16 +351,36 @@ export const CheckInCheckOutScreen = () => {
           <CustomButton
             type={ButtonTypes.outline}
             text={'Check-In'}
-            onPress={handleCheckIn}
-            style={styles.checkBtn}
+            onPress={() => {
+              handleCheckIn();
+            }}
+            style={[
+              styles.checkBtn,
+              {
+                borderColor:
+                  disableCheckInBtn === true ? COLORS.lightGrey : COLORS.dgreen,
+              },
+            ]}
             isDisabled={disableCheckInBtn}
+            textStyle={{color: COLORS.dgreen}}
           />
           <CustomButton
             type={ButtonTypes.outline}
             text={'Check-Out'}
-            onPress={handleCheckOut}
-            style={styles.checkBtn}
+            onPress={() => {
+              handleCheckOut();
+            }}
+            style={[
+              styles.checkBtn,
+              {
+                borderColor:
+                  disableCheckoutBtn === true
+                    ? COLORS.lightGrey
+                    : COLORS.dgreen,
+              },
+            ]}
             isDisabled={disableCheckoutBtn}
+            textStyle={{color: COLORS.dgreen}}
           />
         </View>
         <CustomButton
@@ -477,7 +407,10 @@ export const CheckInCheckOutScreen = () => {
         onSecondaryBtnHandler={() => {
           setShowSuccessModal(false);
           if (isSubmitted) {
-            navigation.navigate('AttendanceLanding' as never);
+            navigation.navigate(
+              'AttendanceManagement' as never,
+              {selectedCard: 'regularisation'} as never,
+            );
           }
         }}
         setShowModal={() => setShowSuccessModal(false)}

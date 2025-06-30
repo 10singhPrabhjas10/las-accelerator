@@ -144,7 +144,7 @@ export default {
     },
     {
       key: 'attendance',
-      label: 'Attendance Landing',
+      label: 'Attendance',
     },
     {
       key: 'beat',

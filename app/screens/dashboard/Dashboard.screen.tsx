@@ -62,11 +62,11 @@ const Dashboard = () => {
     //   onPress: () =>
     //     navigation.navigate('RetailerPartnerSearch', {fromOrderTaking: false}),
     // },
-    // {
-    //   title: getTranslationLabel('attendance'),
-    //   image: <AttendaceIcon height={24} width={24} />,
-    //   onPress: () => navigation.navigate('AttendanceLanding'),
-    // },
+    {
+      title: getTranslationLabel('attendance'),
+      image: <AttendaceIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('AttendanceManagement'),
+    },
     {
       title: getTranslationLabel('beatplan'),
       image: <BeatIcon height={24} width={24} />,
@@ -87,16 +87,16 @@ const Dashboard = () => {
       image: <BeatIcon height={24} width={24} />,
       onPress: () => navigation.navigate('Beat'),
     },
-    {
-      title: getTranslationLabel('travel_expenses'),
-      image: <BeatIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('Beat'),
-    },
     // {
-    //   title: getTranslationLabel('expense_management'),
-    //   image: <ExpenseManagementIcon height={24} width={24} />,
-    //   onPress: () => navigation.navigate('ExpenseManagement'),
+    //   title: getTranslationLabel('travel_expenses'),
+    //   image: <BeatIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('Beat'),
     // },
+    {
+      title: getTranslationLabel('expense_management'),
+      image: <ExpenseManagementIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('ExpenseManagement'),
+    },
     // {
     //   title: getTranslationLabel('self_management'),
     //   image: <SelfManagementIcon height={24} width={24} />,

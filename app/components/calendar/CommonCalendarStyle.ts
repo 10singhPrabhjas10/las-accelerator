@@ -1,5 +1,4 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import {black} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import {COLORS} from 'theme/colors';
 const {width} = Dimensions.get('window');
 export const styles = StyleSheet.create({
