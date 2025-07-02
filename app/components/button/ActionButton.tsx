@@ -5,7 +5,12 @@ import {IActionButtonProps} from '../../types/buttons';
 import {Card, Text} from 'react-native-paper';
 import ArrowRightIcon from '../../../assets/icons/arrowRight.svg';
 
-const ActionButton = ({icon, title, onPress}: IActionButtonProps) => {
+const ActionButton = ({
+  icon,
+  title,
+  onPress,
+  rightIcon,
+}: IActionButtonProps) => {
   return (
     <Pressable onPress={() => onPress(title)}>
       <Card style={styles.cardContainer}>
@@ -16,9 +21,11 @@ const ActionButton = ({icon, title, onPress}: IActionButtonProps) => {
               {title}
             </Text>
           </View>
-          <View style={styles.arrow}>
-            <ArrowRightIcon />
-          </View>
+          {rightIcon && (
+            <View style={styles.arrow}>
+              <ArrowRightIcon />
+            </View>
+          )}
         </Card.Content>
       </Card>
     </Pressable>
@@ -32,7 +39,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 8,
     backgroundColor: COLORS.white,
-    paddingVertical: 10,
+    padding: 8,
   },
   container: {
     flexDirection: 'row',

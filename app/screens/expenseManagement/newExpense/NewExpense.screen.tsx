@@ -221,9 +221,24 @@ const NewExpense = () => {
     setShowUploadImageBottomSheet(true);
   };
 
-  const handleCitySearch = debounce((searchText: string) => {
-    getCityList(searchText, setSearchedCityList);
-  }, 1000);
+  // Comment out the API-based city search
+  // const handleCitySearch = debounce((searchText: string) => {
+  //   getCityList(searchText, setSearchedCityList);
+  // }, 1000);
+
+  // Add a mock city search function
+  const handleCitySearch = (searchText: string) => {
+    const mockCityData = [
+      {id: 'C001', title: 'Mumbai'},
+      {id: 'C002', title: 'Delhi'},
+      {id: 'C003', title: 'Bangalore'},
+      {id: 'C004', title: 'Chennai'},
+    ];
+    const filtered = mockCityData.filter(city =>
+      city.title.toLowerCase().includes(searchText.toLowerCase()),
+    );
+    setSearchedCityList(filtered);
+  };
 
   const combinedImageCountExceedsLimit = (
     currentPhotos: any[] = [],
@@ -347,6 +362,8 @@ const NewExpense = () => {
   };
 
   const createReqBody = () => {
+    console.log("called");
+    
     try {
       const values = formikRef?.current?.values;
       if (!values) {
@@ -659,6 +676,7 @@ const NewExpense = () => {
           onChangeText={val => setFieldValue('lodgingTaxAmount', val)}
           placeHolder={'Enter Tax Amount'}
           onBlur={() => handleBlur('lodgingTaxAmount')}
+          isRequired
           keyboardType="decimal-pad"
           errorText={touched?.lodgingTaxAmount ? errors?.lodgingTaxAmount : ''}
         />
@@ -741,6 +759,9 @@ const NewExpense = () => {
     idx: number,
     updateOtherExpense: (index: number, field: string, value: any) => void,
     deleteOtherExpense: (index: number) => void,
+    touched: any,
+    errors: any,
+    handleBlur: (field: string) => void,
   ) => {
     return (
       <>
@@ -773,6 +794,8 @@ const NewExpense = () => {
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
           keyboardType="decimal-pad"
+          onBlur={() => handleBlur('otherAmount')}
+          errorText={touched?.otherAmount ? errors?.otherAmount : ''}
         />
         <Spacer size={15} />
         <PrimaryTextInput
@@ -783,9 +806,12 @@ const NewExpense = () => {
               ? String(otherExpense.otherTaxAmount)
               : ''
           }
+          isRequired
           onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', val)}
           placeHolder={'Enter Tax Amount'}
           keyboardType="decimal-pad"
+             onBlur={() => handleBlur('otherTaxAmount')}
+          errorText={touched?.otherTaxAmount ? errors?.otherTaxAmount : ''}
         />
         <Spacer size={15} />
         <DropDown
@@ -871,9 +897,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          // validationSchema={travelExpenseValidation
-          //   .concat(lodgingExpenseValidation)
-          //   .concat(otherExpenseValidation)}
+          // validationSchema={travelExpenseValidation.concat(
+          //   lodgingExpenseValidation.concat(otherExpenseValidation),
+          // )}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
@@ -961,6 +987,9 @@ const NewExpense = () => {
                       idx,
                       updateOtherExpense,
                       handleDeleteOtherExpense,
+                      touched,
+                      errors,
+                      handleBlur,
                     )}
                   </View>
                 ))}
@@ -1016,7 +1045,7 @@ const NewExpense = () => {
           message="You have successfully submitted your expenses."
           buttonText="Dismiss"
           onButtonPress={() => {
-            console.log('Modal closed');
+            navigation.navigate('ExpenseManagement');
             setShowSuccessModal(false);
           }}
         />

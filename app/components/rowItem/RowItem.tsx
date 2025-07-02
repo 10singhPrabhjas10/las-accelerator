@@ -28,7 +28,7 @@ const RowItem = (props: IRowItem) => {
   const statusColorList = [
     {status: 'Approved', color: COLORS.darkGreen2},
     {status: 'Rejected', color: COLORS.red},
-    {status: 'In-Progress', color: COLORS.lightOrange2},
+    {status: 'Pending Approval', color: COLORS.lightOrange2},
   ];
   const statusItem = statusColorList.find(item => item.status === value);
   const statusColor = statusItem ? statusItem.color : COLORS.white;
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
   text: {
-    flex: 1,
+    // flex: 1,
     textAlign: 'left',
   },
   rightAligned: {
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
     height: 12,
     borderRadius: 6,
     marginRight: 10,
-    backgroundColor: COLORS.green,
+    backgroundColor: COLORS.green
   },
   listItemStatusRow: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },

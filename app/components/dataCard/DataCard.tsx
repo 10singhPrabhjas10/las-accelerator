@@ -11,7 +11,7 @@ import {ButtonTypes} from 'types/buttons';
 import ArrowUp from '../../../assets/icons/arrowUp.svg';
 import ArrowDown from '../../../assets/icons/arrowDown.svg';
 import {COLORS} from 'theme/colors';
-import {TextStyle} from 'react-native';
+import {TextStyle, ViewStyle} from 'react-native';
 import {getTranslationLabel} from 'utils/commonMethods';
 
 export interface IRowDataProps {
@@ -35,6 +35,8 @@ interface IDataCardInterface {
   headerStyle?: TextStyle;
   buttonDisabled?: boolean;
   shouldShowCardWrapper?: boolean;
+  detailsStyle?: ViewStyle;
+  detailTextStyle?: TextStyle;
 }
 
 const DataCard = ({
@@ -51,6 +53,8 @@ const DataCard = ({
   headerStyle,
   footer,
   buttonDisabled,
+  detailsStyle,
+  detailTextStyle,
 }: IDataCardInterface) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -94,7 +98,8 @@ const DataCard = ({
               icon={buttonIcon}
               onPress={onPressViewLeadDetails}
               isDisabled={buttonDisabled}
-              style={styles.buttonStyle}
+              style={[detailsStyle, styles.buttonStyle]}
+              textStyle={detailTextStyle}
             />
           </>
         )}

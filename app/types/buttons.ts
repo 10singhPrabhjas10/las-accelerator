@@ -34,6 +34,7 @@ export interface IPrimaryButtonProps extends TouchableOpacityProps {
 
 export interface IActionButtonProps {
   icon: ReactElement<SvgProps> | ReactNode;
+  rightIcon?: ReactElement<SvgProps> | ReactNode;
   title: string;
   subTitle?: string;
   onPress: (title: string) => void;
