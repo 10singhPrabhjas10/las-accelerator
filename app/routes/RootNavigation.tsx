@@ -154,7 +154,7 @@ import Performance from 'screens/Retailer/performance/Performance.screen';
 import PrimarySales from 'screens/primaryCP/primarySales/PrimarySales.screen';
 import PrimarySalesPerformance from 'screens/primaryCP/primarySales/primarySalesPerformance/PrimarySalesPerformance.screen';
 import VolumeTarget from 'screens/primaryCP/primarySales/volumeTarget/VolumeTarget.screen';
-
+import AttendanceManagement from '@/screens/attendance/index';
 import OrderSummary from '@/screens/orderTaking/orderSummary/OrderSummary.screen';
 import ProductSeries from '../screens/orderTaking/productSeries/productSeries';
 
@@ -359,6 +359,7 @@ export type RootNavigationTypes = {
   OrderDetails: {invoiceNo: string};
   //Expense Management
   ExpenseManagement: undefined;
+  AttendanceManagement: undefined;
   NewExpense: {selectedExpenseToBeModified: any};
   ExistingExpense: undefined;
   //Self Management
@@ -787,6 +788,27 @@ export default function RootNavigation() {
     </>
   );
 
+  const AttendenceStack = (
+    <>
+      <RootStack.Screen
+        name={'AttendanceManagement'}
+        component={AttendanceManagement}
+      />
+      <RootStack.Screen
+        name="CheckInCheckOut"
+        component={CheckInCheckOutScreen}
+      />
+      <RootStack.Screen
+        name="AttendanceLeaves"
+        component={AttendanceLeavesScreen}
+      />
+      <RootStack.Screen
+        name="AttendanceRegularisation"
+        component={AttendanceRegularisationScreen}
+      />
+    </>
+  );
+
   const ExpenseManagementStack = (
     <>
       <RootStack.Screen
@@ -811,7 +833,7 @@ export default function RootNavigation() {
         name="AttendanceLanding"
         component={AttendanceLandingScreen}
       />
-      <RootStack.Screen
+      {/* <RootStack.Screen
         name="CheckInCheckOut"
         component={CheckInCheckOutScreen}
       />
@@ -822,7 +844,7 @@ export default function RootNavigation() {
       <RootStack.Screen
         name="AttendanceRegularisation"
         component={AttendanceRegularisationScreen}
-      />
+      /> */}
     </>
   );
 
@@ -910,6 +932,7 @@ export default function RootNavigation() {
             {SecondarySalesStack}
             {NotificationStack}
             {PrimarySalesStack}
+            {AttendenceStack}
           </>
         ) : (
           <>

@@ -45,6 +45,7 @@ export const COLORS = {
   gray: '#F8F8F8',
   darkBlue: '#194A87',
   semanticYellow: '#FFDB64',
+  semanticChilliRed: '#F49385',
   delightYellow: '#977400',
   borderGray: '#CAC4D0',
   semanticBlue: '#2161B2',
@@ -73,7 +74,10 @@ export const COLORS = {
   bondiBlue: '#0097A9',
   shamrock: '#3DD598',
   aliceBlue: '#ECF7F9',
-  opalgreen: '#005C66'
+  opalgreen: '#005C66',
+  cardBg: '#fff',
+  cardShadow: '#e0e0e0',
+  surfaceColor: '#ECF7F9',
 };
 
 export const PIE_CHART_COLORS = [

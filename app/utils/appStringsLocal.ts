@@ -144,7 +144,7 @@ export default {
     },
     {
       key: 'attendance',
-      label: 'Attendance Landing',
+      label: 'Attendance',
     },
     {
       key: 'beat',
@@ -449,6 +449,177 @@ export default {
     {
       key: 'YouMayShareOrderSummary',
       label: 'You may share the order summary with the customer',
+    },
+    {
+      key: 'primary_lead_creation',
+      label: 'Primary Lead Creation',
+    },
+    {
+      key: 'secondary_lead_creation',
+      label: 'Secondary Lead Creation',
+    },
+    {
+      key: 'enter_name',
+      label: 'Enter Name',
+    },
+    {
+      key: 'contact_person_name',
+      label: 'Contact Person Name',
+    },
+    {
+      key: 'businessName',
+      label: 'Business Name',
+    },
+    {
+      key: 'enter_business_name',
+      label: 'Enter Business Name',
+    },
+    {
+      key: 'enter_mobile_no',
+      label: 'Enter Mobile No',
+    },
+    {
+      key: 'mobile_num',
+      label: 'Mobile No',
+    },
+    {
+      key: 'enter_email_id',
+      label: 'Enter Email Id',
+    },
+    {
+      key: 'email_id',
+      label: 'Email ID',
+    },
+    {
+      key: 'enter_gstin',
+      label: 'Enter GSTIN',
+    },
+    {
+      key: 'gstin',
+      label: 'GSTIN',
+    },
+    {
+      key: 'enter_pin_code',
+      label: 'Enter Pincode',
+    },
+    {
+      key: 'pin_code',
+      label: 'Pincode',
+    },
+    {
+      key: 'category',
+      label: 'Category',
+    },
+    {
+      key: 'select_category',
+      label: 'Select Category Type',
+    },
+    {
+      key: 'geo_location',
+      label: 'Geo-Location',
+    },
+    {
+      key: 'select_geo_location',
+      label: 'Geo Location',
+    },
+    {
+      key: 'sales_branch',
+      label: 'Sales Branch',
+    },
+    {
+      key: 'enter_sales_branch',
+      label: 'Enter Sales Branch',
+    },
+    {
+      key: 'enter_pan_card_no',
+      label: 'Enter Pan Card No.',
+    },
+    {
+      key: 'pan_card_num',
+      label: 'PAN Card No.',
+    },
+    {
+      key: 'retailer_mobile_num',
+      label: 'Retailer Mobile No',
+    },
+    {
+      key: 'retailer_alternative_mobile_num',
+      label: 'Retailer Alternate Mobile No',
+    },
+    {
+      key: 'enter_owner_name',
+      label: 'Enter Owner Name',
+    },
+
+    {
+      key: 'retailer_owner_name',
+      label: 'Retailer Owner Name',
+    },
+
+    {
+      key: 'area',
+      label: 'Area',
+    },
+    {
+      key: 'select_area',
+      label: 'Area Name',
+    },
+
+    {
+      key: 'district',
+      label: 'District',
+    },
+    {
+      key: 'select_district',
+      label: 'Select district',
+    },
+
+    {
+      key: 'state',
+      label: 'State',
+    },
+    {
+      key: 'select_state',
+      label: 'Select State',
+    },
+    {
+      key: 'address_line1',
+      label: 'Address Line 1',
+    },
+    {
+      key: 'enter_address',
+      label: 'Enter Address',
+    },
+
+    {
+      key: 'address_line2',
+      label: 'Address Line 2',
+    },
+    {
+      key: 'enter_address',
+      label: 'Enter Address',
+    },
+
+    {
+      key: 'enter_landmark',
+      label: 'Landmark Details',
+    },
+    {
+      key: 'landmark',
+      label: 'Landmark',
+    },
+    {
+      key: 'created',
+      label: 'Created',
+    },
+    {
+      key: 'success_primary_lead',
+      label: 'You have successfully created Primary Lead',
+    },
+
+    {
+      key: 'success_secondary_lead',
+      label: 'You have successfully created Secondary Lead',
     },
   ],
 

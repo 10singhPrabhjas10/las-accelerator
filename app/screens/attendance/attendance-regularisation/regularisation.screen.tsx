@@ -1,14 +1,10 @@
 import Layout from 'components/Layout';
-import React, {useCallback, useState} from 'react';
-import {Text} from 'react-native-paper';
+import React, {useState, useEffect} from 'react';
 import CommonStyles from 'utils/commonStyle';
 import {styles as regularisationStyles} from './attendance-regularisation.styles';
 import {styles} from '../attendance-checkin-checkout/checkinout.styles';
-import {Calendar, CalendarUtils} from 'react-native-calendars';
-import {Pressable, View} from 'react-native';
-import moment from 'moment';
-import RightArrowIcon from '../../../../assets/icons/bold-right-arrow.svg';
-import LeftArrowIcon from '../../../../assets/icons/bold-arrow-left-.svg';
+import {CalendarUtils} from 'react-native-calendars';
+import {View} from 'react-native';
 import {COLORS} from 'theme/colors';
 import {Formik} from 'formik';
 import DatePicker from 'components/datePicker/DatePicker';
@@ -24,6 +20,7 @@ import {MarkedDates} from 'react-native-calendars/src/types';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
 import {useNavigation} from '@react-navigation/native';
 import DropDown from 'components/dropdown/Dropdown';
+import CommonCalendar from 'components/calendar/CommonCalendar';
 
 export const AttendanceRegularisationScreen = () => {
   const navigation = useNavigation();
@@ -31,11 +28,24 @@ export const AttendanceRegularisationScreen = () => {
   const [selectedValue, setSelectedValue] = useState(new Date());
   const [showDistrictDropdown, setShowDistrictDropdown] = useState(false);
   const [locale, _setLocale] = useState('en-GB');
+
+  // useEffect(() => {
+  //   setMarkedDate({
+  //     [CalendarUtils.getCalendarDateString(selectedValue)]: {
+  //       customStyles: {
+  //         container: {
+  //           backgroundColor: COLORS.semanticChilliRed,
+  //         },
+  //       },
+  //     },
+  //   });
+  // }, [selectedValue]);
+
   const [markedDate, setMarkedDate] = useState<MarkedDates>({
     [CalendarUtils.getCalendarDateString(new Date())]: {
       customStyles: {
         container: {
-          backgroundColor: COLORS.semanticYellow,
+          backgroundColor: COLORS.semanticChilliRed,
         },
       },
     },
@@ -50,132 +60,60 @@ export const AttendanceRegularisationScreen = () => {
     startTime?: {hours?: string; minutes?: string};
     endTime?: {hours?: string; minutes?: string};
   }) => {
-    try {
-      const {type, fromDate, toDate, endTime, startTime} = values;
+    setIsSubmitted(true);
+    setShowSuccessModal(true);
 
-      const response = await NetworkRequest(
-        POST,
-        SUBMIT_REGULARISATION_REQUEST,
-        {
-          type: type,
-          fromDate: CalendarUtils.getCalendarDateString(fromDate),
-          toDate: CalendarUtils.getCalendarDateString(toDate),
-          startTime: moment(
-            `${startTime?.hours}:${startTime?.minutes}:00`,
-            'H:mm:ss',
-          ).format('HH:mm:ss'),
-          endTime: moment(
-            `${endTime?.hours}:${endTime?.minutes}:00`,
-            'H:mm:ss',
-          ).format('HH:mm:ss'),
+    // try {
+    //   const {type, fromDate, toDate, endTime, startTime} = values;
+    //   const response = await NetworkRequest(
+    //     POST,
+    //     SUBMIT_REGULARISATION_REQUEST,
+    //     {
+    //       type: type,
+    //       fromDate: CalendarUtils.getCalendarDateString(fromDate),
+    //       toDate: CalendarUtils.getCalendarDateString(toDate),
+    //       startTime: moment(
+    //         `${startTime?.hours}:${startTime?.minutes}:00`,
+    //         'H:mm:ss',
+    //       ).format('HH:mm:ss'),
+    //       endTime: moment(
+    //         `${endTime?.hours}:${endTime?.minutes}:00`,
+    //         'H:mm:ss',
+    //       ).format('HH:mm:ss'),
+    //     },
+    //   );
+    //   if (response && response.data) {
+    //     setIsSubmitted(true);
+    //     setShowSuccessModal(true);
+    //   }
+    // } catch (error) {
+    //   setIsSubmitted(false);
+    //   setShowSuccessModal(true);
+    // }
+  };
+
+  useEffect(() => {
+    setMarkedDate({
+      [CalendarUtils.getCalendarDateString(selectedValue)]: {
+        customStyles: {
+          container: {
+            backgroundColor: COLORS.semanticChilliRed,
+          },
         },
-      );
-      if (response && response.data) {
-        setIsSubmitted(true);
-        setShowSuccessModal(true);
-      }
-    } catch (error) {
-      setIsSubmitted(false);
-      setShowSuccessModal(true);
-    }
-  };
-
-  const CustomHeaderTitle = (
-    <View style={styles.calendarHeaderWrap}>
-      <View style={styles.calenderTitleWrap}>
-        <Text style={styles.calenderTitle}>
-          {moment(selectedValue).format('ddd, MMM DD')}
-        </Text>
-      </View>
-      <View style={styles.calendarSubTitleWrap}>
-        <Pressable>
-          <Text style={styles.monthDisplay}>
-            {moment(selectedValue).format('MMMM')} {selectedValue.getFullYear()}
-          </Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-
-  const handleArrowRender = (direction: string) => {
-    return direction === 'left' ? (
-      <LeftArrowIcon height={15} />
-    ) : (
-      <RightArrowIcon height={15} />
-    );
-  };
-
-  const getNewSelectedDate = useCallback(
-    (date: any, shouldAdd: boolean) => {
-      const newMonth = new Date(date).getMonth();
-      const month = shouldAdd ? newMonth + 1 : newMonth - 1;
-      const newDate = new Date(selectedValue.setMonth(month));
-      const newSelected = new Date(newDate.setDate(1));
-      return newSelected;
-    },
-    [selectedValue],
-  );
-
-  const onPressArrowLeft = useCallback(
-    (subtract: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, false);
-      setSelectedValue(newDate);
-      subtract();
-    },
-    [getNewSelectedDate],
-  );
-
-  const onPressArrowRight = useCallback(
-    (add: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, true);
-      setSelectedValue(newDate);
-      add();
-    },
-    [getNewSelectedDate],
-  );
+      },
+    });
+  }, [selectedValue]);
 
   return (
     <Layout
       headerTitle={'Apply Regularisation'}
       style={[CommonStyles.padding16, regularisationStyles.root]}
       isScrollable={true}>
-      <Calendar
-        mode="multiple"
-        current={CalendarUtils.getCalendarDateString(Date.now())}
-        enableSwipeMonths
-        markingType="custom"
-        customHeaderTitle={CustomHeaderTitle}
-        onPressArrowLeft={onPressArrowLeft}
-        onPressArrowRight={onPressArrowRight}
-        hideExtraDays={true}
-        theme={{
-          todayTextColor: COLORS.black,
-          textDayStyle: {
-            textTransform: 'capitalize',
-          },
-          textDayFontFamily: 'soleto_regular',
-          textDayHeaderFontSize: 16,
-          textSectionTitleColor: COLORS.black,
-          arrowStyle: {
-            padding: 0,
-            marginTop: 8,
-            justifyContent: 'center',
-          },
-        }}
-        renderArrow={handleArrowRender}
-        style={styles.calendarContainer}
-        onDayPress={date => {
-          setMarkedDate({
-            [date.dateString]: {
-              customStyles: {
-                container: {
-                  backgroundColor: COLORS.semanticYellow,
-                },
-              },
-            },
-          });
-        }}
+      <CommonCalendar
         markedDates={markedDate}
+        selectedValue={selectedValue}
+        onMonthChange={setSelectedValue}
+        onDayPress={date => setSelectedValue(new Date(date.dateString))}
       />
 
       <Formik
@@ -222,6 +160,9 @@ export const AttendanceRegularisationScreen = () => {
                   }}
                   setValue={data => {
                     setFieldValue('type', data);
+                  }}
+                  dropDownItemSelectedStyle={{
+                    backgroundColor: COLORS.backgroundDgreen,
                   }}
                 />
                 <Spacer size={12} />
@@ -289,7 +230,7 @@ export const AttendanceRegularisationScreen = () => {
       <SuccessFailureModal
         btnType="confirm"
         secondaryBtnTitle={'Dismiss'}
-        title={isSubmitted ? 'Submitted' : 'Failure'}
+        title={isSubmitted ? 'Applied' : 'Failure'}
         label={
           isSubmitted
             ? 'You have successfully applied Regularisation'
@@ -298,7 +239,7 @@ export const AttendanceRegularisationScreen = () => {
         onSecondaryBtnHandler={() => {
           setShowSuccessModal(false);
           if (isSubmitted) {
-            navigation.navigate('AttendanceLanding' as never);
+            navigation.navigate('AttendanceManagement' as never, {selectedCard: 'leaves'} as never);
           }
         }}
         setShowModal={() => setShowSuccessModal(false)}

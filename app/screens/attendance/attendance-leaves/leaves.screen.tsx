@@ -1,14 +1,11 @@
 import Layout from 'components/Layout';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native-paper';
 import CommonStyles from 'utils/commonStyle';
 import {leaveStyles} from './leaves.styles';
 import {styles} from '../attendance-checkin-checkout/checkinout.styles';
-import {Calendar, CalendarUtils} from 'react-native-calendars';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 import moment from 'moment';
-import RightArrowIcon from '../../../../assets/icons/bold-right-arrow.svg';
-import LeftArrowIcon from '../../../../assets/icons/bold-arrow-left-.svg';
 import {COLORS} from 'theme/colors';
 import {MarkedDates} from 'react-native-calendars/src/types';
 import {Formik} from 'formik';
@@ -28,6 +25,7 @@ import {GET, POST} from 'constants/httpConstants';
 import NetworkRequest from 'services/networkRequest';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
 import {useNavigation} from '@react-navigation/native';
+import CommonCalendar from 'components/calendar/CommonCalendar';
 
 export const AttendanceLeavesScreen = () => {
   const navigation = useNavigation();
@@ -71,113 +69,41 @@ export const AttendanceLeavesScreen = () => {
     loadLeaveData();
   }, [selectedValue]);
 
-  const CustomHeaderTitle = (
-    <View style={styles.calendarHeaderWrap}>
-      <View style={styles.calenderTitleWrap}>
-        <Text style={styles.calenderTitle}>
-          {moment(Date.now()).format('ddd, MMM DD')}
-        </Text>
-      </View>
-      <View style={styles.calendarSubTitleWrap}>
-        <Pressable>
-          <Text style={styles.monthDisplay}>
-            {moment(selectedValue).format('MMMM')} {selectedValue.getFullYear()}
-          </Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-
-  const handleArrowRender = (direction: string) => {
-    return direction === 'left' ? (
-      <LeftArrowIcon height={15} />
-    ) : (
-      <RightArrowIcon height={15} />
-    );
-  };
-
-  const getNewSelectedDate = useCallback(
-    (date: any, shouldAdd: boolean) => {
-      const newMonth = new Date(date).getMonth();
-      const month = shouldAdd ? newMonth + 1 : newMonth - 1;
-      const newDate = new Date(selectedValue.setMonth(month));
-      const newSelected = new Date(newDate.setDate(1));
-      return newSelected;
-    },
-    [selectedValue],
-  );
-
-  const onPressArrowLeft = useCallback(
-    (subtract: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, false);
-      setSelectedValue(newDate);
-      subtract();
-    },
-    [getNewSelectedDate],
-  );
-
-  const onPressArrowRight = useCallback(
-    (add: () => void, month: any) => {
-      const newDate = getNewSelectedDate(month, true);
-      setSelectedValue(newDate);
-      add();
-    },
-    [getNewSelectedDate],
-  );
   const submitLeaveRequest = async (values: {
     leaveType?: {value?: string; label?: string};
     fromDate?: string;
     toDate?: string;
     leaveDuration: string;
   }) => {
-    try {
-      const {leaveType, fromDate, toDate, leaveDuration} = values;
+    setIsSubmitted(true);
+    setShowSuccessModal(true);
+    // try {
+    //   const {leaveType, fromDate, toDate, leaveDuration} = values;
 
-      const response = await NetworkRequest(POST, SUBMIT_LEAVE_REQUEST, {
-        leaveType,
-        fromDate: CalendarUtils.getCalendarDateString(fromDate),
-        toDate: CalendarUtils.getCalendarDateString(toDate),
-        leaveDuration,
-      });
-      if (response && response.data) {
-        setIsSubmitted(true);
-        setShowSuccessModal(true);
-      }
-    } catch (error) {
-      setIsSubmitted(false);
-      setShowSuccessModal(true);
-    }
+    //   const response = await NetworkRequest(POST, SUBMIT_LEAVE_REQUEST, {
+    //     leaveType,
+    //     fromDate: CalendarUtils.getCalendarDateString(fromDate),
+    //     toDate: CalendarUtils.getCalendarDateString(toDate),
+    //     leaveDuration,
+    //   });
+    //   if (response && response.data) {
+    //     setIsSubmitted(true);
+    //     setShowSuccessModal(true);
+    //   }
+    // } catch (error) {
+    //   setIsSubmitted(false);
+    //   setShowSuccessModal(true);
+    // }
   };
   return (
     <Layout
       headerTitle={'Apply Leave'}
       style={[CommonStyles.padding16, leaveStyles.root]}
       isScrollable={true}>
-      <Calendar
-        mode="multiple"
-        current={CalendarUtils.getCalendarDateString(Date.now())}
-        enableSwipeMonths
-        markingType="custom"
-        customHeaderTitle={CustomHeaderTitle}
-        onPressArrowLeft={onPressArrowLeft}
-        onPressArrowRight={onPressArrowRight}
-        hideExtraDays={true}
-        theme={{
-          todayTextColor: COLORS.black,
-          textDayStyle: {
-            textTransform: 'capitalize',
-          },
-          textDayFontFamily: 'soleto_regular',
-          textDayHeaderFontSize: 16,
-          textSectionTitleColor: COLORS.black,
-          arrowStyle: {
-            padding: 0,
-            marginTop: 8,
-            justifyContent: 'center',
-          },
-        }}
-        renderArrow={handleArrowRender}
-        style={styles.calendarContainer}
+      <CommonCalendar
+        markedDates={markedDate || {}}
+        selectedValue={selectedValue}
+        onMonthChange={setSelectedValue}
         onDayPress={date => {
           setMarkedDate({
             [date.dateString]: {
@@ -189,7 +115,6 @@ export const AttendanceLeavesScreen = () => {
             },
           });
         }}
-        markedDates={markedDate}
       />
       <View style={styles.daysInfoWrap}>
         <View
@@ -305,7 +230,7 @@ export const AttendanceLeavesScreen = () => {
       <SuccessFailureModal
         btnType="confirm"
         secondaryBtnTitle={'Dismiss'}
-        title={isSubmitted ? 'Submitted' : 'Failure'}
+        title={isSubmitted ? 'Applied' : 'Failure'}
         label={
           isSubmitted
             ? 'You have successfully applied Leave'
@@ -314,7 +239,7 @@ export const AttendanceLeavesScreen = () => {
         onSecondaryBtnHandler={() => {
           setShowSuccessModal(false);
           if (isSubmitted) {
-            navigation.navigate('AttendanceLanding' as never);
+            navigation.navigate('AttendanceManagement' as never, {selectedCard: 'leaves'} as never);
           }
         }}
         setShowModal={() => setShowSuccessModal(false)}

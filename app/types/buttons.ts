@@ -40,6 +40,7 @@ export interface IActionButtonProps {
   subTitle?: string;
   onPress: (title: string) => void;
   pressableProps?: PressableProps;
+  isSelected?: boolean;
 }
 
 export interface ICustomButtonProps {

@@ -62,11 +62,11 @@ const Dashboard = () => {
     //   onPress: () =>
     //     navigation.navigate('RetailerPartnerSearch', {fromOrderTaking: false}),
     // },
-    // {
-    //   title: getTranslationLabel('attendance'),
-    //   image: <AttendaceIcon height={24} width={24} />,
-    //   onPress: () => navigation.navigate('AttendanceLanding'),
-    // },
+    {
+      title: getTranslationLabel('attendance'),
+      image: <AttendaceIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('AttendanceManagement'),
+    },
     {
       title: getTranslationLabel('beatplan'),
       image: <BeatIcon height={24} width={24} />,
@@ -83,15 +83,15 @@ const Dashboard = () => {
       onPress: () => navigation.navigate('PerformanceManagement'),
     },
     {
-      title: getTranslationLabel('lead_managment'),
-      image: <BeatIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('Beat'),
+      title: getTranslationLabel('lead_management'),
+      image: <MultipleUsersIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('LeadManagement'),
     },
-    {
-      title: getTranslationLabel('travel_expenses'),
-      image: <BeatIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('Beat'),
-    },
+    // {
+    //   title: getTranslationLabel('travel_expenses'),
+    //   image: <BeatIcon height={24} width={24} />,
+    //   onPress: () => navigation.navigate('Beat'),
+    // },
     {
       title: getTranslationLabel('expense_management'),
       image: <ExpenseManagementIcon height={24} width={24} />,
@@ -111,12 +111,6 @@ const Dashboard = () => {
     //   title: getTranslationLabel('product_price_list'),
     //   image: <ProductPriceListIcon height={24} width={24} />,
     //   onPress: () => navigation.navigate('ProductPriceList'),
-    // },
-
-    // {
-    //   title: getTranslationLabel('lead_management'),
-    //   image: <MultipleUsersIcon height={24} width={24} />,
-    //   onPress: () => navigation.navigate('LeadManagement'),
     // },
     // {
     //   title: getTranslationLabel('performance_management'),

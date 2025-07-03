@@ -283,6 +283,44 @@ export const DropDownData = [
   {label: 'Custom Range', value: 'Custom Range'},
 ];
 
+export const maharashtraAreas = [
+  {label: 'Mumbai', value: 'Mumbai'},
+  {label: 'Pune', value: 'Pune'},
+  {label: 'Nagpur', value: 'Nagpur'},
+  {label: 'Nashik', value: 'Nashik'},
+  {label: 'Thane', value: 'Thane'},
+  {label: 'Aurangabad', value: 'Aurangabad'},
+  {label: 'Solapur', value: 'Solapur'},
+  {label: 'Amravati', value: 'Amravati'},
+  {label: 'Kolhapur', value: 'Kolhapur'},
+  {label: 'Nanded', value: 'Nanded'},
+  {label: 'Latur', value: 'Latur'},
+  {label: 'Sangli', value: 'Sangli'},
+  {label: 'Jalgaon', value: 'Jalgaon'},
+  {label: 'Akola', value: 'Akola'},
+  {label: 'Ahmednagar', value: 'Ahmednagar'},
+  {label: 'Satara', value: 'Satara'},
+  {label: 'Ratnagiri', value: 'Ratnagiri'},
+  {label: 'Jalna', value: 'Jalna'},
+  {label: 'Parbhani', value: 'Parbhani'},
+  {label: 'Buldhana', value: 'Buldhana'},
+  {label: 'Beed', value: 'Beed'},
+  {label: 'Chandrapur', value: 'Chandrapur'},
+  {label: 'Gondia', value: 'Gondia'},
+  {label: 'Washim', value: 'Washim'},
+  {label: 'Yavatmal', value: 'Yavatmal'},
+  {label: 'Sindhudurg', value: 'Sindhudurg'},
+  {label: 'Palghar', value: 'Palghar'},
+  {label: 'Raigad', value: 'Raigad'},
+  {label: 'Wardha', value: 'Wardha'},
+  {label: 'Dhule', value: 'Dhule'},
+  {label: 'Nandurbar', value: 'Nandurbar'},
+  {label: 'Osmanabad', value: 'Osmanabad'},
+  {label: 'Hingoli', value: 'Hingoli'},
+  {label: 'Gadchiroli', value: 'Gadchiroli'},
+  {label: 'Bid', value: 'Bid'},
+];
+
 export const webViewURL = 'https://www.abc.in/';
 
 export enum SECONDARY_SALES_TYPE {

@@ -28,6 +28,7 @@ const AuthNavigator = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="OtpVerification" component={OtpVerification} />
         <Stack.Screen name="attendance" component={AttendanceLandingScreen} />
+
         <Stack.Screen
           name="TermsAndConditions"
           component={TermsAndConditions}
