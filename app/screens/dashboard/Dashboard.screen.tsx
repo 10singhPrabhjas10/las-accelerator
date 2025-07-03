@@ -83,9 +83,9 @@ const Dashboard = () => {
       onPress: () => navigation.navigate('PerformanceManagement'),
     },
     {
-      title: getTranslationLabel('lead_managment'),
-      image: <BeatIcon height={24} width={24} />,
-      onPress: () => navigation.navigate('Beat'),
+      title: getTranslationLabel('lead_management'),
+      image: <MultipleUsersIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('LeadManagement'),
     },
     // {
     //   title: getTranslationLabel('travel_expenses'),
@@ -111,12 +111,6 @@ const Dashboard = () => {
     //   title: getTranslationLabel('product_price_list'),
     //   image: <ProductPriceListIcon height={24} width={24} />,
     //   onPress: () => navigation.navigate('ProductPriceList'),
-    // },
-
-    // {
-    //   title: getTranslationLabel('lead_management'),
-    //   image: <MultipleUsersIcon height={24} width={24} />,
-    //   onPress: () => navigation.navigate('LeadManagement'),
     // },
     // {
     //   title: getTranslationLabel('performance_management'),

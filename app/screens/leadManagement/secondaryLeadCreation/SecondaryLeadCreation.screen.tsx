@@ -20,6 +20,8 @@ import {
 } from '../LeadManagement.business';
 import SearchIcon from '../../../../assets/icons/searchIcon.svg';
 import {getTranslationLabel} from 'utils/commonMethods';
+import {maharashtraAreas} from 'utils/Constants';
+import { COLORS } from '@/theme/colors';
 
 const initialLeadData = {
   firmName: '',
@@ -64,7 +66,8 @@ const SecondaryLeadCreation = () => {
         retailerAlternativeMobileNumber: values.alternativeMobileNumber,
       }),
     };
-    submitSecondaryLead(requestBody, () => setShowSuccessModal(true));
+    setShowSuccessModal(true);
+    //submitSecondaryLead(requestBody, () => setShowSuccessModal(true));
   };
 
   return (
@@ -94,12 +97,12 @@ const SecondaryLeadCreation = () => {
           return (
             <View>
               <PrimaryTextInput
-                titleText={getTranslationLabel('firm_name')}
+                titleText={getTranslationLabel('sales_branch')}
                 isRequired
                 value={values.firmName}
                 onChangeText={handleChange('firmName')}
                 onBlur={handleBlur('firmName')}
-                placeHolder={getTranslationLabel('enter_firm_name')}
+                placeHolder={getTranslationLabel('enter_sales_branch')}
                 errorText={touched.firmName ? errors.firmName : ''}
               />
               <Spacer size={20} />
@@ -146,6 +149,7 @@ const SecondaryLeadCreation = () => {
                 value={values.alternativeMobileNumber}
                 onChangeText={handleChange('alternativeMobileNumber')}
                 onBlur={handleBlur('alternativeMobileNumber')}
+                isRequired
                 maxLength={10}
                 left={
                   values.alternativeMobileNumber && (
@@ -185,49 +189,27 @@ const SecondaryLeadCreation = () => {
                 titleText={getTranslationLabel('pin_code')}
                 isRequired
                 value={values.pincode}
-                onEndEditing={() => {
-                  getSecondaryPincodeData(
-                    values.pincode,
-                    setFieldValue,
-                    setAreaData,
-                    setFieldError,
-                  );
-                }}
+                // onEndEditing={() => {
+                //   getSecondaryPincodeData(
+                //     values.pincode,
+                //     setFieldValue,
+                //     setAreaData,
+                //     setFieldError,
+                //   );
+                // }}
                 onChangeText={handleChange('pincode')}
                 onBlur={handleBlur('pincode')}
                 maxLength={6}
                 keyboardType="numeric"
-                right={
-                  values.pincode.length > 5 && (
-                    <TextInput.Icon
-                      // eslint-disable-next-line react/no-unstable-nested-components
-                      icon={() => (
-                        <SearchIcon
-                          height={20}
-                          width={20}
-                          onPress={() => {
-                            getSecondaryPincodeData(
-                              values.pincode,
-                              setFieldValue,
-                              setAreaData,
-                              setFieldError,
-                            );
-                          }}
-                        />
-                      )}
-                    />
-                  )
-                }
-                returnKeyType="search"
                 errorText={touched.pincode ? errors.pincode : ''}
               />
               <Spacer size={20} />
               <DropDown
-                list={areaData}
+                list={maharashtraAreas}
                 label={getTranslationLabel('area')}
                 placeholder={getTranslationLabel('select_area')}
                 isRequired
-                isDisabled={!values.pincode}
+                //isDisabled={!values.pincode}
                 value={values.area}
                 visible={showAreaDropdown}
                 onChangeDropdownState={() =>
@@ -237,13 +219,14 @@ const SecondaryLeadCreation = () => {
                   setFieldValue('area', data);
                 }}
                 error={touched.area ? errors.area : ''}
+                textInputStyle={{backgroundColor: COLORS.white}}
               />
               <Spacer size={20} />
               <PrimaryTextInput
                 titleText={getTranslationLabel('district')}
                 disabled
                 isRequired
-                value={values.district ?? EMPTY_DATA_DASH}
+                value={'Mumbai'} //{values.district ?? EMPTY_DATA_DASH}
                 onChangeText={() => {}}
               />
               <Spacer size={20} />
@@ -251,7 +234,7 @@ const SecondaryLeadCreation = () => {
                 titleText={getTranslationLabel('state')}
                 disabled
                 isRequired
-                value={values.state ?? EMPTY_DATA_DASH}
+                value={'Maharasthra'} //{values.state ?? EMPTY_DATA_DASH}
                 onChangeText={() => {}}
               />
               <Spacer size={20} />

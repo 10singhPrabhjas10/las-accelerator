@@ -3,12 +3,16 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import {COLORS} from '../../theme/colors';
 import {IActionButtonProps} from '../../types/buttons';
 import {Card, Text} from 'react-native-paper';
-import ArrowRightIcon from '../../../assets/icons/arrowRight.svg';
 
-const ActionButton = ({icon, title, onPress}: IActionButtonProps) => {
+const ActionButton = ({
+  icon,
+  title,
+  onPress,
+  isSelected,
+}: IActionButtonProps) => {
   return (
     <Pressable onPress={() => onPress(title)}>
-      <Card style={styles.cardContainer}>
+      <Card style={[styles.cardContainer, isSelected && styles.selectedCard]}>
         <Card.Content style={styles.container}>
           {icon}
           <View style={styles.textContainer}>
@@ -16,9 +20,9 @@ const ActionButton = ({icon, title, onPress}: IActionButtonProps) => {
               {title}
             </Text>
           </View>
-          <View style={styles.arrow}>
+          {/* <View style={styles.arrow}>
             <ArrowRightIcon />
-          </View>
+          </View> */}
         </Card.Content>
       </Card>
     </Pressable>
@@ -32,11 +36,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 8,
     backgroundColor: COLORS.white,
-    paddingVertical: 10,
+    paddingVertical: 4,
   },
   container: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 6,
     alignItems: 'center',
   },
   textContainer: {
@@ -56,5 +60,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     borderRadius: 16,
+  },
+  selectedCard: {
+    backgroundColor: '#e3fbe6',
+    borderColor: '#2ecc40',
+    borderWidth: 1,
   },
 });

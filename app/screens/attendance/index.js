@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   selectedCard: {
-    backgroundColor: '#e3fbe6', // light green background
-    borderColor: '#2ecc40', // green border
+    backgroundColor: '#e3fbe6',
+    borderColor: '#2ecc40',
   },
   cardContent: {
     flexDirection: 'row',
