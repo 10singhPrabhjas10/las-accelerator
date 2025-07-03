@@ -1,5 +1,6 @@
 import {ReactElement, ReactNode} from 'react';
 import {
+  PressableProps,
   StyleProp,
   TextStyle,
   TouchableOpacityProps,
@@ -38,6 +39,7 @@ export interface IActionButtonProps {
   title: string;
   subTitle?: string;
   onPress: (title: string) => void;
+  pressableProps?: PressableProps;
 }
 
 export interface ICustomButtonProps {

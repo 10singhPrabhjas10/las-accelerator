@@ -113,4 +113,11 @@ export interface IExpenseFormState {
   travelProofComments: string | null;
   lodgingProofComments: string | null;
   otherProofComments: string | null;
+  // For draft/request body compatibility
+  travel_expense_proof?: string[];
+  lodging_expense_proof?: string[];
+  other_expense_proofs?: string[][];
+  otherExpenses?: IExpenseOther[];
+  status?: string;
+  draftSavedAt?: string;
 }

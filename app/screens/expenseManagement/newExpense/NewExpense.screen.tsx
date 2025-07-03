@@ -23,7 +23,12 @@ import Spacer from 'components/spacer';
 import {Text, TextInput, Icon} from 'react-native-paper';
 import {COLORS} from 'theme/colors';
 import DropDown from 'components/dropdown/Dropdown';
-import {MODE_OF_TRANSPORT, PROOF_TYPE} from 'utils/Constants';
+import {
+  MODE_OF_TRANSPORT,
+  TRAVEL_PROOF_TYPE,
+  LODGING_PROOF_TYPE,
+  OTHER_PROOF_TYPE,
+} from 'utils/Constants';
 import ImageUpload from 'screens/beat/StoreCheckIn/components/imageUpload/ImageUpload';
 import UploadImageBottomSheet from 'bottomSheets/uploadImageBottomSheet/UploadImageBottomSheet';
 import {IPhotoProps} from 'screens/profile/Profile.interface';
@@ -53,6 +58,7 @@ import {
 } from '../ExpenseManagement.Interface';
 import ArrowDown from '../../../../assets/icons/arrowDown.svg';
 import SuccessModal from '@/modals/SuccessModal';
+import {MOCK_CITY_DATA, MOCK_CITY_RATES} from './newExpenses.mock';
 
 // Use a function to get a fresh initial state
 const getInitialExpense = (): IExpenseFormState => ({
@@ -69,20 +75,19 @@ const getInitialExpense = (): IExpenseFormState => ({
   noOfNight: null,
   city: null,
   cityCategory: null,
-  lodgingComments: '',
+  lodgingComments: null,
   travelProofType: null,
   lodgingProofType: null,
-  travelProofComments: '',
-  lodgingProofComments: '',
+  travelProofComments: null,
+  lodgingProofComments: null,
   otherAmount: null,
   otherTaxAmount: null,
   otherProofType: null,
   otherProofComments: null,
-  otherComments: '',
+  otherComments: null,
 });
 
 const GREY_TEXT_THEME = {colors: {onSurface: COLORS.grey2}};
-const searchIcon = () => <SearchIcon height={20} width={20} />;
 
 const NewExpense = () => {
   const [showUploadImageBottomSheet, setShowUploadImageBottomSheet] =
@@ -110,7 +115,6 @@ const NewExpense = () => {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false);
-  const [photo, setPhoto] = useState<IPhotoProps[]>([]);
   const [expenseProofList, setExpenseProofList] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [cityRate, setCityRate] = useState<IExpenseMgmtCityRate>();
@@ -132,6 +136,10 @@ const NewExpense = () => {
 
   const [currentOtherIdx, setCurrentOtherIdx] = useState<number | null>(null);
 
+  const [initialExpense, setInitialExpense] = useState<IExpenseFormState>(
+    getInitialExpense(),
+  );
+
   const toggleDropDownVisibility = (
     key:
       | 'travelProofTypeDropdown'
@@ -146,11 +154,6 @@ const NewExpense = () => {
       modeOfTransportDropdown: false,
       [key]: !visibility[key],
     });
-  };
-
-  const getCityRate = (selectedCity: string) => {
-    if (!selectedCity) return;
-    getCityRateData(selectedCity, setCityRate);
   };
 
   useEffect(() => {
@@ -168,20 +171,12 @@ const NewExpense = () => {
         modeOfTransport: data.modeOfTransport ?? null,
         city: data.city ?? null,
         cityCategory: data.cityCategory ?? null,
-        calculatedAmount: data.calculatedAmount
-          ? String(data.calculatedAmount)
-          : null,
+        calculatedAmount: data.calculatedAmount ?? null,
         noOfNight: data.noOfNight ?? null,
-        lodgingAmount:
-          data.expenseType === 'LA'
-            ? String(data.totalAmount)
-            : String(data.totalAmount - data.lodgingTaxAmount),
-        lodgingTaxAmount: String(data.lodgingTaxAmount),
-        otherAmount:
-          data.expenseType === 'OA'
-            ? String(data.totalAmount)
-            : String(data.totalAmount - data.otherTaxAmount),
-        otherTaxAmount: String(data.otherTaxAmount),
+        lodgingAmount: String(data.totalAmount) ?? null,
+        lodgingTaxAmount: String(data.lodgingTaxAmount) ?? null,
+        otherAmount: String(data.totalAmount) ?? null,
+        otherTaxAmount: String(data.otherTaxAmount) ?? null,
         lodgingComments: data.lodgingComments ?? null,
         otherComments: data.otherComments ?? null,
         travelProofType: data.travelProofType ?? null,
@@ -228,16 +223,22 @@ const NewExpense = () => {
 
   // Add a mock city search function
   const handleCitySearch = (searchText: string) => {
-    const mockCityData = [
-      {id: 'C001', title: 'Mumbai'},
-      {id: 'C002', title: 'Delhi'},
-      {id: 'C003', title: 'Bangalore'},
-      {id: 'C004', title: 'Chennai'},
-    ];
-    const filtered = mockCityData.filter(city =>
+    const filtered = MOCK_CITY_DATA.filter(city =>
       city.title.toLowerCase().includes(searchText.toLowerCase()),
     );
     setSearchedCityList(filtered);
+  };
+
+  // Mock getCityRate for demo/testing
+  const getCityRate = (selectedCity: string) => {
+    if (!selectedCity) return;
+    // Mock city rate data]
+
+    type CityKey = keyof typeof MOCK_CITY_RATES;
+    const cityKey = selectedCity as CityKey;
+    setCityRate(MOCK_CITY_RATES[cityKey] || MOCK_CITY_RATES['Mumbai']);
+    // For real API, uncomment below:
+    // getCityRateData(selectedCity, setCityRate);
   };
 
   const combinedImageCountExceedsLimit = (
@@ -250,15 +251,15 @@ const NewExpense = () => {
     );
   };
 
-  const getTransportUploadTitle = (values: IExpenseFormState) => {
-    if (values.modeOfTransport === ModeOfTransport.OWN_VEHICLE) {
-      return 'Upload fuel bill';
-    } else if (values.modeOfTransport === ModeOfTransport.OUTSTATION_TRAVEL) {
-      return 'Upload train ticket';
-    } else if (values.modeOfTransport === ModeOfTransport.LOCAL_TRAVEL) {
-      return 'Upload bus ticket ';
-    }
-  };
+  // const getTransportUploadTitle = (values: IExpenseFormState) => {
+  //   if (values.modeOfTransport === ModeOfTransport.OWN_VEHICLE) {
+  //     return 'Upload fuel bill';
+  //   } else if (values.modeOfTransport === ModeOfTransport.OUTSTATION_TRAVEL) {
+  //     return 'Upload train ticket';
+  //   } else if (values.modeOfTransport === ModeOfTransport.LOCAL_TRAVEL) {
+  //     return 'Upload bus ticket ';
+  //   }
+  // };
 
   const validRangeFrom = {
     startDate: undefined,
@@ -318,10 +319,6 @@ const NewExpense = () => {
     return false;
   };
 
-  const [initialExpense, setInitialExpense] = useState<IExpenseFormState>(
-    getInitialExpense(),
-  );
-
   const resetFormData = () => {
     const freshExpense = getInitialExpense();
     setInitialExpense(freshExpense);
@@ -333,19 +330,27 @@ const NewExpense = () => {
         setFieldValue?.(key, val);
       });
     }
-    setPhoto([]);
     setTravelPhotos([]);
     setLodgingPhotos([]);
     setOtherPhotos([[]]);
     setExpenseProofList([]);
     setOtherExpenses([getInitialExpense()]);
     setOtherProofDropdowns([false]);
+    setSearchedCityList([]);
   };
 
   const handleAddOtherExpense = () => {
     setOtherExpenses(prev => [...prev, getInitialExpense()]);
     setOtherProofDropdowns(prev => [...prev, false]);
     setOtherPhotos(prev => [...prev, []]);
+  };
+
+  const updateOtherExpense = (index: number, field: string, value: any) => {
+    setOtherExpenses(prev =>
+      prev.map((item, idx) =>
+        idx === index ? {...item, [field]: value} : item,
+      ),
+    );
   };
 
   const handleDeleteOtherExpense = (index: number) => {
@@ -362,8 +367,6 @@ const NewExpense = () => {
   };
 
   const createReqBody = () => {
-    console.log("called");
-    
     try {
       const values = formikRef?.current?.values;
       if (!values) {
@@ -410,31 +413,49 @@ const NewExpense = () => {
         otherExpenses: otherExpensesReq,
       };
       console.log(requestBody);
+      setShowSuccessModal(true);
 
       setShowWarningModal(false);
-      addNewOrUpdateExpense(
-        selectedExpenseToBeModified ? 'Update' : 'Create',
-        requestBody,
-        () => {
-          setIsSubmitted(true);
-          setShowSuccessModal(true);
-        },
-        () => {
-          setIsSubmitted(false);
-          setShowSuccessModal(true);
-        },
-      );
+      // addNewOrUpdateExpense(
+      //   selectedExpenseToBeModified ? 'Update' : 'Create',
+      //   requestBody,
+      //   () => {
+      //     setIsSubmitted(true);
+      //     setShowSuccessModal(true);
+      //   },
+      //   () => {
+      //     setIsSubmitted(false);
+      //     setShowSuccessModal(true);
+      //   },
+      // );
     } catch (error) {
       console.error('Error in createReqBody:', error);
     }
   };
 
-  const updateOtherExpense = (index: number, field: string, value: any) => {
-    setOtherExpenses(prev =>
-      prev.map((item, idx) =>
-        idx === index ? {...item, [field]: value} : item,
-      ),
-    );
+  // Save Draft handler
+  const handleDraft = () => {
+    try {
+      const values = formikRef?.current?.values;
+      if (!values) {
+        Alert.alert('Unexpected Error', 'Form data is missing');
+        return;
+      }
+      // You can add any draft-specific logic here, e.g., mark as draft, skip validations, etc.
+      const draftRequest = {
+        ...values,
+        status: 'Draft',
+        draftSavedAt: new Date().toISOString(),
+      };
+      // For now, just log the draft data
+      console.log('Draft saved:', draftRequest);
+      Alert.alert('Draft Saved', 'Your draft has been saved locally.');
+      // Optionally, you can persist this to local storage or call an API
+      resetFormData(); // Reset the form after saving draft
+    } catch (error) {
+      console.error('Error in handleDraft:', error);
+      Alert.alert('Error', 'Failed to save draft.');
+    }
   };
 
   const renderTravelAllowance = (
@@ -471,33 +492,6 @@ const NewExpense = () => {
           errorText={touched?.beatEndPoint ? errors?.beatEndPoint : ''}
         />
 
-        {/* <Spacer size={15} />
-        <AutocompleteDropdown
-          titleText={'City'}
-          placeholder="Search City"
-          initialValue={initialExpense.city ?? undefined}
-          dataSet={searchedCityList}
-          onChangeText={(value: string) => {
-            if (value.length > 0) {
-              handleCitySearch(value);
-            }
-          }}
-          onSelectItem={data => {
-            if (data) {
-              setFieldValue('cityCategory', data?.id);
-              setFieldValue('city', data?.title);
-              if (data?.title && typeof data.title === 'string') {
-                getCityRate(data.title as string);
-              }
-            }
-          }}
-          icon={<TextInput.Icon icon={searchIcon} />}
-          clearOnFocus={false}
-          isRequired
-          closeOnBlur={true}
-          closeOnSubmit={false}
-          errorText={touched?.cityCategory ? errors?.cityCategory : ''}
-        /> */}
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Actual Beat Distance'}
@@ -530,7 +524,7 @@ const NewExpense = () => {
         />
         <Spacer size={15} />
         <DropDown
-          list={PROOF_TYPE}
+          list={TRAVEL_PROOF_TYPE}
           label={'Proof Type'}
           placeholder={'Select Proof Type'}
           value={values.travelProofType}
@@ -547,7 +541,8 @@ const NewExpense = () => {
         />
 
         <Spacer size={15} />
-        {values.travelProofType === 'other' && (
+        {/* Remove Other Proof Type input for now */}
+        {/* {values.travelProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
             value={values.travelProofComments ?? ''}
@@ -558,10 +553,11 @@ const NewExpense = () => {
               touched?.travelProofComments ? errors?.travelProofComments : ''
             }
           />
-        )}
+        )} */}
         {values?.modeOfTransport !== '' && (
           <>
             <Spacer size={15} />
+            {/* <Text variant="bodyMedium">{getTransportUploadTitle(values)}</Text> */}
             <ImageUpload
               title="Upload Travel Proof"
               imageData={travelPhotos}
@@ -655,7 +651,6 @@ const NewExpense = () => {
           isRequired
           closeOnBlur={true}
           closeOnSubmit={false}
-          errorText={touched?.cityCategory ? errors?.cityCategory : ''}
         />
 
         <Spacer size={15} />
@@ -682,7 +677,7 @@ const NewExpense = () => {
         />
         <Spacer size={15} />
         <DropDown
-          list={PROOF_TYPE}
+          list={LODGING_PROOF_TYPE}
           label={'Proof Type'}
           placeholder={'Select Proof Type'}
           value={values.lodgingProofType}
@@ -698,7 +693,8 @@ const NewExpense = () => {
           error={touched.lodgingProofType ? errors.lodgingProofType : ''}
         />
         <Spacer size={15} />
-        {values.lodgingProofType === 'other' && (
+        {/* Remove Other Proof Type input for now */}
+        {/* {values.lodgingProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
             value={values.lodgingProofComments ?? ''}
@@ -709,7 +705,7 @@ const NewExpense = () => {
               touched?.lodgingProofComments ? errors?.lodgingProofComments : ''
             }
           />
-        )}
+        )} */}
         <Spacer size={15} />
         <PrimaryTextInput
           multiline
@@ -794,8 +790,6 @@ const NewExpense = () => {
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
           keyboardType="decimal-pad"
-          onBlur={() => handleBlur('otherAmount')}
-          errorText={touched?.otherAmount ? errors?.otherAmount : ''}
         />
         <Spacer size={15} />
         <PrimaryTextInput
@@ -810,12 +804,10 @@ const NewExpense = () => {
           onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', val)}
           placeHolder={'Enter Tax Amount'}
           keyboardType="decimal-pad"
-             onBlur={() => handleBlur('otherTaxAmount')}
-          errorText={touched?.otherTaxAmount ? errors?.otherTaxAmount : ''}
         />
         <Spacer size={15} />
         <DropDown
-          list={PROOF_TYPE}
+          list={OTHER_PROOF_TYPE}
           label={'Proof Type'}
           placeholder={'Select Proof Type'}
           value={otherExpense.otherProofType}
@@ -833,7 +825,8 @@ const NewExpense = () => {
           }}
         />
         <Spacer size={15} />
-        {otherExpense.otherProofType === 'other' && (
+        {/* Remove Other Proof Type input for now */}
+        {/* {otherExpense.otherProofType === 'other' && (
           <PrimaryTextInput
             titleText={'Other Proof Type'}
             value={otherExpense.otherProofComments ?? undefined}
@@ -842,7 +835,7 @@ const NewExpense = () => {
             }
             placeHolder={'Enter Other Proof Type'}
           />
-        )}
+        )} */}
         <Spacer size={15} />
         <PrimaryTextInput
           multiline
@@ -898,7 +891,7 @@ const NewExpense = () => {
         <Formik
           innerRef={formikRef}
           // validationSchema={travelExpenseValidation.concat(
-          //   lodgingExpenseValidation.concat(otherExpenseValidation),
+          //   lodgingExpenseValidation,
           // )}
           initialValues={initialExpense}
           enableReinitialize
@@ -1034,6 +1027,16 @@ const NewExpense = () => {
                   onPress={handleSubmit}
                   style={CommonStyles.flexOne}
                 />
+                <Spacer size={15} />
+
+                <CustomButton
+                  type={ButtonTypes.text}
+                  text="Save Draft"
+                  onPress={handleDraft}
+                  style={CommonStyles.flexOne}
+                  textStyle={{color: COLORS.dgreen}}
+                />
+                <Spacer size={25} />
               </>
             );
           }}

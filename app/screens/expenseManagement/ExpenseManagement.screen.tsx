@@ -6,21 +6,24 @@ import Layout from 'components/Layout';
 import ActionButton from 'components/button/ActionButton';
 import ExistingExpenseIcon from './../../../assets/icons/existingExpenseIcon.svg';
 import NewExpenseIcon from './../../../assets/icons/newExpenseIcon.svg';
+import {COLORS} from '@/theme/colors';
+import CustomButton from '@/components/button/CustomButton';
+import ActionTouchableButton from '@/components/button/ActionTouchableButton';
 
 const ExpenseManagement = () => {
   const navigation = useNavigation<RootNavigationProp>();
 
   return (
     <Layout headerTitle="Expense Management" style={CommonStyles.padding}>
-      <ActionButton
-        title="New Expense"
+      <ActionTouchableButton
+        title={'New Expense'}
         onPress={() => navigation.navigate('NewExpense')}
-        icon={<NewExpenseIcon />}
+        leftIcon={<NewExpenseIcon />}
       />
-      <ActionButton
+      <ActionTouchableButton
         title="Existing Expense"
         onPress={() => navigation.navigate('ExistingExpense')}
-        icon={<ExistingExpenseIcon />}
+        leftIcon={<ExistingExpenseIcon />}
       />
     </Layout>
   );
