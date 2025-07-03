@@ -890,9 +890,9 @@ const NewExpense = () => {
         isScrollable>
         <Formik
           innerRef={formikRef}
-          // validationSchema={travelExpenseValidation.concat(
-          //   lodgingExpenseValidation,
-          // )}
+          validationSchema={travelExpenseValidation.concat(
+            lodgingExpenseValidation,
+          )}
           initialValues={initialExpense}
           enableReinitialize
           onSubmit={values => {
