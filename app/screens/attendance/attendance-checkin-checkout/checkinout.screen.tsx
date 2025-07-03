@@ -35,21 +35,21 @@ export const CheckInCheckOutScreen = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const attendanceData = [
-    {date: '2025-06-05', type: 'present'},
-    {date: '2025-06-02', type: 'present'},
-    {date: '2025-06-03', type: 'present'},
-    {date: '2025-06-04', type: 'present'},
-    {date: '2025-06-25', type: 'present'},
+    {date: '2025-07-05', type: 'present'},
+    {date: '2025-07-02', type: 'present'},
+    {date: '2025-07-03', type: 'present'},
+    {date: '2025-07-04', type: 'present'},
+    {date: '2025-07-25', type: 'present'},
     //absent
-    {date: '2025-06-09', type: 'absent'},
-    {date: '2025-06-10', type: 'absent'},
-    {date: '2025-06-11', type: 'absent'},
+    {date: '2025-07-09', type: 'absent'},
+    {date: '2025-07-10', type: 'absent'},
+    {date: '2025-07-11', type: 'absent'},
     //holiday
-    {date: '2025-06-23', type: 'holiday'},
-    {date: '2025-06-24', type: 'holiday'},
+    {date: '2025-07-23', type: 'holiday'},
+    {date: '2025-07-24', type: 'holiday'},
     //pending
-    {date: '2025-06-17', type: 'pending'},
-    {date: '2025-06-18', type: 'pending'},
+    {date: '2025-07-17', type: 'pending'},
+    {date: '2025-07-18', type: 'pending'},
   ];
 
   const TYPE_COLORS = {
