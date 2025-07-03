@@ -10,6 +10,7 @@ import {getTranslationLabel} from 'utils/commonMethods';
 import {useSelector} from 'react-redux';
 import {RootState} from 'store/redux/store';
 import {LasType} from 'screens/performanceManagement/PerformanceMgmt.interface';
+import ActionTouchableButton from '@/components/button/ActionTouchableButton';
 
 const LeadManagement = () => {
   const navigation = useNavigation<RootNavigationProp>();
@@ -20,24 +21,23 @@ const LeadManagement = () => {
       headerTitle={getTranslationLabel('lead_management')}
       style={CommonStyles.padding}>
       {lasType !== LasType.RE && (
-        <ActionButton
-          title={getTranslationLabel('primary_lead_creation')}
+        <ActionTouchableButton
           onPress={() => {
             navigation.navigate('PrimaryLeadCreation');
             setSelectedCard('primary');
           }}
-          isSelected={selectedCard === 'primary'}
-          icon={<UserIcon />}
+          title={getTranslationLabel('primary_lead_creation')}
+          leftIcon={<UserIcon />}
         />
       )}
-      <ActionButton
-        title={getTranslationLabel('secondary_lead_creation')}
+
+      <ActionTouchableButton
         onPress={() => {
           navigation.navigate('SecondaryLeadCreation');
           setSelectedCard('secondary');
         }}
-        isSelected={selectedCard === 'secondary'}
-        icon={<SecondaryUserIcon />}
+        title={getTranslationLabel('secondary_lead_creation')}
+        leftIcon={<SecondaryUserIcon />}
       />
     </Layout>
   );

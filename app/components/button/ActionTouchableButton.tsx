@@ -42,7 +42,6 @@ const ActionTouchableButton: React.FC<ActionTouchableButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    height: 56,
     shadowColor: '#000',
     shadowOffset: {width: 1, height: 0},
     shadowOpacity: 0.08,
@@ -52,9 +51,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     elevation: 3,
-    padding: 16,
-    gap: 8,
-    marginVertical:12
+    padding: 20,
+    gap: 16,
+    marginBottom:24
   },
   icon: {
     justifyContent: 'center',

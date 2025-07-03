@@ -6,6 +6,7 @@ import RegularisationIcon from '../../../assets/icons/regularisation.svg';
 import LeaveIcon from '../../../assets/icons/applyLeaves.svg';
 import Layout from 'components/Layout';
 import CommonStyles from 'utils/commonStyle';
+import ActionTouchableButton from '@/components/button/ActionTouchableButton';
 
 const AttendanceManagement = ({navigation, route}) => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -22,48 +23,32 @@ const AttendanceManagement = ({navigation, route}) => {
       <View style={styles.container}>
         {/* Cards */}
         <View style={styles.cardsContainer}>
-          <Card
-            style={[
-              styles.card,
-              selectedCard === 'checkin' && styles.selectedCard,
-            ]}
+          <ActionTouchableButton
+            title="Check-In & Check-Out"
             onPress={() => {
               setSelectedCard('checkin');
               navigation.navigate('CheckInCheckOut');
-            }}>
-            <Card.Content style={styles.cardContent}>
-              <CheckInIcon width={24} height={24} />
-              <Text style={styles.cardText}>Check-In & Check-Out</Text>
-            </Card.Content>
-          </Card>
-          <Card
-            style={[
-              styles.card,
-              selectedCard === 'regularisation' && styles.selectedCard,
-            ]}
+            }}
+            leftIcon={<CheckInIcon />}
+          />
+
+          <ActionTouchableButton
+            title="Apply Regularisation"
             onPress={() => {
               setSelectedCard('regularisation');
               navigation.navigate('AttendanceRegularisation');
-            }}>
-            <Card.Content style={styles.cardContent}>
-              <RegularisationIcon width={24} height={24} />
-              <Text style={styles.cardText}>Apply Regularisation</Text>
-            </Card.Content>
-          </Card>
-          <Card
-            style={[
-              styles.card,
-              selectedCard === 'leaves' && styles.selectedCard,
-            ]}
+            }}
+            leftIcon={<RegularisationIcon />}
+          />
+
+          <ActionTouchableButton
+            title="Apply Leaves"
             onPress={() => {
               setSelectedCard('leaves');
               navigation.navigate('AttendanceLeaves');
-            }}>
-            <Card.Content style={styles.cardContent}>
-              <LeaveIcon width={24} height={24} />
-              <Text style={styles.cardText}>Apply Leaves</Text>
-            </Card.Content>
-          </Card>
+            }}
+            leftIcon={<LeaveIcon />}
+          />
         </View>
       </View>
     </Layout>
