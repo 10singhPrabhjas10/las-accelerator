@@ -23,6 +23,11 @@ import {
 } from '../LeadManagement.business';
 import {EMPTY_DATA_DASH} from 'utils/Constants';
 import {getTranslationLabel} from 'utils/commonMethods';
+import Geolocation, {
+  GeolocationError,
+  GeolocationResponse,
+} from '@react-native-community/geolocation';
+import { COLORS } from '@/theme/colors';
 
 const initialLeadData = {
   contactPersonName: '',
@@ -32,6 +37,7 @@ const initialLeadData = {
   gstIn: '',
   categoryId: '',
   pincode: '',
+  geoLocation: '',
 };
 
 const PrimaryLeadCreation = () => {
@@ -40,18 +46,50 @@ const PrimaryLeadCreation = () => {
   const [showCategoryDropdown, setShowCategoryDropdown] =
     useState<boolean>(false);
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [location, setLocation] = useState('');
 
   const navigation = useNavigation<RootNavigationProp>();
+  useEffect(() => {
+    //getCategoryDropdown(setCategoryData);
+  }, []);
 
   useEffect(() => {
-    getCategoryDropdown(setCategoryData);
+    fetchLocation();
   }, []);
 
   const handleOnSubmit = (values: IPrimaryLeadData) => {
     if (values.emailId === '') {
       values.emailId = null;
     }
-    submitPrimaryLead(values, () => setShowSuccessModal(true));
+    setShowSuccessModal(true);
+    //submitPrimaryLead(values, () => setShowSuccessModal(true));
+  };
+
+  const fetchLocation = () => {
+    try {
+      let location: string;
+      const handleLocationResponse = (response: GeolocationResponse) => {
+        location = `lat=${response.coords.latitude}&lng=${response.coords.longitude}`;
+        setLocation(location);
+      };
+      const handleLocationError = (_error: GeolocationError) => {
+        setLocation(location ?? 'LOCATION_FETCH_FAILED');
+      };
+      getHere(handleLocationResponse, handleLocationError);
+    } catch (error) {}
+  };
+
+  const getHere = (
+    cb: (response: GeolocationResponse) => void,
+    cbError: (error: GeolocationError) => void,
+  ) => {
+    let location;
+
+    Geolocation.getCurrentPosition(cb, cbError, {
+      enableHighAccuracy: true,
+    });
+
+    return location;
   };
 
   return (
@@ -137,7 +175,16 @@ const PrimaryLeadCreation = () => {
               />
               <Spacer size={20} />
               <DropDown
-                list={categoryData}
+                list={[
+                  {
+                    label: 'Retailer',
+                    value: 'Retailer',
+                  },
+                  {
+                    label: 'Non-Retailer',
+                    value: 'Non-Retailer',
+                  },
+                ]}
                 label={getTranslationLabel('category')}
                 placeholder={getTranslationLabel('select_category')}
                 isRequired
@@ -150,6 +197,7 @@ const PrimaryLeadCreation = () => {
                   setFieldValue('categoryId', data);
                 }}
                 error={touched.categoryId ? errors.categoryId : ''}
+                textInputStyle={{backgroundColor: COLORS.white}}
               />
               <Spacer size={20} />
               <PrimaryTextInput
@@ -157,49 +205,37 @@ const PrimaryLeadCreation = () => {
                 titleText={getTranslationLabel('pin_code')}
                 isRequired
                 value={values.pincode}
-                onEndEditing={() => {
-                  if (values.pincode.length === 6) {
-                    getPincodeData(
-                      values.pincode,
-                      setFieldValue,
-                      setPinCodeError,
-                      setFieldError,
-                    );
-                  }
-                }}
+                // onEndEditing={() => {
+                //   if (values.pincode.length === 6) {
+                //     getPincodeData(
+                //       values.pincode,
+                //       setFieldValue,
+                //       setPinCodeError,
+                //       setFieldError,
+                //     );
+                //   }
+                // }}
                 onChangeText={handleChange('pincode')}
                 onBlur={handleBlur('pincode')}
                 maxLength={6}
-                right={
-                  values.pincode.length > 5 && (
-                    <TextInput.Icon
-                      // eslint-disable-next-line react/no-unstable-nested-components
-                      icon={() => (
-                        <SearchIcon
-                          height={20}
-                          width={20}
-                          onPress={() => {
-                            getPincodeData(
-                              values.pincode,
-                              setFieldValue,
-                              setPinCodeError,
-                              setFieldError,
-                            );
-                          }}
-                        />
-                      )}
-                    />
-                  )
-                }
                 keyboardType="numeric"
                 returnKeyType="search"
                 errorText={touched.pincode ? errors.pincode : ''}
+              />
+              <Spacer size={20} />
+              <PrimaryTextInput
+                placeHolder={getTranslationLabel('geo_location')}
+                titleText={getTranslationLabel('select_geo_location')}
+                value={location}
+                onChangeText={() => undefined}
+                errorText={touched.geoLocation ? errors.geoLocation : ''}
+                onPressIn={() => {}}
               />
               <Spacer size={40} />
               <CustomButton
                 type={ButtonTypes.contained}
                 onPress={handleSubmit}
-                isDisabled={!isValid || pinCodeError}
+                isDisabled={false} //{!isValid || pinCodeError}
                 text={getTranslationLabel('submit')}
               />
             </View>

@@ -9,9 +9,9 @@ export const PrimaryLeadSchema = Yup.object().shape({
     .length(10, 'Mobile number must be 10 digit')
     .matches(INDIAN_MOBILE_REGEX, 'Invalid mobile number')
     .required('Please enter lead mobile number'),
-  gstIn: Yup.string()
-    .length(15, 'GST must be 15 letters')
-    .matches(GST_REGEX, 'Invalid GST number'),
+  // gstIn: Yup.string()
+  //   .length(15, 'GST must be 15 letters')
+  //   .matches(GST_REGEX, 'Invalid GST number'),
   categoryId: Yup.string().required('Please select lead product category'),
   pincode: Yup.string()
     .length(6, 'Pin code must be 6 digit')
