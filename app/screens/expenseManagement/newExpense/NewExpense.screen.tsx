@@ -60,6 +60,18 @@ import ArrowDown from '../../../../assets/icons/arrowDown.svg';
 import SuccessModal from '@/modals/SuccessModal';
 import {MOCK_CITY_DATA, MOCK_CITY_RATES} from './newExpenses.mock';
 
+// Helper to format amount as ₹900/-
+const formatAmount = (value: string | number | null) => {
+  if (value === null || value === undefined || value === '') return '';
+  const num = String(value).replace(/[^\d.]/g, '');
+  if (!num) return '';
+  return `₹${num}/-`;
+};
+// Helper to parse formatted amount back to number string
+const parseAmount = (value: string) => {
+  return value.replace(/[^\d.]/g, '');
+};
+
 // Use a function to get a fresh initial state
 const getInitialExpense = (): IExpenseFormState => ({
   id: null,
@@ -589,9 +601,9 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Calculated Amount'}
-          value={values?.calculatedAmount ?? ''}
+          value={formatAmount(values?.calculatedAmount)}
           isRequired
-          onChangeText={val => setFieldValue('calculatedAmount', val)}
+          onChangeText={val => setFieldValue('calculatedAmount', parseAmount(val))}
           placeHolder={'Enter Calculated Amount'}
           onBlur={() => handleBlur('calculatedAmount')}
           keyboardType="decimal-pad"
@@ -656,8 +668,8 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Amount (excl. tax)'}
-          value={values?.lodgingAmount ?? ''}
-          onChangeText={val => setFieldValue('lodgingAmount', val)}
+          value={formatAmount(values?.lodgingAmount)}
+          onChangeText={val => setFieldValue('lodgingAmount', parseAmount(val))}
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
           onBlur={() => handleBlur('lodgingAmount')}
@@ -667,8 +679,8 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Tax Amount'}
-          value={values?.lodgingTaxAmount ?? ''}
-          onChangeText={val => setFieldValue('lodgingTaxAmount', val)}
+          value={formatAmount(values?.lodgingTaxAmount)}
+          onChangeText={val => setFieldValue('lodgingTaxAmount', parseAmount(val))}
           placeHolder={'Enter Tax Amount'}
           onBlur={() => handleBlur('lodgingTaxAmount')}
           isRequired
@@ -780,13 +792,13 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Amount (excl. tax)'}
-          value={
+          value={formatAmount(
             otherExpense?.otherAmount !== undefined &&
             otherExpense?.otherAmount !== null
-              ? String(otherExpense.otherAmount)
+              ? otherExpense.otherAmount
               : ''
-          }
-          onChangeText={val => updateOtherExpense(idx, 'otherAmount', val)}
+          )}
+          onChangeText={val => updateOtherExpense(idx, 'otherAmount', parseAmount(val))}
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
           keyboardType="decimal-pad"
@@ -794,14 +806,14 @@ const NewExpense = () => {
         <Spacer size={15} />
         <PrimaryTextInput
           titleText={'Tax Amount'}
-          value={
+          value={formatAmount(
             otherExpense?.otherTaxAmount !== undefined &&
             otherExpense?.otherTaxAmount !== null
-              ? String(otherExpense.otherTaxAmount)
+              ? otherExpense.otherTaxAmount
               : ''
-          }
+          )}
           isRequired
-          onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', val)}
+          onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', parseAmount(val))}
           placeHolder={'Enter Tax Amount'}
           keyboardType="decimal-pad"
         />
