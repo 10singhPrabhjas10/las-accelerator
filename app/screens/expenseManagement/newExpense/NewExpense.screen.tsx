@@ -650,6 +650,7 @@ const NewExpense = () => {
           setValue={data => {
             setFieldValue('modeOfTransport', data);
           }}
+          textInputStyle={{backgroundColor: COLORS.white}}
           error={touched.modeOfTransport ? errors.modeOfTransport : ''}
         />
         <Spacer size={15} />
@@ -662,6 +663,7 @@ const NewExpense = () => {
           onChangeDropdownState={() =>
             toggleDropDownVisibility('travelProofTypeDropdown')
           }
+          textInputStyle={{backgroundColor: COLORS.white}}
           setValue={data => {
             setFieldValue('travelProofType', data);
             if (data !== 'Other')
@@ -816,6 +818,7 @@ const NewExpense = () => {
           placeholder={'Select Proof Type'}
           value={values.lodgingProofType}
           visible={visibility.lodgingProofTypeDropdown}
+          textInputStyle={{backgroundColor: COLORS.white}}
           onChangeDropdownState={() =>
             toggleDropDownVisibility('lodgingProofTypeDropdown')
           }
@@ -950,6 +953,7 @@ const NewExpense = () => {
           placeholder={'Select Proof Type'}
           value={otherExpense.otherProofType}
           visible={otherProofDropdowns[idx]}
+          textInputStyle={{backgroundColor: COLORS.white}}
           onChangeDropdownState={() => toggleOtherProofDropdown(idx)}
           setValue={data => {
             updateOtherExpense(idx, 'otherProofType', data);
