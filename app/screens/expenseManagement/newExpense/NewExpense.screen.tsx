@@ -59,6 +59,12 @@ import {
 import ArrowDown from '../../../../assets/icons/arrowDown.svg';
 import SuccessModal from '@/modals/SuccessModal';
 import {MOCK_CITY_DATA, MOCK_CITY_RATES} from './newExpenses.mock';
+import {
+  setExpenseFormWithFlag,
+  setExpenseFrom,
+  updateExpenseFormWithFlag,
+} from '@/store/redux/expenseFormSlice';
+import {useDispatch} from 'react-redux';
 
 // Helper to format amount as ₹900/-
 const formatAmount = (value: string | number | null) => {
@@ -98,7 +104,6 @@ const getInitialExpense = (): IExpenseFormState => ({
   otherProofComments: null,
   otherComments: null,
 });
-
 const GREY_TEXT_THEME = {colors: {onSurface: COLORS.grey2}};
 
 const NewExpense = () => {
@@ -136,7 +141,8 @@ const NewExpense = () => {
   const navigation = useNavigation();
   const formikRef = useRef<any>(null);
   const route = useRoute<RouteProp<RootNavigationTypes, 'NewExpense'>>();
-  const {selectedExpenseToBeModified = null} = route?.params || {};
+  const {selectedExpenseToBeModified, selectedExpenseIndex} =
+    route?.params || {};
 
   const [otherExpenses, setOtherExpenses] = useState<IExpenseFormState[]>([
     getInitialExpense(),
@@ -168,52 +174,132 @@ const NewExpense = () => {
     });
   };
 
+  // useEffect(() => {
+  //   if (selectedExpenseToBeModified && selectedExpenseToBeModified.form) {
+  //     setInitialExpense(selectedExpenseToBeModified.form);
+  //     // Set other states as needed (photos, etc.)
+  //   } else {
+  //     resetFormData();
+  //   }
+  // }, [selectedExpenseToBeModified]);
+
   useEffect(() => {
-    if (selectedExpenseToBeModified) {
-      const data: IExpenseData = selectedExpenseToBeModified;
-      const updatedExpense: IExpenseFormState = {
-        id: data.id ?? null,
-        fromDate: data.fromDate ?? null,
-        toDate: data.toDate ?? null,
-        beatStartPoint: data.beatStartPoint ?? null,
-        beatEndPoint: data.beatEndPoint ?? null,
-        beatDistance: data.actualBeatDistance
-          ? String(data.actualBeatDistance)
-          : null,
-        modeOfTransport: data.modeOfTransport ?? null,
-        city: data.city ?? null,
-        cityCategory: data.cityCategory ?? null,
-        calculatedAmount: data.calculatedAmount ?? null,
-        noOfNight: data.noOfNight ?? null,
-        lodgingAmount: String(data.totalAmount) ?? null,
-        lodgingTaxAmount: String(data.lodgingTaxAmount) ?? null,
-        otherAmount: String(data.totalAmount) ?? null,
-        otherTaxAmount: String(data.otherTaxAmount) ?? null,
-        lodgingComments: data.lodgingComments ?? null,
-        otherComments: data.otherComments ?? null,
-        travelProofType: data.travelProofType ?? null,
-        lodgingProofType: data.lodgingProofType ?? null,
-        otherProofType: data.otherProofType ?? null,
-        travelProofComments: data.travelProofComments ?? null,
-        lodgingProofComments: data.lodgingProofComments ?? null,
-        otherProofComments: data.otherProofComments ?? null,
+    if (selectedExpenseToBeModified && selectedExpenseToBeModified.form) {
+      const form = selectedExpenseToBeModified.form;
+      console.log('MyFORM', form);
+      const mappedForm = {
+        ...form,
+        beatDistance: form.beatDistance ? String(form.beatDistance) : null,
       };
-      setInitialExpense(updatedExpense);
-      setSearchedCityList([
-        {
-          id: data.cityCategory ?? '',
-          title: data.city ?? '',
-        },
-      ]);
-      if (data.otherExpenses && Array.isArray(data.otherExpenses)) {
-        setOtherPhotos(Array(data.otherExpenses.length).fill([]));
+      setInitialExpense(mappedForm);
+      // Set travel photos
+      if (
+        form.travel_expense_proof &&
+        Array.isArray(form.travel_expense_proof)
+      ) {
+        setTravelPhotos(form.travel_expense_proof.map(uri => ({uri})));
+      } else {
+        setTravelPhotos([]);
+      }
+
+      // Set lodging photos
+      if (
+        form.lodging_expense_proof &&
+        Array.isArray(form.lodging_expense_proof)
+      ) {
+        setLodgingPhotos(form.lodging_expense_proof.map(uri => ({uri})));
+      } else {
+        setLodgingPhotos([]);
+      }
+
+      // Set other photos (array of arrays)
+      if (
+        form.other_expense_proofs &&
+        Array.isArray(form.other_expense_proofs)
+      ) {
+        setOtherPhotos(
+          form.other_expense_proofs.map(photoArr =>
+            Array.isArray(photoArr) ? photoArr.map(uri => ({uri})) : [],
+          ),
+        );
       } else {
         setOtherPhotos([[]]);
       }
+
+      // Set other expenses
+      if (form.otherExpenses && Array.isArray(form.otherExpenses)) {
+        setOtherExpenses(form.otherExpenses);
+        setOtherProofDropdowns(form.otherExpenses.map(() => false));
+      } else {
+        setOtherExpenses([getInitialExpense()]);
+        setOtherProofDropdowns([false]);
+      }
+
+      // Set city dropdown if needed
+      if (form.city && form.cityCategory) {
+        setSearchedCityList([
+          {
+            id: form.cityCategory,
+            title: form.city,
+          },
+        ]);
+      }
+      if (formikRef.current && formikRef.current.resetForm) {
+        formikRef.current.resetForm({values: form});
+      }
     } else {
-      resetFormData();
+      // eslint-disable-next-line prettier/prettier
+    resetFormData();
     }
-  }, []);
+  }, [selectedExpenseToBeModified]);
+
+  // useEffect(() => {
+  //   console.log('selectedExpenseToBeModified', selectedExpenseToBeModified);
+  //   if (selectedExpenseToBeModified.form) {
+  //     const data: IExpenseData = selectedExpenseToBeModified.form;
+  //     const updatedExpense: IExpenseFormState = {
+  //       id: data.id ?? null,
+  //       fromDate: data.fromDate ?? null,
+  //       toDate: data.toDate ?? null,
+  //       beatStartPoint: data.beatStartPoint ?? null,
+  //       beatEndPoint: data.beatEndPoint ?? null,
+  //       beatDistance: data.actualBeatDistance
+  //         ? String(data.actualBeatDistance)
+  //         : null,
+  //       modeOfTransport: data.modeOfTransport ?? null,
+  //       city: data.city ?? null,
+  //       cityCategory: data.cityCategory ?? null,
+  //       calculatedAmount: data.calculatedAmount ?? null,
+  //       noOfNight: data.noOfNight ?? null,
+  //       lodgingAmount: String(data.totalAmount) ?? null,
+  //       lodgingTaxAmount: String(data.lodgingTaxAmount) ?? null,
+  //       otherAmount: String(data.totalAmount) ?? null,
+  //       otherTaxAmount: String(data.otherTaxAmount) ?? null,
+  //       lodgingComments: data.lodgingComments ?? null,
+  //       otherComments: data.otherComments ?? null,
+  //       travelProofType: data.travelProofType ?? null,
+  //       lodgingProofType: data.lodgingProofType ?? null,
+  //       otherProofType: data.otherProofType ?? null,
+  //       travelProofComments: data.travelProofComments ?? null,
+  //       lodgingProofComments: data.lodgingProofComments ?? null,
+  //       otherProofComments: data.otherProofComments ?? null,
+  //     };
+  //     setInitialExpense(updatedExpense);
+  //     setSearchedCityList([
+  //       {
+  //         id: data.cityCategory ?? '',
+  //         title: data.city ?? '',
+  //       },
+  //     ]);
+  //     if (data.otherExpenses && Array.isArray(data.otherExpenses)) {
+  //       setOtherPhotos(Array(data.otherExpenses.length).fill([]));
+  //     } else {
+  //       setOtherPhotos([[]]);
+  //     }
+  //   } else {
+  //     resetFormData();
+  //   }
+  // }, [selectedExpenseToBeModified]);
 
   const handleAddMoreProof = (
     proofType: 'travel' | 'lodging' | 'other',
@@ -377,8 +463,9 @@ const NewExpense = () => {
       prev.map((open, i) => (i === idx ? !open : false)),
     );
   };
-
-  const createReqBody = () => {
+  const dispatch = useDispatch();
+  const createReqBody = (isDraft: boolean) => {
+    console.log('called');
     try {
       const values = formikRef?.current?.values;
       if (!values) {
@@ -423,11 +510,39 @@ const NewExpense = () => {
         fromDate: moment(values?.fromDate).format(DateFormats.YYYY_MM_DD),
         toDate: moment(values?.toDate).format(DateFormats.YYYY_MM_DD),
         otherExpenses: otherExpensesReq,
+        status: isDraft ? 'Draft' : 'Submitted',
+        draftSavedAt: isDraft ? new Date().toISOString() : undefined,
       };
-      console.log(requestBody);
-      setShowSuccessModal(true);
-
-      setShowWarningModal(false);
+      //save to redux
+      if (selectedExpenseToBeModified) {
+        console.log('Updating existing expense:', selectedExpenseToBeModified);
+        dispatch(
+          updateExpenseFormWithFlag({
+            id: selectedExpenseIndex,
+            form: requestBody,
+            isDraft: true,
+          }),
+        );
+      } else {
+        console.log('Updating:', selectedExpenseToBeModified);
+        dispatch(setExpenseFormWithFlag({form: requestBody, isDraft}));
+      }
+      if (isDraft) {
+        Alert.alert('Draft Saved', 'Your draft has been saved.', [
+          {
+            text: 'OK',
+            onPress: () => {
+              navigation.navigate('ExpenseManagement');
+              resetFormData();
+            },
+          },
+        ]);
+      } else {
+        setShowSuccessModal(true);
+        setShowWarningModal(false);
+      }
+      //setShowSuccessModal(true);
+      //setShowWarningModal(false);
       // addNewOrUpdateExpense(
       //   selectedExpenseToBeModified ? 'Update' : 'Create',
       //   requestBody,
@@ -442,6 +557,9 @@ const NewExpense = () => {
       // );
     } catch (error) {
       console.error('Error in createReqBody:', error);
+      if (isDraft) {
+        Alert.alert('Error', 'Failed to save draft.');
+      }
     }
   };
 
@@ -603,7 +721,9 @@ const NewExpense = () => {
           titleText={'Calculated Amount'}
           value={formatAmount(values?.calculatedAmount)}
           isRequired
-          onChangeText={val => setFieldValue('calculatedAmount', parseAmount(val))}
+          onChangeText={val =>
+            setFieldValue('calculatedAmount', parseAmount(val))
+          }
           placeHolder={'Enter Calculated Amount'}
           onBlur={() => handleBlur('calculatedAmount')}
           keyboardType="decimal-pad"
@@ -680,7 +800,9 @@ const NewExpense = () => {
         <PrimaryTextInput
           titleText={'Tax Amount'}
           value={formatAmount(values?.lodgingTaxAmount)}
-          onChangeText={val => setFieldValue('lodgingTaxAmount', parseAmount(val))}
+          onChangeText={val =>
+            setFieldValue('lodgingTaxAmount', parseAmount(val))
+          }
           placeHolder={'Enter Tax Amount'}
           onBlur={() => handleBlur('lodgingTaxAmount')}
           isRequired
@@ -794,11 +916,13 @@ const NewExpense = () => {
           titleText={'Amount (excl. tax)'}
           value={formatAmount(
             otherExpense?.otherAmount !== undefined &&
-            otherExpense?.otherAmount !== null
+              otherExpense?.otherAmount !== null
               ? otherExpense.otherAmount
-              : ''
+              : '',
           )}
-          onChangeText={val => updateOtherExpense(idx, 'otherAmount', parseAmount(val))}
+          onChangeText={val =>
+            updateOtherExpense(idx, 'otherAmount', parseAmount(val))
+          }
           placeHolder={'Enter Amount (excl. tax)'}
           isRequired
           keyboardType="decimal-pad"
@@ -808,12 +932,14 @@ const NewExpense = () => {
           titleText={'Tax Amount'}
           value={formatAmount(
             otherExpense?.otherTaxAmount !== undefined &&
-            otherExpense?.otherTaxAmount !== null
+              otherExpense?.otherTaxAmount !== null
               ? otherExpense.otherTaxAmount
-              : ''
+              : '',
           )}
           isRequired
-          onChangeText={val => updateOtherExpense(idx, 'otherTaxAmount', parseAmount(val))}
+          onChangeText={val =>
+            updateOtherExpense(idx, 'otherTaxAmount', parseAmount(val))
+          }
           placeHolder={'Enter Tax Amount'}
           keyboardType="decimal-pad"
         />
@@ -914,7 +1040,7 @@ const NewExpense = () => {
             if (exceedsTravel || exceedsLodging || exceedsOther) {
               setShowWarningModal(true);
             } else {
-              createReqBody();
+              createReqBody(false);
             }
           }}>
           {({
@@ -1044,7 +1170,7 @@ const NewExpense = () => {
                 <CustomButton
                   type={ButtonTypes.text}
                   text="Save Draft"
-                  onPress={handleDraft}
+                  onPress={() => createReqBody(true)}
                   style={CommonStyles.flexOne}
                   textStyle={{color: COLORS.dgreen}}
                 />
@@ -1099,7 +1225,7 @@ const NewExpense = () => {
           label={'Calculated amount exceeds limit. Continue to submit?'}
           secondaryBtnTitle={'Continue'}
           onSecondaryBtnHandler={() => {
-            createReqBody();
+            createReqBody(false);
           }}
           primaryButtonTitle="Dismiss"
           onPrimaryBtnHandler={() => {

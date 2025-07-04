@@ -16,42 +16,38 @@ import {EMPTY_DATA_DASH, ID_ALL} from 'utils/Constants';
 import {COLORS} from '@/theme/colors';
 // import {getFilteredExpensedataAPI} from '../ExpenseManagement.business';
 // import {IExpenseFilterRequestBody} from '../ExpenseManagement.Interface';
+import {useSelector} from 'react-redux';
+import {RootState} from 'store/redux/store';
 
-const mockExpenseData = [
-  {
-    id: 1,
-    status: 'Approved',
+const ExistingExpense = () => {
+  const forms =
+    useSelector((state: RootState) => state.expenseForm.forms) || [];
+  console.log('formData', forms);
+  const mockExpenseData = forms.map((entry, idx) => ({
+    id: idx + 1,
+    status: entry.form.status || 'Pending Approval',
     data: [
-      {title: 'Expense Date', text: 'Lorem Ipsum'},
-      {title: 'Expense Amount', text: 'Lorem Ipsum'},
-      {title: 'Expense Status', text: 'Approved', showStatusColor: true},
-    ],
-  },
-  {
-    id: 2,
-    status: 'Rejected',
-    data: [
-      {title: 'Expense Date', text: 'Lorem Ipsum'},
-      {title: 'Expense Amount', text: 'Lorem Ipsum'},
-      {title: 'Expense Status', text: 'Rejected', showStatusColor: true},
-    ],
-  },
-  {
-    id: 3,
-    status: 'Pending Approval',
-    data: [
-      {title: 'Expense Date', text: 'Lorem Ipsum'},
-      {title: 'Expense Amount', text: 'Lorem Ipsum'},
+      {
+        title: 'Expense Date',
+        text: entry.form.fromDate
+          ? moment(entry.form.fromDate).format(DateFormats.DD_MM_YYYY)
+          : EMPTY_DATA_DASH,
+      },
+      {
+        title: 'Expense Amount',
+        text:
+          entry.form.calculatedAmount !== undefined
+            ? entry.form.calculatedAmount
+            : EMPTY_DATA_DASH,
+      },
       {
         title: 'Expense Status',
-        text: 'Pending Approval',
+        text: entry.form.status || 'Pending Approval',
         showStatusColor: true,
       },
     ],
-  },
-];
-
-const ExistingExpense = () => {
+  }));
+  console.log('mockExpenseData', mockExpenseData);
   // const [existingExpenseDataList, setExistingExpenseDataList] = useState([]);
   // const [modifiedExistingExpenseDataList, setModifiedExistingExpenseDataList] = useState([]);
   const existingExpenseDataList = mockExpenseData;
@@ -191,13 +187,16 @@ const ExistingExpense = () => {
           <DataCard
             key={item.id}
             data={item.data}
-            showViewDetailsButton={item.status === 'Rejected' ? true : false}
+            showViewDetailsButton={item.status === 'Draft' ? true : false}
+            //showViewDetailsButton={item.status === 'Rejected' ? true : false}
             buttonText={
-              item.status === 'Rejected' ? 'Modify Expense' : undefined
+              //item.status === 'Rejected' ? 'Modify Expense' : undefined
+              item.status === 'Draft' ? 'Modify Expense' : undefined
             }
             onPressViewLeadDetails={() => {
               navigation.navigate('NewExpense', {
-                selectedExpenseToBeModified: existingExpenseDataList[index],
+                selectedExpenseToBeModified: forms[index],
+                selectedExpenseIndex: index,
               });
             }}
             detailTextStyle={{color: COLORS.dgreen}}
