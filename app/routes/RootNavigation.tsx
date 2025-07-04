@@ -360,7 +360,7 @@ export type RootNavigationTypes = {
   //Expense Management
   ExpenseManagement: undefined;
   AttendanceManagement: undefined;
-  NewExpense: {selectedExpenseToBeModified: any};
+  NewExpense: {selectedExpenseToBeModified: any; selectedExpenseIndex?: number};
   ExistingExpense: undefined;
   //Self Management
   SelfManagement: undefined;

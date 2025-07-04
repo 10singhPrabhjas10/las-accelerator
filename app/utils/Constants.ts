@@ -194,6 +194,23 @@ export const PROOF_TYPE = [
     label: 'Both',
     value: 'both',
   },
+  {
+    label: 'Other',
+    value: 'other',
+  },
+];
+
+export const TRAVEL_PROOF_TYPE = [
+  {label: 'Travel Allowance', value: 'travel'},
+  // {label: 'Other', value: 'other'}, // Other option temporarily disabled
+];
+export const LODGING_PROOF_TYPE = [
+  {label: 'Lodging Allowance', value: 'lodging'},
+  // {label: 'Other', value: 'other'}, // Other option temporarily disabled
+];
+export const OTHER_PROOF_TYPE = [
+  {label: 'Other Allowance', value: 'other'},
+  // {label: 'Other', value: 'other'}, // Other option temporarily disabled
 ];
 
 export const CITY_LIST = [

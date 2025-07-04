@@ -18,6 +18,12 @@ export interface ISearchCityData {
   };
 }
 
+export interface IExpenseProof {
+  id: number;
+  expenseName: string;
+  proofFile: string;
+}
+
 export interface IExpenseData {
   id: number;
   lasUserId: string;
@@ -31,23 +37,36 @@ export interface IExpenseData {
   noOfNight: string;
   city: string;
   cityCategory: string | null;
-  otherProofType: string | null;
   createdAt: string;
   updatedAt: string;
   totalAmount: number;
-  taxAmount: number;
-  lasComments: string;
+  calculatedAmount: any;
+  lodgingTaxAmount: number;
+  otherTaxAmount: number;
+  lodgingComments: string | null;
+  otherComments: string | null;
   status: string;
   expenseType: string;
   allowedAmount: string | null;
-  expense_proofs: [
-    {
-      id: number,
-      expenseName: string,
-      proofFile: string,
-    }
-  ];
   createdBy: string | null;
+  travelProofType: string | null;
+  lodgingProofType: string | null;
+  otherProofType: string | null;
+  travelProofComments: string | null;
+  lodgingProofComments: string | null;
+  otherProofComments: string | null;
+  travel_expense_proof: string[];
+  lodging_expense_proof: string[];
+  other_expense_proofs: string[][];
+  otherExpenses: IExpenseOther[];
+}
+
+export interface IExpenseOther {
+  otherAmount: number;
+  otherTaxAmount: number;
+  otherProofType: string | null;
+  otherProofComments: string | null;
+  otherComments: string | null;
 }
 
 export interface IExpenseFilterRequestBody {
@@ -68,4 +87,37 @@ export enum ModeOfTransport {
   OWN_VEHICLE = 'Own Vehicle',
   LOCAL_TRAVEL = 'Local Travel',
   OUTSTATION_TRAVEL = 'Outstation Travel',
+}
+
+export interface IExpenseFormState {
+  id: number | null;
+  fromDate: string | null;
+  toDate: string | null;
+  beatStartPoint: string | null;
+  beatEndPoint: string | null;
+  beatDistance: string | null;
+  modeOfTransport: string | null;
+  lodgingAmount: string | null;
+  lodgingTaxAmount: string | null;
+  otherAmount: string | null;
+  otherTaxAmount: string | null;
+  noOfNight: string | null;
+  city: string | null;
+  cityCategory: string | number | null;
+  calculatedAmount: string | null;
+  lodgingComments: string | null;
+  otherComments: string | null;
+  travelProofType: string | null;
+  lodgingProofType: string | null;
+  otherProofType: string | null;
+  travelProofComments: string | null;
+  lodgingProofComments: string | null;
+  otherProofComments: string | null;
+  // For draft/request body compatibility
+  travel_expense_proof?: string[];
+  lodging_expense_proof?: string[];
+  other_expense_proofs?: string[][];
+  otherExpenses?: IExpenseOther[];
+  status?: string;
+  draftSavedAt?: string;
 }

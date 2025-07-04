@@ -16,7 +16,6 @@ import {COLORS} from 'theme/colors';
 import {LANGUAGES} from 'utils/Constants';
 import {RootNavigationProp, RootNavigationTypes} from 'routes/RootNavigation';
 import {handleLanguageChange} from './LanguageSelection.business';
-import SubHeader from '@/components/subHeader/subHeader';
 import ScreenHeader from '@/components/headers/ScreenHeader';
 import CustomButton from '@/components/button/CustomButton';
 import {ButtonTypes} from '@/types/buttons';
@@ -24,6 +23,7 @@ import {getDeviceHeight, getTranslationLabel} from '@/utils/commonMethods';
 import {updateIsFirstTimeAppLaunch} from '@/store/redux/userSlice';
 import CommonStyles from '../../utils/commonStyle';
 import LanguageSelectionList from './LanguageSelectionList';
+import SubHeader from '@/components/subHeader/subHeader';
 
 export interface ILanguage {
   id: string;

@@ -8,10 +8,12 @@ const ActionButton = ({
   icon,
   title,
   onPress,
+  rightIcon,
+  pressableProps = {},
   isSelected,
 }: IActionButtonProps) => {
   return (
-    <Pressable onPress={() => onPress(title)}>
+    <Pressable onPress={() => onPress(title)} {...pressableProps}>
       <Card style={[styles.cardContainer, isSelected && styles.selectedCard]}>
         <Card.Content style={styles.container}>
           {icon}

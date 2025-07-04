@@ -1,5 +1,6 @@
 import {ReactElement, ReactNode} from 'react';
 import {
+  PressableProps,
   StyleProp,
   TextStyle,
   TouchableOpacityProps,
@@ -34,9 +35,11 @@ export interface IPrimaryButtonProps extends TouchableOpacityProps {
 
 export interface IActionButtonProps {
   icon: ReactElement<SvgProps> | ReactNode;
+  rightIcon?: ReactElement<SvgProps> | ReactNode;
   title: string;
   subTitle?: string;
   onPress: (title: string) => void;
+  pressableProps?: PressableProps;
   isSelected?: boolean;
 }
 

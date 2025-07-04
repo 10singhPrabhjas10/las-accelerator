@@ -57,8 +57,8 @@ export const getCityList = async (
 //API to create Primary Lead
 
 export const addNewOrUpdateExpense = async (
-  addOrUpdate,
-  requestBody,
+  addOrUpdate: string,
+  requestBody: any,
   onSuccess: () => void,
   onFailure: () => void,
 ) => {

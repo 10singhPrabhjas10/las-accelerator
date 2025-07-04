@@ -237,9 +237,12 @@ const DropDown = forwardRef((props: IDropdownProps, ref: Ref<View>) => {
                   style={[
                     {
                       height: 45,
-                      backgroundColor: isDisabled
-                        ? COLORS.lightGrey2
-                        : 'transparent',
+                      backgroundColor:
+                        displayValue && displayValue.length > 0
+                          ? COLORS.white
+                          : isDisabled
+                          ? COLORS.lightGrey2
+                          : 'transparent',
                     },
                     textInputStyle,
                   ]}

@@ -11,6 +11,7 @@ import snackbarSlice from './snackbarSlice';
 import channelPartnerSlice from './channelPartnerSlice';
 import forceUpdateSlice from './forceUpdateSlice';
 import logger from 'redux-logger';
+import expenseFormReducer from './expenseFormSlice';
 
 const rootReducer = combineReducers({
   user: userSlice,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   snackbar: snackbarSlice,
   channelPartner: channelPartnerSlice,
   forceUpdate: forceUpdateSlice,
+  expenseForm: expenseFormReducer,
 });
 
 const persistConfig = {
