@@ -6,7 +6,6 @@ import {Formik} from 'formik';
 import {
   travelExpenseValidation,
   lodgingExpenseValidation,
-  otherExpenseValidation,
 } from 'validations/newExpense';
 import {
   View,
@@ -36,24 +35,16 @@ import CustomButton from 'components/button/CustomButton';
 import {ButtonTypes} from 'types/buttons';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
-import {debounce} from 'utils/commonMethods';
 import {RootNavigationTypes} from 'routes/RootNavigation';
 import {AutocompleteDropdown} from 'components/auto-complete/AutocompleteDropdown';
-import {
-  getCityRateData,
-  getCityList,
-  addNewOrUpdateExpense,
-} from '../ExpenseManagement.business';
 import {TAutocompleteDropdownItem} from 'components/auto-complete/AutocompleteDropdown.interface';
 import WarningIcon from '../../../../assets/icons/warning-triangle.svg';
-import SearchIcon from '../../../../assets/icons/searchIcon.svg';
 import DeleteIcon from '../../../../assets/icons/delete.svg';
 import moment from 'moment';
 import {DateFormats} from 'constants/dateFormat';
 import {
   ModeOfTransport,
   IExpenseMgmtCityRate,
-  IExpenseData,
   IExpenseFormState,
 } from '../ExpenseManagement.Interface';
 import ArrowDown from '../../../../assets/icons/arrowDown.svg';
@@ -61,7 +52,6 @@ import SuccessModal from '@/modals/SuccessModal';
 import {MOCK_CITY_DATA, MOCK_CITY_RATES} from './newExpenses.mock';
 import {
   setExpenseFormWithFlag,
-  setExpenseFrom,
   updateExpenseFormWithFlag,
 } from '@/store/redux/expenseFormSlice';
 import {useDispatch} from 'react-redux';
@@ -197,7 +187,7 @@ const NewExpense = () => {
         form.travel_expense_proof &&
         Array.isArray(form.travel_expense_proof)
       ) {
-        setTravelPhotos(form.travel_expense_proof.map(uri => ({uri})));
+        setTravelPhotos(form.travel_expense_proof.map((uri: any) => ({uri})));
       } else {
         setTravelPhotos([]);
       }
@@ -207,7 +197,7 @@ const NewExpense = () => {
         form.lodging_expense_proof &&
         Array.isArray(form.lodging_expense_proof)
       ) {
-        setLodgingPhotos(form.lodging_expense_proof.map(uri => ({uri})));
+        setLodgingPhotos(form.lodging_expense_proof.map((uri: any) => ({uri})));
       } else {
         setLodgingPhotos([]);
       }
@@ -218,7 +208,7 @@ const NewExpense = () => {
         Array.isArray(form.other_expense_proofs)
       ) {
         setOtherPhotos(
-          form.other_expense_proofs.map(photoArr =>
+          form.other_expense_proofs.map((photoArr: any[]) =>
             Array.isArray(photoArr) ? photoArr.map(uri => ({uri})) : [],
           ),
         );
@@ -249,7 +239,7 @@ const NewExpense = () => {
       }
     } else {
       // eslint-disable-next-line prettier/prettier
-    resetFormData();
+      resetFormData();
     }
   }, [selectedExpenseToBeModified]);
 
@@ -518,7 +508,7 @@ const NewExpense = () => {
         console.log('Updating existing expense:', selectedExpenseToBeModified);
         dispatch(
           updateExpenseFormWithFlag({
-            id: selectedExpenseIndex,
+            id: selectedExpenseIndex ?? 0,
             form: requestBody,
             isDraft: true,
           }),
@@ -532,7 +522,7 @@ const NewExpense = () => {
           {
             text: 'OK',
             onPress: () => {
-              navigation.navigate('ExpenseManagement');
+              (navigation as any).navigate('ExpenseManagement');
               resetFormData();
             },
           },
@@ -1190,7 +1180,7 @@ const NewExpense = () => {
           message="You have successfully submitted your expenses."
           buttonText="Dismiss"
           onButtonPress={() => {
-            navigation.navigate('ExpenseManagement');
+            (navigation as any).navigate('ExpenseManagement');
             setShowSuccessModal(false);
           }}
         />
