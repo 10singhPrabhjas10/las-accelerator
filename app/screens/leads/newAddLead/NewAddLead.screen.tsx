@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Linking} from 'react-native';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 
@@ -11,7 +11,8 @@ import CustomButton from 'components/button/CustomButton';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
 import SearchIcon from '../../../../assets/icons/searchIcon.svg';
 import CustomRadioButton from 'components/radioButton/CustomRadioButton';
-
+import HelpdeskIcon from '../../../../assets/icons/phone-ringing.svg';
+import EmaildeskIcon from '../../../../assets/icons/emailIcon.svg';
 import {PrimaryLeadSchema} from 'validations/primaryLead';
 import {ButtonTypes} from 'types/buttons';
 import {RootNavigationProp} from 'routes/RootNavigation';
@@ -23,6 +24,8 @@ import Geolocation, {
 } from '@react-native-community/geolocation';
 import {COLORS} from '@/theme/colors';
 import {EMPTY_DATA_DASH} from '@/utils/Constants';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {leadsStyles} from '../Leads.style';
 
 const initialLeadData = {
   leadName: '',
@@ -121,6 +124,16 @@ const NewAddLeadScreen = () => {
       setFieldValue('zone', '');
       setFieldValue('country', 'India');
     }
+  };
+
+  // Function to open phone dialer
+  const handlePhonePress = () => {
+    Linking.openURL('tel:+919876567890');
+  };
+
+  // Function to open email client
+  const handleEmailPress = () => {
+    Linking.openURL('mailto:info@LAS.com');
   };
 
   return (
@@ -326,6 +339,22 @@ const NewAddLeadScreen = () => {
                 isDisabled={false} //{!isValid || pinCodeError}
                 text={getTranslationLabel('save_submit')}
               />
+              <Spacer size={40} />
+              <View style={leadsStyles.contactRow}>
+                <TouchableOpacity
+                  style={leadsStyles.contactTouchable}
+                  onPress={handlePhonePress}>
+                  <HelpdeskIcon />
+                  <Text style={leadsStyles.contactText}>+91 9876567890</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={leadsStyles.contactTouchable}
+                  onPress={handleEmailPress}>
+                  <EmaildeskIcon />
+                  <Text style={leadsStyles.contactText}>info@LAS.com</Text>
+                </TouchableOpacity>
+              </View>
+              <Spacer size={40} />
             </View>
           );
         }}

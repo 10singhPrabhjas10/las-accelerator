@@ -425,7 +425,8 @@ export default function RootNavigation() {
     // for updating the language for development mode, can be removed in release version
     store.dispatch(
       setCurrentLanguage({
-        selectedLanguageTranslation: appStringsLocal[selectedLanguage.id],
+        selectedLanguageTranslation:
+          appStringsLocal[selectedLanguage.id as keyof typeof appStringsLocal],
         language: selectedLanguage,
       }),
     );
@@ -798,8 +799,14 @@ export default function RootNavigation() {
   const LeadsStack = (
     <>
       <RootStack.Screen name={'Leads'} component={Leads} />
-      <RootStack.Screen name={'NewAddLeadScreen'} component={NewAddLeadScreen} />
-      <RootStack.Screen name={'ViewAddedLeadsScreen'} component={ViewAddedLeadsScreen} />
+      <RootStack.Screen
+        name={'NewAddLeadScreen'}
+        component={NewAddLeadScreen}
+      />
+      <RootStack.Screen
+        name={'ViewAddedLeadsScreen'}
+        component={ViewAddedLeadsScreen}
+      />
     </>
   );
 
