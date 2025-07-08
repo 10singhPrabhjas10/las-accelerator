@@ -97,6 +97,11 @@ const Dashboard = () => {
       image: <ExpenseManagementIcon height={24} width={24} />,
       onPress: () => navigation.navigate('ExpenseManagement'),
     },
+    {
+      title: getTranslationLabel('leads'),
+      image: <SecondaryProfileIcon height={24} width={24} />,
+      onPress: () => navigation.navigate('Leads'),
+    },
     // {
     //   title: getTranslationLabel('self_management'),
     //   image: <SelfManagementIcon height={24} width={24} />,
@@ -162,7 +167,7 @@ const Dashboard = () => {
           data={tilesData}
           numColumns={3}
           renderItem={({item, index}) => (
-            <QuickLinkCard text={item.title} onPress={item.onPress} />
+            <QuickLinkCard text={item.title} onPress={item.onPress} icon={item.image} />
           )}
         />
       </View>
