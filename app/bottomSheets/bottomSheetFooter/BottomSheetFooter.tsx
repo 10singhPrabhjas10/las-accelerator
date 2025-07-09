@@ -11,6 +11,11 @@ interface IBottomSheetFooterProps {
   isFilterButtonDisabled: boolean;
   isApplyButtonDisabled?: boolean;
   hideClearButton?: boolean;
+  style?: object;
+  leftButtonStyle?: object;
+  rightButtonStyle?: object;
+  leftTextStyle?: object;
+  rightTextStyle?: object;
 }
 
 const BottomSheetFooter = ({
@@ -19,16 +24,22 @@ const BottomSheetFooter = ({
   isApplyButtonDisabled,
   isFilterButtonDisabled,
   hideClearButton = false,
+  style,
+  leftButtonStyle,
+  rightButtonStyle,
+  leftTextStyle,
+  rightTextStyle,
 }: IBottomSheetFooterProps) => {
   return (
-    <View style={styles.buttonContainer}>
+    <View style={[styles.buttonContainer, style]}>
       {hideClearButton ? null : (
         <CustomButton
           type={ButtonTypes.outline}
           text={getTranslationLabel('clear')}
           onPress={handleClearFilters}
-          style={styles.container}
+          style={[styles.container, leftButtonStyle]}
           isDisabled={isFilterButtonDisabled}
+          textStyle={leftTextStyle}
         />
       )}
       <CustomButton
@@ -37,8 +48,9 @@ const BottomSheetFooter = ({
         onPress={() => {
           handleApplyFilters();
         }}
+        style={[styles.container, rightButtonStyle]}
         isDisabled={isApplyButtonDisabled}
-        style={styles.container}
+        textStyle={rightTextStyle}
       />
     </View>
   );

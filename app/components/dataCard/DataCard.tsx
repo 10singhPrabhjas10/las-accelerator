@@ -104,18 +104,21 @@ const DataCard = ({
           </>
         )}
         {showViewMoreButton ? (
-          <Button
-            mode="text"
-            textColor={COLORS.darkOrange}
-            onPress={handleExpand}
-            contentStyle={styles.buttonContentStyle}
-            icon={expandableIcon}>
-            <Text
-              theme={{colors: {onSurface: COLORS.darkOrange}}}
-              variant="bodyMedium">
-              {getTranslationLabel(expanded ? 'view_less' : 'view_more')}
-            </Text>
-          </Button>
+          <>
+            <Spacer size={20} />
+            <Button
+              mode="text"
+              textColor={COLORS.darkOrange}
+              onPress={handleExpand}
+              contentStyle={styles.buttonContentStyle}
+              icon={expandableIcon}>
+              <Text
+                theme={{colors: {onSurface: COLORS.darkOrange}}}
+                variant="bodyMedium">
+                {getTranslationLabel(expanded ? 'view_less' : 'view_more')}
+              </Text>
+            </Button>
+          </>
         ) : null}
         {footer}
       </>

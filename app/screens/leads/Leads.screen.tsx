@@ -47,9 +47,7 @@ const Leads = () => {
       )}
 
       <ActionTouchableButton
-        onPress={() => {
-          handleViewLeads();
-        }}
+        onPress={() => navigation.navigate('LeadManagement')}
         title={getTranslationLabel('lead_management')}
         leftIcon={<MultipleFileIcon />}
       />

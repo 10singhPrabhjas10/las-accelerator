@@ -335,3 +335,11 @@ export const CurrencyCode = '₹';
 export const dot = '•';
 export const BeatPlan = 'BeatPlan';
 export const OrderConfirmed = 'OrderConfirmed';
+
+export const CATEGORY_FILTER = [
+  {id: 'all', name: 'Select All'},
+  {id: 'water_heaters', name: 'Water Heaters'},
+  {id: 'voltage_stabilisers', name: 'Voltage Stabilisers'},
+  {id: 'fans', name: 'Fans'},
+  {id: 'electric_motors', name: 'Electric Motors'},
+];

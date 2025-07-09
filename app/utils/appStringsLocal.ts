@@ -448,6 +448,9 @@ export default {
     {key: 'available', label: 'available'},
     {key: 'sku', label: 'SKU'},
     {key: 'save_submit', label: 'Save & Submit'},
+    {key: 'view_lead_details', label: 'View Lead Details'},
+    {key: 'view_less', label: 'View Less'},
+    {key: 'view_more', label: 'View More'},
     {
       key: 'search_by_product_category',
       label: 'Search by product, category...',

@@ -28,12 +28,20 @@ const LeadOptionBottomSheet: React.FC<LeadOptionBottomSheetProps> = ({
     }
   }, [visible]);
 
+  // Call onClose after the sheet is closed
+  const handleSheetChange = (index: number) => {
+    if (index === -1) {
+      onClose();
+    }
+  };
+
   return (
     <BottomSheetModalComponent
       ref={bottomSheetRef}
-      minHeight={222}
-      maxHeight={222}
-      title="Select Option">
+      minHeight={'35%'}
+      maxHeight={'35%'}
+      title="Select Option"
+      onChange={handleSheetChange}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Select Option</Text>
         <Text style={styles.subtitle}>Select lead option to proceed</Text>

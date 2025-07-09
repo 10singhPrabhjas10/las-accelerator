@@ -21,6 +21,8 @@ interface IFilterCheckboxProps {
   handleCheckbox?: (item: CheckboxProps) => void;
   filterData: string[];
   setFilterData: (data: string[]) => void;
+  accordianHeadingStyle?: object;
+  accordianTitleStyle?: object;
 }
 
 const FilterCheckbox = ({
@@ -30,6 +32,8 @@ const FilterCheckbox = ({
   showSearch = true,
   filterData,
   setFilterData,
+  accordianHeadingStyle,
+  accordianTitleStyle,
 }: IFilterCheckboxProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -69,8 +73,11 @@ const FilterCheckbox = ({
   return (
     <View>
       <Accordion
-        headingStyle={CommonStyles.accordionHeadingStyle}
-        titleStyle={CommonStyles.accordionTitleStyle}
+        headingStyle={[
+          CommonStyles.accordionHeadingStyle,
+          accordianHeadingStyle,
+        ]}
+        titleStyle={[CommonStyles.accordionTitleStyle, accordianTitleStyle]}
         isExpanded
         title={title}>
         <View>
