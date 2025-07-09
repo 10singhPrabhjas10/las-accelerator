@@ -73,11 +73,11 @@ const FilterCheckbox = ({
   return (
     <View>
       <Accordion
-        headingStyle={[
-          CommonStyles.accordionHeadingStyle,
-          accordianHeadingStyle,
-        ]}
-        titleStyle={[CommonStyles.accordionTitleStyle, accordianTitleStyle]}
+        headingStyle={{
+          ...CommonStyles.accordionHeadingStyle,
+          ...(accordianHeadingStyle || {}),
+        }}
+        titleStyle={{...CommonStyles.accordionTitleStyle, ...(accordianTitleStyle || {})}}
         isExpanded
         title={title}>
         <View>
