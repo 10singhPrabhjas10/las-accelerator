@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import {COLORS} from '@/theme/colors';
-import AddAccount from './../../../assets/icons/addAccount.svg';
-import SePicIcon from '../../../assets/icons/imageCapture.svg';
+import AddAccount from './../../../../assets/icons/addAccount.svg';
+import SePicIcon from '../../../../assets/icons/imageCapture.svg';
 
 interface LeadOptionBottomSheetProps {
   visible: boolean;

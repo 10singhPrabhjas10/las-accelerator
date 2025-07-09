@@ -11,7 +11,7 @@ import {RootState} from 'store/redux/store';
 import {LasType} from 'screens/performanceManagement/PerformanceMgmt.interface';
 import ActionTouchableButton from '@/components/button/ActionTouchableButton';
 import MultipleFileIcon from '../../../assets/icons/multipleFile.svg';
-import LeadOptionBottomSheet from './LeadOptionBottomSheet';
+import LeadOptionBottomSheet from './component/LeadOptionBottomSheet';
 
 const Leads = () => {
   const navigation = useNavigation<RootNavigationProp>();
