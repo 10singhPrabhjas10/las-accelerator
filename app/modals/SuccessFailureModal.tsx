@@ -81,7 +81,9 @@ const SuccessFailureModal = ({
                 style={styles.saveCancelBtn}
                 mode="contained"
                 onPress={() => onSecondaryBtnHandler?.()}>
-                <Text variant="bodyMedium">{secondaryBtnTitle}</Text>
+                <Text variant="bodyMedium" style={{color: COLORS.white}}>
+                  {secondaryBtnTitle}
+                </Text>
               </Button>
             )}
           </View>

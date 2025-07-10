@@ -13,6 +13,8 @@ import {COLORS} from '@/theme/colors';
 import FilterButton from '@/components/button/FilterButton';
 import BottomSheetModalComponent from '@/bottomSheets/bottomSheetModal/BottomSheetModalComponent';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useAppSelector} from '../../../store/redux/store';
+
 interface IFilterData {
   leadTypeFilter: string[];
   categoryFilter: string[];
@@ -31,33 +33,17 @@ const ViewAddedLeadsScreen = () => {
     bottomSheetModalRef.current?.dismiss();
   };
 
-  // Sample data for multiple leads
-  const leadsData = [
-    [
-      {title: 'Lead Name', text: 'Vijay Kumar'},
-      {title: 'Lead Email-ID', text: 'vijayk@gmail.com'},
-      {title: 'Leads Mobile No.', text: '+91 9869474566'},
-      {title: 'Category', text: 'Water Heaters'},
-      {title: 'Lead Type', text: 'Consumer'},
-      {title: 'Pin Code', text: '400001'},
-    ],
-    [
-      {title: 'Lead Name', text: 'Anjali Sharma'},
-      {title: 'Lead Email-ID', text: 'anjali.s@gmail.com'},
-      {title: 'Leads Mobile No.', text: '+91 9876543210'},
-      {title: 'Category', text: 'Voltage Stabilisers'},
-      {title: 'Lead Type', text: 'Institutional'},
-      {title: 'Pin Code', text: '400002'},
-    ],
-    [
-      {title: 'Lead Name', text: 'Rahul Mehta'},
-      {title: 'Lead Email-ID', text: 'rahul.m@gmail.com'},
-      {title: 'Leads Mobile No.', text: '+91 9123456789'},
-      {title: 'Category', text: 'Electric Motors'},
-      {title: 'Lead Type', text: 'Consumer'},
-      {title: 'Pin Code', text: '400003'},
-    ],
-  ];
+  const leads = useAppSelector(state => state.newAddLead.leads);
+
+  // Transform leads for DataCard
+  const leadsData = leads.map(lead => [
+    {title: 'Lead Name', text: lead.contactPersonName},
+    {title: 'Lead Email-ID', text: lead.emailId},
+    {title: 'Leads Mobile No.', text: lead.mobileNumber},
+    {title: 'Category', text: lead.categoryId},
+    {title: 'Lead Type', text: lead.leadType},
+    {title: 'Pin Code', text: lead.pincode},
+  ]);
 
   return (
     <Layout headerTitle={getTranslationLabel('view_added_leads')}>
@@ -68,7 +54,7 @@ const ViewAddedLeadsScreen = () => {
         showsVerticalScrollIndicator={false}
         initialNumToRender={10}
         ref={flatListRef}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <DataCard
             data={item}
             showViewDetailsButton
@@ -76,7 +62,7 @@ const ViewAddedLeadsScreen = () => {
             detailsStyle={{borderColor: COLORS.dgreen}}
             detailTextStyle={{color: COLORS.dgreen}}
             onPressViewLeadDetails={() =>
-              navigation.navigate('NewAddLeadScreen')
+              navigation.navigate('NewAddLeadScreen', { lead: leads[index] })
             }
             isExpandableButtonVisible={true}
           />

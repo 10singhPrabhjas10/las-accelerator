@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, Linking} from 'react-native';
 import {Formik} from 'formik';
-import {useNavigation} from '@react-navigation/native';
-
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Layout from 'components/Layout';
 import Spacer from 'components/spacer';
 import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import DropDown from 'components/dropdown/Dropdown';
 import CustomButton from 'components/button/CustomButton';
 import SuccessFailureModal from 'modals/SuccessFailureModal';
-import SearchIcon from '../../../../assets/icons/searchIcon.svg';
 import CustomRadioButton from 'components/radioButton/CustomRadioButton';
 import HelpdeskIcon from '../../../../assets/icons/phone-ringing.svg';
 import EmaildeskIcon from '../../../../assets/icons/emailIcon.svg';
@@ -26,6 +24,8 @@ import {COLORS} from '@/theme/colors';
 import {EMPTY_DATA_DASH} from '@/utils/Constants';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {leadsStyles} from '../Leads.style';
+import {useAppDispatch} from '../../../store/redux/store';
+import {addLead} from '../../../store/redux/newAddLeadSlice';
 
 const initialLeadData = {
   leadName: '',
@@ -43,6 +43,8 @@ const initialLeadData = {
 };
 
 const NewAddLeadScreen = () => {
+  const route = useRoute();
+  const leadParam = (route.params && (route.params as any).lead) || undefined;
   const [showCategoryDropdown, setShowCategoryDropdown] =
     useState<boolean>(false);
   const [showSubCategoryDropdown, setShowSubCategoryDropdown] =
@@ -51,13 +53,28 @@ const NewAddLeadScreen = () => {
   const [location, setLocation] = useState('');
 
   const navigation = useNavigation<RootNavigationProp>();
-  useEffect(() => {
-    //getCategoryDropdown(setCategoryData);
-  }, []);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // fetchLocation();
-  }, []);
+  // If lead param is passed, use it as initial values
+  const formInitialValues = leadParam
+    ? {
+        leadName: leadParam.contactPersonName || '',
+        leadEmail: leadParam.emailId || '',
+        leadMobile: leadParam.mobileNumber || '',
+        categoryName: leadParam.categoryId || '',
+        subCategoryName: leadParam.subCategoryId || '',
+        leadType: leadParam.leadType || '',
+        pinCode: leadParam.pincode || '',
+        district: leadParam.district || '',
+        salesOffice: leadParam.salesOffice || '',
+        state: leadParam.state || '',
+        zone: leadParam.zone || '',
+        country: leadParam.country || 'India',
+      }
+    : initialLeadData;
+
+  // Determine if the form should be read-only (when coming from View Lead Details)
+  const isReadOnly = !!leadParam;
 
   const handleOnSubmit = (values: any) => {
     // Map form values to API request body
@@ -75,10 +92,8 @@ const NewAddLeadScreen = () => {
       zone: values.zone,
       country: values.country,
     };
-    console.log(createReqBody);
-
+    dispatch(addLead(createReqBody));
     setShowSuccessModal(true);
-    //submitPrimaryLead(createReqBody, () => setShowSuccessModal(true));
   };
 
   const fetchLocation = () => {
@@ -136,13 +151,20 @@ const NewAddLeadScreen = () => {
     Linking.openURL('mailto:info@LAS.com');
   };
 
+  // Helper to ensure errorText is always a string
+  const getErrorString = (err: any) => {
+    if (typeof err === 'string') return err;
+    if (Array.isArray(err)) return err.join(', ');
+    return '';
+  };
+
   return (
     <Layout
       headerTitle={getTranslationLabel('lead_addition')}
       isScrollable
       style={CommonStyles.padding}>
       <Formik
-        initialValues={initialLeadData}
+        initialValues={formInitialValues}
         validationSchema={PrimaryLeadSchema}
         validateOnBlur
         validateOnMount
@@ -167,9 +189,10 @@ const NewAddLeadScreen = () => {
                 value={values.leadName}
                 onChangeText={handleChange('leadName')}
                 onBlur={handleBlur('leadName')}
-                errorText={
-                  touched.leadName && errors.leadName ? errors.leadName : ''
-                }
+                errorText={getErrorString(
+                  touched.leadName && errors.leadName ? errors.leadName : '',
+                )}
+                disabled={isReadOnly}
               />
               <Spacer size={20} />
               <PrimaryTextInput
@@ -180,9 +203,10 @@ const NewAddLeadScreen = () => {
                 keyboardType="email-address"
                 onChangeText={handleChange('leadEmail')}
                 onBlur={handleBlur('leadEmail')}
-                errorText={
-                  touched.leadEmail && errors.leadEmail ? errors.leadEmail : ''
-                }
+                errorText={getErrorString(
+                  touched.leadEmail && errors.leadEmail ? errors.leadEmail : '',
+                )}
+                disabled={isReadOnly}
               />
               <Spacer size={20} />
               <PrimaryTextInput
@@ -205,18 +229,20 @@ const NewAddLeadScreen = () => {
                 onBlur={handleBlur('leadMobile')}
                 maxLength={13}
                 keyboardType="numeric"
-                errorText={
+                errorText={getErrorString(
                   touched.leadMobile && errors.leadMobile
                     ? errors.leadMobile
-                    : ''
-                }
+                    : '',
+                )}
+                disabled={isReadOnly}
               />
               <Spacer size={20} />
               <DropDown
                 list={[
                   {label: 'Water Heaters', value: 'Water Heaters'},
-                  {label: 'Geysers', value: 'Geysers'},
-                  {label: 'Solar', value: 'Solar'},
+                  {label: 'Voltage Stabilisers', value: 'Voltage Stabilisers'},
+                  {label: 'Fans', value: 'Fans'},
+                  {label: 'Electric Motors', value: 'Electric Motors'},
                 ]}
                 label={getTranslationLabel('category_name')}
                 placeholder={getTranslationLabel('category_name')}
@@ -227,12 +253,13 @@ const NewAddLeadScreen = () => {
                   setShowCategoryDropdown(!showCategoryDropdown)
                 }
                 setValue={data => setFieldValue('categoryName', data)}
-                error={
+                error={getErrorString(
                   touched.categoryName && errors.categoryName
                     ? errors.categoryName
-                    : ''
-                }
+                    : '',
+                )}
                 textInputStyle={{backgroundColor: COLORS.white}}
+                isDisabled={isReadOnly}
               />
               <Spacer size={20} />
               <DropDown
@@ -250,12 +277,13 @@ const NewAddLeadScreen = () => {
                   setShowSubCategoryDropdown(!showSubCategoryDropdown)
                 }
                 setValue={data => setFieldValue('subCategoryName', data)}
-                error={
+                error={getErrorString(
                   touched.subCategoryName && errors.subCategoryName
                     ? errors.subCategoryName
-                    : ''
-                }
+                    : '',
+                )}
                 textInputStyle={{backgroundColor: COLORS.white}}
+                isDisabled={isReadOnly}
               />
               <Spacer size={20} />
               <CustomRadioButton
@@ -267,6 +295,7 @@ const NewAddLeadScreen = () => {
                   {value: 'Consumer', label: 'Consumer'},
                   {value: 'Institutional', label: 'Institutional'},
                 ]}
+                disabled={isReadOnly}
               />
               <PrimaryTextInput
                 placeHolder={getTranslationLabel('enter_pin_code')}
@@ -278,9 +307,10 @@ const NewAddLeadScreen = () => {
                 keyboardType="numeric"
                 maxLength={6}
                 returnKeyType="search"
-                errorText={
-                  touched.pinCode && errors.pinCode ? errors.pinCode : ''
-                }
+                errorText={getErrorString(
+                  touched.pinCode && errors.pinCode ? errors.pinCode : '',
+                )}
+                disabled={isReadOnly}
               />
               <Spacer size={20} />
               <PrimaryTextInput
@@ -289,7 +319,9 @@ const NewAddLeadScreen = () => {
                 value={values.district}
                 onChangeText={handleChange('district')}
                 onBlur={handleBlur('district')}
-                errorText={touched.district ? errors.district : ''}
+                errorText={getErrorString(
+                  touched.district ? errors.district : '',
+                )}
                 disabled
               />
               <Spacer size={20} />
@@ -299,7 +331,9 @@ const NewAddLeadScreen = () => {
                 value={values.salesOffice}
                 onChangeText={handleChange('salesOffice')}
                 onBlur={handleBlur('salesOffice')}
-                errorText={touched.salesOffice ? errors.salesOffice : ''}
+                errorText={getErrorString(
+                  touched.salesOffice ? errors.salesOffice : '',
+                )}
                 disabled
               />
               <Spacer size={20} />
@@ -309,7 +343,7 @@ const NewAddLeadScreen = () => {
                 value={values.state}
                 onChangeText={handleChange('state')}
                 onBlur={handleBlur('state')}
-                errorText={touched.state ? errors.state : ''}
+                errorText={getErrorString(touched.state ? errors.state : '')}
                 disabled
               />
               <Spacer size={20} />
@@ -319,7 +353,7 @@ const NewAddLeadScreen = () => {
                 value={values.zone}
                 onChangeText={handleChange('zone')}
                 onBlur={handleBlur('zone')}
-                errorText={touched.zone ? errors.zone : ''}
+                errorText={getErrorString(touched.zone ? errors.zone : '')}
                 disabled
               />
               <Spacer size={20} />
@@ -329,16 +363,22 @@ const NewAddLeadScreen = () => {
                 value={values.country}
                 onChangeText={handleChange('country')}
                 onBlur={handleBlur('country')}
-                errorText={touched.country ? errors.country : ''}
+                errorText={getErrorString(
+                  touched.country ? errors.country : '',
+                )}
                 disabled
               />
-              <Spacer size={40} />
-              <CustomButton
-                type={ButtonTypes.contained}
-                onPress={handleSubmit}
-                isDisabled={false} //{!isValid || pinCodeError}
-                text={getTranslationLabel('save_submit')}
-              />
+              {!isReadOnly && (
+                <>
+                  <Spacer size={40} />
+                  <CustomButton
+                    type={ButtonTypes.contained}
+                    onPress={handleSubmit}
+                    isDisabled={false}
+                    text={getTranslationLabel('save_submit')}
+                  />
+                </>
+              )}
               <Spacer size={40} />
               <View style={leadsStyles.contactRow}>
                 <TouchableOpacity
@@ -362,8 +402,8 @@ const NewAddLeadScreen = () => {
       <SuccessFailureModal
         showModal={showSuccessModal}
         setShowModal={() => setShowSuccessModal(false)}
-        title={getTranslationLabel('created')}
-        label={getTranslationLabel('success_primary_lead')}
+        title={getTranslationLabel('lead_draft_saved')}
+        label={getTranslationLabel('success_saved_leads_draft')}
         btnType="confirm"
         secondaryBtnTitle={getTranslationLabel('dismiss')}
         onSecondaryBtnHandler={() => navigation.navigate('Leads')}

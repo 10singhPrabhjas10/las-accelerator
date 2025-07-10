@@ -203,6 +203,14 @@ export default {
       key: 'view_added_leads',
       label: 'View Added Leads',
     },
+    {
+      key:'lead_draft_saved',
+      label: 'Lead Draft Saved',
+    },
+    {
+      key:'success_saved_leads_draft',
+      label:'You have successfully saved Lead as a draft'
+    },
     {key: 'leads_name', label: 'Leads Name'},
     {key: 'leads_email_id', label: 'Leads Email-ID'},
     {key: 'leads_mobile_no', label: 'Leads Mobile No.'},
