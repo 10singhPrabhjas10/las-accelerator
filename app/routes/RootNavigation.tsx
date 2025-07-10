@@ -347,7 +347,7 @@ export type RootNavigationTypes = {
   SecondaryLeadCreation: undefined;
   //Lead
   Leads: undefined;
-  NewAddLeadScreen: {lead: any};
+  NewAddLeadScreen: {lead?: any};
   ViewAddedLeadsScreen: undefined;
   //Mapped Retailer
   MappedRetailer: undefined;

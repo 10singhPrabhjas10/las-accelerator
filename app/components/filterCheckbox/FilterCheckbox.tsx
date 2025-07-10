@@ -8,6 +8,7 @@ import {ID_ALL} from 'utils/Constants';
 import CommonStyles from 'utils/commonStyle';
 import PrimaryTextInput from 'components/textInput/PrimaryTextInput';
 import {getTranslationLabel} from 'utils/commonMethods';
+import {COLORS} from '@/theme/colors';
 
 interface CheckboxProps {
   id: string;
@@ -23,6 +24,7 @@ interface IFilterCheckboxProps {
   setFilterData: (data: string[]) => void;
   accordianHeadingStyle?: object;
   accordianTitleStyle?: object;
+  searchPlaceholder?: string;
 }
 
 const FilterCheckbox = ({
@@ -34,6 +36,7 @@ const FilterCheckbox = ({
   setFilterData,
   accordianHeadingStyle,
   accordianTitleStyle,
+  searchPlaceholder = getTranslationLabel('search'),
 }: IFilterCheckboxProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -77,13 +80,16 @@ const FilterCheckbox = ({
           ...CommonStyles.accordionHeadingStyle,
           ...(accordianHeadingStyle || {}),
         }}
-        titleStyle={{...CommonStyles.accordionTitleStyle, ...(accordianTitleStyle || {})}}
+        titleStyle={{
+          ...CommonStyles.accordionTitleStyle,
+          ...(accordianTitleStyle || {}),
+        }}
         isExpanded
         title={title}>
         <View>
           {showSearch && (
             <PrimaryTextInput
-              placeHolder={getTranslationLabel('search')}
+              placeHolder={searchPlaceholder}
               value={searchQuery}
               containerStyle={styles.inputContainer}
               onChangeText={value => setSearchQuery(value)}

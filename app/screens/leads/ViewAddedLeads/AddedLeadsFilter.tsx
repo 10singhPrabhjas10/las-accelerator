@@ -6,6 +6,7 @@ import FilterCheckbox from 'components/filterCheckbox/FilterCheckbox';
 import BottomSheetFooter from 'bottomSheets/bottomSheetFooter/BottomSheetFooter';
 import {CATEGORY_FILTER} from 'utils/Constants';
 import {COLORS} from '@/theme/colors';
+import SearchInput from '@/components/searchInput';
 
 export interface IFilterData {
   leadTypeFilter: string[];
@@ -68,7 +69,8 @@ const AddedLeadsFilter = ({
               categoryFilter: [...data],
             });
           }}
-          showSearch={false}
+          showSearch={true}
+          searchPlaceholder="Search Category"
           filterData={filterData.categoryFilter}
         />
         <FilterCheckbox
