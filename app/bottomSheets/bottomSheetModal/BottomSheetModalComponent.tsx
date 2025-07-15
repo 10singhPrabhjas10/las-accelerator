@@ -20,15 +20,16 @@ import {BottomSheetDefaultBackdropProps} from '@gorhom/bottom-sheet/lib/typescri
 import styles from './BottomSheetModalComponent.style';
 import CommonStyles from 'utils/commonStyle';
 import CloseIcon from '../../../assets/icons/closeIcon.svg';
-// import {getTranslationLabel} from 'utils/commonMethods';
+import {getTranslationLabel} from 'utils/commonMethods';
 import {VariantProp} from 'react-native-paper/lib/typescript/components/Typography/types';
 
 interface IBottomSheetModalComponentProps {
   children: ReactNode;
   minHeight?: string | number;
   maxHeight?: string | number;
-  enableClose?: boolean;
+  isFilter?: boolean;
   title?: string;
+  onChange?: (index: number) => void;
   titleTextVariant?: VariantProp<string>;
 }
 
@@ -40,8 +41,9 @@ const BottomSheetModalComponent = forwardRef<
     children,
     minHeight = '25%',
     maxHeight = '25%',
-    enableClose = false,
+    isFilter = false,
     title,
+    onChange,
     titleTextVariant = 'titleLarge',
   } = props;
 
@@ -84,10 +86,11 @@ const BottomSheetModalComponent = forwardRef<
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
-        enablePanDownToClose={!enableClose}>
-        {enableClose && (
+        enablePanDownToClose={!isFilter}
+        onChange={onChange}>
+        {isFilter && (
           <View style={styles.headerContainer}>
-            <Text variant={titleTextVariant}>{title}</Text>
+            <Text variant="titleLarge">{getTranslationLabel('filters  ')}</Text>
             <CloseIcon
               height={20}
               width={20}

@@ -166,6 +166,9 @@ import OrderPlaced from '@/screens/orderTaking/placedOrder';
 import TodayBeatPlan from '@/screens/beatPlan/TodaysBeatPlan';
 import RetailerDetails from '@/screens/beatPlan/RetailersDetails';
 import PreviousBeatPlan from '@/screens/beatPlan/PreviousBeatPlan';
+import Leads from '@/screens/leads/Leads.screen';
+import NewAddLeadScreen from '@/screens/leads/newAddLead/NewAddLead.screen';
+import ViewAddedLeadsScreen from '@/screens/leads/ViewAddedLeads/ViewAddedLeads.screen';
 export type RootNavigationTypes = {
   OnboardingScreens: undefined;
   TabNavigator: undefined;
@@ -342,6 +345,10 @@ export type RootNavigationTypes = {
   LeadManagement: undefined;
   PrimaryLeadCreation: undefined;
   SecondaryLeadCreation: undefined;
+  //Lead
+  Leads: undefined;
+  NewAddLeadScreen: {lead?: any};
+  ViewAddedLeadsScreen: undefined;
   //Mapped Retailer
   MappedRetailer: undefined;
   //Secondary CP
@@ -418,7 +425,8 @@ export default function RootNavigation() {
     // for updating the language for development mode, can be removed in release version
     store.dispatch(
       setCurrentLanguage({
-        selectedLanguageTranslation: appStringsLocal[selectedLanguage.id],
+        selectedLanguageTranslation:
+          appStringsLocal[selectedLanguage.id as keyof typeof appStringsLocal],
         language: selectedLanguage,
       }),
     );
@@ -788,6 +796,20 @@ export default function RootNavigation() {
     </>
   );
 
+  const LeadsStack = (
+    <>
+      <RootStack.Screen name={'Leads'} component={Leads} />
+      <RootStack.Screen
+        name={'NewAddLeadScreen'}
+        component={NewAddLeadScreen}
+      />
+      <RootStack.Screen
+        name={'ViewAddedLeadsScreen'}
+        component={ViewAddedLeadsScreen}
+      />
+    </>
+  );
+
   const AttendenceStack = (
     <>
       <RootStack.Screen
@@ -923,6 +945,7 @@ export default function RootNavigation() {
 
             {BeatMappingStack}
             {LeadManagementStack}
+            {LeadsStack}
             {AttendanceManagementStack}
             {OrderTakingStack}
             {ExpenseManagementStack}

@@ -12,6 +12,7 @@ import channelPartnerSlice from './channelPartnerSlice';
 import forceUpdateSlice from './forceUpdateSlice';
 import logger from 'redux-logger';
 import expenseFormReducer from './expenseFormSlice';
+import newAddLeadReducer from './newAddLeadSlice';
 
 const rootReducer = combineReducers({
   user: userSlice,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   channelPartner: channelPartnerSlice,
   forceUpdate: forceUpdateSlice,
   expenseForm: expenseFormReducer,
+  newAddLead: newAddLeadReducer,
 });
 
 const persistConfig = {

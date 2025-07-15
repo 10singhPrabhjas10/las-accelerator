@@ -8,7 +8,7 @@ import {COLORS} from 'theme/colors';
 //Styles, Constants and interfaces
 
 interface IPrimaryTextInput extends TextInputProps {
-  placeHolder?: string | Number;
+  placeHolder?: string | number;
   titleText?: string;
   containerStyle?: TextStyle;
   textInputStyle?: TextStyle;
@@ -65,7 +65,7 @@ const PrimaryTextInput = ({
         style={[styles.textInputView, textInputStyle]}
         mode="outlined"
         error={errorText && errorText.length > 0 ? true : false}
-        placeholder={placeHolder}
+        placeholder={placeHolder !== undefined ? String(placeHolder) : ''}
         disabled={disabled}
         value={value}
         theme={theme}

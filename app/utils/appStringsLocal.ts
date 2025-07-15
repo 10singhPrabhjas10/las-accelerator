@@ -44,7 +44,7 @@ export default {
       key: 'phone',
       label: 'Phone:',
     },
-
+    {},
     {
       key: 'not_a_registered_partner_yet',
       label: 'Not a registered partner yet?',
@@ -190,6 +190,39 @@ export default {
       key: 'lead_management',
       label: 'Lead Management',
     },
+    //leads
+    {
+      key: 'leads',
+      label: 'Leads',
+    },
+    {
+      key: 'lead_addition',
+      label: 'Lead Addition',
+    },
+    {
+      key: 'view_added_leads',
+      label: 'View Added Leads',
+    },
+    {
+      key:'lead_draft_saved',
+      label: 'Lead Draft Saved',
+    },
+    {
+      key:'success_saved_leads_draft',
+      label:'You have successfully saved Lead as a draft'
+    },
+    {key: 'leads_name', label: 'Leads Name'},
+    {key: 'leads_email_id', label: 'Leads Email-ID'},
+    {key: 'leads_mobile_no', label: 'Leads Mobile No.'},
+    {key: 'category_name', label: 'Category Name'},
+    {key: 'sub_category_name', label: 'Sub-Category Name'},
+    {key: 'lead_type', label: 'Lead Type'},
+    {key: 'pin_code', label: 'Pin Code'},
+    {key: 'district', label: 'District'},
+    {key: 'sales_office', label: 'Sales Office'},
+    {key: 'state', label: 'State'},
+    {key: 'zone', label: 'Zone'},
+    {key: 'country', label: 'Country'},
     {
       key: 'performance_management',
       label: 'Performance Management',
@@ -422,6 +455,10 @@ export default {
     {key: 'current_stock', label: 'Current stock'},
     {key: 'available', label: 'available'},
     {key: 'sku', label: 'SKU'},
+    {key: 'save_submit', label: 'Save & Submit'},
+    {key: 'view_lead_details', label: 'View Lead Details'},
+    {key: 'view_less', label: 'View Less'},
+    {key: 'view_more', label: 'View More'},
     {
       key: 'search_by_product_category',
       label: 'Search by product, category...',
@@ -621,6 +658,10 @@ export default {
       key: 'success_secondary_lead',
       label: 'You have successfully created Secondary Lead',
     },
+    {key: 'enter_district', label: 'Enter District'},
+    {key: 'enter_sales_office', label: 'Enter Sales Office'},
+    {key: 'enter_state', label: 'Enter State'},
+    {key: 'enter_zone', label: 'Enter Zone'},
   ],
 
   hi: [
