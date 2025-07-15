@@ -1164,20 +1164,7 @@ const NewExpense = () => {
                 <CustomButton
                   type={ButtonTypes.text}
                   text="Save Draft"
-                  onPress={async () => {
-                    const errors = await formikRef.current.validateForm();
-                    if (Object.keys(errors).length > 0) {
-                      formikRef.current.setTouched(
-                        Object.keys(errors).reduce(
-                          (acc, key) => ({...acc, [key]: true}),
-                          {},
-                        ),
-                        true,
-                      );
-                      return;
-                    }
-                    createReqBody(true);
-                  }}
+                  onPress={() => createReqBody(true)}
                   style={CommonStyles.flexOne}
                   textStyle={{color: COLORS.dgreen}}
                 />

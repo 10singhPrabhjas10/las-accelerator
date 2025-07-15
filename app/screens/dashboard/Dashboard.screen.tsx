@@ -166,9 +166,8 @@ const Dashboard = () => {
         <FlatList
           data={tilesData}
           numColumns={3}
-          style={styles.flatListContent}
           renderItem={({item, index}) => (
-            <QuickLinkCard text={item.title} onPress={item.onPress} />
+            <QuickLinkCard text={item.title} onPress={item.onPress} icon={item.image} />
           )}
         />
       </View>
@@ -210,7 +209,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   flatListContent: {
-    marginBottom: 24,
+    gap: 8,
+    padding: 10,
   },
   tileText: {
     textAlign: 'center',
