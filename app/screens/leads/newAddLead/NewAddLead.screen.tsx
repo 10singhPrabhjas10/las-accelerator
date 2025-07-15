@@ -11,7 +11,6 @@ import SuccessFailureModal from 'modals/SuccessFailureModal';
 import CustomRadioButton from 'components/radioButton/CustomRadioButton';
 import HelpdeskIcon from '../../../../assets/icons/phone-ringing.svg';
 import EmaildeskIcon from '../../../../assets/icons/emailIcon.svg';
-import {PrimaryLeadSchema} from 'validations/primaryLead';
 import {ButtonTypes} from 'types/buttons';
 import {RootNavigationProp} from 'routes/RootNavigation';
 import CommonStyles from 'utils/commonStyle';
@@ -26,6 +25,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {leadsStyles} from '../Leads.style';
 import {useAppDispatch} from '../../../store/redux/store';
 import {addLead} from '../../../store/redux/newAddLeadSlice';
+import { NewAddLeadSchema } from '@/validations/newAddLead';
 
 const initialLeadData = {
   leadName: '',
@@ -165,7 +165,7 @@ const NewAddLeadScreen = () => {
       style={CommonStyles.padding}>
       <Formik
         initialValues={formInitialValues}
-        validationSchema={PrimaryLeadSchema}
+        validationSchema={NewAddLeadSchema}
         validateOnBlur
         validateOnMount
         validateOnChange
