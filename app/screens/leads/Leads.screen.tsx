@@ -16,19 +16,16 @@ import LeadOptionBottomSheet from './component/LeadOptionBottomSheet';
 const Leads = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const lasType = useSelector((state: RootState) => state?.user?.user?.lasType);
-  const [selectedCard, setSelectedCard] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const handleAddNewLead = () => {
     setBottomSheetVisible(false);
-    navigation.navigate('NewAddLeadScreen');
-    setSelectedCard('primary');
+    navigation.navigate('NewAddLeadScreen', {});
   };
 
   const handleViewLeads = () => {
     setBottomSheetVisible(false);
     navigation.navigate('ViewAddedLeadsScreen');
-    setSelectedCard('secondary');
   };
 
   return (
@@ -39,7 +36,6 @@ const Leads = () => {
         <ActionTouchableButton
           onPress={() => {
             setBottomSheetVisible(true);
-            setSelectedCard('primary');
           }}
           title={getTranslationLabel('lead_addition')}
           leftIcon={<AddAccountIcon />}

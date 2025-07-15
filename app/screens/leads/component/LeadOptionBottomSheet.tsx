@@ -68,11 +68,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
   },
   subContentContainer: {
-    flex: 1,
     marginTop: 24,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
     justifyContent: 'space-between',
   },
   title: {
